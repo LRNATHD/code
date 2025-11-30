@@ -1,0 +1,476 @@
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .data          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .bss           0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text._puts    0x0000000000000000       0x42 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.vprintf  0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.mini_vsnprintf
+                0x0000000000000000       0x3a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.snprintf
+                0x0000000000000000       0x20 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.sprintf  0x0000000000000000       0x2c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strcpy   0x0000000000000000       0x14 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strncpy  0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strcmp   0x0000000000000000       0x1a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strncmp  0x0000000000000000       0x2e C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strchr   0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strrchr  0x0000000000000000       0x3c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.memcmp   0x0000000000000000       0x26 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.memmove  0x0000000000000000       0x5e C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.memchr   0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strnlen  0x0000000000000000       0x2a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.twoway_strstr
+                0x0000000000000000      0x254 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.strstr   0x0000000000000000      0x13a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\cczCNcBM.debug.temp.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccELMcWn.debug.temp.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000000000 0x000000000003c000 xr
+RAM              0x0000000020000000 0x0000000000003000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccoQVgbN.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\cczCNcBM.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccELMcWn.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccRb2M4d.o
+LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\libgcc.a
+
+.init           0x0000000000000000       0x90
+                0x0000000000000000                _sinit = .
+                0x0000000000000000                . = ALIGN (0x4)
+ *(SORT_NONE(.init))
+ .init          0x0000000000000000       0x90 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x0000000000000000                InterruptVector
+                0x0000000000000090                . = ALIGN (0x4)
+                0x0000000000000090                _einit = .
+
+.highcodelalign
+                0x0000000000000090        0x0
+                0x0000000000000090                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_lma = .)
+
+.highcode       0x0000000020000000        0x0 load address 0x0000000000000090
+                0x0000000020000000                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_vma_start = .)
+ *(.highcode*)
+                0x0000000020000000                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_vma_end = .)
+
+.text           0x0000000000000090      0xeec
+                0x0000000000000090                . = ALIGN (0x4)
+ *(.text)
+ *(.text.*)
+ .text.mini_pad
+                0x0000000000000090       0x9a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.mini_itoa.part.0
+                0x000000000000012a       0x8e C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.DevSetMode
+                0x00000000000001b8       0x52 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.RFEND_TXCTune
+                0x000000000000020a       0x8a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.blink    0x0000000000000294       0x4e C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.internal_handle_input.constprop.0
+                0x00000000000002e2        0xa C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text._write.constprop.0
+                0x00000000000002ec       0xf4 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.__puts_uart
+                0x00000000000003e0       0x14 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.Frame_TX.constprop.0
+                0x00000000000003f4      0x12a C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.handle_reset
+                0x000000000000051e       0x84 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x000000000000051e                handle_reset
+ .text.vector_handler
+                0x00000000000005a2        0x2 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x00000000000005a2                EXTI2_IRQHandler
+                0x00000000000005a2                TIM8_TRG_COM_IRQHandler
+                0x00000000000005a2                TIM8_CC_IRQHandler
+                0x00000000000005a2                USART_WKUP_IRQHandler
+                0x00000000000005a2                UART8_IRQHandler
+                0x00000000000005a2                SPI4_IRQHandler
+                0x00000000000005a2                NFC_IRQHandler
+                0x00000000000005a2                DFSDM0_IRQHandler
+                0x00000000000005a2                TIM1_CC_IRQHandler
+                0x00000000000005a2                HardFault_Handler
+                0x00000000000005a2                TIM10_IRQHandler
+                0x00000000000005a2                GPIOB_IRQHandler
+                0x00000000000005a2                IPC_CH2_Handler
+                0x00000000000005a2                USBPD_IRQHandler
+                0x00000000000005a2                TIM6_IRQHandler
+                0x00000000000005a2                GPIOA_IRQHandler
+                0x00000000000005a2                SysTick_Handler
+                0x00000000000005a2                CAN3_RX1_IRQHandler
+                0x00000000000005a2                I3C_ER_IRQHandler
+                0x00000000000005a2                PVD_IRQHandler
+                0x00000000000005a2                SDIO_IRQHandler
+                0x00000000000005a2                TIM9_BRK_IRQHandler
+                0x00000000000005a2                DMA2_Channel8_IRQHandler
+                0x00000000000005a2                NMI_Handler
+                0x00000000000005a2                CAN2_RX1_IRQHandler
+                0x00000000000005a2                EXTI3_IRQHandler
+                0x00000000000005a2                HSEM_Handler
+                0x00000000000005a2                UART1_IRQHandler
+                0x00000000000005a2                USBHS_IRQHandler
+                0x00000000000005a2                LPTIM2_IRQHandler
+                0x00000000000005a2                DMA2_Channel9_IRQHandler
+                0x00000000000005a2                TIM10_CC_IRQHandler
+                0x00000000000005a2                EXTI25_16_IRQHandler
+                0x00000000000005a2                I2C3_ER_IRQHandler
+                0x00000000000005a2                USBFS_IRQHandler
+                0x00000000000005a2                UART0_IRQHandler
+                0x00000000000005a2                USART8_IRQHandler
+                0x00000000000005a2                EXTI0_IRQHandler
+                0x00000000000005a2                I2C2_EV_IRQHandler
+                0x00000000000005a2                TIM10_TRG_COM_IRQHandler
+                0x00000000000005a2                LPTIM_IRQHandler
+                0x00000000000005a2                CAN1_RX0_IRQHandler
+                0x00000000000005a2                CAN3_SCE_IRQHandler
+                0x00000000000005a2                CAN2_SCE_IRQHandler
+                0x00000000000005a2                ADC1_2_IRQHandler
+                0x00000000000005a2                BB_IRQHandler
+                0x00000000000005a2                Break_Point_Handler
+                0x00000000000005a2                IPC_CH0_Handler
+                0x00000000000005a2                TIM2_CC_IRQHandler
+                0x00000000000005a2                SPI1_IRQHandler
+                0x00000000000005a2                USART5_IRQHandler
+                0x00000000000005a2                TAMPER_IRQHandler
+                0x00000000000005a2                TMR0_IRQHandler
+                0x00000000000005a2                AWU_IRQHandler
+                0x00000000000005a2                EXTI7_0_IRQHandler
+                0x00000000000005a2                CAN2_RX0_IRQHandler
+                0x00000000000005a2                OSCWakeUp_IRQHandler
+                0x00000000000005a2                TIM8_UP_IRQHandler
+                0x00000000000005a2                Ecall_M_Mode_Handler
+                0x00000000000005a2                ECDC_IRQHandler
+                0x00000000000005a2                SDMMC_IRQHandler
+                0x00000000000005a2                USART7_IRQHandler
+                0x00000000000005a2                DMA2_Channel2_IRQHandler
+                0x00000000000005a2                DMA1_Channel4_IRQHandler
+                0x00000000000005a2                ADC1_IRQHandler
+                0x00000000000005a2                TIM2_BRK_IRQHandler
+                0x00000000000005a2                USART6_IRQHandler
+                0x00000000000005a2                CAN3_RX0_IRQHandler
+                0x00000000000005a2                HSADC_IRQHandler
+                0x00000000000005a2                TIM9_UP_IRQHandler
+                0x00000000000005a2                USART3_IRQHandler
+                0x00000000000005a2                RTC_IRQHandler
+                0x00000000000005a2                DMA1_Channel7_IRQHandler
+                0x00000000000005a2                LED_IRQHandler
+                0x00000000000005a2                CAN1_RX1_IRQHandler
+                0x00000000000005a2                DVP_IRQHandler
+                0x00000000000005a2                UART5_IRQHandler
+                0x00000000000005a2                USBSS_IRQHandler
+                0x00000000000005a2                SWPMI_IRQHandler
+                0x00000000000005a2                USBPDWakeUp_IRQHandler
+                0x00000000000005a2                EXTI15_8_IRQHandler
+                0x00000000000005a2                TIM4_IRQHandler
+                0x00000000000005a2                DMA2_Channel1_IRQHandler
+                0x00000000000005a2                SWPMI_WKUP_IRQHandler
+                0x00000000000005a2                USBPD_WKUP_IRQHandler
+                0x00000000000005a2                I2C1_EV_IRQHandler
+                0x00000000000005a2                USBSSWakeup_IRQHandler
+                0x00000000000005a2                UART2_IRQHandler
+                0x00000000000005a2                USART4_IRQHandler
+                0x00000000000005a2                PWMX_IRQHandler
+                0x00000000000005a2                DMA1_Channel6_IRQHandler
+                0x00000000000005a2                UART4_IRQHandler
+                0x00000000000005a2                DMA2_Channel4_IRQHandler
+                0x00000000000005a2                TIM3_IRQHandler
+                0x00000000000005a2                RCC_IRQHandler
+                0x00000000000005a2                TIM1_TRG_COM_IRQHandler
+                0x00000000000005a2                DMA1_Channel1_IRQHandler
+                0x00000000000005a2                DMA2_Channel7_IRQHandler
+                0x00000000000005a2                QSPI1_IRQHandler
+                0x00000000000005a2                EXTI15_10_IRQHandler
+                0x00000000000005a2                ADC_IRQHandler
+                0x00000000000005a2                IPC_CH3_Handler
+                0x00000000000005a2                DMA1_Channel8_IRQHandler
+                0x00000000000005a2                I3C_EV_IRQHandler
+                0x00000000000005a2                TMR2_IRQHandler
+                0x00000000000005a2                I3C_WKUP_IRQHandler
+                0x00000000000005a2                DefaultIRQHandler
+                0x00000000000005a2                TIM12_IRQHandler
+                0x00000000000005a2                TIM7_IRQHandler
+                0x00000000000005a2                CAN2_TX_IRQHandler
+                0x00000000000005a2                TIM5_IRQHandler
+                0x00000000000005a2                I2C3_EV_IRQHandler
+                0x00000000000005a2                USB_IRQHandler
+                0x00000000000005a2                EXTI9_5_IRQHandler
+                0x00000000000005a2                PIOC_IRQHandler
+                0x00000000000005a2                TIM9_IRQHandler
+                0x00000000000005a2                LTDC_IRQHandler
+                0x00000000000005a2                SAI_IRQHandler
+                0x00000000000005a2                SPI2_IRQHandler
+                0x00000000000005a2                OSC32KCal_IRQHandler
+                0x00000000000005a2                IPC_CH1_Handler
+                0x00000000000005a2                I2C_IRQHandler
+                0x00000000000005a2                LPTIM1_WKUP_IRQHandler
+                0x00000000000005a2                TIM10_BRK_IRQHandler
+                0x00000000000005a2                TIM9_CC_IRQHandler
+                0x00000000000005a2                CAN1_TX_IRQHandler
+                0x00000000000005a2                DMA2_Channel5_IRQHandler
+                0x00000000000005a2                USB2_IRQHandler
+                0x00000000000005a2                USBHSWakeUp_IRQHandler
+                0x00000000000005a2                DMA1_Channel5_IRQHandler
+                0x00000000000005a2                EXTI4_IRQHandler
+                0x00000000000005a2                USB_LP_CAN1_RX0_IRQHandler
+                0x00000000000005a2                QSPI2_IRQHandler
+                0x00000000000005a2                RNG_IRQHandler
+                0x00000000000005a2                USB_HP_CAN1_TX_IRQHandler
+                0x00000000000005a2                CMPWakeUp_IRQHandler
+                0x00000000000005a2                DMA1_Channel3_IRQHandler
+                0x00000000000005a2                FSMC_IRQHandler
+                0x00000000000005a2                ETH_IRQHandler
+                0x00000000000005a2                TIM1_UP_IRQHandler
+                0x00000000000005a2                LPTIMWakeUp_IRQHandler
+                0x00000000000005a2                WWDG_IRQHandler
+                0x00000000000005a2                USBHSWakeup_IRQHandler
+                0x00000000000005a2                DMA2_Channel11_IRQHandler
+                0x00000000000005a2                WDOG_BAT_IRQHandler
+                0x00000000000005a2                Ecall_U_Mode_Handler
+                0x00000000000005a2                I2C4_EV_IRQHandler
+                0x00000000000005a2                CAN3_TX_IRQHandler
+                0x00000000000005a2                TMR3_IRQHandler
+                0x00000000000005a2                DMA2_Channel6_IRQHandler
+                0x00000000000005a2                TIM2_IRQHandler
+                0x00000000000005a2                SW_Handler
+                0x00000000000005a2                TIM1_BRK_IRQHandler
+                0x00000000000005a2                GPHA_IRQHandler
+                0x00000000000005a2                OPA_IRQHandler
+                0x00000000000005a2                DMA2_Channel10_IRQHandler
+                0x00000000000005a2                EXTI1_IRQHandler
+                0x00000000000005a2                SPI0_IRQHandler
+                0x00000000000005a2                USB2_HOST_IRQHandler
+                0x00000000000005a2                LPTIM2_WKUP_IRQHandler
+                0x00000000000005a2                RTCAlarm_IRQHandler
+                0x00000000000005a2                TIM11_IRQHandler
+                0x00000000000005a2                TIM10_UP_IRQHandler
+                0x00000000000005a2                TIM9_TRG_COM_IRQHandler
+                0x00000000000005a2                UART7_IRQHandler
+                0x00000000000005a2                USART2_IRQHandler
+                0x00000000000005a2                UART6_IRQHandler
+                0x00000000000005a2                UHSIF_IRQHandler
+                0x00000000000005a2                ETHWakeUp_IRQHandler
+                0x00000000000005a2                I2C2_ER_IRQHandler
+                0x00000000000005a2                DMA1_Channel2_IRQHandler
+                0x00000000000005a2                TIM8_BRK_IRQHandler
+                0x00000000000005a2                TIM2_TRG_IRQHandler
+                0x00000000000005a2                CAN1_SCE_IRQHandler
+                0x00000000000005a2                FLASH_IRQHandler
+                0x00000000000005a2                USBFSWakeUp_IRQHandler
+                0x00000000000005a2                USART1_IRQHandler
+                0x00000000000005a2                OTG_FS_IRQHandler
+                0x00000000000005a2                SPI3_IRQHandler
+                0x00000000000005a2                USBFS_WakeUp_IRQHandler
+                0x00000000000005a2                UART3_IRQHandler
+                0x00000000000005a2                I2C1_ER_IRQHandler
+                0x00000000000005a2                FMC_IRQHandler
+                0x00000000000005a2                USB2_DEVICE_IRQHandler
+                0x00000000000005a2                LPTIM1_IRQHandler
+                0x00000000000005a2                DFSDM1_IRQHandler
+                0x00000000000005a2                TMR1_IRQHandler
+                0x00000000000005a2                I2C4_ER_IRQHandler
+                0x00000000000005a2                SERDES_IRQHandler
+                0x00000000000005a2                USBSS_LINK_IRQHandler
+                0x00000000000005a2                USBWakeUp_IRQHandler
+                0x00000000000005a2                DMA2_Channel3_IRQHandler
+ .text.strlen   0x00000000000005a4       0x12 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x00000000000005a4                strlen
+ .text.mini_vpprintf
+                0x00000000000005b6      0x1be C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .text.printf   0x0000000000000774       0x26 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x0000000000000774                printf
+ .text.memset   0x000000000000079a       0x12 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x000000000000079a                memset
+ .text.memcpy   0x00000000000007ac       0x1c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x00000000000007ac                memcpy
+ .text.puts     0x00000000000007c8       0x2c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x00000000000007c8                puts
+ .text.putchar  0x00000000000007f4       0x6c C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x00000000000007f4                putchar
+ .text.SystemInit
+                0x0000000000000860       0x78 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x0000000000000860                SystemInit
+ .text.startup.main
+                0x00000000000008d8      0x592 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                0x00000000000008d8                main
+ .text.LLE_IRQHandler
+                0x0000000000000e6a       0x8e C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *(.rodata)
+ *(.rodata*)
+ .rodata.puts.str1.4
+                0x0000000000000ef8        0x2 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *fill*         0x0000000000000efa        0x2 
+ .rodata.main.str1.4
+                0x0000000000000efc       0x42 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *fill*         0x0000000000000f3e        0x2 
+ .rodata.channel_map
+                0x0000000000000f40       0x28 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rodata.hex_lut
+                0x0000000000000f68       0x11 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *(.gnu.linkonce.t.*)
+                0x0000000000000f7c                . = ALIGN (0x4)
+ *fill*         0x0000000000000f79        0x3 
+
+.rela.dyn       0x0000000000000f7c        0x0
+ .rela.text.mini_pad
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rela.text._write.constprop.0
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rela.text.Frame_TX.constprop.0
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rela.text.handle_reset
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rela.text.mini_vpprintf
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rela.text.puts
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .rela.text.startup.main
+                0x0000000000000f7c        0x0 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+
+.fini           0x0000000000000f7c        0x0
+ *(SORT_NONE(.fini))
+                0x0000000000000f7c                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (_eitcm = .)
+
+.preinit_array  0x0000000000000f7c        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0000000000000f7c        0x0
+                0x0000000000000f7c                PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                0x0000000000000f7c                PROVIDE (__init_array_end = .)
+
+.fini_array     0x0000000000000f7c        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.dalign         0x0000000020000000        0x0 load address 0x0000000000000f7c
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_data_vma = .)
+
+.dlalign        0x0000000000000f7c        0x0
+                0x0000000000000f7c                . = ALIGN (0x4)
+                0x0000000000000f7c                PROVIDE (_data_lma = .)
+
+.data           0x0000000020000000       0x18 load address 0x0000000000000f7c
+                0x0000000020000000                . = ALIGN (0x4)
+                0x00000000200003fc                __global_pointer$ = (. + 0x3fc)
+ *(.gnu.linkonce.r.*)
+ *(.data .data.*)
+ .data.adv      0x0000000020000000       0x13 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *(.gnu.linkonce.d.*)
+                0x0000000020000018                . = ALIGN (0x8)
+ *fill*         0x0000000020000013        0x5 
+ *(.sdata .sdata.*)
+ *(.sdata2*)
+ *(.gnu.linkonce.s.*)
+                0x0000000020000018                . = ALIGN (0x8)
+ *(.srodata.cst16)
+ *(.srodata.cst8)
+ *(.srodata.cst4)
+ *(.srodata.cst2)
+ *(.srodata .srodata.*)
+                0x0000000020000018                . = ALIGN (0x4)
+                0x0000000020000018                PROVIDE (_edata = .)
+
+.bss            0x0000000020000018      0x44c load address 0x0000000000000f94
+                0x0000000020000018                . = ALIGN (0x4)
+                0x0000000020000018                PROVIDE (_sbss = .)
+ *(.sbss*)
+ .sbss.rx_ready
+                0x0000000020000018        0x4 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .sbss.tuneFilter
+                0x000000002000001c        0x4 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .sbss.tuneFilter2M
+                0x0000000020000020        0x4 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *(.gnu.linkonce.sb.*)
+ *(.bss*)
+ .bss.LLE_BUF   0x0000000020000024      0x440 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ *(.gnu.linkonce.b.*)
+ *(COMMON*)
+                0x0000000020000464                . = ALIGN (0x4)
+                0x0000000020000464                PROVIDE (_ebss = .)
+                [!provide]                        PROVIDE (_end = _ebss)
+                [!provide]                        PROVIDE (end = .)
+                0x0000000020003000                PROVIDE (_eusrstack = (ORIGIN (RAM) + LENGTH (RAM)))
+
+/DISCARD/
+ *(.note .note.*)
+ *(.eh_frame .eh_frame.*)
+ *(.comment .comment.*)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.ARM.exidx*)
+OUTPUT(iSLER.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x2b
+ .riscv.attributes
+                0x0000000000000000       0x2b C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+
+.debug_info     0x0000000000000000     0x32bd
+ .debug_info    0x0000000000000000     0x152b C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .debug_info    0x000000000000152b      0xf4b C:\Users\LRNA\AppData\Local\Temp\cczCNcBM.debug.temp.o
+                0x000000000000152b                ch32fun.c.06290d3e
+ .debug_info    0x0000000000002476      0xe47 C:\Users\LRNA\AppData\Local\Temp\ccELMcWn.debug.temp.o
+                0x0000000000002476                iSLER.c.5eab49fd
+
+.debug_abbrev   0x0000000000000000      0x730
+ .debug_abbrev  0x0000000000000000      0x1f3 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .debug_abbrev  0x00000000000001f3      0x2a6 C:\Users\LRNA\AppData\Local\Temp\cczCNcBM.debug.temp.o
+ .debug_abbrev  0x0000000000000499      0x297 C:\Users\LRNA\AppData\Local\Temp\ccELMcWn.debug.temp.o
+
+.debug_loc      0x0000000000000000     0x2568
+ .debug_loc     0x0000000000000000     0x2568 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+
+.debug_aranges  0x0000000000000000      0x150
+ .debug_aranges
+                0x0000000000000000      0x150 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+
+.debug_ranges   0x0000000000000000      0x600
+ .debug_ranges  0x0000000000000000      0x600 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+
+.debug_line     0x0000000000000000     0x39fa
+ .debug_line    0x0000000000000000     0x3732 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+ .debug_line    0x0000000000003732      0x181 C:\Users\LRNA\AppData\Local\Temp\cczCNcBM.debug.temp.o
+ .debug_line    0x00000000000038b3      0x147 C:\Users\LRNA\AppData\Local\Temp\ccELMcWn.debug.temp.o
+
+.debug_str      0x0000000000000000      0xe0e
+ .debug_str     0x0000000000000000      0x16b C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
+                                        0x18e (size before relaxing)
+ .debug_str     0x000000000000016b      0x64a C:\Users\LRNA\AppData\Local\Temp\cczCNcBM.debug.temp.o
+                                        0x733 (size before relaxing)
+ .debug_str     0x00000000000007b5      0x659 C:\Users\LRNA\AppData\Local\Temp\ccELMcWn.debug.temp.o
+                                        0x879 (size before relaxing)
+
+.debug_frame    0x0000000000000000      0x494
+ .debug_frame   0x0000000000000000      0x494 C:\Users\LRNA\AppData\Local\Temp\iSLER.elf.xOMsFF.ltrans0.ltrans.o
