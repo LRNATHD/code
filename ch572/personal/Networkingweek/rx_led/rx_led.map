@@ -1,46 +1,45 @@
 
 Discarded input sections
 
- .text          0x0000000000000000        0x0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .data          0x0000000000000000        0x0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .bss           0x0000000000000000        0x0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+ .text          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .data          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .bss           0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.mini_pad
-                0x0000000000000000       0xa0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text._puts    0x0000000000000000       0x42 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000       0xa0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text._puts    0x0000000000000000       0x42 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.mini_itoa.part.0
-                0x0000000000000000       0x8e C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000       0x8e C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.__puts_uart
-                0x0000000000000000       0x20 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strlen   0x0000000000000000       0x12 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000       0x20 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strlen   0x0000000000000000       0x12 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.mini_vpprintf
-                0x0000000000000000      0x1d6 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.printf   0x0000000000000000       0x30 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.vprintf  0x0000000000000000       0x16 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000      0x1d6 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.printf   0x0000000000000000       0x30 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.vprintf  0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.mini_vsnprintf
-                0x0000000000000000       0x3a C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000       0x3a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.snprintf
-                0x0000000000000000       0x20 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.sprintf  0x0000000000000000       0x2c C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strcpy   0x0000000000000000       0x14 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strncpy  0x0000000000000000       0x1c C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strcmp   0x0000000000000000       0x1a C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strncmp  0x0000000000000000       0x2e C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strchr   0x0000000000000000       0x16 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strrchr  0x0000000000000000       0x3c C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.memcpy   0x0000000000000000       0x1c C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.memcmp   0x0000000000000000       0x26 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.memmove  0x0000000000000000       0x5e C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.memchr   0x0000000000000000       0x1c C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strnlen  0x0000000000000000       0x2a C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000       0x20 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.sprintf  0x0000000000000000       0x2c C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strcpy   0x0000000000000000       0x14 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strncpy  0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strcmp   0x0000000000000000       0x1a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strncmp  0x0000000000000000       0x2e C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strchr   0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strrchr  0x0000000000000000       0x3c C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.memcmp   0x0000000000000000       0x26 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.memmove  0x0000000000000000       0x5e C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.memchr   0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strnlen  0x0000000000000000       0x2a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.twoway_strstr
-                0x0000000000000000      0x254 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.strstr   0x0000000000000000      0x13a C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000      0x254 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.strstr   0x0000000000000000      0x13a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .rodata.puts.str1.4
-                0x0000000000000000        0x2 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .text.puts     0x0000000000000000       0x40 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .comment       0x0000000000000000       0x13 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .comment       0x0000000000000000       0x13 C:\Users\Noahs\AppData\Local\Temp\cc6RvEpQ.debug.temp.o
- .comment       0x0000000000000000       0x13 C:\Users\Noahs\AppData\Local\Temp\ccsTwosf.debug.temp.o
+                0x0000000000000000        0x2 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.puts     0x0000000000000000       0x40 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccgvpPyC.debug.temp.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\cce6a4ZM.debug.temp.o
 
 Memory Configuration
 
@@ -51,18 +50,18 @@ RAM              0x0000000020000000 0x0000000000003000 xrw
 
 Linker script and memory map
 
-LOAD C:\Users\Noahs\AppData\Local\Temp\cckgQ9FB.o
-LOAD C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-LOAD C:\Users\Noahs\AppData\Local\Temp\cc6RvEpQ.debug.temp.o
-LOAD C:\Users\Noahs\AppData\Local\Temp\ccsTwosf.debug.temp.o
-LOAD C:\Users\Noahs\AppData\Local\Temp\cc7toPPE.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccCbPlHe.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccgvpPyC.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\cce6a4ZM.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccK3Vlnj.o
 LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\libgcc.a
 
 .init           0x0000000000000000       0x90
                 0x0000000000000000                _sinit = .
                 0x0000000000000000                . = ALIGN (0x4)
  *(SORT_NONE(.init))
- .init          0x0000000000000000       0x90 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+ .init          0x0000000000000000       0x90 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
                 0x0000000000000000                InterruptVector
                 0x0000000000000090                . = ALIGN (0x4)
                 0x0000000000000090                _einit = .
@@ -79,253 +78,280 @@ LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\l
                 0x0000000020000000                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_highcode_vma_end = .)
 
-.text           0x0000000000000090      0x7bc
+.text           0x0000000000000090      0xc80
                 0x0000000000000090                . = ALIGN (0x4)
  *(.text)
  *(.text.*)
  .text.DevSetMode
-                0x0000000000000090       0x52 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000090       0x52 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.RFEND_TXCTune
-                0x00000000000000e2       0x8a C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x00000000000000e2       0x8a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_delay
+                0x000000000000016c       0x1a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_scl_high
+                0x0000000000000186       0x12 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_sda_high
+                0x0000000000000198       0x2a C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_sda_low
+                0x00000000000001c2       0x22 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_start
+                0x00000000000001e4       0x24 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_stop
+                0x0000000000000208       0x14 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.i2c_write_byte
+                0x000000000000021c       0x6c C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.ssd1306_cmd
+                0x0000000000000288       0x22 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .text.ssd1306_print
+                0x00000000000002aa       0x70 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .text.handle_reset
-                0x000000000000016c       0x82 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-                0x000000000000016c                handle_reset
+                0x000000000000031a       0x82 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                0x000000000000031a                handle_reset
  .text.vector_handler
-                0x00000000000001ee        0x2 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-                0x00000000000001ee                EXTI2_IRQHandler
-                0x00000000000001ee                TIM8_TRG_COM_IRQHandler
-                0x00000000000001ee                TIM8_CC_IRQHandler
-                0x00000000000001ee                USART_WKUP_IRQHandler
-                0x00000000000001ee                UART8_IRQHandler
-                0x00000000000001ee                SPI4_IRQHandler
-                0x00000000000001ee                NFC_IRQHandler
-                0x00000000000001ee                DFSDM0_IRQHandler
-                0x00000000000001ee                TIM1_CC_IRQHandler
-                0x00000000000001ee                HardFault_Handler
-                0x00000000000001ee                TIM10_IRQHandler
-                0x00000000000001ee                GPIOB_IRQHandler
-                0x00000000000001ee                IPC_CH2_Handler
-                0x00000000000001ee                USBPD_IRQHandler
-                0x00000000000001ee                TIM6_IRQHandler
-                0x00000000000001ee                GPIOA_IRQHandler
-                0x00000000000001ee                SysTick_Handler
-                0x00000000000001ee                CAN3_RX1_IRQHandler
-                0x00000000000001ee                I3C_ER_IRQHandler
-                0x00000000000001ee                PVD_IRQHandler
-                0x00000000000001ee                SDIO_IRQHandler
-                0x00000000000001ee                TIM9_BRK_IRQHandler
-                0x00000000000001ee                DMA2_Channel8_IRQHandler
-                0x00000000000001ee                NMI_Handler
-                0x00000000000001ee                CAN2_RX1_IRQHandler
-                0x00000000000001ee                EXTI3_IRQHandler
-                0x00000000000001ee                HSEM_Handler
-                0x00000000000001ee                UART1_IRQHandler
-                0x00000000000001ee                USBHS_IRQHandler
-                0x00000000000001ee                LPTIM2_IRQHandler
-                0x00000000000001ee                DMA2_Channel9_IRQHandler
-                0x00000000000001ee                TIM10_CC_IRQHandler
-                0x00000000000001ee                EXTI25_16_IRQHandler
-                0x00000000000001ee                I2C3_ER_IRQHandler
-                0x00000000000001ee                USBFS_IRQHandler
-                0x00000000000001ee                UART0_IRQHandler
-                0x00000000000001ee                USART8_IRQHandler
-                0x00000000000001ee                EXTI0_IRQHandler
-                0x00000000000001ee                I2C2_EV_IRQHandler
-                0x00000000000001ee                TIM10_TRG_COM_IRQHandler
-                0x00000000000001ee                LPTIM_IRQHandler
-                0x00000000000001ee                CAN1_RX0_IRQHandler
-                0x00000000000001ee                CAN3_SCE_IRQHandler
-                0x00000000000001ee                CAN2_SCE_IRQHandler
-                0x00000000000001ee                ADC1_2_IRQHandler
-                0x00000000000001ee                BB_IRQHandler
-                0x00000000000001ee                Break_Point_Handler
-                0x00000000000001ee                IPC_CH0_Handler
-                0x00000000000001ee                TIM2_CC_IRQHandler
-                0x00000000000001ee                SPI1_IRQHandler
-                0x00000000000001ee                USART5_IRQHandler
-                0x00000000000001ee                TAMPER_IRQHandler
-                0x00000000000001ee                TMR0_IRQHandler
-                0x00000000000001ee                AWU_IRQHandler
-                0x00000000000001ee                EXTI7_0_IRQHandler
-                0x00000000000001ee                CAN2_RX0_IRQHandler
-                0x00000000000001ee                OSCWakeUp_IRQHandler
-                0x00000000000001ee                TIM8_UP_IRQHandler
-                0x00000000000001ee                Ecall_M_Mode_Handler
-                0x00000000000001ee                ECDC_IRQHandler
-                0x00000000000001ee                SDMMC_IRQHandler
-                0x00000000000001ee                USART7_IRQHandler
-                0x00000000000001ee                DMA2_Channel2_IRQHandler
-                0x00000000000001ee                DMA1_Channel4_IRQHandler
-                0x00000000000001ee                ADC1_IRQHandler
-                0x00000000000001ee                TIM2_BRK_IRQHandler
-                0x00000000000001ee                USART6_IRQHandler
-                0x00000000000001ee                CAN3_RX0_IRQHandler
-                0x00000000000001ee                HSADC_IRQHandler
-                0x00000000000001ee                TIM9_UP_IRQHandler
-                0x00000000000001ee                USART3_IRQHandler
-                0x00000000000001ee                RTC_IRQHandler
-                0x00000000000001ee                DMA1_Channel7_IRQHandler
-                0x00000000000001ee                LED_IRQHandler
-                0x00000000000001ee                CAN1_RX1_IRQHandler
-                0x00000000000001ee                DVP_IRQHandler
-                0x00000000000001ee                UART5_IRQHandler
-                0x00000000000001ee                USBSS_IRQHandler
-                0x00000000000001ee                SWPMI_IRQHandler
-                0x00000000000001ee                USBPDWakeUp_IRQHandler
-                0x00000000000001ee                EXTI15_8_IRQHandler
-                0x00000000000001ee                TIM4_IRQHandler
-                0x00000000000001ee                DMA2_Channel1_IRQHandler
-                0x00000000000001ee                SWPMI_WKUP_IRQHandler
-                0x00000000000001ee                USBPD_WKUP_IRQHandler
-                0x00000000000001ee                I2C1_EV_IRQHandler
-                0x00000000000001ee                USBSSWakeup_IRQHandler
-                0x00000000000001ee                UART2_IRQHandler
-                0x00000000000001ee                USART4_IRQHandler
-                0x00000000000001ee                PWMX_IRQHandler
-                0x00000000000001ee                DMA1_Channel6_IRQHandler
-                0x00000000000001ee                UART4_IRQHandler
-                0x00000000000001ee                DMA2_Channel4_IRQHandler
-                0x00000000000001ee                TIM3_IRQHandler
-                0x00000000000001ee                RCC_IRQHandler
-                0x00000000000001ee                TIM1_TRG_COM_IRQHandler
-                0x00000000000001ee                DMA1_Channel1_IRQHandler
-                0x00000000000001ee                DMA2_Channel7_IRQHandler
-                0x00000000000001ee                QSPI1_IRQHandler
-                0x00000000000001ee                EXTI15_10_IRQHandler
-                0x00000000000001ee                ADC_IRQHandler
-                0x00000000000001ee                IPC_CH3_Handler
-                0x00000000000001ee                DMA1_Channel8_IRQHandler
-                0x00000000000001ee                I3C_EV_IRQHandler
-                0x00000000000001ee                TMR2_IRQHandler
-                0x00000000000001ee                I3C_WKUP_IRQHandler
-                0x00000000000001ee                DefaultIRQHandler
-                0x00000000000001ee                TIM12_IRQHandler
-                0x00000000000001ee                TIM7_IRQHandler
-                0x00000000000001ee                CAN2_TX_IRQHandler
-                0x00000000000001ee                TIM5_IRQHandler
-                0x00000000000001ee                I2C3_EV_IRQHandler
-                0x00000000000001ee                USB_IRQHandler
-                0x00000000000001ee                EXTI9_5_IRQHandler
-                0x00000000000001ee                PIOC_IRQHandler
-                0x00000000000001ee                TIM9_IRQHandler
-                0x00000000000001ee                LTDC_IRQHandler
-                0x00000000000001ee                SAI_IRQHandler
-                0x00000000000001ee                SPI2_IRQHandler
-                0x00000000000001ee                OSC32KCal_IRQHandler
-                0x00000000000001ee                IPC_CH1_Handler
-                0x00000000000001ee                I2C_IRQHandler
-                0x00000000000001ee                LPTIM1_WKUP_IRQHandler
-                0x00000000000001ee                TIM10_BRK_IRQHandler
-                0x00000000000001ee                TIM9_CC_IRQHandler
-                0x00000000000001ee                CAN1_TX_IRQHandler
-                0x00000000000001ee                DMA2_Channel5_IRQHandler
-                0x00000000000001ee                USB2_IRQHandler
-                0x00000000000001ee                USBHSWakeUp_IRQHandler
-                0x00000000000001ee                DMA1_Channel5_IRQHandler
-                0x00000000000001ee                EXTI4_IRQHandler
-                0x00000000000001ee                USB_LP_CAN1_RX0_IRQHandler
-                0x00000000000001ee                QSPI2_IRQHandler
-                0x00000000000001ee                RNG_IRQHandler
-                0x00000000000001ee                USB_HP_CAN1_TX_IRQHandler
-                0x00000000000001ee                CMPWakeUp_IRQHandler
-                0x00000000000001ee                DMA1_Channel3_IRQHandler
-                0x00000000000001ee                FSMC_IRQHandler
-                0x00000000000001ee                ETH_IRQHandler
-                0x00000000000001ee                TIM1_UP_IRQHandler
-                0x00000000000001ee                LPTIMWakeUp_IRQHandler
-                0x00000000000001ee                WWDG_IRQHandler
-                0x00000000000001ee                USBHSWakeup_IRQHandler
-                0x00000000000001ee                DMA2_Channel11_IRQHandler
-                0x00000000000001ee                WDOG_BAT_IRQHandler
-                0x00000000000001ee                Ecall_U_Mode_Handler
-                0x00000000000001ee                I2C4_EV_IRQHandler
-                0x00000000000001ee                CAN3_TX_IRQHandler
-                0x00000000000001ee                TMR3_IRQHandler
-                0x00000000000001ee                DMA2_Channel6_IRQHandler
-                0x00000000000001ee                TIM2_IRQHandler
-                0x00000000000001ee                SW_Handler
-                0x00000000000001ee                TIM1_BRK_IRQHandler
-                0x00000000000001ee                GPHA_IRQHandler
-                0x00000000000001ee                OPA_IRQHandler
-                0x00000000000001ee                DMA2_Channel10_IRQHandler
-                0x00000000000001ee                EXTI1_IRQHandler
-                0x00000000000001ee                SPI0_IRQHandler
-                0x00000000000001ee                USB2_HOST_IRQHandler
-                0x00000000000001ee                LPTIM2_WKUP_IRQHandler
-                0x00000000000001ee                RTCAlarm_IRQHandler
-                0x00000000000001ee                TIM11_IRQHandler
-                0x00000000000001ee                TIM10_UP_IRQHandler
-                0x00000000000001ee                TIM9_TRG_COM_IRQHandler
-                0x00000000000001ee                UART7_IRQHandler
-                0x00000000000001ee                USART2_IRQHandler
-                0x00000000000001ee                UART6_IRQHandler
-                0x00000000000001ee                UHSIF_IRQHandler
-                0x00000000000001ee                ETHWakeUp_IRQHandler
-                0x00000000000001ee                I2C2_ER_IRQHandler
-                0x00000000000001ee                DMA1_Channel2_IRQHandler
-                0x00000000000001ee                TIM8_BRK_IRQHandler
-                0x00000000000001ee                TIM2_TRG_IRQHandler
-                0x00000000000001ee                CAN1_SCE_IRQHandler
-                0x00000000000001ee                FLASH_IRQHandler
-                0x00000000000001ee                USBFSWakeUp_IRQHandler
-                0x00000000000001ee                USART1_IRQHandler
-                0x00000000000001ee                OTG_FS_IRQHandler
-                0x00000000000001ee                SPI3_IRQHandler
-                0x00000000000001ee                USBFS_WakeUp_IRQHandler
-                0x00000000000001ee                UART3_IRQHandler
-                0x00000000000001ee                I2C1_ER_IRQHandler
-                0x00000000000001ee                FMC_IRQHandler
-                0x00000000000001ee                USB2_DEVICE_IRQHandler
-                0x00000000000001ee                LPTIM1_IRQHandler
-                0x00000000000001ee                DFSDM1_IRQHandler
-                0x00000000000001ee                TMR1_IRQHandler
-                0x00000000000001ee                I2C4_ER_IRQHandler
-                0x00000000000001ee                SERDES_IRQHandler
-                0x00000000000001ee                USBSS_LINK_IRQHandler
-                0x00000000000001ee                USBWakeUp_IRQHandler
-                0x00000000000001ee                DMA2_Channel3_IRQHandler
- .text.memset   0x00000000000001f0       0x12 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-                0x00000000000001f0                memset
+                0x000000000000039c        0x2 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                0x000000000000039c                EXTI2_IRQHandler
+                0x000000000000039c                TIM8_TRG_COM_IRQHandler
+                0x000000000000039c                TIM8_CC_IRQHandler
+                0x000000000000039c                USART_WKUP_IRQHandler
+                0x000000000000039c                UART8_IRQHandler
+                0x000000000000039c                SPI4_IRQHandler
+                0x000000000000039c                NFC_IRQHandler
+                0x000000000000039c                DFSDM0_IRQHandler
+                0x000000000000039c                TIM1_CC_IRQHandler
+                0x000000000000039c                HardFault_Handler
+                0x000000000000039c                TIM10_IRQHandler
+                0x000000000000039c                GPIOB_IRQHandler
+                0x000000000000039c                IPC_CH2_Handler
+                0x000000000000039c                USBPD_IRQHandler
+                0x000000000000039c                TIM6_IRQHandler
+                0x000000000000039c                GPIOA_IRQHandler
+                0x000000000000039c                SysTick_Handler
+                0x000000000000039c                CAN3_RX1_IRQHandler
+                0x000000000000039c                I3C_ER_IRQHandler
+                0x000000000000039c                PVD_IRQHandler
+                0x000000000000039c                SDIO_IRQHandler
+                0x000000000000039c                TIM9_BRK_IRQHandler
+                0x000000000000039c                DMA2_Channel8_IRQHandler
+                0x000000000000039c                NMI_Handler
+                0x000000000000039c                CAN2_RX1_IRQHandler
+                0x000000000000039c                EXTI3_IRQHandler
+                0x000000000000039c                HSEM_Handler
+                0x000000000000039c                UART1_IRQHandler
+                0x000000000000039c                USBHS_IRQHandler
+                0x000000000000039c                LPTIM2_IRQHandler
+                0x000000000000039c                DMA2_Channel9_IRQHandler
+                0x000000000000039c                TIM10_CC_IRQHandler
+                0x000000000000039c                EXTI25_16_IRQHandler
+                0x000000000000039c                I2C3_ER_IRQHandler
+                0x000000000000039c                USBFS_IRQHandler
+                0x000000000000039c                UART0_IRQHandler
+                0x000000000000039c                USART8_IRQHandler
+                0x000000000000039c                EXTI0_IRQHandler
+                0x000000000000039c                I2C2_EV_IRQHandler
+                0x000000000000039c                TIM10_TRG_COM_IRQHandler
+                0x000000000000039c                LPTIM_IRQHandler
+                0x000000000000039c                CAN1_RX0_IRQHandler
+                0x000000000000039c                CAN3_SCE_IRQHandler
+                0x000000000000039c                CAN2_SCE_IRQHandler
+                0x000000000000039c                ADC1_2_IRQHandler
+                0x000000000000039c                BB_IRQHandler
+                0x000000000000039c                Break_Point_Handler
+                0x000000000000039c                IPC_CH0_Handler
+                0x000000000000039c                TIM2_CC_IRQHandler
+                0x000000000000039c                SPI1_IRQHandler
+                0x000000000000039c                USART5_IRQHandler
+                0x000000000000039c                TAMPER_IRQHandler
+                0x000000000000039c                TMR0_IRQHandler
+                0x000000000000039c                AWU_IRQHandler
+                0x000000000000039c                EXTI7_0_IRQHandler
+                0x000000000000039c                CAN2_RX0_IRQHandler
+                0x000000000000039c                OSCWakeUp_IRQHandler
+                0x000000000000039c                TIM8_UP_IRQHandler
+                0x000000000000039c                Ecall_M_Mode_Handler
+                0x000000000000039c                ECDC_IRQHandler
+                0x000000000000039c                SDMMC_IRQHandler
+                0x000000000000039c                USART7_IRQHandler
+                0x000000000000039c                DMA2_Channel2_IRQHandler
+                0x000000000000039c                DMA1_Channel4_IRQHandler
+                0x000000000000039c                ADC1_IRQHandler
+                0x000000000000039c                TIM2_BRK_IRQHandler
+                0x000000000000039c                USART6_IRQHandler
+                0x000000000000039c                CAN3_RX0_IRQHandler
+                0x000000000000039c                HSADC_IRQHandler
+                0x000000000000039c                TIM9_UP_IRQHandler
+                0x000000000000039c                USART3_IRQHandler
+                0x000000000000039c                RTC_IRQHandler
+                0x000000000000039c                DMA1_Channel7_IRQHandler
+                0x000000000000039c                LED_IRQHandler
+                0x000000000000039c                CAN1_RX1_IRQHandler
+                0x000000000000039c                DVP_IRQHandler
+                0x000000000000039c                UART5_IRQHandler
+                0x000000000000039c                USBSS_IRQHandler
+                0x000000000000039c                SWPMI_IRQHandler
+                0x000000000000039c                USBPDWakeUp_IRQHandler
+                0x000000000000039c                EXTI15_8_IRQHandler
+                0x000000000000039c                TIM4_IRQHandler
+                0x000000000000039c                DMA2_Channel1_IRQHandler
+                0x000000000000039c                SWPMI_WKUP_IRQHandler
+                0x000000000000039c                USBPD_WKUP_IRQHandler
+                0x000000000000039c                I2C1_EV_IRQHandler
+                0x000000000000039c                USBSSWakeup_IRQHandler
+                0x000000000000039c                UART2_IRQHandler
+                0x000000000000039c                USART4_IRQHandler
+                0x000000000000039c                PWMX_IRQHandler
+                0x000000000000039c                DMA1_Channel6_IRQHandler
+                0x000000000000039c                UART4_IRQHandler
+                0x000000000000039c                DMA2_Channel4_IRQHandler
+                0x000000000000039c                TIM3_IRQHandler
+                0x000000000000039c                RCC_IRQHandler
+                0x000000000000039c                TIM1_TRG_COM_IRQHandler
+                0x000000000000039c                DMA1_Channel1_IRQHandler
+                0x000000000000039c                DMA2_Channel7_IRQHandler
+                0x000000000000039c                QSPI1_IRQHandler
+                0x000000000000039c                EXTI15_10_IRQHandler
+                0x000000000000039c                ADC_IRQHandler
+                0x000000000000039c                IPC_CH3_Handler
+                0x000000000000039c                DMA1_Channel8_IRQHandler
+                0x000000000000039c                I3C_EV_IRQHandler
+                0x000000000000039c                TMR2_IRQHandler
+                0x000000000000039c                I3C_WKUP_IRQHandler
+                0x000000000000039c                DefaultIRQHandler
+                0x000000000000039c                TIM12_IRQHandler
+                0x000000000000039c                TIM7_IRQHandler
+                0x000000000000039c                CAN2_TX_IRQHandler
+                0x000000000000039c                TIM5_IRQHandler
+                0x000000000000039c                I2C3_EV_IRQHandler
+                0x000000000000039c                USB_IRQHandler
+                0x000000000000039c                EXTI9_5_IRQHandler
+                0x000000000000039c                PIOC_IRQHandler
+                0x000000000000039c                TIM9_IRQHandler
+                0x000000000000039c                LTDC_IRQHandler
+                0x000000000000039c                SAI_IRQHandler
+                0x000000000000039c                SPI2_IRQHandler
+                0x000000000000039c                OSC32KCal_IRQHandler
+                0x000000000000039c                IPC_CH1_Handler
+                0x000000000000039c                I2C_IRQHandler
+                0x000000000000039c                LPTIM1_WKUP_IRQHandler
+                0x000000000000039c                TIM10_BRK_IRQHandler
+                0x000000000000039c                TIM9_CC_IRQHandler
+                0x000000000000039c                CAN1_TX_IRQHandler
+                0x000000000000039c                DMA2_Channel5_IRQHandler
+                0x000000000000039c                USB2_IRQHandler
+                0x000000000000039c                USBHSWakeUp_IRQHandler
+                0x000000000000039c                DMA1_Channel5_IRQHandler
+                0x000000000000039c                EXTI4_IRQHandler
+                0x000000000000039c                USB_LP_CAN1_RX0_IRQHandler
+                0x000000000000039c                QSPI2_IRQHandler
+                0x000000000000039c                RNG_IRQHandler
+                0x000000000000039c                USB_HP_CAN1_TX_IRQHandler
+                0x000000000000039c                CMPWakeUp_IRQHandler
+                0x000000000000039c                DMA1_Channel3_IRQHandler
+                0x000000000000039c                FSMC_IRQHandler
+                0x000000000000039c                ETH_IRQHandler
+                0x000000000000039c                TIM1_UP_IRQHandler
+                0x000000000000039c                LPTIMWakeUp_IRQHandler
+                0x000000000000039c                WWDG_IRQHandler
+                0x000000000000039c                USBHSWakeup_IRQHandler
+                0x000000000000039c                DMA2_Channel11_IRQHandler
+                0x000000000000039c                WDOG_BAT_IRQHandler
+                0x000000000000039c                Ecall_U_Mode_Handler
+                0x000000000000039c                I2C4_EV_IRQHandler
+                0x000000000000039c                CAN3_TX_IRQHandler
+                0x000000000000039c                TMR3_IRQHandler
+                0x000000000000039c                DMA2_Channel6_IRQHandler
+                0x000000000000039c                TIM2_IRQHandler
+                0x000000000000039c                SW_Handler
+                0x000000000000039c                TIM1_BRK_IRQHandler
+                0x000000000000039c                GPHA_IRQHandler
+                0x000000000000039c                OPA_IRQHandler
+                0x000000000000039c                DMA2_Channel10_IRQHandler
+                0x000000000000039c                EXTI1_IRQHandler
+                0x000000000000039c                SPI0_IRQHandler
+                0x000000000000039c                USB2_HOST_IRQHandler
+                0x000000000000039c                LPTIM2_WKUP_IRQHandler
+                0x000000000000039c                RTCAlarm_IRQHandler
+                0x000000000000039c                TIM11_IRQHandler
+                0x000000000000039c                TIM10_UP_IRQHandler
+                0x000000000000039c                TIM9_TRG_COM_IRQHandler
+                0x000000000000039c                UART7_IRQHandler
+                0x000000000000039c                USART2_IRQHandler
+                0x000000000000039c                UART6_IRQHandler
+                0x000000000000039c                UHSIF_IRQHandler
+                0x000000000000039c                ETHWakeUp_IRQHandler
+                0x000000000000039c                I2C2_ER_IRQHandler
+                0x000000000000039c                DMA1_Channel2_IRQHandler
+                0x000000000000039c                TIM8_BRK_IRQHandler
+                0x000000000000039c                TIM2_TRG_IRQHandler
+                0x000000000000039c                CAN1_SCE_IRQHandler
+                0x000000000000039c                FLASH_IRQHandler
+                0x000000000000039c                USBFSWakeUp_IRQHandler
+                0x000000000000039c                USART1_IRQHandler
+                0x000000000000039c                OTG_FS_IRQHandler
+                0x000000000000039c                SPI3_IRQHandler
+                0x000000000000039c                USBFS_WakeUp_IRQHandler
+                0x000000000000039c                UART3_IRQHandler
+                0x000000000000039c                I2C1_ER_IRQHandler
+                0x000000000000039c                FMC_IRQHandler
+                0x000000000000039c                USB2_DEVICE_IRQHandler
+                0x000000000000039c                LPTIM1_IRQHandler
+                0x000000000000039c                DFSDM1_IRQHandler
+                0x000000000000039c                TMR1_IRQHandler
+                0x000000000000039c                I2C4_ER_IRQHandler
+                0x000000000000039c                SERDES_IRQHandler
+                0x000000000000039c                USBSS_LINK_IRQHandler
+                0x000000000000039c                USBWakeUp_IRQHandler
+                0x000000000000039c                DMA2_Channel3_IRQHandler
+ .text.memset   0x000000000000039e       0x12 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                0x000000000000039e                memset
+ .text.memcpy   0x00000000000003b0       0x1c C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                0x00000000000003b0                memcpy
  .text.SystemInit
-                0x0000000000000202       0x68 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-                0x0000000000000202                SystemInit
+                0x00000000000003cc       0x68 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                0x00000000000003cc                SystemInit
  .text.startup.main
-                0x000000000000026a      0x52e C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-                0x000000000000026a                main
+                0x0000000000000434      0x606 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                0x0000000000000434                main
  .text.LLE_IRQHandler
-                0x0000000000000798       0x8c C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000a3a       0x8e C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  *(.rodata)
+ .rodata        0x0000000000000ac8       0x19 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  *(.rodata*)
- *fill*         0x0000000000000824        0x0 
+ *fill*         0x0000000000000ae1        0x3 
+ .rodata.main.str1.4
+                0x0000000000000ae4       0x25 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ *fill*         0x0000000000000b09        0x3 
  .rodata.channel_map
-                0x0000000000000824       0x28 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000b0c       0x28 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .rodata.font5x7
+                0x0000000000000b34      0x1db C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  *(.gnu.linkonce.t.*)
-                0x000000000000084c                . = ALIGN (0x4)
+                0x0000000000000d10                . = ALIGN (0x4)
+ *fill*         0x0000000000000d0f        0x1 
 
-.rela.dyn       0x000000000000084c        0x0
+.rela.dyn       0x0000000000000d10        0x0
  .rela.text.handle_reset
-                0x000000000000084c        0x0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000d10        0x0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .rela.text.startup.main
-                0x000000000000084c        0x0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000d10        0x0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
 
-.fini           0x000000000000084c        0x0
+.fini           0x0000000000000d10        0x0
  *(SORT_NONE(.fini))
-                0x000000000000084c                . = ALIGN (0x4)
+                0x0000000000000d10                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_etext = .)
                 [!provide]                        PROVIDE (_eitcm = .)
 
-.preinit_array  0x000000000000084c        0x0
+.preinit_array  0x0000000000000d10        0x0
                 [!provide]                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array)
                 [!provide]                        PROVIDE (__preinit_array_end = .)
 
-.init_array     0x000000000000084c        0x0
+.init_array     0x0000000000000d10        0x0
                 [!provide]                        PROVIDE (__init_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
  *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
                 [!provide]                        PROVIDE (__init_array_end = .)
 
-.fini_array     0x000000000000084c        0x0
+.fini_array     0x0000000000000d10        0x0
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
  *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
@@ -345,15 +371,15 @@ LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\l
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
 
-.dalign         0x0000000020000000        0x0 load address 0x000000000000084c
+.dalign         0x0000000020000000        0x0 load address 0x0000000000000d10
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                PROVIDE (_data_vma = .)
 
-.dlalign        0x000000000000084c        0x0
-                0x000000000000084c                . = ALIGN (0x4)
-                0x000000000000084c                PROVIDE (_data_lma = .)
+.dlalign        0x0000000000000d10        0x0
+                0x0000000000000d10                . = ALIGN (0x4)
+                0x0000000000000d10                PROVIDE (_data_lma = .)
 
-.data           0x0000000020000000        0x0 load address 0x000000000000084c
+.data           0x0000000020000000        0x0 load address 0x0000000000000d10
                 0x0000000020000000                . = ALIGN (0x4)
                 0x00000000200003fc                __global_pointer$ = (. + 0x3fc)
  *(.gnu.linkonce.r.*)
@@ -372,19 +398,19 @@ LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\l
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                PROVIDE (_edata = .)
 
-.bss            0x0000000020000000      0x44c load address 0x000000000000084c
+.bss            0x0000000020000000      0x44c load address 0x0000000000000d10
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                PROVIDE (_sbss = .)
  *(.sbss*)
  .sbss.rx_ready
-                0x0000000020000000        0x4 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000020000000        0x4 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .sbss.tuneFilter
-                0x0000000020000004        0x4 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000020000004        0x4 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  .sbss.tuneFilter2M
-                0x0000000020000008        0x4 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000020000008        0x4 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  *(.gnu.linkonce.sb.*)
  *(.bss*)
- .bss.LLE_BUF   0x000000002000000c      0x440 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+ .bss.LLE_BUF   0x000000002000000c      0x440 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
  *(.gnu.linkonce.b.*)
  *(COMMON*)
                 0x000000002000044c                . = ALIGN (0x4)
@@ -404,42 +430,42 @@ OUTPUT(rx_led.elf elf32-littleriscv)
 .riscv.attributes
                 0x0000000000000000       0x2b
  .riscv.attributes
-                0x0000000000000000       0x2b C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000       0x2b C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
 
-.debug_info     0x0000000000000000     0x2b30
- .debug_info    0x0000000000000000     0x105f C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .debug_info    0x000000000000105f      0xd4b C:\Users\Noahs\AppData\Local\Temp\cc6RvEpQ.debug.temp.o
-                0x000000000000105f                ch32fun.c.b64b58d4
- .debug_info    0x0000000000001daa      0xd86 C:\Users\Noahs\AppData\Local\Temp\ccsTwosf.debug.temp.o
-                0x0000000000001daa                rx_led.c.eedc55c1
+.debug_info     0x0000000000000000     0x33b0
+ .debug_info    0x0000000000000000     0x16b9 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .debug_info    0x00000000000016b9      0xd4b C:\Users\LRNA\AppData\Local\Temp\ccgvpPyC.debug.temp.o
+                0x00000000000016b9                ch32fun.c.6d5a98c5
+ .debug_info    0x0000000000002404      0xfac C:\Users\LRNA\AppData\Local\Temp\cce6a4ZM.debug.temp.o
+                0x0000000000002404                rx_led.c.c82581fa
 
-.debug_abbrev   0x0000000000000000      0x665
- .debug_abbrev  0x0000000000000000      0x1af C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .debug_abbrev  0x00000000000001af      0x276 C:\Users\Noahs\AppData\Local\Temp\cc6RvEpQ.debug.temp.o
- .debug_abbrev  0x0000000000000425      0x240 C:\Users\Noahs\AppData\Local\Temp\ccsTwosf.debug.temp.o
+.debug_abbrev   0x0000000000000000      0x71e
+ .debug_abbrev  0x0000000000000000      0x1f7 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .debug_abbrev  0x00000000000001f7      0x276 C:\Users\LRNA\AppData\Local\Temp\ccgvpPyC.debug.temp.o
+ .debug_abbrev  0x000000000000046d      0x2b1 C:\Users\LRNA\AppData\Local\Temp\cce6a4ZM.debug.temp.o
 
-.debug_loc      0x0000000000000000     0x215e
- .debug_loc     0x0000000000000000     0x215e C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+.debug_loc      0x0000000000000000     0x23cc
+ .debug_loc     0x0000000000000000     0x23cc C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
 
-.debug_aranges  0x0000000000000000      0x128
+.debug_aranges  0x0000000000000000      0x170
  .debug_aranges
-                0x0000000000000000      0x128 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+                0x0000000000000000      0x170 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
 
-.debug_ranges   0x0000000000000000      0x528
- .debug_ranges  0x0000000000000000      0x528 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+.debug_ranges   0x0000000000000000      0x6e0
+ .debug_ranges  0x0000000000000000      0x6e0 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
 
-.debug_line     0x0000000000000000     0x322a
- .debug_line    0x0000000000000000     0x2f55 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
- .debug_line    0x0000000000002f55      0x187 C:\Users\Noahs\AppData\Local\Temp\cc6RvEpQ.debug.temp.o
- .debug_line    0x00000000000030dc      0x14e C:\Users\Noahs\AppData\Local\Temp\ccsTwosf.debug.temp.o
+.debug_line     0x0000000000000000     0x3ac2
+ .debug_line    0x0000000000000000     0x37df C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+ .debug_line    0x00000000000037df      0x187 C:\Users\LRNA\AppData\Local\Temp\ccgvpPyC.debug.temp.o
+ .debug_line    0x0000000000003966      0x15c C:\Users\LRNA\AppData\Local\Temp\cce6a4ZM.debug.temp.o
 
-.debug_str      0x0000000000000000      0xd1d
- .debug_str     0x0000000000000000      0x179 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
-                                        0x194 (size before relaxing)
- .debug_str     0x0000000000000179      0x54d C:\Users\Noahs\AppData\Local\Temp\cc6RvEpQ.debug.temp.o
-                                        0x631 (size before relaxing)
- .debug_str     0x00000000000006c6      0x657 C:\Users\Noahs\AppData\Local\Temp\ccsTwosf.debug.temp.o
-                                        0x871 (size before relaxing)
+.debug_str      0x0000000000000000      0xe1b
+ .debug_str     0x0000000000000000      0x178 C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
+                                        0x193 (size before relaxing)
+ .debug_str     0x0000000000000178      0x54d C:\Users\LRNA\AppData\Local\Temp\ccgvpPyC.debug.temp.o
+                                        0x630 (size before relaxing)
+ .debug_str     0x00000000000006c5      0x756 C:\Users\LRNA\AppData\Local\Temp\cce6a4ZM.debug.temp.o
+                                        0x974 (size before relaxing)
 
-.debug_frame    0x0000000000000000      0x3e0
- .debug_frame   0x0000000000000000      0x3e0 C:\Users\Noahs\AppData\Local\Temp\rx_led.elf.MVILGi.ltrans0.ltrans.o
+.debug_frame    0x0000000000000000      0x4ec
+ .debug_frame   0x0000000000000000      0x4ec C:\Users\LRNA\AppData\Local\Temp\rx_led.elf.mKFGjj.ltrans0.ltrans.o
