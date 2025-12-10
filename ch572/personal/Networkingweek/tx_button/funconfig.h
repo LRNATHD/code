@@ -1,0 +1,15 @@
+#ifndef _FUNCONFIG_H
+#define _FUNCONFIG_H
+
+#define CH572 1
+#define FUNCONF_USE_DEBUGPRINTF 0
+#define FUNCONF_USE_UARTPRINTF  0
+#define FUNCONF_SYSTICK_USE_HCLK 1
+
+#define FUNCONF_USE_HSI           0
+#define FUNCONF_USE_HSE           1
+#define CLK_SOURCE_CH5XX          CLK_SOURCE_PLL_60MHz
+#define FUNCONF_SYSTEM_CORE_CLOCK 60000000
+#define FUNCONF_USE_CLK_SEC       0
+
+#endif
