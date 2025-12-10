@@ -1,6 +1,6 @@
 all : flash
 
-TARGET:=tft_color_test
+TARGET:=mini_oled_screen
 TARGET_MCU:=CH572
 TARGET_MCU_PACKAGE:=CH572D
 
