@@ -1,6 +1,6 @@
 all : flash
 
-TARGET:=rx_led
+TARGET:=rx_oled
 TARGET_MCU:=CH572
 TARGET_MCU_PACKAGE:=CH572D
 

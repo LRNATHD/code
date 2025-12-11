@@ -1,4 +1,4 @@
-# RX LED Project
+# RX OLED Project
 
 This project implements a simple RF receiver using the CH572D.
 
