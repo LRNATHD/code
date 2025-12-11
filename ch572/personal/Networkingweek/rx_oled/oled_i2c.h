@@ -66,7 +66,7 @@ static u8 i2c_write_byte(u8 byte) {
     i2c_scl_low();
   }
 
-  // ACK Pulse
+  // ACKnowledge Pulse
   i2c_sda_high(); // Release SDA
   i2c_delay();
   i2c_scl_high();
