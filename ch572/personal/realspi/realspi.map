@@ -1,0 +1,463 @@
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .data          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .bss           0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text._puts    0x0000000000000000       0x42 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.vprintf  0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.mini_vsnprintf
+                0x0000000000000000       0x3a C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.snprintf
+                0x0000000000000000       0x20 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.sprintf  0x0000000000000000       0x2c C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strcpy   0x0000000000000000       0x14 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strncpy  0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strcmp   0x0000000000000000       0x1a C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strncmp  0x0000000000000000       0x2e C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strchr   0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strrchr  0x0000000000000000       0x3c C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.memcmp   0x0000000000000000       0x26 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.memmove  0x0000000000000000       0x5e C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.memchr   0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strnlen  0x0000000000000000       0x2a C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.twoway_strstr
+                0x0000000000000000      0x254 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.strstr   0x0000000000000000      0x13a C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.putchar  0x0000000000000000       0x72 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\cciJX5ZA.debug.temp.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccWNzreB.debug.temp.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccSb1iRB.debug.temp.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000000000 0x000000000003c000 xr
+RAM              0x0000000020000000 0x0000000000003000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccC20kWi.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\cciJX5ZA.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccWNzreB.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccSb1iRB.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccycXUKh.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccaqQ3Fh.o
+LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\libgcc.a
+
+.init           0x0000000000000000       0x90
+                0x0000000000000000                _sinit = .
+                0x0000000000000000                . = ALIGN (0x4)
+ *(SORT_NONE(.init))
+ .init          0x0000000000000000       0x90 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x0000000000000000                InterruptVector
+                0x0000000000000090                . = ALIGN (0x4)
+                0x0000000000000090                _einit = .
+
+.highcodelalign
+                0x0000000000000090        0x0
+                0x0000000000000090                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_lma = .)
+
+.highcode       0x0000000020000000        0x0 load address 0x0000000000000090
+                0x0000000020000000                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_vma_start = .)
+ *(.highcode*)
+                0x0000000020000000                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_vma_end = .)
+
+.text           0x0000000000000090      0x744
+                0x0000000000000090                . = ALIGN (0x4)
+ *(.text)
+ *(.text.*)
+ .text.mini_pad
+                0x0000000000000090       0x9a C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.PrintHex
+                0x000000000000012a       0x58 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.mini_itoa.part.0
+                0x0000000000000182       0x8e C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.internal_handle_input.constprop.0
+                0x0000000000000210        0xa C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text._write.constprop.0
+                0x000000000000021a       0xf4 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.__puts_uart
+                0x000000000000030e       0x14 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.handle_reset
+                0x0000000000000322       0x7e C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x0000000000000322                handle_reset
+ .text.vector_handler
+                0x00000000000003a0       0x50 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x00000000000003a0                EXTI2_IRQHandler
+                0x00000000000003a0                TIM8_TRG_COM_IRQHandler
+                0x00000000000003a0                TIM8_CC_IRQHandler
+                0x00000000000003a0                USART_WKUP_IRQHandler
+                0x00000000000003a0                UART8_IRQHandler
+                0x00000000000003a0                SPI4_IRQHandler
+                0x00000000000003a0                NFC_IRQHandler
+                0x00000000000003a0                DFSDM0_IRQHandler
+                0x00000000000003a0                TIM1_CC_IRQHandler
+                0x00000000000003a0                HardFault_Handler
+                0x00000000000003a0                TIM10_IRQHandler
+                0x00000000000003a0                GPIOB_IRQHandler
+                0x00000000000003a0                IPC_CH2_Handler
+                0x00000000000003a0                USBPD_IRQHandler
+                0x00000000000003a0                TIM6_IRQHandler
+                0x00000000000003a0                GPIOA_IRQHandler
+                0x00000000000003a0                SysTick_Handler
+                0x00000000000003a0                CAN3_RX1_IRQHandler
+                0x00000000000003a0                I3C_ER_IRQHandler
+                0x00000000000003a0                PVD_IRQHandler
+                0x00000000000003a0                SDIO_IRQHandler
+                0x00000000000003a0                TIM9_BRK_IRQHandler
+                0x00000000000003a0                DMA2_Channel8_IRQHandler
+                0x00000000000003a0                NMI_Handler
+                0x00000000000003a0                CAN2_RX1_IRQHandler
+                0x00000000000003a0                EXTI3_IRQHandler
+                0x00000000000003a0                HSEM_Handler
+                0x00000000000003a0                UART1_IRQHandler
+                0x00000000000003a0                USBHS_IRQHandler
+                0x00000000000003a0                LPTIM2_IRQHandler
+                0x00000000000003a0                DMA2_Channel9_IRQHandler
+                0x00000000000003a0                TIM10_CC_IRQHandler
+                0x00000000000003a0                EXTI25_16_IRQHandler
+                0x00000000000003a0                I2C3_ER_IRQHandler
+                0x00000000000003a0                USBFS_IRQHandler
+                0x00000000000003a0                UART0_IRQHandler
+                0x00000000000003a0                USART8_IRQHandler
+                0x00000000000003a0                EXTI0_IRQHandler
+                0x00000000000003a0                I2C2_EV_IRQHandler
+                0x00000000000003a0                TIM10_TRG_COM_IRQHandler
+                0x00000000000003a0                LPTIM_IRQHandler
+                0x00000000000003a0                CAN1_RX0_IRQHandler
+                0x00000000000003a0                CAN3_SCE_IRQHandler
+                0x00000000000003a0                CAN2_SCE_IRQHandler
+                0x00000000000003a0                ADC1_2_IRQHandler
+                0x00000000000003a0                BB_IRQHandler
+                0x00000000000003a0                Break_Point_Handler
+                0x00000000000003a0                IPC_CH0_Handler
+                0x00000000000003a0                TIM2_CC_IRQHandler
+                0x00000000000003a0                SPI1_IRQHandler
+                0x00000000000003a0                USART5_IRQHandler
+                0x00000000000003a0                TAMPER_IRQHandler
+                0x00000000000003a0                TMR0_IRQHandler
+                0x00000000000003a0                AWU_IRQHandler
+                0x00000000000003a0                EXTI7_0_IRQHandler
+                0x00000000000003a0                CAN2_RX0_IRQHandler
+                0x00000000000003a0                OSCWakeUp_IRQHandler
+                0x00000000000003a0                TIM8_UP_IRQHandler
+                0x00000000000003a0                Ecall_M_Mode_Handler
+                0x00000000000003a0                ECDC_IRQHandler
+                0x00000000000003a0                SDMMC_IRQHandler
+                0x00000000000003a0                USART7_IRQHandler
+                0x00000000000003a0                DMA2_Channel2_IRQHandler
+                0x00000000000003a0                DMA1_Channel4_IRQHandler
+                0x00000000000003a0                ADC1_IRQHandler
+                0x00000000000003a0                TIM2_BRK_IRQHandler
+                0x00000000000003a0                USART6_IRQHandler
+                0x00000000000003a0                CAN3_RX0_IRQHandler
+                0x00000000000003a0                HSADC_IRQHandler
+                0x00000000000003a0                TIM9_UP_IRQHandler
+                0x00000000000003a0                USART3_IRQHandler
+                0x00000000000003a0                RTC_IRQHandler
+                0x00000000000003a0                DMA1_Channel7_IRQHandler
+                0x00000000000003a0                LED_IRQHandler
+                0x00000000000003a0                CAN1_RX1_IRQHandler
+                0x00000000000003a0                DVP_IRQHandler
+                0x00000000000003a0                UART5_IRQHandler
+                0x00000000000003a0                USBSS_IRQHandler
+                0x00000000000003a0                SWPMI_IRQHandler
+                0x00000000000003a0                USBPDWakeUp_IRQHandler
+                0x00000000000003a0                EXTI15_8_IRQHandler
+                0x00000000000003a0                TIM4_IRQHandler
+                0x00000000000003a0                DMA2_Channel1_IRQHandler
+                0x00000000000003a0                SWPMI_WKUP_IRQHandler
+                0x00000000000003a0                USBPD_WKUP_IRQHandler
+                0x00000000000003a0                I2C1_EV_IRQHandler
+                0x00000000000003a0                USBSSWakeup_IRQHandler
+                0x00000000000003a0                UART2_IRQHandler
+                0x00000000000003a0                USART4_IRQHandler
+                0x00000000000003a0                PWMX_IRQHandler
+                0x00000000000003a0                DMA1_Channel6_IRQHandler
+                0x00000000000003a0                UART4_IRQHandler
+                0x00000000000003a0                DMA2_Channel4_IRQHandler
+                0x00000000000003a0                TIM3_IRQHandler
+                0x00000000000003a0                RCC_IRQHandler
+                0x00000000000003a0                TIM1_TRG_COM_IRQHandler
+                0x00000000000003a0                DMA1_Channel1_IRQHandler
+                0x00000000000003a0                DMA2_Channel7_IRQHandler
+                0x00000000000003a0                QSPI1_IRQHandler
+                0x00000000000003a0                EXTI15_10_IRQHandler
+                0x00000000000003a0                ADC_IRQHandler
+                0x00000000000003a0                IPC_CH3_Handler
+                0x00000000000003a0                DMA1_Channel8_IRQHandler
+                0x00000000000003a0                I3C_EV_IRQHandler
+                0x00000000000003a0                TMR2_IRQHandler
+                0x00000000000003a0                I3C_WKUP_IRQHandler
+                0x00000000000003a0                DefaultIRQHandler
+                0x00000000000003a0                TIM12_IRQHandler
+                0x00000000000003a0                TIM7_IRQHandler
+                0x00000000000003a0                CAN2_TX_IRQHandler
+                0x00000000000003a0                TIM5_IRQHandler
+                0x00000000000003a0                I2C3_EV_IRQHandler
+                0x00000000000003a0                USB_IRQHandler
+                0x00000000000003a0                EXTI9_5_IRQHandler
+                0x00000000000003a0                PIOC_IRQHandler
+                0x00000000000003a0                TIM9_IRQHandler
+                0x00000000000003a0                LTDC_IRQHandler
+                0x00000000000003a0                SAI_IRQHandler
+                0x00000000000003a0                SPI2_IRQHandler
+                0x00000000000003a0                OSC32KCal_IRQHandler
+                0x00000000000003a0                IPC_CH1_Handler
+                0x00000000000003a0                I2C_IRQHandler
+                0x00000000000003a0                LPTIM1_WKUP_IRQHandler
+                0x00000000000003a0                TIM10_BRK_IRQHandler
+                0x00000000000003a0                TIM9_CC_IRQHandler
+                0x00000000000003a0                CAN1_TX_IRQHandler
+                0x00000000000003a0                DMA2_Channel5_IRQHandler
+                0x00000000000003a0                USB2_IRQHandler
+                0x00000000000003a0                USBHSWakeUp_IRQHandler
+                0x00000000000003a0                DMA1_Channel5_IRQHandler
+                0x00000000000003a0                EXTI4_IRQHandler
+                0x00000000000003a0                USB_LP_CAN1_RX0_IRQHandler
+                0x00000000000003a0                QSPI2_IRQHandler
+                0x00000000000003a0                RNG_IRQHandler
+                0x00000000000003a0                USB_HP_CAN1_TX_IRQHandler
+                0x00000000000003a0                LLE_IRQHandler
+                0x00000000000003a0                CMPWakeUp_IRQHandler
+                0x00000000000003a0                DMA1_Channel3_IRQHandler
+                0x00000000000003a0                FSMC_IRQHandler
+                0x00000000000003a0                ETH_IRQHandler
+                0x00000000000003a0                TIM1_UP_IRQHandler
+                0x00000000000003a0                LPTIMWakeUp_IRQHandler
+                0x00000000000003a0                WWDG_IRQHandler
+                0x00000000000003a0                USBHSWakeup_IRQHandler
+                0x00000000000003a0                DMA2_Channel11_IRQHandler
+                0x00000000000003a0                WDOG_BAT_IRQHandler
+                0x00000000000003a0                Ecall_U_Mode_Handler
+                0x00000000000003a0                I2C4_EV_IRQHandler
+                0x00000000000003a0                CAN3_TX_IRQHandler
+                0x00000000000003a0                TMR3_IRQHandler
+                0x00000000000003a0                DMA2_Channel6_IRQHandler
+                0x00000000000003a0                TIM2_IRQHandler
+                0x00000000000003a0                SW_Handler
+                0x00000000000003a0                TIM1_BRK_IRQHandler
+                0x00000000000003a0                GPHA_IRQHandler
+                0x00000000000003a0                OPA_IRQHandler
+                0x00000000000003a0                DMA2_Channel10_IRQHandler
+                0x00000000000003a0                EXTI1_IRQHandler
+                0x00000000000003a0                SPI0_IRQHandler
+                0x00000000000003a0                USB2_HOST_IRQHandler
+                0x00000000000003a0                LPTIM2_WKUP_IRQHandler
+                0x00000000000003a0                RTCAlarm_IRQHandler
+                0x00000000000003a0                TIM11_IRQHandler
+                0x00000000000003a0                TIM10_UP_IRQHandler
+                0x00000000000003a0                TIM9_TRG_COM_IRQHandler
+                0x00000000000003a0                UART7_IRQHandler
+                0x00000000000003a0                USART2_IRQHandler
+                0x00000000000003a0                UART6_IRQHandler
+                0x00000000000003a0                UHSIF_IRQHandler
+                0x00000000000003a0                ETHWakeUp_IRQHandler
+                0x00000000000003a0                I2C2_ER_IRQHandler
+                0x00000000000003a0                DMA1_Channel2_IRQHandler
+                0x00000000000003a0                TIM8_BRK_IRQHandler
+                0x00000000000003a0                TIM2_TRG_IRQHandler
+                0x00000000000003a0                CAN1_SCE_IRQHandler
+                0x00000000000003a0                FLASH_IRQHandler
+                0x00000000000003a0                USBFSWakeUp_IRQHandler
+                0x00000000000003a0                USART1_IRQHandler
+                0x00000000000003a0                OTG_FS_IRQHandler
+                0x00000000000003a0                SPI3_IRQHandler
+                0x00000000000003a0                USBFS_WakeUp_IRQHandler
+                0x00000000000003a0                UART3_IRQHandler
+                0x00000000000003a0                I2C1_ER_IRQHandler
+                0x00000000000003a0                FMC_IRQHandler
+                0x00000000000003a0                USB2_DEVICE_IRQHandler
+                0x00000000000003a0                LPTIM1_IRQHandler
+                0x00000000000003a0                DFSDM1_IRQHandler
+                0x00000000000003a0                TMR1_IRQHandler
+                0x00000000000003a0                I2C4_ER_IRQHandler
+                0x00000000000003a0                SERDES_IRQHandler
+                0x00000000000003a0                USBSS_LINK_IRQHandler
+                0x00000000000003a0                USBWakeUp_IRQHandler
+                0x00000000000003a0                DMA2_Channel3_IRQHandler
+ .text.strlen   0x00000000000003f0       0x12 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x00000000000003f0                strlen
+ .text.mini_vpprintf
+                0x0000000000000402      0x1be C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .text.printf   0x00000000000005c0       0x26 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x00000000000005c0                printf
+ .text.memset   0x00000000000005e6       0x12 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x00000000000005e6                memset
+ .text.memcpy   0x00000000000005f8       0x1c C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x00000000000005f8                memcpy
+ .text.puts     0x0000000000000614       0x2c C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x0000000000000614                puts
+ .text.SystemInit
+                0x0000000000000640       0x78 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x0000000000000640                SystemInit
+ .text.startup.main
+                0x00000000000006b8       0xde C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                0x00000000000006b8                main
+ *(.rodata)
+ *(.rodata*)
+ .rodata.puts.str1.4
+                0x0000000000000796        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                                          0x2 (size before relaxing)
+ *fill*         0x0000000000000796        0x2 
+ .rodata.main.str1.4
+                0x0000000000000798       0x3a C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ *(.gnu.linkonce.t.*)
+                0x00000000000007d4                . = ALIGN (0x4)
+ *fill*         0x00000000000007d2        0x2 
+
+.rela.dyn       0x00000000000007d4        0x0
+ .rela.text.mini_pad
+                0x00000000000007d4        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .rela.text._write.constprop.0
+                0x00000000000007d4        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .rela.text.handle_reset
+                0x00000000000007d4        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .rela.text.mini_vpprintf
+                0x00000000000007d4        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .rela.text.puts
+                0x00000000000007d4        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .rela.text.startup.main
+                0x00000000000007d4        0x0 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+
+.fini           0x00000000000007d4        0x0
+ *(SORT_NONE(.fini))
+                0x00000000000007d4                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (_eitcm = .)
+
+.preinit_array  0x00000000000007d4        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x00000000000007d4        0x0
+                0x00000000000007d4                PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                0x00000000000007d4                PROVIDE (__init_array_end = .)
+
+.fini_array     0x00000000000007d4        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.dalign         0x0000000020000000        0x0 load address 0x00000000000007d4
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_data_vma = .)
+
+.dlalign        0x00000000000007d4        0x0
+                0x00000000000007d4                . = ALIGN (0x4)
+                0x00000000000007d4                PROVIDE (_data_lma = .)
+
+.data           0x0000000020000000        0x0 load address 0x00000000000007d4
+                0x0000000020000000                . = ALIGN (0x4)
+                0x00000000200003fc                __global_pointer$ = (. + 0x3fc)
+ *(.gnu.linkonce.r.*)
+ *(.data .data.*)
+ *(.gnu.linkonce.d.*)
+                0x0000000020000000                . = ALIGN (0x8)
+ *(.sdata .sdata.*)
+ *(.sdata2*)
+ *(.gnu.linkonce.s.*)
+                0x0000000020000000                . = ALIGN (0x8)
+ *(.srodata.cst16)
+ *(.srodata.cst8)
+ *(.srodata.cst4)
+ *(.srodata.cst2)
+ *(.srodata .srodata.*)
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_edata = .)
+
+.bss            0x0000000020000000        0x0 load address 0x00000000000007d4
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_sbss = .)
+ *(.sbss*)
+ *(.gnu.linkonce.sb.*)
+ *(.bss*)
+ *(.gnu.linkonce.b.*)
+ *(COMMON*)
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_ebss = .)
+                [!provide]                        PROVIDE (_end = _ebss)
+                [!provide]                        PROVIDE (end = .)
+                0x0000000020003000                PROVIDE (_eusrstack = (ORIGIN (RAM) + LENGTH (RAM)))
+
+/DISCARD/
+ *(.note .note.*)
+ *(.eh_frame .eh_frame.*)
+ *(.comment .comment.*)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.ARM.exidx*)
+OUTPUT(realspi.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x2b
+ .riscv.attributes
+                0x0000000000000000       0x2b C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+
+.debug_info     0x0000000000000000     0x22de
+ .debug_info    0x0000000000000000     0x1016 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .debug_info    0x0000000000001016      0xff6 C:\Users\LRNA\AppData\Local\Temp\cciJX5ZA.debug.temp.o
+                0x0000000000001016                ch32fun.c.f8d0d122
+ .debug_info    0x000000000000200c       0xa4 C:\Users\LRNA\AppData\Local\Temp\ccWNzreB.debug.temp.o
+                0x000000000000200c                realspi.c.314d9d50
+ .debug_info    0x00000000000020b0      0x22e C:\Users\LRNA\AppData\Local\Temp\ccSb1iRB.debug.temp.o
+                0x00000000000020b0                spi.c.d75ae3c7
+
+.debug_abbrev   0x0000000000000000      0x5d4
+ .debug_abbrev  0x0000000000000000      0x1bd C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .debug_abbrev  0x00000000000001bd      0x2b7 C:\Users\LRNA\AppData\Local\Temp\cciJX5ZA.debug.temp.o
+ .debug_abbrev  0x0000000000000474       0x5a C:\Users\LRNA\AppData\Local\Temp\ccWNzreB.debug.temp.o
+ .debug_abbrev  0x00000000000004ce      0x106 C:\Users\LRNA\AppData\Local\Temp\ccSb1iRB.debug.temp.o
+
+.debug_loc      0x0000000000000000     0x212b
+ .debug_loc     0x0000000000000000     0x212b C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+
+.debug_aranges  0x0000000000000000      0x130
+ .debug_aranges
+                0x0000000000000000      0x130 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+
+.debug_ranges   0x0000000000000000      0x408
+ .debug_ranges  0x0000000000000000      0x408 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+
+.debug_line     0x0000000000000000     0x292e
+ .debug_line    0x0000000000000000     0x2625 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+ .debug_line    0x0000000000002625      0x181 C:\Users\LRNA\AppData\Local\Temp\cciJX5ZA.debug.temp.o
+ .debug_line    0x00000000000027a6       0xb2 C:\Users\LRNA\AppData\Local\Temp\ccWNzreB.debug.temp.o
+ .debug_line    0x0000000000002858       0xd6 C:\Users\LRNA\AppData\Local\Temp\ccSb1iRB.debug.temp.o
+
+.debug_str      0x0000000000000000      0x8e7
+ .debug_str     0x0000000000000000      0x163 C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o
+                                        0x17e (size before relaxing)
+ .debug_str     0x0000000000000163      0x691 C:\Users\LRNA\AppData\Local\Temp\cciJX5ZA.debug.temp.o
+                                        0x76d (size before relaxing)
+ .debug_str     0x00000000000007f4        0xf C:\Users\LRNA\AppData\Local\Temp\ccWNzreB.debug.temp.o
+                                        0x17b (size before relaxing)
+ .debug_str     0x0000000000000803       0xe4 C:\Users\LRNA\AppData\Local\Temp\ccSb1iRB.debug.temp.o
+                                        0x2eb (size before relaxing)
+
+.debug_frame    0x0000000000000000      0x3dc
+ .debug_frame   0x0000000000000000      0x3dc C:\Users\LRNA\AppData\Local\Temp\realspi.elf.PNddvn.ltrans0.ltrans.o

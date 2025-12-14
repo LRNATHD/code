@@ -1,0 +1,10 @@
+all : flash
+
+TARGET:=realspi
+TARGET_MCU:=CH572
+ADDITIONAL_C_FILES:=spi.c
+
+include ../../ch32fun/ch32fun.mk
+
+flash : cv_flash
+clean : cv_clean
