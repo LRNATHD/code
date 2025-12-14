@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\MounRiver\\MounRiver_Studio2\\resources\\app\\resources\\win32\\components\\WCH\\Toolchain\\RISC-V Embedded GCC\\bin;C:\\Users\\LRNA\\Desktop\\code\\ch32fun\\minichlink;${env:PATH}"
+    }
+}

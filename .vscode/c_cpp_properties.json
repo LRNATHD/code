@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/mounriver/EXAM/SRC/StdPeriphDriver/inc",
-                "${workspaceFolder}/mounriver/EXAM/SRC/RVMSIS"
+                "${workspaceFolder}/mounriver/EXAM/SRC/RVMSIS",
+                "${workspaceFolder}/mounriver/SRC/StdPeriphDriver/inc",
+                "${workspaceFolder}/mounriver/SRC/RVMSIS"
             ],
             "defines": [
                 "_DEBUG",
