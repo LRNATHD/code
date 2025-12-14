@@ -1,0 +1,173 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s 			page 1
+
+
+   1              		.file	"CH57x_uart.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.UART_BaudRateCfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	UART_BaudRateCfg
+   8              	UART_BaudRateCfg:
+   9 0000 4111     		addi	sp,sp,-16
+  10 0002 22C4     		sw	s0,8(sp)
+  11 0004 06C6     		sw	ra,12(sp)
+  12 0006 2A84     		mv	s0,a0
+  13 0008 97000000 		call	GetSysClock
+  13      E7800000 
+  14 0010 2947     		li	a4,10
+  15 0012 B307E502 		mul	a5,a0,a4
+  16 0016 B240     		lw	ra,12(sp)
+  17 0018 8D83     		srli	a5,a5,3
+  18 001a B3D78702 		divu	a5,a5,s0
+  19 001e 2244     		lw	s0,8(sp)
+  20 0020 9507     		addi	a5,a5,5
+  21 0022 B3D7E702 		divu	a5,a5,a4
+  22 0026 37370040 		li	a4,1073754112
+  23 002a C207     		slli	a5,a5,16
+  24 002c C183     		srli	a5,a5,16
+  25 002e 2316F740 		sh	a5,1036(a4)
+  26 0032 4101     		addi	sp,sp,16
+  27 0034 8280     		jr	ra
+  29              		.section	.text.UART_DefInit,"ax",@progbits
+  30              		.align	1
+  31              		.globl	UART_DefInit
+  33              	UART_DefInit:
+  34 0000 7165     		li	a0,114688
+  35 0002 4111     		addi	sp,sp,-16
+  36 0004 13050520 		addi	a0,a0,512
+  37 0008 06C6     		sw	ra,12(sp)
+  38 000a 97000000 		call	UART_BaudRateCfg
+  38      E7800000 
+  39 0012 B7370040 		li	a5,1073754112
+  40 0016 130710F8 		li	a4,-127
+  41 001a 2381E740 		sb	a4,1026(a5)
+  42 001e 0D47     		li	a4,3
+  43 0020 A381E740 		sb	a4,1027(a5)
+  44 0024 13070004 		li	a4,64
+  45 0028 A380E740 		sb	a4,1025(a5)
+  46 002c 0547     		li	a4,1
+  47 002e 2387E740 		sb	a4,1038(a5)
+  48 0032 B240     		lw	ra,12(sp)
+  49 0034 4101     		addi	sp,sp,16
+  50 0036 8280     		jr	ra
+  52              		.section	.text.UART_ByteTrigCfg,"ax",@progbits
+  53              		.align	1
+  54              		.globl	UART_ByteTrigCfg
+  56              	UART_ByteTrigCfg:
+  57 0000 37370040 		li	a4,1073754112
+  58 0004 83472740 		lbu	a5,1026(a4)
+  59 0008 1A05     		slli	a0,a0,6
+  60 000a 93F7F703 		andi	a5,a5,63
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s 			page 2
+
+
+  61 000e C98F     		or	a5,a5,a0
+  62 0010 93F7F70F 		andi	a5,a5,0xff
+  63 0014 2301F740 		sb	a5,1026(a4)
+  64 0018 8280     		ret
+  66              		.section	.text.UART_INTCfg,"ax",@progbits
+  67              		.align	1
+  68              		.globl	UART_INTCfg
+  70              	UART_INTCfg:
+  71 0000 B7370040 		li	a5,1073754112
+  72 0004 03C71740 		lbu	a4,1025(a5)
+  73 0008 19C9     		beqz	a0,.L7
+  74 000a D98D     		or	a1,a1,a4
+  75 000c A380B740 		sb	a1,1025(a5)
+  76 0010 03C70740 		lbu	a4,1024(a5)
+  77 0014 13678700 		ori	a4,a4,8
+  78 0018 2380E740 		sb	a4,1024(a5)
+  79 001c 8280     		ret
+  80              	.L7:
+  81 001e 93C5F5FF 		not	a1,a1
+  82 0022 F98D     		and	a1,a1,a4
+  83 0024 A380B740 		sb	a1,1025(a5)
+  84 0028 8280     		ret
+  86              		.section	.text.UART_SendString,"ax",@progbits
+  87              		.align	1
+  88              		.globl	UART_SendString
+  90              	UART_SendString:
+  91 0000 B7370040 		li	a5,1073754112
+  92 0004 2147     		li	a4,8
+  93 0006 B7360040 		li	a3,1073754112
+  94              	.L11:
+  95 000a 91E1     		bnez	a1,.L12
+  96 000c 8280     		ret
+  97              	.L12:
+  98 000e 03C6B740 		lbu	a2,1035(a5)
+  99 0012 E30CC7FE 		beq	a4,a2,.L11
+ 100 0016 0505     		addi	a0,a0,1
+ 101 0018 0346F5FF 		lbu	a2,-1(a0)
+ 102 001c FD15     		addi	a1,a1,-1
+ 103 001e C205     		slli	a1,a1,16
+ 104 0020 2384C640 		sb	a2,1032(a3)
+ 105 0024 C181     		srli	a1,a1,16
+ 106 0026 D5B7     		j	.L11
+ 108              		.section	.text.UART_RecvString,"ax",@progbits
+ 109              		.align	1
+ 110              		.globl	UART_RecvString
+ 112              	UART_RecvString:
+ 113 0000 8147     		li	a5,0
+ 114 0002 B7360040 		li	a3,1073754112
+ 115              	.L15:
+ 116 0006 03C7A640 		lbu	a4,1034(a3)
+ 117 000a 13960701 		slli	a2,a5,16
+ 118 000e 4182     		srli	a2,a2,16
+ 119 0010 1377F70F 		andi	a4,a4,0xff
+ 120 0014 19E3     		bnez	a4,.L16
+ 121 0016 3285     		mv	a0,a2
+ 122 0018 8280     		ret
+ 123              	.L16:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s 			page 3
+
+
+ 124 001a 03C68640 		lbu	a2,1032(a3)
+ 125 001e 3307F500 		add	a4,a0,a5
+ 126 0022 8507     		addi	a5,a5,1
+ 127 0024 2300C700 		sb	a2,0(a4)
+ 128 0028 F9BF     		j	.L15
+ 130              		.section	.text.UART_Remap,"ax",@progbits
+ 131              		.align	1
+ 132              		.globl	UART_Remap
+ 134              	UART_Remap:
+ 135 0000 37170040 		li	a4,1073745920
+ 136 0004 8357A701 		lhu	a5,26(a4)
+ 137 0008 C207     		slli	a5,a5,16
+ 138 000a C183     		srli	a5,a5,16
+ 139 000c 93F707FC 		andi	a5,a5,-64
+ 140 0010 C207     		slli	a5,a5,16
+ 141 0012 C183     		srli	a5,a5,16
+ 142 0014 231DF700 		sh	a5,26(a4)
+ 143 0018 19C9     		beqz	a0,.L18
+ 144 001a 8357A701 		lhu	a5,26(a4)
+ 145 001e 8E05     		slli	a1,a1,3
+ 146 0020 5D8E     		or	a2,a2,a5
+ 147 0022 D18D     		or	a1,a1,a2
+ 148 0024 C205     		slli	a1,a1,16
+ 149 0026 C181     		srli	a1,a1,16
+ 150 0028 231DB700 		sh	a1,26(a4)
+ 151 002c 8280     		ret
+ 152              	.L18:
+ 153 002e 8280     		ret
+ 155              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_uart.c
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:8      .text.UART_BaudRateCfg:0000000000000000 UART_BaudRateCfg
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:33     .text.UART_DefInit:0000000000000000 UART_DefInit
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:56     .text.UART_ByteTrigCfg:0000000000000000 UART_ByteTrigCfg
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:70     .text.UART_INTCfg:0000000000000000 UART_INTCfg
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:90     .text.UART_SendString:0000000000000000 UART_SendString
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:112    .text.UART_RecvString:0000000000000000 UART_RecvString
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:134    .text.UART_Remap:0000000000000000 UART_Remap
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:80     .text.UART_INTCfg:000000000000001e .L7
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:97     .text.UART_SendString:000000000000000e .L12
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:94     .text.UART_SendString:000000000000000a .L11
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:123    .text.UART_RecvString:000000000000001a .L16
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:115    .text.UART_RecvString:0000000000000006 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccfqp5um.s:152    .text.UART_Remap:000000000000002e .L18
+
+UNDEFINED SYMBOLS
+GetSysClock

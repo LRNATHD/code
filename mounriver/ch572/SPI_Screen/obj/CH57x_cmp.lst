@@ -1,0 +1,63 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s 			page 1
+
+
+   1              		.file	"CH57x_cmp.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.CMP_Init,"ax",@progbits
+   5              		.align	1
+   6              		.globl	CMP_Init
+   8              	CMP_Init:
+   9 0000 0A05     		slli	a0,a0,2
+  10 0002 9205     		slli	a1,a1,4
+  11 0004 4D8D     		or	a0,a0,a1
+  12 0006 1375F50F 		andi	a0,a0,0xff
+  13 000a B7170040 		li	a5,1073745920
+  14 000e 238AA704 		sb	a0,84(a5)
+  15 0012 8280     		ret
+  17              		.section	.text.CMP_OutToTIMCAPCfg,"ax",@progbits
+  18              		.align	1
+  19              		.globl	CMP_OutToTIMCAPCfg
+  21              	CMP_OutToTIMCAPCfg:
+  22 0000 37170040 		li	a4,1073745920
+  23 0004 83474705 		lbu	a5,84(a4)
+  24 0008 11C5     		beqz	a0,.L3
+  25 000a 93E72700 		ori	a5,a5,2
+  26              	.L5:
+  27 000e 230AF704 		sb	a5,84(a4)
+  28 0012 8280     		ret
+  29              	.L3:
+  30 0014 93F7D70F 		andi	a5,a5,253
+  31 0018 DDBF     		j	.L5
+  33              		.section	.text.CMP_INTCfg,"ax",@progbits
+  34              		.align	1
+  35              		.globl	CMP_INTCfg
+  37              	CMP_INTCfg:
+  38 0000 0A05     		slli	a0,a0,2
+  39 0002 B7170040 		li	a5,1073745920
+  40 0006 1375F50F 		andi	a0,a0,0xff
+  41 000a A38AA704 		sb	a0,85(a5)
+  42 000e 03C75705 		lbu	a4,85(a5)
+  43 0012 91C5     		beqz	a1,.L7
+  44 0014 13671700 		ori	a4,a4,1
+  45              	.L9:
+  46 0018 A38AE704 		sb	a4,85(a5)
+  47 001c 8280     		ret
+  48              	.L7:
+  49 001e 1377E70F 		andi	a4,a4,254
+  50 0022 DDBF     		j	.L9
+  52              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_cmp.c
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:8      .text.CMP_Init:0000000000000000 CMP_Init
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:21     .text.CMP_OutToTIMCAPCfg:0000000000000000 CMP_OutToTIMCAPCfg
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:37     .text.CMP_INTCfg:0000000000000000 CMP_INTCfg
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:29     .text.CMP_OutToTIMCAPCfg:0000000000000014 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:26     .text.CMP_OutToTIMCAPCfg:000000000000000e .L5
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:48     .text.CMP_INTCfg:000000000000001e .L7
+C:\Users\LRNA\AppData\Local\Temp\ccRYwpiI.s:45     .text.CMP_INTCfg:0000000000000018 .L9
+
+NO UNDEFINED SYMBOLS

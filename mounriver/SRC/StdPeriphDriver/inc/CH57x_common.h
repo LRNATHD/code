@@ -15,6 +15,12 @@
 extern "C" {
 #endif
 
+/* Include standard libraries first */
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+
+
 #ifndef NULL
 #define NULL 0
 #endif
@@ -33,28 +39,26 @@ extern "C" {
 #endif
 
 #ifdef DEBUG
-#include <stdio.h>
-#endif
-
-#ifdef DEBUG
 #define PRINT(X...) printf(X)
 #else
 #define PRINT(X...)
 #endif
 
-/**
- * @brief  系统主频时钟（Hz）
- */
 #ifndef FREQ_SYS
-#define FREQ_SYS 100000000
+#define FREQ_SYS 60000000
 #endif
 
 #ifndef SAFEOPERATE
 #define SAFEOPERATE asm volatile("fence.i")
 #endif
 
-typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+/* CH572SFR.h defines system registers and IRQn_Type */
+#include <CH572SFR.h>
 
+/* core_riscv.h defines core peripherals and FunctionalState */
+#include "core_riscv.h"
+
+/* Peripheral drivers */
 #include "CH57x_clk.h"
 #include "CH57x_cmp.h"
 #include "CH57x_flash.h"
@@ -70,14 +74,7 @@ typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
 #include "CH57x_usbdev.h"
 #include "CH57x_usbhost.h"
 #include "ISP572.h"
-#include "core_riscv.h"
-#include <CH572SFR.h>
-#include <stdint.h>
-#include <string.h>
 
-/**
- * @brief  LSI时钟（Hz）
- */
 extern uint32_t Freq_LSI;
 
 #define DelayMs(x) mDelaymS(x)

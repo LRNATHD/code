@@ -1,0 +1,124 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s 			page 1
+
+
+   1              		.file	"spi.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.SPI_Init,"ax",@progbits
+   5              		.align	1
+   6              		.globl	SPI_Init
+   8              	SPI_Init:
+   9 0000 4111     		addi	sp,sp,-16
+  10 0002 22C4     		sw	s0,8(sp)
+  11 0004 8D45     		li	a1,3
+  12 0006 2A84     		mv	s0,a0
+  13 0008 4145     		li	a0,16
+  14 000a 06C6     		sw	ra,12(sp)
+  15 000c 97000000 		call	GPIOA_ModeCfg
+  15      E7800000 
+  16 0014 B7170040 		li	a5,1073745920
+  17 0018 4147     		li	a4,16
+  18 001a 23ACE70A 		sw	a4,184(a5)
+  19 001e 8D45     		li	a1,3
+  20 0020 1305000A 		li	a0,160
+  21 0024 97000000 		call	GPIOA_ModeCfg
+  21      E7800000 
+  22 002c 97000000 		call	SPI_MasterDefInit
+  22      E7800000 
+  23 0034 09C4     		beqz	s0,.L1
+  24 0036 B7470040 		li	a5,1073758208
+  25 003a A3818700 		sb	s0,3(a5)
+  26              	.L1:
+  27 003e B240     		lw	ra,12(sp)
+  28 0040 2244     		lw	s0,8(sp)
+  29 0042 4101     		addi	sp,sp,16
+  30 0044 8280     		jr	ra
+  32              		.section	.text.SPI_Transfer,"ax",@progbits
+  33              		.align	1
+  34              		.globl	SPI_Transfer
+  36              	SPI_Transfer:
+  37 0000 4111     		addi	sp,sp,-16
+  38 0002 06C6     		sw	ra,12(sp)
+  39 0004 97000000 		call	SPI_MasterSendByte
+  39      E7800000 
+  40 000c B240     		lw	ra,12(sp)
+  41 000e 0145     		li	a0,0
+  42 0010 4101     		addi	sp,sp,16
+  43 0012 8280     		jr	ra
+  45              		.section	.text.SPI_Send,"ax",@progbits
+  46              		.align	1
+  47              		.globl	SPI_Send
+  49              	SPI_Send:
+  50 0000 0111     		addi	sp,sp,-32
+  51 0002 4AC8     		sw	s2,16(sp)
+  52 0004 0569     		li	s2,4096
+  53 0006 7919     		addi	s2,s2,-2
+  54 0008 22CC     		sw	s0,24(sp)
+  55 000a 4EC6     		sw	s3,12(sp)
+  56 000c 52C4     		sw	s4,8(sp)
+  57 000e 56C2     		sw	s5,4(sp)
+  58 0010 06CE     		sw	ra,28(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s 			page 2
+
+
+  59 0012 26CA     		sw	s1,20(sp)
+  60 0014 2A8A     		mv	s4,a0
+  61 0016 AE89     		mv	s3,a1
+  62 0018 0144     		li	s0,0
+  63 001a CA8A     		mv	s5,s2
+  64              	.L10:
+  65 001c 636B3401 		bltu	s0,s3,.L12
+  66 0020 F240     		lw	ra,28(sp)
+  67 0022 6244     		lw	s0,24(sp)
+  68 0024 D244     		lw	s1,20(sp)
+  69 0026 4249     		lw	s2,16(sp)
+  70 0028 B249     		lw	s3,12(sp)
+  71 002a 224A     		lw	s4,8(sp)
+  72 002c 924A     		lw	s5,4(sp)
+  73 002e 0561     		addi	sp,sp,32
+  74 0030 8280     		jr	ra
+  75              	.L12:
+  76 0032 B3878940 		sub	a5,s3,s0
+  77 0036 C207     		slli	a5,a5,16
+  78 0038 C183     		srli	a5,a5,16
+  79 003a BE84     		mv	s1,a5
+  80 003c 6373F900 		bleu	a5,s2,.L11
+  81 0040 D684     		mv	s1,s5
+  82              	.L11:
+  83 0042 C204     		slli	s1,s1,16
+  84 0044 C180     		srli	s1,s1,16
+  85 0046 33058A00 		add	a0,s4,s0
+  86 004a 2694     		add	s0,s0,s1
+  87 004c A685     		mv	a1,s1
+  88 004e 4204     		slli	s0,s0,16
+  89 0050 97000000 		call	SPI_MasterDMATrans
+  89      E7800000 
+  90 0058 4180     		srli	s0,s0,16
+  91 005a C9B7     		j	.L10
+  93              		.section	.text.SPI_Receive,"ax",@progbits
+  94              		.align	1
+  95              		.globl	SPI_Receive
+  97              	SPI_Receive:
+  98 0000 17030000 		tail	SPI_MasterDMARecv
+  98      67000300 
+ 100              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi.c
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:8      .text.SPI_Init:0000000000000000 SPI_Init
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:36     .text.SPI_Transfer:0000000000000000 SPI_Transfer
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:49     .text.SPI_Send:0000000000000000 SPI_Send
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:97     .text.SPI_Receive:0000000000000000 SPI_Receive
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:26     .text.SPI_Init:000000000000003e .L1
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:75     .text.SPI_Send:0000000000000032 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:82     .text.SPI_Send:0000000000000042 .L11
+C:\Users\LRNA\AppData\Local\Temp\ccds3exy.s:64     .text.SPI_Send:000000000000001c .L10
+
+UNDEFINED SYMBOLS
+GPIOA_ModeCfg
+SPI_MasterDefInit
+SPI_MasterSendByte
+SPI_MasterDMATrans
+SPI_MasterDMARecv

@@ -19,9 +19,10 @@ BUILD_DIR = obj
 # CPP sources
 CPP_SOURCES = 
 
-# C sources
 C_SOURCES = \
 src/Main.c \
+src/spi.c \
+src/gc9a01.c \
 ../../SRC/StdPeriphDriver/CH57x_clk.c \
 ../../SRC/StdPeriphDriver/CH57x_cmp.c \
 ../../SRC/StdPeriphDriver/CH57x_flash.c \

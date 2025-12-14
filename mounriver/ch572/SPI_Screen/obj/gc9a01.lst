@@ -1,0 +1,984 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 1
+
+
+   1              		.file	"gc9a01.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.GC9A01_WriteData,"ax",@progbits
+   5              		.align	1
+   7              	GC9A01_WriteData:
+   8 0000 4111     		addi	sp,sp,-16
+   9 0002 8567     		li	a5,4096
+  10 0004 22C4     		sw	s0,8(sp)
+  11 0006 26C2     		sw	s1,4(sp)
+  12 0008 06C6     		sw	ra,12(sp)
+  13 000a 37140040 		li	s0,1073745920
+  14 000e 93870780 		addi	a5,a5,-2048
+  15 0012 232CF40A 		sw	a5,184(s0)
+  16 0016 C144     		li	s1,16
+  17 0018 2326940A 		sw	s1,172(s0)
+  18 001c 97000000 		call	SPI_Transfer
+  18      E7800000 
+  19 0024 B240     		lw	ra,12(sp)
+  20 0026 232C940A 		sw	s1,184(s0)
+  21 002a 2244     		lw	s0,8(sp)
+  22 002c 9244     		lw	s1,4(sp)
+  23 002e 4101     		addi	sp,sp,16
+  24 0030 8280     		jr	ra
+  26              		.section	.text.GC9A01_WriteCmd,"ax",@progbits
+  27              		.align	1
+  29              	GC9A01_WriteCmd:
+  30 0000 4111     		addi	sp,sp,-16
+  31 0002 8567     		li	a5,4096
+  32 0004 22C4     		sw	s0,8(sp)
+  33 0006 26C2     		sw	s1,4(sp)
+  34 0008 06C6     		sw	ra,12(sp)
+  35 000a 37140040 		li	s0,1073745920
+  36 000e 93870780 		addi	a5,a5,-2048
+  37 0012 2326F40A 		sw	a5,172(s0)
+  38 0016 C144     		li	s1,16
+  39 0018 2326940A 		sw	s1,172(s0)
+  40 001c 97000000 		call	SPI_Transfer
+  40      E7800000 
+  41 0024 B240     		lw	ra,12(sp)
+  42 0026 232C940A 		sw	s1,184(s0)
+  43 002a 2244     		lw	s0,8(sp)
+  44 002c 9244     		lw	s1,4(sp)
+  45 002e 4101     		addi	sp,sp,16
+  46 0030 8280     		jr	ra
+  48              		.section	.text.GC9A01_Init,"ax",@progbits
+  49              		.align	1
+  50              		.globl	GC9A01_Init
+  52              	GC9A01_Init:
+  53 0000 4111     		addi	sp,sp,-16
+  54 0002 9145     		li	a1,4
+  55 0004 4145     		li	a0,16
+  56 0006 06C6     		sw	ra,12(sp)
+  57 0008 22C4     		sw	s0,8(sp)
+  58 000a 26C2     		sw	s1,4(sp)
+  59 000c 97000000 		call	GPIOA_ModeCfg
+  59      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 2
+
+
+  60 0014 8564     		li	s1,4096
+  61 0016 13850480 		addi	a0,s1,-2048
+  62 001a 9145     		li	a1,4
+  63 001c 97000000 		call	GPIOA_ModeCfg
+  63      E7800000 
+  64 0024 9145     		li	a1,4
+  65 0026 13050040 		li	a0,1024
+  66 002a 97000000 		call	GPIOA_ModeCfg
+  66      E7800000 
+  67 0032 C147     		li	a5,16
+  68 0034 37140040 		li	s0,1073745920
+  69 0038 232CF40A 		sw	a5,184(s0)
+  70 003c 93840480 		addi	s1,s1,-2048
+  71 0040 232C940A 		sw	s1,184(s0)
+  72 0044 93040040 		li	s1,1024
+  73 0048 232C940A 		sw	s1,184(s0)
+  74 004c 13054006 		li	a0,100
+  75 0050 97000000 		call	mDelaymS
+  75      E7800000 
+  76 0058 13054006 		li	a0,100
+  77 005c 2326940A 		sw	s1,172(s0)
+  78 0060 97000000 		call	mDelaymS
+  78      E7800000 
+  79 0068 1305800C 		li	a0,200
+  80 006c 232C940A 		sw	s1,184(s0)
+  81 0070 97000000 		call	mDelaymS
+  81      E7800000 
+  82 0078 1305F00E 		li	a0,239
+  83 007c 97000000 		call	GC9A01_WriteCmd
+  83      E7800000 
+  84 0084 1305B00E 		li	a0,235
+  85 0088 97000000 		call	GC9A01_WriteCmd
+  85      E7800000 
+  86 0090 5145     		li	a0,20
+  87 0092 97000000 		call	GC9A01_WriteData
+  87      E7800000 
+  88 009a 1305E00F 		li	a0,254
+  89 009e 97000000 		call	GC9A01_WriteCmd
+  89      E7800000 
+  90 00a6 1305F00E 		li	a0,239
+  91 00aa 97000000 		call	GC9A01_WriteCmd
+  91      E7800000 
+  92 00b2 1305B00E 		li	a0,235
+  93 00b6 97000000 		call	GC9A01_WriteCmd
+  93      E7800000 
+  94 00be 5145     		li	a0,20
+  95 00c0 97000000 		call	GC9A01_WriteData
+  95      E7800000 
+  96 00c8 13054008 		li	a0,132
+  97 00cc 97000000 		call	GC9A01_WriteCmd
+  97      E7800000 
+  98 00d4 13050004 		li	a0,64
+  99 00d8 97000000 		call	GC9A01_WriteData
+  99      E7800000 
+ 100 00e0 13055008 		li	a0,133
+ 101 00e4 97000000 		call	GC9A01_WriteCmd
+ 101      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 3
+
+
+ 102 00ec 1305F00F 		li	a0,255
+ 103 00f0 97000000 		call	GC9A01_WriteData
+ 103      E7800000 
+ 104 00f8 13056008 		li	a0,134
+ 105 00fc 97000000 		call	GC9A01_WriteCmd
+ 105      E7800000 
+ 106 0104 1305F00F 		li	a0,255
+ 107 0108 97000000 		call	GC9A01_WriteData
+ 107      E7800000 
+ 108 0110 13057008 		li	a0,135
+ 109 0114 97000000 		call	GC9A01_WriteCmd
+ 109      E7800000 
+ 110 011c 1305F00F 		li	a0,255
+ 111 0120 97000000 		call	GC9A01_WriteData
+ 111      E7800000 
+ 112 0128 13058008 		li	a0,136
+ 113 012c 97000000 		call	GC9A01_WriteCmd
+ 113      E7800000 
+ 114 0134 2945     		li	a0,10
+ 115 0136 97000000 		call	GC9A01_WriteData
+ 115      E7800000 
+ 116 013e 13059008 		li	a0,137
+ 117 0142 97000000 		call	GC9A01_WriteCmd
+ 117      E7800000 
+ 118 014a 13051002 		li	a0,33
+ 119 014e 97000000 		call	GC9A01_WriteData
+ 119      E7800000 
+ 120 0156 1305A008 		li	a0,138
+ 121 015a 97000000 		call	GC9A01_WriteCmd
+ 121      E7800000 
+ 122 0162 0145     		li	a0,0
+ 123 0164 97000000 		call	GC9A01_WriteData
+ 123      E7800000 
+ 124 016c 1305B008 		li	a0,139
+ 125 0170 97000000 		call	GC9A01_WriteCmd
+ 125      E7800000 
+ 126 0178 13050008 		li	a0,128
+ 127 017c 97000000 		call	GC9A01_WriteData
+ 127      E7800000 
+ 128 0184 1305C008 		li	a0,140
+ 129 0188 97000000 		call	GC9A01_WriteCmd
+ 129      E7800000 
+ 130 0190 0545     		li	a0,1
+ 131 0192 97000000 		call	GC9A01_WriteData
+ 131      E7800000 
+ 132 019a 1305D008 		li	a0,141
+ 133 019e 97000000 		call	GC9A01_WriteCmd
+ 133      E7800000 
+ 134 01a6 0545     		li	a0,1
+ 135 01a8 97000000 		call	GC9A01_WriteData
+ 135      E7800000 
+ 136 01b0 1305E008 		li	a0,142
+ 137 01b4 97000000 		call	GC9A01_WriteCmd
+ 137      E7800000 
+ 138 01bc 1305F00F 		li	a0,255
+ 139 01c0 97000000 		call	GC9A01_WriteData
+ 139      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 4
+
+
+ 140 01c8 1305F008 		li	a0,143
+ 141 01cc 97000000 		call	GC9A01_WriteCmd
+ 141      E7800000 
+ 142 01d4 1305F00F 		li	a0,255
+ 143 01d8 97000000 		call	GC9A01_WriteData
+ 143      E7800000 
+ 144 01e0 1305600B 		li	a0,182
+ 145 01e4 97000000 		call	GC9A01_WriteCmd
+ 145      E7800000 
+ 146 01ec 0145     		li	a0,0
+ 147 01ee 97000000 		call	GC9A01_WriteData
+ 147      E7800000 
+ 148 01f6 13050002 		li	a0,32
+ 149 01fa 97000000 		call	GC9A01_WriteData
+ 149      E7800000 
+ 150 0202 13056003 		li	a0,54
+ 151 0206 97000000 		call	GC9A01_WriteCmd
+ 151      E7800000 
+ 152 020e 2145     		li	a0,8
+ 153 0210 97000000 		call	GC9A01_WriteData
+ 153      E7800000 
+ 154 0218 1305A003 		li	a0,58
+ 155 021c 97000000 		call	GC9A01_WriteCmd
+ 155      E7800000 
+ 156 0224 1545     		li	a0,5
+ 157 0226 97000000 		call	GC9A01_WriteData
+ 157      E7800000 
+ 158 022e 13050009 		li	a0,144
+ 159 0232 97000000 		call	GC9A01_WriteCmd
+ 159      E7800000 
+ 160 023a 2145     		li	a0,8
+ 161 023c 97000000 		call	GC9A01_WriteData
+ 161      E7800000 
+ 162 0244 2145     		li	a0,8
+ 163 0246 97000000 		call	GC9A01_WriteData
+ 163      E7800000 
+ 164 024e 2145     		li	a0,8
+ 165 0250 97000000 		call	GC9A01_WriteData
+ 165      E7800000 
+ 166 0258 2145     		li	a0,8
+ 167 025a 97000000 		call	GC9A01_WriteData
+ 167      E7800000 
+ 168 0262 1305D00B 		li	a0,189
+ 169 0266 97000000 		call	GC9A01_WriteCmd
+ 169      E7800000 
+ 170 026e 1945     		li	a0,6
+ 171 0270 97000000 		call	GC9A01_WriteData
+ 171      E7800000 
+ 172 0278 1305C00B 		li	a0,188
+ 173 027c 97000000 		call	GC9A01_WriteCmd
+ 173      E7800000 
+ 174 0284 0145     		li	a0,0
+ 175 0286 97000000 		call	GC9A01_WriteData
+ 175      E7800000 
+ 176 028e 1305F00F 		li	a0,255
+ 177 0292 97000000 		call	GC9A01_WriteCmd
+ 177      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 5
+
+
+ 178 029a 13050006 		li	a0,96
+ 179 029e 97000000 		call	GC9A01_WriteData
+ 179      E7800000 
+ 180 02a6 0545     		li	a0,1
+ 181 02a8 97000000 		call	GC9A01_WriteData
+ 181      E7800000 
+ 182 02b0 1145     		li	a0,4
+ 183 02b2 97000000 		call	GC9A01_WriteData
+ 183      E7800000 
+ 184 02ba 1305300C 		li	a0,195
+ 185 02be 97000000 		call	GC9A01_WriteCmd
+ 185      E7800000 
+ 186 02c6 4D45     		li	a0,19
+ 187 02c8 97000000 		call	GC9A01_WriteData
+ 187      E7800000 
+ 188 02d0 1305400C 		li	a0,196
+ 189 02d4 97000000 		call	GC9A01_WriteCmd
+ 189      E7800000 
+ 190 02dc 4D45     		li	a0,19
+ 191 02de 97000000 		call	GC9A01_WriteData
+ 191      E7800000 
+ 192 02e6 1305900C 		li	a0,201
+ 193 02ea 97000000 		call	GC9A01_WriteCmd
+ 193      E7800000 
+ 194 02f2 13052002 		li	a0,34
+ 195 02f6 97000000 		call	GC9A01_WriteData
+ 195      E7800000 
+ 196 02fe 1305E00B 		li	a0,190
+ 197 0302 97000000 		call	GC9A01_WriteCmd
+ 197      E7800000 
+ 198 030a 4545     		li	a0,17
+ 199 030c 97000000 		call	GC9A01_WriteData
+ 199      E7800000 
+ 200 0314 1305100E 		li	a0,225
+ 201 0318 97000000 		call	GC9A01_WriteCmd
+ 201      E7800000 
+ 202 0320 4145     		li	a0,16
+ 203 0322 97000000 		call	GC9A01_WriteData
+ 203      E7800000 
+ 204 032a 3945     		li	a0,14
+ 205 032c 97000000 		call	GC9A01_WriteData
+ 205      E7800000 
+ 206 0334 1305F00D 		li	a0,223
+ 207 0338 97000000 		call	GC9A01_WriteCmd
+ 207      E7800000 
+ 208 0340 13051002 		li	a0,33
+ 209 0344 97000000 		call	GC9A01_WriteData
+ 209      E7800000 
+ 210 034c 3145     		li	a0,12
+ 211 034e 97000000 		call	GC9A01_WriteData
+ 211      E7800000 
+ 212 0356 0945     		li	a0,2
+ 213 0358 97000000 		call	GC9A01_WriteData
+ 213      E7800000 
+ 214 0360 1305000F 		li	a0,240
+ 215 0364 97000000 		call	GC9A01_WriteCmd
+ 215      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 6
+
+
+ 216 036c 13055004 		li	a0,69
+ 217 0370 97000000 		call	GC9A01_WriteData
+ 217      E7800000 
+ 218 0378 2545     		li	a0,9
+ 219 037a 97000000 		call	GC9A01_WriteData
+ 219      E7800000 
+ 220 0382 2145     		li	a0,8
+ 221 0384 97000000 		call	GC9A01_WriteData
+ 221      E7800000 
+ 222 038c 2145     		li	a0,8
+ 223 038e 97000000 		call	GC9A01_WriteData
+ 223      E7800000 
+ 224 0396 13056002 		li	a0,38
+ 225 039a 97000000 		call	GC9A01_WriteData
+ 225      E7800000 
+ 226 03a2 1305A002 		li	a0,42
+ 227 03a6 97000000 		call	GC9A01_WriteData
+ 227      E7800000 
+ 228 03ae 1305100F 		li	a0,241
+ 229 03b2 97000000 		call	GC9A01_WriteCmd
+ 229      E7800000 
+ 230 03ba 13053004 		li	a0,67
+ 231 03be 97000000 		call	GC9A01_WriteData
+ 231      E7800000 
+ 232 03c6 13050007 		li	a0,112
+ 233 03ca 97000000 		call	GC9A01_WriteData
+ 233      E7800000 
+ 234 03d2 13052007 		li	a0,114
+ 235 03d6 97000000 		call	GC9A01_WriteData
+ 235      E7800000 
+ 236 03de 13056003 		li	a0,54
+ 237 03e2 97000000 		call	GC9A01_WriteData
+ 237      E7800000 
+ 238 03ea 13057003 		li	a0,55
+ 239 03ee 97000000 		call	GC9A01_WriteData
+ 239      E7800000 
+ 240 03f6 1305F006 		li	a0,111
+ 241 03fa 97000000 		call	GC9A01_WriteData
+ 241      E7800000 
+ 242 0402 1305200F 		li	a0,242
+ 243 0406 97000000 		call	GC9A01_WriteCmd
+ 243      E7800000 
+ 244 040e 13055004 		li	a0,69
+ 245 0412 97000000 		call	GC9A01_WriteData
+ 245      E7800000 
+ 246 041a 2545     		li	a0,9
+ 247 041c 97000000 		call	GC9A01_WriteData
+ 247      E7800000 
+ 248 0424 2145     		li	a0,8
+ 249 0426 97000000 		call	GC9A01_WriteData
+ 249      E7800000 
+ 250 042e 2145     		li	a0,8
+ 251 0430 97000000 		call	GC9A01_WriteData
+ 251      E7800000 
+ 252 0438 13056002 		li	a0,38
+ 253 043c 97000000 		call	GC9A01_WriteData
+ 253      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 7
+
+
+ 254 0444 1305A002 		li	a0,42
+ 255 0448 97000000 		call	GC9A01_WriteData
+ 255      E7800000 
+ 256 0450 1305300F 		li	a0,243
+ 257 0454 97000000 		call	GC9A01_WriteCmd
+ 257      E7800000 
+ 258 045c 13053004 		li	a0,67
+ 259 0460 97000000 		call	GC9A01_WriteData
+ 259      E7800000 
+ 260 0468 13050007 		li	a0,112
+ 261 046c 97000000 		call	GC9A01_WriteData
+ 261      E7800000 
+ 262 0474 13052007 		li	a0,114
+ 263 0478 97000000 		call	GC9A01_WriteData
+ 263      E7800000 
+ 264 0480 13056003 		li	a0,54
+ 265 0484 97000000 		call	GC9A01_WriteData
+ 265      E7800000 
+ 266 048c 13057003 		li	a0,55
+ 267 0490 97000000 		call	GC9A01_WriteData
+ 267      E7800000 
+ 268 0498 1305F006 		li	a0,111
+ 269 049c 97000000 		call	GC9A01_WriteData
+ 269      E7800000 
+ 270 04a4 1305D00E 		li	a0,237
+ 271 04a8 97000000 		call	GC9A01_WriteCmd
+ 271      E7800000 
+ 272 04b0 6D45     		li	a0,27
+ 273 04b2 97000000 		call	GC9A01_WriteData
+ 273      E7800000 
+ 274 04ba 2D45     		li	a0,11
+ 275 04bc 97000000 		call	GC9A01_WriteData
+ 275      E7800000 
+ 276 04c4 1305E00A 		li	a0,174
+ 277 04c8 97000000 		call	GC9A01_WriteCmd
+ 277      E7800000 
+ 278 04d0 13057007 		li	a0,119
+ 279 04d4 97000000 		call	GC9A01_WriteData
+ 279      E7800000 
+ 280 04dc 1305D00C 		li	a0,205
+ 281 04e0 97000000 		call	GC9A01_WriteCmd
+ 281      E7800000 
+ 282 04e8 13053006 		li	a0,99
+ 283 04ec 97000000 		call	GC9A01_WriteData
+ 283      E7800000 
+ 284 04f4 13050007 		li	a0,112
+ 285 04f8 97000000 		call	GC9A01_WriteCmd
+ 285      E7800000 
+ 286 0500 1D45     		li	a0,7
+ 287 0502 97000000 		call	GC9A01_WriteData
+ 287      E7800000 
+ 288 050a 1D45     		li	a0,7
+ 289 050c 97000000 		call	GC9A01_WriteData
+ 289      E7800000 
+ 290 0514 1145     		li	a0,4
+ 291 0516 97000000 		call	GC9A01_WriteData
+ 291      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 8
+
+
+ 292 051e 3945     		li	a0,14
+ 293 0520 97000000 		call	GC9A01_WriteData
+ 293      E7800000 
+ 294 0528 3D45     		li	a0,15
+ 295 052a 97000000 		call	GC9A01_WriteData
+ 295      E7800000 
+ 296 0532 2545     		li	a0,9
+ 297 0534 97000000 		call	GC9A01_WriteData
+ 297      E7800000 
+ 298 053c 1D45     		li	a0,7
+ 299 053e 97000000 		call	GC9A01_WriteData
+ 299      E7800000 
+ 300 0546 2145     		li	a0,8
+ 301 0548 97000000 		call	GC9A01_WriteData
+ 301      E7800000 
+ 302 0550 0D45     		li	a0,3
+ 303 0552 97000000 		call	GC9A01_WriteData
+ 303      E7800000 
+ 304 055a 1305800E 		li	a0,232
+ 305 055e 97000000 		call	GC9A01_WriteCmd
+ 305      E7800000 
+ 306 0566 13054003 		li	a0,52
+ 307 056a 97000000 		call	GC9A01_WriteData
+ 307      E7800000 
+ 308 0572 13052006 		li	a0,98
+ 309 0576 97000000 		call	GC9A01_WriteCmd
+ 309      E7800000 
+ 310 057e 6145     		li	a0,24
+ 311 0580 97000000 		call	GC9A01_WriteData
+ 311      E7800000 
+ 312 0588 3545     		li	a0,13
+ 313 058a 97000000 		call	GC9A01_WriteData
+ 313      E7800000 
+ 314 0592 13051007 		li	a0,113
+ 315 0596 97000000 		call	GC9A01_WriteData
+ 315      E7800000 
+ 316 059e 1305D00E 		li	a0,237
+ 317 05a2 97000000 		call	GC9A01_WriteData
+ 317      E7800000 
+ 318 05aa 13050007 		li	a0,112
+ 319 05ae 97000000 		call	GC9A01_WriteData
+ 319      E7800000 
+ 320 05b6 13050007 		li	a0,112
+ 321 05ba 97000000 		call	GC9A01_WriteData
+ 321      E7800000 
+ 322 05c2 6145     		li	a0,24
+ 323 05c4 97000000 		call	GC9A01_WriteData
+ 323      E7800000 
+ 324 05cc 3D45     		li	a0,15
+ 325 05ce 97000000 		call	GC9A01_WriteData
+ 325      E7800000 
+ 326 05d6 13051007 		li	a0,113
+ 327 05da 97000000 		call	GC9A01_WriteData
+ 327      E7800000 
+ 328 05e2 1305F00E 		li	a0,239
+ 329 05e6 97000000 		call	GC9A01_WriteData
+ 329      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 9
+
+
+ 330 05ee 13050007 		li	a0,112
+ 331 05f2 97000000 		call	GC9A01_WriteData
+ 331      E7800000 
+ 332 05fa 13050007 		li	a0,112
+ 333 05fe 97000000 		call	GC9A01_WriteData
+ 333      E7800000 
+ 334 0606 13053006 		li	a0,99
+ 335 060a 97000000 		call	GC9A01_WriteCmd
+ 335      E7800000 
+ 336 0612 6145     		li	a0,24
+ 337 0614 97000000 		call	GC9A01_WriteData
+ 337      E7800000 
+ 338 061c 4545     		li	a0,17
+ 339 061e 97000000 		call	GC9A01_WriteData
+ 339      E7800000 
+ 340 0626 13051007 		li	a0,113
+ 341 062a 97000000 		call	GC9A01_WriteData
+ 341      E7800000 
+ 342 0632 1305100F 		li	a0,241
+ 343 0636 97000000 		call	GC9A01_WriteData
+ 343      E7800000 
+ 344 063e 13050007 		li	a0,112
+ 345 0642 97000000 		call	GC9A01_WriteData
+ 345      E7800000 
+ 346 064a 13050007 		li	a0,112
+ 347 064e 97000000 		call	GC9A01_WriteData
+ 347      E7800000 
+ 348 0656 6145     		li	a0,24
+ 349 0658 97000000 		call	GC9A01_WriteData
+ 349      E7800000 
+ 350 0660 4D45     		li	a0,19
+ 351 0662 97000000 		call	GC9A01_WriteData
+ 351      E7800000 
+ 352 066a 13051007 		li	a0,113
+ 353 066e 97000000 		call	GC9A01_WriteData
+ 353      E7800000 
+ 354 0676 1305300F 		li	a0,243
+ 355 067a 97000000 		call	GC9A01_WriteData
+ 355      E7800000 
+ 356 0682 13050007 		li	a0,112
+ 357 0686 97000000 		call	GC9A01_WriteData
+ 357      E7800000 
+ 358 068e 13050007 		li	a0,112
+ 359 0692 97000000 		call	GC9A01_WriteData
+ 359      E7800000 
+ 360 069a 13054006 		li	a0,100
+ 361 069e 97000000 		call	GC9A01_WriteCmd
+ 361      E7800000 
+ 362 06a6 13058002 		li	a0,40
+ 363 06aa 97000000 		call	GC9A01_WriteData
+ 363      E7800000 
+ 364 06b2 13059002 		li	a0,41
+ 365 06b6 97000000 		call	GC9A01_WriteData
+ 365      E7800000 
+ 366 06be 1305100F 		li	a0,241
+ 367 06c2 97000000 		call	GC9A01_WriteData
+ 367      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 10
+
+
+ 368 06ca 0545     		li	a0,1
+ 369 06cc 97000000 		call	GC9A01_WriteData
+ 369      E7800000 
+ 370 06d4 1305100F 		li	a0,241
+ 371 06d8 97000000 		call	GC9A01_WriteData
+ 371      E7800000 
+ 372 06e0 0145     		li	a0,0
+ 373 06e2 97000000 		call	GC9A01_WriteData
+ 373      E7800000 
+ 374 06ea 1D45     		li	a0,7
+ 375 06ec 97000000 		call	GC9A01_WriteData
+ 375      E7800000 
+ 376 06f4 13056006 		li	a0,102
+ 377 06f8 97000000 		call	GC9A01_WriteCmd
+ 377      E7800000 
+ 378 0700 1305C003 		li	a0,60
+ 379 0704 97000000 		call	GC9A01_WriteData
+ 379      E7800000 
+ 380 070c 0145     		li	a0,0
+ 381 070e 97000000 		call	GC9A01_WriteData
+ 381      E7800000 
+ 382 0716 1305D00C 		li	a0,205
+ 383 071a 97000000 		call	GC9A01_WriteData
+ 383      E7800000 
+ 384 0722 13057006 		li	a0,103
+ 385 0726 97000000 		call	GC9A01_WriteData
+ 385      E7800000 
+ 386 072e 13055004 		li	a0,69
+ 387 0732 97000000 		call	GC9A01_WriteData
+ 387      E7800000 
+ 388 073a 13055004 		li	a0,69
+ 389 073e 97000000 		call	GC9A01_WriteData
+ 389      E7800000 
+ 390 0746 4145     		li	a0,16
+ 391 0748 97000000 		call	GC9A01_WriteData
+ 391      E7800000 
+ 392 0750 0145     		li	a0,0
+ 393 0752 97000000 		call	GC9A01_WriteData
+ 393      E7800000 
+ 394 075a 0145     		li	a0,0
+ 395 075c 97000000 		call	GC9A01_WriteData
+ 395      E7800000 
+ 396 0764 0145     		li	a0,0
+ 397 0766 97000000 		call	GC9A01_WriteData
+ 397      E7800000 
+ 398 076e 13057006 		li	a0,103
+ 399 0772 97000000 		call	GC9A01_WriteCmd
+ 399      E7800000 
+ 400 077a 0145     		li	a0,0
+ 401 077c 97000000 		call	GC9A01_WriteData
+ 401      E7800000 
+ 402 0784 1305C003 		li	a0,60
+ 403 0788 97000000 		call	GC9A01_WriteData
+ 403      E7800000 
+ 404 0790 0145     		li	a0,0
+ 405 0792 97000000 		call	GC9A01_WriteData
+ 405      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 11
+
+
+ 406 079a 0145     		li	a0,0
+ 407 079c 97000000 		call	GC9A01_WriteData
+ 407      E7800000 
+ 408 07a4 0145     		li	a0,0
+ 409 07a6 97000000 		call	GC9A01_WriteData
+ 409      E7800000 
+ 410 07ae 0545     		li	a0,1
+ 411 07b0 97000000 		call	GC9A01_WriteData
+ 411      E7800000 
+ 412 07b8 13054005 		li	a0,84
+ 413 07bc 97000000 		call	GC9A01_WriteData
+ 413      E7800000 
+ 414 07c4 4145     		li	a0,16
+ 415 07c6 97000000 		call	GC9A01_WriteData
+ 415      E7800000 
+ 416 07ce 13052003 		li	a0,50
+ 417 07d2 97000000 		call	GC9A01_WriteData
+ 417      E7800000 
+ 418 07da 13058009 		li	a0,152
+ 419 07de 97000000 		call	GC9A01_WriteData
+ 419      E7800000 
+ 420 07e6 13054007 		li	a0,116
+ 421 07ea 97000000 		call	GC9A01_WriteCmd
+ 421      E7800000 
+ 422 07f2 4145     		li	a0,16
+ 423 07f4 97000000 		call	GC9A01_WriteData
+ 423      E7800000 
+ 424 07fc 13055008 		li	a0,133
+ 425 0800 97000000 		call	GC9A01_WriteData
+ 425      E7800000 
+ 426 0808 13050008 		li	a0,128
+ 427 080c 97000000 		call	GC9A01_WriteData
+ 427      E7800000 
+ 428 0814 0145     		li	a0,0
+ 429 0816 97000000 		call	GC9A01_WriteData
+ 429      E7800000 
+ 430 081e 0145     		li	a0,0
+ 431 0820 97000000 		call	GC9A01_WriteData
+ 431      E7800000 
+ 432 0828 1305E004 		li	a0,78
+ 433 082c 97000000 		call	GC9A01_WriteData
+ 433      E7800000 
+ 434 0834 0145     		li	a0,0
+ 435 0836 97000000 		call	GC9A01_WriteData
+ 435      E7800000 
+ 436 083e 13058009 		li	a0,152
+ 437 0842 97000000 		call	GC9A01_WriteCmd
+ 437      E7800000 
+ 438 084a 1305E003 		li	a0,62
+ 439 084e 97000000 		call	GC9A01_WriteData
+ 439      E7800000 
+ 440 0856 1D45     		li	a0,7
+ 441 0858 97000000 		call	GC9A01_WriteData
+ 441      E7800000 
+ 442 0860 13055003 		li	a0,53
+ 443 0864 97000000 		call	GC9A01_WriteCmd
+ 443      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 12
+
+
+ 444 086c 13051002 		li	a0,33
+ 445 0870 97000000 		call	GC9A01_WriteCmd
+ 445      E7800000 
+ 446 0878 4545     		li	a0,17
+ 447 087a 97000000 		call	GC9A01_WriteCmd
+ 447      E7800000 
+ 448 0882 13058007 		li	a0,120
+ 449 0886 97000000 		call	mDelaymS
+ 449      E7800000 
+ 450 088e 13059002 		li	a0,41
+ 451 0892 97000000 		call	GC9A01_WriteCmd
+ 451      E7800000 
+ 452 089a 2244     		lw	s0,8(sp)
+ 453 089c B240     		lw	ra,12(sp)
+ 454 089e 9244     		lw	s1,4(sp)
+ 455 08a0 5145     		li	a0,20
+ 456 08a2 4101     		addi	sp,sp,16
+ 457 08a4 17030000 		tail	mDelaymS
+ 457      67000300 
+ 459              		.section	.text.GC9A01_SetWindow,"ax",@progbits
+ 460              		.align	1
+ 461              		.globl	GC9A01_SetWindow
+ 463              	GC9A01_SetWindow:
+ 464 0000 0111     		addi	sp,sp,-32
+ 465 0002 26CA     		sw	s1,20(sp)
+ 466 0004 AA84     		mv	s1,a0
+ 467 0006 1305A002 		li	a0,42
+ 468 000a 06CE     		sw	ra,28(sp)
+ 469 000c 22CC     		sw	s0,24(sp)
+ 470 000e 4AC8     		sw	s2,16(sp)
+ 471 0010 2E84     		mv	s0,a1
+ 472 0012 3689     		mv	s2,a3
+ 473 0014 4EC6     		sw	s3,12(sp)
+ 474 0016 52C4     		sw	s4,8(sp)
+ 475 0018 328A     		mv	s4,a2
+ 476 001a 97000000 		call	GC9A01_WriteCmd
+ 476      E7800000 
+ 477 0022 13D58400 		srli	a0,s1,8
+ 478 0026 97000000 		call	GC9A01_WriteData
+ 478      E7800000 
+ 479 002e 93F9F40F 		andi	s3,s1,0xff
+ 480 0032 4E85     		mv	a0,s3
+ 481 0034 97000000 		call	GC9A01_WriteData
+ 481      E7800000 
+ 482 003c 33854401 		add	a0,s1,s4
+ 483 0040 7D15     		addi	a0,a0,-1
+ 484 0042 2185     		srai	a0,a0,8
+ 485 0044 1375F50F 		andi	a0,a0,0xff
+ 486 0048 97000000 		call	GC9A01_WriteData
+ 486      E7800000 
+ 487 0050 1305FAFF 		addi	a0,s4,-1
+ 488 0054 4E95     		add	a0,s3,a0
+ 489 0056 1375F50F 		andi	a0,a0,0xff
+ 490 005a 97000000 		call	GC9A01_WriteData
+ 490      E7800000 
+ 491 0062 1305B002 		li	a0,43
+ 492 0066 97000000 		call	GC9A01_WriteCmd
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 13
+
+
+ 492      E7800000 
+ 493 006e 13558400 		srli	a0,s0,8
+ 494 0072 97000000 		call	GC9A01_WriteData
+ 494      E7800000 
+ 495 007a 9374F40F 		andi	s1,s0,0xff
+ 496 007e 2685     		mv	a0,s1
+ 497 0080 97000000 		call	GC9A01_WriteData
+ 497      E7800000 
+ 498 0088 33052401 		add	a0,s0,s2
+ 499 008c 7D15     		addi	a0,a0,-1
+ 500 008e 2185     		srai	a0,a0,8
+ 501 0090 1375F50F 		andi	a0,a0,0xff
+ 502 0094 97000000 		call	GC9A01_WriteData
+ 502      E7800000 
+ 503 009c 1305F9FF 		addi	a0,s2,-1
+ 504 00a0 2695     		add	a0,s1,a0
+ 505 00a2 1375F50F 		andi	a0,a0,0xff
+ 506 00a6 97000000 		call	GC9A01_WriteData
+ 506      E7800000 
+ 507 00ae 6244     		lw	s0,24(sp)
+ 508 00b0 F240     		lw	ra,28(sp)
+ 509 00b2 D244     		lw	s1,20(sp)
+ 510 00b4 4249     		lw	s2,16(sp)
+ 511 00b6 B249     		lw	s3,12(sp)
+ 512 00b8 224A     		lw	s4,8(sp)
+ 513 00ba 1305C002 		li	a0,44
+ 514 00be 0561     		addi	sp,sp,32
+ 515 00c0 17030000 		tail	GC9A01_WriteCmd
+ 515      67000300 
+ 517              		.section	.text.GC9A01_FillRect.part.0,"ax",@progbits
+ 518              		.align	1
+ 520              	GC9A01_FillRect.part.0:
+ 521 0000 7971     		addi	sp,sp,-48
+ 522 0002 22D4     		sw	s0,40(sp)
+ 523 0004 26D2     		sw	s1,36(sp)
+ 524 0006 06D6     		sw	ra,44(sp)
+ 525 0008 B684     		mv	s1,a3
+ 526 000a 4AD0     		sw	s2,32(sp)
+ 527 000c 4ECE     		sw	s3,28(sp)
+ 528 000e B306C500 		add	a3,a0,a2
+ 529 0012 9307000F 		li	a5,240
+ 530 0016 3284     		mv	s0,a2
+ 531 0018 63D7D700 		ble	a3,a5,.L10
+ 532 001c 1304000F 		li	s0,240
+ 533 0020 098C     		sub	s0,s0,a0
+ 534 0022 4204     		slli	s0,s0,16
+ 535 0024 4180     		srli	s0,s0,16
+ 536              	.L10:
+ 537 0026 B3879500 		add	a5,a1,s1
+ 538 002a 9306000F 		li	a3,240
+ 539 002e 63D7F600 		ble	a5,a3,.L11
+ 540 0032 9304000F 		li	s1,240
+ 541 0036 8D8C     		sub	s1,s1,a1
+ 542 0038 C204     		slli	s1,s1,16
+ 543 003a C180     		srli	s1,s1,16
+ 544              	.L11:
+ 545 003c A686     		mv	a3,s1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 14
+
+
+ 546 003e 2286     		mv	a2,s0
+ 547 0040 3AC6     		sw	a4,12(sp)
+ 548 0042 97000000 		call	GC9A01_SetWindow
+ 548      E7800000 
+ 549 004a 3247     		lw	a4,12(sp)
+ 550 004c 8567     		li	a5,4096
+ 551 004e B7160040 		li	a3,1073745920
+ 552 0052 93870780 		addi	a5,a5,-2048
+ 553 0056 23ACF60A 		sw	a5,184(a3)
+ 554 005a C147     		li	a5,16
+ 555 005c 23A6F60A 		sw	a5,172(a3)
+ 556 0060 13568700 		srli	a2,a4,8
+ 557 0064 97070000 		lla	a5,.LANCHOR0
+ 557      93870700 
+ 558 006c 1377F70F 		andi	a4,a4,0xff
+ 559 0070 97060000 		lla	a3,.LANCHOR0+1024
+ 559      93860600 
+ 560              	.L12:
+ 561 0078 2380C700 		sb	a2,0(a5)
+ 562 007c A380E700 		sb	a4,1(a5)
+ 563 0080 8907     		addi	a5,a5,2
+ 564 0082 E39BD7FE 		bne	a5,a3,.L12
+ 565 0086 33049402 		mul	s0,s0,s1
+ 566 008a 13090020 		li	s2,512
+ 567 008e 97090000 		lla	s3,.LANCHOR0
+ 567      93890900 
+ 568              	.L13:
+ 569 0096 09EC     		bnez	s0,.L15
+ 570 0098 B250     		lw	ra,44(sp)
+ 571 009a 2254     		lw	s0,40(sp)
+ 572 009c B7170040 		li	a5,1073745920
+ 573 00a0 4147     		li	a4,16
+ 574 00a2 23ACE70A 		sw	a4,184(a5)
+ 575 00a6 9254     		lw	s1,36(sp)
+ 576 00a8 0259     		lw	s2,32(sp)
+ 577 00aa F249     		lw	s3,28(sp)
+ 578 00ac 4561     		addi	sp,sp,48
+ 579 00ae 8280     		jr	ra
+ 580              	.L15:
+ 581 00b0 A284     		mv	s1,s0
+ 582 00b2 63748900 		bleu	s0,s2,.L14
+ 583 00b6 93040020 		li	s1,512
+ 584              	.L14:
+ 585 00ba 93951400 		slli	a1,s1,1
+ 586 00be C205     		slli	a1,a1,16
+ 587 00c0 C181     		srli	a1,a1,16
+ 588 00c2 4E85     		mv	a0,s3
+ 589 00c4 97000000 		call	SPI_Send
+ 589      E7800000 
+ 590 00cc 058C     		sub	s0,s0,s1
+ 591 00ce E1B7     		j	.L13
+ 593              		.section	.text.GC9A01_DrawPixel,"ax",@progbits
+ 594              		.align	1
+ 595              		.globl	GC9A01_DrawPixel
+ 597              	GC9A01_DrawPixel:
+ 598 0000 9307F00E 		li	a5,239
+ 599 0004 63ECA704 		bgtu	a0,a5,.L24
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 15
+
+
+ 600 0008 63EAB704 		bgtu	a1,a5,.L24
+ 601 000c 0111     		addi	sp,sp,-32
+ 602 000e 22CC     		sw	s0,24(sp)
+ 603 0010 8546     		li	a3,1
+ 604 0012 3284     		mv	s0,a2
+ 605 0014 0546     		li	a2,1
+ 606 0016 06CE     		sw	ra,28(sp)
+ 607 0018 26CA     		sw	s1,20(sp)
+ 608 001a 97000000 		call	GC9A01_SetWindow
+ 608      E7800000 
+ 609 0022 13168400 		slli	a2,s0,8
+ 610 0026 2180     		srli	s0,s0,8
+ 611 0028 518C     		or	s0,a2,s0
+ 612 002a 8567     		li	a5,4096
+ 613 002c 23168100 		sh	s0,12(sp)
+ 614 0030 93870780 		addi	a5,a5,-2048
+ 615 0034 37140040 		li	s0,1073745920
+ 616 0038 232CF40A 		sw	a5,184(s0)
+ 617 003c C144     		li	s1,16
+ 618 003e 2326940A 		sw	s1,172(s0)
+ 619 0042 6800     		addi	a0,sp,12
+ 620 0044 8945     		li	a1,2
+ 621 0046 97000000 		call	SPI_Send
+ 621      E7800000 
+ 622 004e F240     		lw	ra,28(sp)
+ 623 0050 232C940A 		sw	s1,184(s0)
+ 624 0054 6244     		lw	s0,24(sp)
+ 625 0056 D244     		lw	s1,20(sp)
+ 626 0058 0561     		addi	sp,sp,32
+ 627 005a 8280     		jr	ra
+ 628              	.L24:
+ 629 005c 8280     		ret
+ 631              		.section	.text.GC9A01_FillRect,"ax",@progbits
+ 632              		.align	1
+ 633              		.globl	GC9A01_FillRect
+ 635              	GC9A01_FillRect:
+ 636 0000 9307F00E 		li	a5,239
+ 637 0004 63E8A700 		bgtu	a0,a5,.L27
+ 638 0008 63E6B700 		bgtu	a1,a5,.L27
+ 639 000c 17030000 		tail	GC9A01_FillRect.part.0
+ 639      67000300 
+ 640              	.L27:
+ 641 0014 8280     		ret
+ 643              		.section	.text.GC9A01_FillScreen,"ax",@progbits
+ 644              		.align	1
+ 645              		.globl	GC9A01_FillScreen
+ 647              	GC9A01_FillScreen:
+ 648 0000 2A87     		mv	a4,a0
+ 649 0002 9306000F 		li	a3,240
+ 650 0006 1306000F 		li	a2,240
+ 651 000a 8145     		li	a1,0
+ 652 000c 0145     		li	a0,0
+ 653 000e 17030000 		tail	GC9A01_FillRect.part.0
+ 653      67000300 
+ 655              		.section	.text.GC9A01_DrawBitmap,"ax",@progbits
+ 656              		.align	1
+ 657              		.globl	GC9A01_DrawBitmap
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 16
+
+
+ 659              	GC9A01_DrawBitmap:
+ 660 0000 0111     		addi	sp,sp,-32
+ 661 0002 06CE     		sw	ra,28(sp)
+ 662 0004 22CC     		sw	s0,24(sp)
+ 663 0006 26CA     		sw	s1,20(sp)
+ 664 0008 3284     		mv	s0,a2
+ 665 000a B684     		mv	s1,a3
+ 666 000c 3AC6     		sw	a4,12(sp)
+ 667 000e 97000000 		call	GC9A01_SetWindow
+ 667      E7800000 
+ 668 0016 B3059402 		mul	a1,s0,s1
+ 669 001a 3247     		lw	a4,12(sp)
+ 670 001c 8567     		li	a5,4096
+ 671 001e B7160040 		li	a3,1073745920
+ 672 0022 93870780 		addi	a5,a5,-2048
+ 673 0026 23ACF60A 		sw	a5,184(a3)
+ 674 002a C147     		li	a5,16
+ 675 002c 3A85     		mv	a0,a4
+ 676 002e 23A6F60A 		sw	a5,172(a3)
+ 677 0032 8605     		slli	a1,a1,1
+ 678 0034 C205     		slli	a1,a1,16
+ 679 0036 C181     		srli	a1,a1,16
+ 680 0038 97000000 		call	SPI_Send
+ 680      E7800000 
+ 681 0040 37470040 		li	a4,1073758208
+ 682              	.L31:
+ 683 0044 83476700 		lbu	a5,6(a4)
+ 684 0048 93F70704 		andi	a5,a5,64
+ 685 004c E5DF     		beqz	a5,.L31
+ 686 004e F240     		lw	ra,28(sp)
+ 687 0050 6244     		lw	s0,24(sp)
+ 688 0052 B7170040 		li	a5,1073745920
+ 689 0056 4147     		li	a4,16
+ 690 0058 23ACE70A 		sw	a4,184(a5)
+ 691 005c D244     		lw	s1,20(sp)
+ 692 005e 0561     		addi	sp,sp,32
+ 693 0060 8280     		jr	ra
+ 695              		.section	.bss.buffer.3866,"aw",@nobits
+ 696              		.align	2
+ 697              		.set	.LANCHOR0,. + 0
+ 700              	buffer.3866:
+ 701 0000 00000000 		.zero	1024
+ 701      00000000 
+ 701      00000000 
+ 701      00000000 
+ 701      00000000 
+ 702              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 gc9a01.c
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:7      .text.GC9A01_WriteData:0000000000000000 GC9A01_WriteData
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:29     .text.GC9A01_WriteCmd:0000000000000000 GC9A01_WriteCmd
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:52     .text.GC9A01_Init:0000000000000000 GC9A01_Init
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:463    .text.GC9A01_SetWindow:0000000000000000 GC9A01_SetWindow
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:520    .text.GC9A01_FillRect.part.0:0000000000000000 GC9A01_FillRect.part.0
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:597    .text.GC9A01_DrawPixel:0000000000000000 GC9A01_DrawPixel
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:635    .text.GC9A01_FillRect:0000000000000000 GC9A01_FillRect
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:647    .text.GC9A01_FillScreen:0000000000000000 GC9A01_FillScreen
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:659    .text.GC9A01_DrawBitmap:0000000000000000 GC9A01_DrawBitmap
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:697    .bss.buffer.3866:0000000000000000 .LANCHOR0
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:700    .bss.buffer.3866:0000000000000000 buffer.3866
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:557    .text.GC9A01_FillRect.part.0:0000000000000064 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:559    .text.GC9A01_FillRect.part.0:0000000000000070 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:567    .text.GC9A01_FillRect.part.0:000000000000008e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:536    .text.GC9A01_FillRect.part.0:0000000000000026 .L10
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:544    .text.GC9A01_FillRect.part.0:000000000000003c .L11
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:560    .text.GC9A01_FillRect.part.0:0000000000000078 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:580    .text.GC9A01_FillRect.part.0:00000000000000b0 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:584    .text.GC9A01_FillRect.part.0:00000000000000ba .L14
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:568    .text.GC9A01_FillRect.part.0:0000000000000096 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:628    .text.GC9A01_DrawPixel:000000000000005c .L24
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:640    .text.GC9A01_FillRect:0000000000000014 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccpu2v8e.s:682    .text.GC9A01_DrawBitmap:0000000000000044 .L31
+
+UNDEFINED SYMBOLS
+SPI_Transfer
+GPIOA_ModeCfg
+mDelaymS
+SPI_Send

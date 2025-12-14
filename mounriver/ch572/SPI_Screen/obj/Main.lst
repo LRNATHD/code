@@ -1,0 +1,500 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 1
+
+
+   1              		.file	"Main.c"
+   2              		.option nopic
+   3              		.text
+   4              		.globl	__floatsisf
+   5              		.globl	__subsf3
+   6              		.globl	__addsf3
+   7              		.globl	__mulsf3
+   8              		.globl	__lesf2
+   9              		.section	.text.InitBallSprite,"ax",@progbits
+  10              		.align	1
+  11              		.globl	InitBallSprite
+  13              	InitBallSprite:
+  14 0000 5D71     		addi	sp,sp,-80
+  15 0002 17070000 		lla	a4,.LC0
+  15      13070700 
+  16 000a 52DC     		sw	s4,56(sp)
+  17 000c 032A0700 		lw	s4,0(a4)
+  18 0010 17070000 		lla	a4,.LC1
+  18      13070700 
+  19 0018 4EDE     		sw	s3,60(sp)
+  20 001a 83290700 		lw	s3,0(a4)
+  21 001e 17070000 		lla	a4,.LC2
+  21      13070700 
+  22 0026 5AD8     		sw	s6,48(sp)
+  23 0028 032B0700 		lw	s6,0(a4)
+  24 002c CAC0     		sw	s2,64(sp)
+  25 002e 56DA     		sw	s5,52(sp)
+  26 0030 5ED6     		sw	s7,44(sp)
+  27 0032 62D4     		sw	s8,40(sp)
+  28 0034 66D2     		sw	s9,36(sp)
+  29 0036 6AD0     		sw	s10,32(sp)
+  30 0038 6ECE     		sw	s11,28(sp)
+  31 003a 86C6     		sw	ra,76(sp)
+  32 003c A2C4     		sw	s0,72(sp)
+  33 003e A6C2     		sw	s1,68(sp)
+  34 0040 970A0000 		lla	s5,ballBuffer
+  34      938A0A00 
+  35 0048 0149     		li	s2,0
+  36 004a 528C     		mv	s8,s4
+  37 004c CE8C     		mv	s9,s3
+  38 004e 1D4D     		li	s10,7
+  39 0050 815D     		li	s11,-32
+  40 0052 F94B     		li	s7,30
+  41              	.L2:
+  42 0054 4A85     		mv	a0,s2
+  43 0056 97000000 		call	__floatsisf
+  43      E7800000 
+  44 005e D285     		mv	a1,s4
+  45 0060 97000000 		call	__subsf3
+  45      E7800000 
+  46 0068 CE85     		mv	a1,s3
+  47 006a 97000000 		call	__addsf3
+  47      E7800000 
+  48 0072 AA85     		mv	a1,a0
+  49 0074 97000000 		call	__mulsf3
+  49      E7800000 
+  50 007c 2AC6     		sw	a0,12(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 2
+
+
+  51 007e 5684     		mv	s0,s5
+  52 0080 8144     		li	s1,0
+  53              	.L6:
+  54 0082 2685     		mv	a0,s1
+  55 0084 97000000 		call	__floatsisf
+  55      E7800000 
+  56 008c E285     		mv	a1,s8
+  57 008e 97000000 		call	__subsf3
+  57      E7800000 
+  58 0096 E685     		mv	a1,s9
+  59 0098 97000000 		call	__addsf3
+  59      E7800000 
+  60 00a0 AA85     		mv	a1,a0
+  61 00a2 97000000 		call	__mulsf3
+  61      E7800000 
+  62 00aa B245     		lw	a1,12(sp)
+  63 00ac 97000000 		call	__addsf3
+  63      E7800000 
+  64 00b4 DA85     		mv	a1,s6
+  65 00b6 97000000 		call	__lesf2
+  65      E7800000 
+  66 00be 634EA002 		bgtz	a0,.L10
+  67 00c2 2300A401 		sb	s10,0(s0)
+  68 00c6 A300B401 		sb	s11,1(s0)
+  69              	.L5:
+  70 00ca 8504     		addi	s1,s1,1
+  71 00cc 0904     		addi	s0,s0,2
+  72 00ce E39A74FB 		bne	s1,s7,.L6
+  73 00d2 0509     		addi	s2,s2,1
+  74 00d4 938ACA03 		addi	s5,s5,60
+  75 00d8 E31E99F6 		bne	s2,s1,.L2
+  76 00dc B640     		lw	ra,76(sp)
+  77 00de 2644     		lw	s0,72(sp)
+  78 00e0 9644     		lw	s1,68(sp)
+  79 00e2 0649     		lw	s2,64(sp)
+  80 00e4 F259     		lw	s3,60(sp)
+  81 00e6 625A     		lw	s4,56(sp)
+  82 00e8 D25A     		lw	s5,52(sp)
+  83 00ea 425B     		lw	s6,48(sp)
+  84 00ec B25B     		lw	s7,44(sp)
+  85 00ee 225C     		lw	s8,40(sp)
+  86 00f0 925C     		lw	s9,36(sp)
+  87 00f2 025D     		lw	s10,32(sp)
+  88 00f4 F24D     		lw	s11,28(sp)
+  89 00f6 6161     		addi	sp,sp,80
+  90 00f8 8280     		jr	ra
+  91              	.L10:
+  92 00fa 23000400 		sb	zero,0(s0)
+  93 00fe A3000400 		sb	zero,1(s0)
+  94 0102 E1B7     		j	.L5
+  96              		.globl	__fixsfsi
+  97              		.globl	__gesf2
+  98              		.globl	__divsf3
+  99              		.section	.text.startup.main,"ax",@progbits
+ 100              		.align	1
+ 101              		.globl	main
+ 103              	main:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 3
+
+
+ 104 0000 5D71     		addi	sp,sp,-80
+ 105 0002 1305A004 		li	a0,74
+ 106 0006 86C6     		sw	ra,76(sp)
+ 107 0008 A2C4     		sw	s0,72(sp)
+ 108 000a A6C2     		sw	s1,68(sp)
+ 109 000c 4EDE     		sw	s3,60(sp)
+ 110 000e 52DC     		sw	s4,56(sp)
+ 111 0010 6AD0     		sw	s10,32(sp)
+ 112 0012 CAC0     		sw	s2,64(sp)
+ 113 0014 56DA     		sw	s5,52(sp)
+ 114 0016 5AD8     		sw	s6,48(sp)
+ 115 0018 5ED6     		sw	s7,44(sp)
+ 116 001a 62D4     		sw	s8,40(sp)
+ 117 001c 66D2     		sw	s9,36(sp)
+ 118 001e 6ECE     		sw	s11,28(sp)
+ 119 0020 97000000 		call	SetSysClock
+ 119      E7800000 
+ 120 0028 4145     		li	a0,16
+ 121 002a 97000000 		call	SPI_Init
+ 121      E7800000 
+ 122 0032 97000000 		call	GC9A01_Init
+ 122      E7800000 
+ 123 003a 0145     		li	a0,0
+ 124 003c 97000000 		call	GC9A01_FillScreen
+ 124      E7800000 
+ 125 0044 97000000 		call	InitBallSprite
+ 125      E7800000 
+ 126 004c 97070000 		lla	a5,.LC3
+ 126      93870700 
+ 127 0054 03AA0700 		lw	s4,0(a5)
+ 128 0058 97070000 		lla	a5,.LC4
+ 128      93870700 
+ 129 0060 83A90700 		lw	s3,0(a5)
+ 130 0064 97070000 		lla	a5,.LC5
+ 130      93870700 
+ 131 006c 8043     		lw	s0,0(a5)
+ 132 006e 97070000 		lla	a5,.LC6
+ 132      93870700 
+ 133 0076 9C43     		lw	a5,0(a5)
+ 134 0078 A284     		mv	s1,s0
+ 135 007a 170D0000 		lla	s10,.LC7
+ 135      130D0D00 
+ 136 0082 3EC4     		sw	a5,8(sp)
+ 137              	.L19:
+ 138 0084 2685     		mv	a0,s1
+ 139 0086 97000000 		call	__fixsfsi
+ 139      E7800000 
+ 140 008e AA8D     		mv	s11,a0
+ 141 0090 930A15FF 		addi	s5,a0,-15
+ 142 0094 2285     		mv	a0,s0
+ 143 0096 97000000 		call	__fixsfsi
+ 143      E7800000 
+ 144 009e CE85     		mv	a1,s3
+ 145 00a0 2A89     		mv	s2,a0
+ 146 00a2 130B15FF 		addi	s6,a0,-15
+ 147 00a6 2685     		mv	a0,s1
+ 148 00a8 97000000 		call	__addsf3
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 4
+
+
+ 148      E7800000 
+ 149 00b0 AA84     		mv	s1,a0
+ 150 00b2 D285     		mv	a1,s4
+ 151 00b4 2285     		mv	a0,s0
+ 152 00b6 97000000 		call	__addsf3
+ 152      E7800000 
+ 153 00be 970B0000 		lla	s7,.LC5
+ 153      938B0B00 
+ 154 00c6 83A50B00 		lw	a1,0(s7)
+ 155 00ca 2A84     		mv	s0,a0
+ 156 00cc 2685     		mv	a0,s1
+ 157 00ce 97000000 		call	__subsf3
+ 157      E7800000 
+ 158 00d6 83A50B00 		lw	a1,0(s7)
+ 159 00da 2A8C     		mv	s8,a0
+ 160 00dc 2285     		mv	a0,s0
+ 161 00de 97000000 		call	__subsf3
+ 161      E7800000 
+ 162 00e6 AA8B     		mv	s7,a0
+ 163 00e8 E285     		mv	a1,s8
+ 164 00ea 6285     		mv	a0,s8
+ 165 00ec 97000000 		call	__mulsf3
+ 165      E7800000 
+ 166 00f4 AA8C     		mv	s9,a0
+ 167 00f6 DE85     		mv	a1,s7
+ 168 00f8 5E85     		mv	a0,s7
+ 169 00fa 97000000 		call	__mulsf3
+ 169      E7800000 
+ 170 0102 AA85     		mv	a1,a0
+ 171 0104 6685     		mv	a0,s9
+ 172 0106 97000000 		call	__addsf3
+ 172      E7800000 
+ 173 010e A245     		lw	a1,8(sp)
+ 174 0110 AA8C     		mv	s9,a0
+ 175 0112 97000000 		call	__gesf2
+ 175      E7800000 
+ 176 011a 63480514 		bltz	a0,.L13
+ 177 011e 6685     		mv	a0,s9
+ 178 0120 97000000 		call	sqrtf
+ 178      E7800000 
+ 179 0128 AA8C     		mv	s9,a0
+ 180 012a AA85     		mv	a1,a0
+ 181 012c 6285     		mv	a0,s8
+ 182 012e 97000000 		call	__divsf3
+ 182      E7800000 
+ 183 0136 2A8C     		mv	s8,a0
+ 184 0138 E685     		mv	a1,s9
+ 185 013a 5E85     		mv	a0,s7
+ 186 013c 97000000 		call	__divsf3
+ 186      E7800000 
+ 187 0144 AA8B     		mv	s7,a0
+ 188 0146 E285     		mv	a1,s8
+ 189 0148 4E85     		mv	a0,s3
+ 190 014a 97000000 		call	__mulsf3
+ 190      E7800000 
+ 191 0152 2AC6     		sw	a0,12(sp)
+ 192 0154 DE85     		mv	a1,s7
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 5
+
+
+ 193 0156 5285     		mv	a0,s4
+ 194 0158 97000000 		call	__mulsf3
+ 194      E7800000 
+ 195 0160 3247     		lw	a4,12(sp)
+ 196 0162 AA85     		mv	a1,a0
+ 197 0164 3A85     		mv	a0,a4
+ 198 0166 97000000 		call	__addsf3
+ 198      E7800000 
+ 199 016e AA85     		mv	a1,a0
+ 200 0170 97000000 		call	__addsf3
+ 200      E7800000 
+ 201 0178 E285     		mv	a1,s8
+ 202 017a 2AC6     		sw	a0,12(sp)
+ 203 017c 97000000 		call	__mulsf3
+ 203      E7800000 
+ 204 0184 AA85     		mv	a1,a0
+ 205 0186 4E85     		mv	a0,s3
+ 206 0188 97000000 		call	__subsf3
+ 206      E7800000 
+ 207 0190 3247     		lw	a4,12(sp)
+ 208 0192 AA89     		mv	s3,a0
+ 209 0194 DE85     		mv	a1,s7
+ 210 0196 3A85     		mv	a0,a4
+ 211 0198 97000000 		call	__mulsf3
+ 211      E7800000 
+ 212 01a0 AA85     		mv	a1,a0
+ 213 01a2 5285     		mv	a0,s4
+ 214 01a4 97000000 		call	__subsf3
+ 214      E7800000 
+ 215 01ac 2A8A     		mv	s4,a0
+ 216 01ae 97000000 		call	rand
+ 216      E7800000 
+ 217 01b6 D147     		li	a5,20
+ 218 01b8 3365F502 		rem	a0,a0,a5
+ 219 01bc 5915     		addi	a0,a0,-10
+ 220 01be 97000000 		call	__floatsisf
+ 220      E7800000 
+ 221 01c6 83250D00 		lw	a1,0(s10)
+ 222 01ca 97000000 		call	__mulsf3
+ 222      E7800000 
+ 223 01d2 CE85     		mv	a1,s3
+ 224 01d4 97000000 		call	__addsf3
+ 224      E7800000 
+ 225 01dc AA89     		mv	s3,a0
+ 226 01de 97000000 		call	rand
+ 226      E7800000 
+ 227 01e6 D147     		li	a5,20
+ 228 01e8 3365F502 		rem	a0,a0,a5
+ 229 01ec 5915     		addi	a0,a0,-10
+ 230 01ee 97000000 		call	__floatsisf
+ 230      E7800000 
+ 231 01f6 83250D00 		lw	a1,0(s10)
+ 232 01fa 97000000 		call	__mulsf3
+ 232      E7800000 
+ 233 0202 D285     		mv	a1,s4
+ 234 0204 97000000 		call	__addsf3
+ 234      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 6
+
+
+ 235 020c 97070000 		lla	a5,.LC8
+ 235      93870700 
+ 236 0214 8C43     		lw	a1,0(a5)
+ 237 0216 2A8A     		mv	s4,a0
+ 238 0218 6685     		mv	a0,s9
+ 239 021a 97000000 		call	__subsf3
+ 239      E7800000 
+ 240 0222 97070000 		lla	a5,.LC1
+ 240      93870700 
+ 241 022a 8C43     		lw	a1,0(a5)
+ 242 022c 97000000 		call	__addsf3
+ 242      E7800000 
+ 243 0234 E285     		mv	a1,s8
+ 244 0236 2AC6     		sw	a0,12(sp)
+ 245 0238 97000000 		call	__mulsf3
+ 245      E7800000 
+ 246 0240 AA85     		mv	a1,a0
+ 247 0242 2685     		mv	a0,s1
+ 248 0244 97000000 		call	__subsf3
+ 248      E7800000 
+ 249 024c B247     		lw	a5,12(sp)
+ 250 024e DE85     		mv	a1,s7
+ 251 0250 AA84     		mv	s1,a0
+ 252 0252 3E85     		mv	a0,a5
+ 253 0254 97000000 		call	__mulsf3
+ 253      E7800000 
+ 254 025c AA85     		mv	a1,a0
+ 255 025e 2285     		mv	a0,s0
+ 256 0260 97000000 		call	__subsf3
+ 256      E7800000 
+ 257 0268 2A84     		mv	s0,a0
+ 258              	.L13:
+ 259 026a 2685     		mv	a0,s1
+ 260 026c 97000000 		call	__fixsfsi
+ 260      E7800000 
+ 261 0274 2AC6     		sw	a0,12(sp)
+ 262 0276 930C15FF 		addi	s9,a0,-15
+ 263 027a 2285     		mv	a0,s0
+ 264 027c 97000000 		call	__fixsfsi
+ 264      E7800000 
+ 265 0284 B247     		lw	a5,12(sp)
+ 266 0286 2A8C     		mv	s8,a0
+ 267 0288 930B15FF 		addi	s7,a0,-15
+ 268 028c 63D5FD06 		bge	s11,a5,.L15
+ 269 0290 3386B741 		sub	a2,a5,s11
+ 270 0294 4206     		slli	a2,a2,16
+ 271 0296 93150B01 		slli	a1,s6,16
+ 272 029a 0147     		li	a4,0
+ 273 029c F946     		li	a3,30
+ 274 029e 4182     		srli	a2,a2,16
+ 275 02a0 C181     		srli	a1,a1,16
+ 276 02a2 13950A01 		slli	a0,s5,16
+ 277              	.L22:
+ 278 02a6 4181     		srli	a0,a0,16
+ 279 02a8 97000000 		call	GC9A01_FillRect
+ 279      E7800000 
+ 280              	.L16:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 7
+
+
+ 281 02b0 63528907 		bge	s2,s8,.L17
+ 282 02b4 B3062C41 		sub	a3,s8,s2
+ 283 02b8 C206     		slli	a3,a3,16
+ 284 02ba 0147     		li	a4,0
+ 285 02bc C182     		srli	a3,a3,16
+ 286 02be 7946     		li	a2,30
+ 287 02c0 93150B01 		slli	a1,s6,16
+ 288              	.L23:
+ 289 02c4 13950A01 		slli	a0,s5,16
+ 290 02c8 C181     		srli	a1,a1,16
+ 291 02ca 4181     		srli	a0,a0,16
+ 292 02cc 97000000 		call	GC9A01_FillRect
+ 292      E7800000 
+ 293              	.L18:
+ 294 02d4 93950B01 		slli	a1,s7,16
+ 295 02d8 13950C01 		slli	a0,s9,16
+ 296 02dc 17070000 		lla	a4,ballBuffer
+ 296      13070700 
+ 297 02e4 F946     		li	a3,30
+ 298 02e6 7946     		li	a2,30
+ 299 02e8 C181     		srli	a1,a1,16
+ 300 02ea 4181     		srli	a0,a0,16
+ 301 02ec 97000000 		call	GC9A01_DrawBitmap
+ 301      E7800000 
+ 302 02f4 41BB     		j	.L19
+ 303              	.L15:
+ 304 02f6 E3DDB7FB 		ble	s11,a5,.L16
+ 305 02fa 3386FD40 		sub	a2,s11,a5
+ 306 02fe 1385F700 		addi	a0,a5,15
+ 307 0302 4206     		slli	a2,a2,16
+ 308 0304 93150B01 		slli	a1,s6,16
+ 309 0308 0147     		li	a4,0
+ 310 030a F946     		li	a3,30
+ 311 030c 4182     		srli	a2,a2,16
+ 312 030e C181     		srli	a1,a1,16
+ 313 0310 4205     		slli	a0,a0,16
+ 314 0312 51BF     		j	.L22
+ 315              	.L17:
+ 316 0314 E3502CFD 		ble	s2,s8,.L18
+ 317 0318 B3068941 		sub	a3,s2,s8
+ 318 031c 9385EB01 		addi	a1,s7,30
+ 319 0320 C206     		slli	a3,a3,16
+ 320 0322 0147     		li	a4,0
+ 321 0324 C182     		srli	a3,a3,16
+ 322 0326 7946     		li	a2,30
+ 323 0328 C205     		slli	a1,a1,16
+ 324 032a 69BF     		j	.L23
+ 326              		.comm	ballBuffer,1800,4
+ 327              		.section	.rodata.InitBallSprite.cst4,"aM",@progbits,4
+ 328              		.align	2
+ 329              	.LC0:
+ 330 0000 00007041 		.word	1097859072
+ 331              	.LC1:
+ 332 0004 0000003F 		.word	1056964608
+ 333              	.LC2:
+ 334 0008 00006143 		.word	1130430464
+ 335              		.section	.rodata.main.cst4,"aM",@progbits,4
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 8
+
+
+ 336              		.align	2
+ 337              	.LC3:
+ 338 0000 C3F54840 		.word	1078523331
+ 339              	.LC4:
+ 340 0004 CDCC2C40 		.word	1076677837
+ 341              	.LC5:
+ 342 0008 0000F042 		.word	1123024896
+ 343              	.LC6:
+ 344 000c 00442C46 		.word	1177306112
+ 345              	.LC7:
+ 346 0010 CDCC4C3D 		.word	1028443341
+ 347              	.LC8:
+ 348 0014 0000D242 		.word	1121058816
+ 349              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Main.c
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:13     .text.InitBallSprite:0000000000000000 InitBallSprite
+                            *COM*:0000000000000708 ballBuffer
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:103    .text.startup.main:0000000000000000 main
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:329    .rodata.InitBallSprite.cst4:0000000000000000 .LC0
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:15     .text.InitBallSprite:0000000000000002 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:331    .rodata.InitBallSprite.cst4:0000000000000004 .LC1
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:18     .text.InitBallSprite:0000000000000010 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:333    .rodata.InitBallSprite.cst4:0000000000000008 .LC2
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:21     .text.InitBallSprite:000000000000001e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:34     .text.InitBallSprite:0000000000000040 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:91     .text.InitBallSprite:00000000000000fa .L10
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:53     .text.InitBallSprite:0000000000000082 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:41     .text.InitBallSprite:0000000000000054 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:69     .text.InitBallSprite:00000000000000ca .L5
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:337    .rodata.main.cst4:0000000000000000 .LC3
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:126    .text.startup.main:000000000000004c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:339    .rodata.main.cst4:0000000000000004 .LC4
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:128    .text.startup.main:0000000000000058 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:341    .rodata.main.cst4:0000000000000008 .LC5
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:130    .text.startup.main:0000000000000064 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:343    .rodata.main.cst4:000000000000000c .LC6
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:132    .text.startup.main:000000000000006e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:345    .rodata.main.cst4:0000000000000010 .LC7
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:135    .text.startup.main:000000000000007a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:153    .text.startup.main:00000000000000be .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:347    .rodata.main.cst4:0000000000000014 .LC8
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:235    .text.startup.main:000000000000020c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:240    .text.startup.main:0000000000000222 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:296    .text.startup.main:00000000000002dc .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:258    .text.startup.main:000000000000026a .L13
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:303    .text.startup.main:00000000000002f6 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:315    .text.startup.main:0000000000000314 .L17
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:137    .text.startup.main:0000000000000084 .L19
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:280    .text.startup.main:00000000000002b0 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:277    .text.startup.main:00000000000002a6 .L22
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:293    .text.startup.main:00000000000002d4 .L18
+C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s:288    .text.startup.main:00000000000002c4 .L23
+
+UNDEFINED SYMBOLS
+__floatsisf
+__subsf3
+__addsf3
+__mulsf3
+__lesf2
+__fixsfsi
+__gesf2
+__divsf3
+SetSysClock
+SPI_Init
+GC9A01_Init
+GC9A01_FillScreen
+sqrtf
+rand
+GC9A01_FillRect
+GC9A01_DrawBitmap
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmiOLgw.s 			page 10
+
+

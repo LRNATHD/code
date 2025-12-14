@@ -1,0 +1,929 @@
+Archive member included to satisfy reference by file (symbol)
+
+../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                              obj/CH57x_flash.o (FLASH_EEPROM_CMD)
+
+Allocating common symbols
+Common symbol       size              file
+
+pHOST_RX_RAM_Addr   0x4               obj/CH57x_usbhostBase.o
+pHOST_TX_RAM_Addr   0x4               obj/CH57x_usbhostBase.o
+pEP2_RAM_Addr       0x4               obj/CH57x_usbdev.o
+pEP3_RAM_Addr       0x4               obj/CH57x_usbdev.o
+pEP0_RAM_Addr       0x4               obj/CH57x_usbdev.o
+FoundNewDev         0x1               obj/CH57x_usbhostBase.o
+Com_Buffer          0x80              obj/CH57x_usbhostClass.o
+UsbDevEndp0Size     0x1               obj/CH57x_usbhostBase.o
+ThisUsbDev          0xe               obj/CH57x_usbhostBase.o
+DevOnHubPort        0x30              obj/CH57x_usbhostBase.o
+pEP1_RAM_Addr       0x4               obj/CH57x_usbdev.o
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 obj/Main.o
+ .data          0x0000000000000000        0x0 obj/Main.o
+ .bss           0x0000000000000000        0x0 obj/Main.o
+ .text          0x0000000000000000        0x0 obj/CH57x_clk.o
+ .data          0x0000000000000000        0x0 obj/CH57x_clk.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_clk.o
+ .text.LClk_Cfg
+                0x0000000000000000       0x58 obj/CH57x_clk.o
+ .text.HSECFG_Current
+                0x0000000000000000       0x4e obj/CH57x_clk.o
+ .text.HSECFG_Capacitance
+                0x0000000000000000       0x50 obj/CH57x_clk.o
+ .text.RTC_InitClock
+                0x0000000000000000       0xf6 obj/CH57x_clk.o
+ .text.RTC_InitTime
+                0x0000000000000000      0x212 obj/CH57x_clk.o
+ .text.RTC_GetTime
+                0x0000000000000000      0x1bc obj/CH57x_clk.o
+ .text.RTC_SetCycleLSI
+                0x0000000000000000       0x72 obj/CH57x_clk.o
+ .text.RTC_GetCycleLSI
+                0x0000000000000000       0x18 obj/CH57x_clk.o
+ .text.RTC_TMRFunCfg
+                0x0000000000000000       0x84 obj/CH57x_clk.o
+ .text.RTC_TRIGFunCfg
+                0x0000000000000000       0x6e obj/CH57x_clk.o
+ .text.RTC_ModeFunDisable
+                0x0000000000000000       0x5c obj/CH57x_clk.o
+ .text.RTC_GetITFlag
+                0x0000000000000000       0x1a obj/CH57x_clk.o
+ .text.RTC_ClearITFlag
+                0x0000000000000000       0x20 obj/CH57x_clk.o
+ .sbss.Freq_LSI
+                0x0000000000000000        0x4 obj/CH57x_clk.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_clk.o
+ .text          0x0000000000000000        0x0 obj/CH57x_cmp.o
+ .data          0x0000000000000000        0x0 obj/CH57x_cmp.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_cmp.o
+ .text.CMP_Init
+                0x0000000000000000       0x14 obj/CH57x_cmp.o
+ .text.CMP_OutToTIMCAPCfg
+                0x0000000000000000       0x1a obj/CH57x_cmp.o
+ .text.CMP_INTCfg
+                0x0000000000000000       0x24 obj/CH57x_cmp.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_cmp.o
+ .text          0x0000000000000000        0x0 obj/CH57x_flash.o
+ .data          0x0000000000000000        0x0 obj/CH57x_flash.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_flash.o
+ .text.FLASH_ROM_READ
+                0x0000000000000000       0x1c obj/CH57x_flash.o
+ .text.UserOptionByteConfig
+                0x0000000000000000       0xc8 obj/CH57x_flash.o
+ .text.UserOptionByteClose_SWD
+                0x0000000000000000        0x4 obj/CH57x_flash.o
+ .text.UserOptionByte_Active
+                0x0000000000000000       0x88 obj/CH57x_flash.o
+ .text.GET_UNIQUE_ID
+                0x0000000000000000       0x5a obj/CH57x_flash.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_flash.o
+ .text          0x0000000000000000        0x0 obj/CH57x_gpio.o
+ .data          0x0000000000000000        0x0 obj/CH57x_gpio.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_gpio.o
+ .text.GPIOA_ITModeCfg
+                0x0000000000000000       0x82 obj/CH57x_gpio.o
+ .text.GPIOPinRemap
+                0x0000000000000000       0x1a obj/CH57x_gpio.o
+ .text.GPIOADigitalCfg
+                0x0000000000000000       0x1a obj/CH57x_gpio.o
+ .text          0x0000000000000000        0x0 obj/CH57x_i2c.o
+ .data          0x0000000000000000        0x0 obj/CH57x_i2c.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_i2c.o
+ .text.I2C_Cmd  0x0000000000000000       0x20 obj/CH57x_i2c.o
+ .text.I2C_GenerateSTART
+                0x0000000000000000       0x22 obj/CH57x_i2c.o
+ .text.I2C_GenerateSTOP
+                0x0000000000000000       0x22 obj/CH57x_i2c.o
+ .text.I2C_AcknowledgeConfig
+                0x0000000000000000       0x22 obj/CH57x_i2c.o
+ .text.I2C_OwnAddress2Config
+                0x0000000000000000       0x28 obj/CH57x_i2c.o
+ .text.I2C_DualAddressCmd
+                0x0000000000000000       0x20 obj/CH57x_i2c.o
+ .text.I2C_GeneralCallCmd
+                0x0000000000000000       0x22 obj/CH57x_i2c.o
+ .text.I2C_ITConfig
+                0x0000000000000000       0x1e obj/CH57x_i2c.o
+ .text.I2C_SendData
+                0x0000000000000000        0xa obj/CH57x_i2c.o
+ .text.I2C_ReceiveData
+                0x0000000000000000        0xe obj/CH57x_i2c.o
+ .text.I2C_Send7bitAddress
+                0x0000000000000000       0x18 obj/CH57x_i2c.o
+ .text.I2C_SoftwareResetCmd
+                0x0000000000000000       0x1a obj/CH57x_i2c.o
+ .text.I2C_Init
+                0x0000000000000000      0x162 obj/CH57x_i2c.o
+ .text.I2C_NACKPositionConfig
+                0x0000000000000000       0x2a obj/CH57x_i2c.o
+ .text.I2C_SMBusAlertConfig
+                0x0000000000000000       0x24 obj/CH57x_i2c.o
+ .text.I2C_TransmitPEC
+                0x0000000000000000       0x20 obj/CH57x_i2c.o
+ .text.I2C_PECPositionConfig
+                0x0000000000000000        0x8 obj/CH57x_i2c.o
+ .text.I2C_CalculatePEC
+                0x0000000000000000       0x22 obj/CH57x_i2c.o
+ .text.I2C_GetPEC
+                0x0000000000000000        0xc obj/CH57x_i2c.o
+ .text.I2C_ARPCmd
+                0x0000000000000000       0x20 obj/CH57x_i2c.o
+ .text.I2C_StretchClockCmd
+                0x0000000000000000       0x22 obj/CH57x_i2c.o
+ .text.I2C_FastModeDutyCycleConfig
+                0x0000000000000000       0x24 obj/CH57x_i2c.o
+ .text.I2C_CheckEvent
+                0x0000000000000000       0x20 obj/CH57x_i2c.o
+ .text.I2C_GetLastEvent
+                0x0000000000000000       0x16 obj/CH57x_i2c.o
+ .text.I2C_GetFlagStatus
+                0x0000000000000000       0x3a obj/CH57x_i2c.o
+ .text.I2C_ClearFlag
+                0x0000000000000000       0x12 obj/CH57x_i2c.o
+ .text.I2C_GetITStatus
+                0x0000000000000000       0x26 obj/CH57x_i2c.o
+ .text.I2C_ClearITPendingBit
+                0x0000000000000000        0x8 obj/CH57x_i2c.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_i2c.o
+ .text          0x0000000000000000        0x0 obj/CH57x_keyscan.o
+ .data          0x0000000000000000        0x0 obj/CH57x_keyscan.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_keyscan.o
+ .text.KeyScan_Cfg
+                0x0000000000000000       0x3a obj/CH57x_keyscan.o
+ .text.KeyPress_Wake
+                0x0000000000000000       0x86 obj/CH57x_keyscan.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_keyscan.o
+ .text          0x0000000000000000        0x0 obj/CH57x_pwm.o
+ .data          0x0000000000000000        0x0 obj/CH57x_pwm.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_pwm.o
+ .text.PWMX_CycleCfg
+                0x0000000000000000       0x5c obj/CH57x_pwm.o
+ .rodata.PWMX_CycleCfg
+                0x0000000000000000       0x18 obj/CH57x_pwm.o
+ .text.PWMX_16bit_CycleCfg
+                0x0000000000000000       0x1c obj/CH57x_pwm.o
+ .text.PWMX_16bit_ACTOUT
+                0x0000000000000000       0x70 obj/CH57x_pwm.o
+ .text.PWMX_ACTOUT
+                0x0000000000000000       0xb6 obj/CH57x_pwm.o
+ .rodata.PWMX_ACTOUT
+                0x0000000000000000       0x40 obj/CH57x_pwm.o
+ .text.PWMX_AlterOutCfg
+                0x0000000000000000       0x1a obj/CH57x_pwm.o
+ .text.PWMX_SyncOutCfg
+                0x0000000000000000       0x32 obj/CH57x_pwm.o
+ .text.PWM_DMACfg
+                0x0000000000000000       0x54 obj/CH57x_pwm.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_pwm.o
+ .text          0x0000000000000000        0x0 obj/CH57x_pwr.o
+ .data          0x0000000000000000        0x0 obj/CH57x_pwr.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_pwr.o
+ .text.PWR_PeriphClkCfg
+                0x0000000000000000       0x52 obj/CH57x_pwr.o
+ .text.PWR_PeriphWakeUpCfg
+                0x0000000000000000       0xfa obj/CH57x_pwr.o
+ .text.PowerMonitor
+                0x0000000000000000       0xd8 obj/CH57x_pwr.o
+ .highcode      0x0000000000000000      0x440 obj/CH57x_pwr.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_pwr.o
+ .text          0x0000000000000000        0x0 obj/CH57x_spi.o
+ .data          0x0000000000000000        0x0 obj/CH57x_spi.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_spi.o
+ .text.SPI_MasterDefInit
+                0x0000000000000000       0x32 obj/CH57x_spi.o
+ .text.SPI_2WIRE_MasterOutputInit
+                0x0000000000000000       0x32 obj/CH57x_spi.o
+ .text.SPI_2WIRE_MasterReceiveInit
+                0x0000000000000000       0x32 obj/CH57x_spi.o
+ .text.SPI_2WIRE_SlaveInputInit
+                0x0000000000000000       0x1e obj/CH57x_spi.o
+ .text.SPI_2WIRE_SlaveOutputInit
+                0x0000000000000000       0x20 obj/CH57x_spi.o
+ .text.SPI_CLKCfg
+                0x0000000000000000       0x2a obj/CH57x_spi.o
+ .text.SPI_DataMode
+                0x0000000000000000       0x6a obj/CH57x_spi.o
+ .text.SPI_MasterSendByte
+                0x0000000000000000       0x2a obj/CH57x_spi.o
+ .text.SPI_MasterRecvByte
+                0x0000000000000000       0x2a obj/CH57x_spi.o
+ .text.SPI_MasterTrans
+                0x0000000000000000       0x4c obj/CH57x_spi.o
+ .text.SPI_MasterRecv
+                0x0000000000000000       0x42 obj/CH57x_spi.o
+ .text.SPI_MasterDMATrans
+                0x0000000000000000       0x50 obj/CH57x_spi.o
+ .text.SPI_MasterDMARecv
+                0x0000000000000000       0x50 obj/CH57x_spi.o
+ .text.SPI_SlaveInit
+                0x0000000000000000       0x20 obj/CH57x_spi.o
+ .text.SPI_2WIRE_SlaveInit
+                0x0000000000000000        0x8 obj/CH57x_spi.o
+ .text.SPI_SlaveRecvByte
+                0x0000000000000000       0x20 obj/CH57x_spi.o
+ .text.SPI_SlaveSendByte
+                0x0000000000000000       0x2a obj/CH57x_spi.o
+ .highcode      0x0000000000000000       0x86 obj/CH57x_spi.o
+ .text.SPI_SlaveDMARecv
+                0x0000000000000000        0x8 obj/CH57x_spi.o
+ .text.SPI_SlaveDMATrans
+                0x0000000000000000        0x8 obj/CH57x_spi.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_spi.o
+ .text          0x0000000000000000        0x0 obj/CH57x_sys.o
+ .data          0x0000000000000000        0x0 obj/CH57x_sys.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_sys.o
+ .text.GetSysClock
+                0x0000000000000000       0x7c obj/CH57x_sys.o
+ .text.SYS_GetInfoSta
+                0x0000000000000000       0x26 obj/CH57x_sys.o
+ .text.SYS_DisableAllIrq
+                0x0000000000000000       0x20 obj/CH57x_sys.o
+ .text.SYS_RecoverIrq
+                0x0000000000000000       0x14 obj/CH57x_sys.o
+ .text.SYS_GetSysTickCnt
+                0x0000000000000000        0x8 obj/CH57x_sys.o
+ .text.WWDG_ITCfg
+                0x0000000000000000       0x58 obj/CH57x_sys.o
+ .text.WWDG_ResetCfg
+                0x0000000000000000       0x58 obj/CH57x_sys.o
+ .text.WWDG_ClearFlag
+                0x0000000000000000       0x4a obj/CH57x_sys.o
+ .text._sbrk    0x0000000000000000       0x32 obj/CH57x_sys.o
+ .sdata.curbrk.3873
+                0x0000000000000000        0x4 obj/CH57x_sys.o
+ .text          0x0000000000000000        0x0 obj/CH57x_timer.o
+ .data          0x0000000000000000        0x0 obj/CH57x_timer.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_timer.o
+ .text.TMR_TimerInit
+                0x0000000000000000       0x16 obj/CH57x_timer.o
+ .text.TMR_EXTSingleCounterInit
+                0x0000000000000000       0x1a obj/CH57x_timer.o
+ .text.TMR_PWMInit
+                0x0000000000000000       0x1a obj/CH57x_timer.o
+ .text.TMR_CapInit
+                0x0000000000000000       0x1a obj/CH57x_timer.o
+ .text.TMR_DMACfg
+                0x0000000000000000       0x2c obj/CH57x_timer.o
+ .text.ENC_Config
+                0x0000000000000000       0x38 obj/CH57x_timer.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_timer.o
+ .text          0x0000000000000000        0x0 obj/CH57x_uart.o
+ .data          0x0000000000000000        0x0 obj/CH57x_uart.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_uart.o
+ .text.UART_BaudRateCfg
+                0x0000000000000000       0x36 obj/CH57x_uart.o
+ .text.UART_DefInit
+                0x0000000000000000       0x38 obj/CH57x_uart.o
+ .text.UART_ByteTrigCfg
+                0x0000000000000000       0x1a obj/CH57x_uart.o
+ .text.UART_INTCfg
+                0x0000000000000000       0x2a obj/CH57x_uart.o
+ .text.UART_SendString
+                0x0000000000000000       0x28 obj/CH57x_uart.o
+ .text.UART_RecvString
+                0x0000000000000000       0x2a obj/CH57x_uart.o
+ .text.UART_Remap
+                0x0000000000000000       0x30 obj/CH57x_uart.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_uart.o
+ .text          0x0000000000000000        0x0 obj/CH57x_usbdev.o
+ .data          0x0000000000000000        0x0 obj/CH57x_usbdev.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_usbdev.o
+ .text.USB_DeviceInit
+                0x0000000000000000       0x8e obj/CH57x_usbdev.o
+ .text.DevEP1_IN_Deal
+                0x0000000000000000       0x16 obj/CH57x_usbdev.o
+ .text.DevEP2_IN_Deal
+                0x0000000000000000       0x16 obj/CH57x_usbdev.o
+ .text.DevEP3_IN_Deal
+                0x0000000000000000       0x16 obj/CH57x_usbdev.o
+ .text.DevEP4_IN_Deal
+                0x0000000000000000       0x16 obj/CH57x_usbdev.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_usbdev.o
+ COMMON         0x0000000000000000       0x10 obj/CH57x_usbdev.o
+ .text          0x0000000000000000        0x0 obj/CH57x_usbhostBase.o
+ .data          0x0000000000000000        0x0 obj/CH57x_usbhostBase.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_usbhostBase.o
+ .text.SetUsbSpeed.part.1
+                0x0000000000000000       0x1e obj/CH57x_usbhostBase.o
+ .text.DisableRootHubPort
+                0x0000000000000000        0xa obj/CH57x_usbhostBase.o
+ .text.AnalyzeRootHub
+                0x0000000000000000       0x64 obj/CH57x_usbhostBase.o
+ .text.SetHostUsbAddr
+                0x0000000000000000       0x18 obj/CH57x_usbhostBase.o
+ .text.SetUsbSpeed
+                0x0000000000000000       0x1c obj/CH57x_usbhostBase.o
+ .text.ResetRootHubPort
+                0x0000000000000000       0x72 obj/CH57x_usbhostBase.o
+ .text.EnableRootHubPort
+                0x0000000000000000       0x5e obj/CH57x_usbhostBase.o
+ .text.SelectHubPort
+                0x0000000000000000       0x88 obj/CH57x_usbhostBase.o
+ .text.WaitUSB_Interrupt
+                0x0000000000000000       0x2c obj/CH57x_usbhostBase.o
+ .text.USBHostTransact
+                0x0000000000000000      0x170 obj/CH57x_usbhostBase.o
+ .text.HostCtrlTransfer
+                0x0000000000000000      0x1f4 obj/CH57x_usbhostBase.o
+ .text.CopySetupReqPkg
+                0x0000000000000000       0x24 obj/CH57x_usbhostBase.o
+ .text.CtrlGetDeviceDescr
+                0x0000000000000000       0x60 obj/CH57x_usbhostBase.o
+ .text.CtrlGetConfigDescr
+                0x0000000000000000       0x88 obj/CH57x_usbhostBase.o
+ .text.CtrlSetUsbAddress
+                0x0000000000000000       0x5c obj/CH57x_usbhostBase.o
+ .text.CtrlSetUsbConfig
+                0x0000000000000000       0x3c obj/CH57x_usbhostBase.o
+ .text.CtrlClearEndpStall
+                0x0000000000000000       0x3c obj/CH57x_usbhostBase.o
+ .text.CtrlSetUsbIntercace
+                0x0000000000000000       0x3c obj/CH57x_usbhostBase.o
+ .text.USB_HostInit
+                0x0000000000000000       0x76 obj/CH57x_usbhostBase.o
+ .sdata2.SetupClrEndpStall
+                0x0000000000000000        0x8 obj/CH57x_usbhostBase.o
+ .sdata2.SetupGetCfgDescr
+                0x0000000000000000        0x8 obj/CH57x_usbhostBase.o
+ .sdata2.SetupGetDevDescr
+                0x0000000000000000        0x8 obj/CH57x_usbhostBase.o
+ .sdata2.SetupSetUsbAddr
+                0x0000000000000000        0x8 obj/CH57x_usbhostBase.o
+ .sdata2.SetupSetUsbConfig
+                0x0000000000000000        0x8 obj/CH57x_usbhostBase.o
+ .sdata2.SetupSetUsbInterface
+                0x0000000000000000        0x8 obj/CH57x_usbhostBase.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_usbhostBase.o
+ COMMON         0x0000000000000000       0x4c obj/CH57x_usbhostBase.o
+ .text          0x0000000000000000        0x0 obj/CH57x_usbhostClass.o
+ .data          0x0000000000000000        0x0 obj/CH57x_usbhostClass.o
+ .bss           0x0000000000000000        0x0 obj/CH57x_usbhostClass.o
+ .text.AnalyzeHidIntEndp
+                0x0000000000000000       0xba obj/CH57x_usbhostClass.o
+ .text.AnalyzeBulkEndp
+                0x0000000000000000       0xc4 obj/CH57x_usbhostClass.o
+ .text.SearchTypeDevice
+                0x0000000000000000       0x7e obj/CH57x_usbhostClass.o
+ .text.SETorOFFNumLock
+                0x0000000000000000       0x84 obj/CH57x_usbhostClass.o
+ .text.CtrlGetHIDDeviceReport
+                0x0000000000000000       0x84 obj/CH57x_usbhostClass.o
+ .text.CtrlGetHubDescr
+                0x0000000000000000       0x42 obj/CH57x_usbhostClass.o
+ .text.HubGetPortStatus
+                0x0000000000000000       0x5c obj/CH57x_usbhostClass.o
+ .text.HubSetPortFeature
+                0x0000000000000000       0x3c obj/CH57x_usbhostClass.o
+ .text.InitRootDevice
+                0x0000000000000000      0x294 obj/CH57x_usbhostClass.o
+ .text.HubClearPortFeature
+                0x0000000000000000       0x3c obj/CH57x_usbhostClass.o
+ .text.InitDevOnHub
+                0x0000000000000000      0x21e obj/CH57x_usbhostClass.o
+ .text.EnumHubPort
+                0x0000000000000000      0x1a8 obj/CH57x_usbhostClass.o
+ .text.EnumAllHubPort
+                0x0000000000000000       0x48 obj/CH57x_usbhostClass.o
+ .sdata2.SetupGetHIDDevReport
+                0x0000000000000000        0x8 obj/CH57x_usbhostClass.o
+ .sdata2.SetupGetHubDescr
+                0x0000000000000000        0x8 obj/CH57x_usbhostClass.o
+ .sdata2.SetupSetHIDIdle
+                0x0000000000000000        0x8 obj/CH57x_usbhostClass.o
+ .comment       0x0000000000000000       0x34 obj/CH57x_usbhostClass.o
+ COMMON         0x0000000000000000       0x80 obj/CH57x_usbhostClass.o
+ .text          0x0000000000000000        0x0 obj/startup_CH572.o
+ .data          0x0000000000000000        0x0 obj/startup_CH572.o
+ .bss           0x0000000000000000        0x0 obj/startup_CH572.o
+ .text          0x0000000000000000        0x0 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+ .data          0x0000000000000000        0x0 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+ .bss           0x0000000000000000        0x0 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000000000 0x000000000003c000 xr
+RAM              0x0000000020000000 0x0000000000003000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD obj/Main.o
+LOAD obj/CH57x_clk.o
+LOAD obj/CH57x_cmp.o
+LOAD obj/CH57x_flash.o
+LOAD obj/CH57x_gpio.o
+LOAD obj/CH57x_i2c.o
+LOAD obj/CH57x_keyscan.o
+LOAD obj/CH57x_pwm.o
+LOAD obj/CH57x_pwr.o
+LOAD obj/CH57x_spi.o
+LOAD obj/CH57x_sys.o
+LOAD obj/CH57x_timer.o
+LOAD obj/CH57x_uart.o
+LOAD obj/CH57x_usbdev.o
+LOAD obj/CH57x_usbhostBase.o
+LOAD obj/CH57x_usbhostClass.o
+LOAD obj/startup_CH572.o
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libc.a
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libm.a
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libnosys.a
+LOAD ../../SRC/StdPeriphDriver\libISP572.a
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32\libgcc.a
+START GROUP
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32\libgcc.a
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg.a
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libc.a
+END GROUP
+LOAD c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32\libgcc.a
+
+.init           0x0000000000000000        0x4
+                0x0000000000000000                _sinit = .
+                0x0000000000000000                . = ALIGN (0x4)
+ *(SORT_NONE(.init))
+ .init          0x0000000000000000        0x4 obj/startup_CH572.o
+                0x0000000000000000                _start
+                0x0000000000000004                . = ALIGN (0x4)
+                0x0000000000000004                _einit = .
+
+.highcode_initlalign
+                0x0000000000000004        0x0
+                0x0000000000000004                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_init_lma = .)
+
+.highcodelalign
+                0x0000000000000004        0x0
+                0x0000000000000004                . = ALIGN (0x4)
+                0x0000000000000004                PROVIDE (_highcode_lma = .)
+
+.highcode       0x0000000020000000      0x724 load address 0x0000000000000004
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_highcode_vma_start = .)
+                0x0000000020000000                . = ALIGN (0x400)
+ *(.vector)
+ .vector        0x0000000020000000       0x90 obj/startup_CH572.o
+                0x0000000020000000                _vector_base
+ *(.highcode)
+ .highcode      0x0000000020000090      0x384 obj/CH57x_sys.o
+                0x0000000020000090                SetSysClock
+                0x0000000020000300                SYS_ResetExecute
+                0x000000002000035e                HardFault_Handler
+                0x00000000200003e4                NMI_Handler
+                0x00000000200003e6                mDelayuS
+                0x00000000200003f6                mDelaymS
+ *(.highcode.*)
+ .highcode.FLASH_ROM_BEG_FF
+                0x0000000020000414       0x34 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000414                FLASH_ROM_BEG_FF
+ .highcode.FLASH_ROM_BEG
+                0x0000000020000448       0x14 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000448                FLASH_ROM_BEG
+ .highcode.FLASH_ROM_END
+                0x000000002000045c        0xe ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x000000002000045c                FLASH_ROM_END
+ .highcode.FLASH_ROM_IN
+                0x000000002000046a        0xe ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x000000002000046a                FLASH_ROM_IN
+ .highcode.FLASH_ROM_OUT
+                0x0000000020000478        0xe ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000478                FLASH_ROM_OUT
+ .highcode.FLASH_ROM_ADDR
+                0x0000000020000486       0x48 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000486                FLASH_ROM_ADDR
+ .highcode.FLASH_ROM_WAIT
+                0x00000000200004ce       0x38 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x00000000200004ce                FLASH_ROM_WAIT
+ .highcode.FLASH_START
+                0x0000000020000506       0x36 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000506                FLASH_START
+ .highcode.FLASH_CMD_ROM_WRITE
+                0x000000002000053c       0x60 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x000000002000053c                FLASH_CMD_ROM_WRITE
+ .highcode.FLASH_CMD_ROM_ERASE
+                0x000000002000059c       0x72 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x000000002000059c                FLASH_CMD_ROM_ERASE
+ .highcode.FLASH_CMD_ROM_VERIFY
+                0x000000002000060e       0x50 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x000000002000060e                FLASH_CMD_ROM_VERIFY
+ .highcode.FLASH_CMD_ROM_PWR
+                0x000000002000065e       0x12 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x000000002000065e                FLASH_CMD_ROM_PWR
+ .highcode.FLASH_CMD_GET_ROM_INFO
+                0x0000000020000670       0x5a ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000670                FLASH_CMD_GET_ROM_INFO
+ .highcode.FLASH_CMD_GET_UNIQUE_ID
+                0x00000000200006ca       0x3e ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x00000000200006ca                FLASH_CMD_GET_UNIQUE_ID
+ .highcode.FLASH_CMD_ROM_SW_RESET
+                0x0000000020000708       0x1a ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x0000000020000708                FLASH_CMD_ROM_SW_RESET
+                0x0000000020000724                . = ALIGN (0x4)
+ *fill*         0x0000000020000722        0x2 
+                0x0000000020000724                PROVIDE (_highcode_vma_end = .)
+
+.text           0x0000000000000728      0x2f4
+                0x0000000000000728                . = ALIGN (0x4)
+ *(SORT_NONE(.handle_reset))
+ .handle_reset  0x0000000000000728       0xbe obj/startup_CH572.o
+                0x0000000000000728                handle_reset
+ *(.text)
+ *(.text.*)
+ .text.startup.main
+                0x00000000000007e6       0x52 obj/Main.o
+                0x00000000000007e6                main
+ .text.GPIOA_ModeCfg
+                0x0000000000000838       0xa6 obj/CH57x_gpio.o
+                0x0000000000000838                GPIOA_ModeCfg
+ .text.FLASH_EEPROM_CMD
+                0x00000000000008de      0x12a ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                0x00000000000008de                FLASH_EEPROM_CMD
+ *(.rodata)
+ *(.rodata*)
+ *fill*         0x0000000000000a08        0x0 
+ .rodata.GPIOA_ModeCfg
+                0x0000000000000a08       0x14 obj/CH57x_gpio.o
+ *(.sdata2.*)
+ *(.glue_7)
+ *(.glue_7t)
+ *(.gnu.linkonce.t.*)
+                0x0000000000000a1c                . = ALIGN (0x4)
+
+.vector_handler
+                0x0000000000000a1c        0x2
+ .vector_handler
+                0x0000000000000a1c        0x2 obj/startup_CH572.o
+                0x0000000000000a1c                CMP_IRQHandler
+                0x0000000000000a1c                GPIOA_IRQHandler
+                0x0000000000000a1c                SysTick_Handler
+                0x0000000000000a1c                UART_IRQHandler
+                0x0000000000000a1c                SWI_Handler
+                0x0000000000000a1c                BB_IRQHandler
+                0x0000000000000a1c                Break_Point_Handler
+                0x0000000000000a1c                Ecall_M_Mode_Handler
+                0x0000000000000a1c                RTC_IRQHandler
+                0x0000000000000a1c                SPI_IRQHandler
+                0x0000000000000a1c                PWMX_IRQHandler
+                0x0000000000000a1c                KEYSCAN_IRQHandler
+                0x0000000000000a1c                USB_IRQHandler
+                0x0000000000000a1c                I2C_IRQHandler
+                0x0000000000000a1c                LLE_IRQHandler
+                0x0000000000000a1c                TMR_IRQHandler
+                0x0000000000000a1c                WDOG_BAT_IRQHandler
+                0x0000000000000a1c                Ecall_U_Mode_Handler
+
+.rela.dyn       0x0000000000000a20        0x0
+ .rela.init     0x0000000000000a20        0x0 obj/Main.o
+ .rela.vector   0x0000000000000a20        0x0 obj/Main.o
+ .rela.handle_reset
+                0x0000000000000a20        0x0 obj/Main.o
+
+.fini           0x0000000000000a1e        0x2
+ *(SORT_NONE(.fini))
+                0x0000000000000a20                . = ALIGN (0x4)
+ *fill*         0x0000000000000a1e        0x2 
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (_eitcm = .)
+
+.preinit_array  0x0000000000000a20        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0000000000000a20        0x0
+                [!provide]                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                [!provide]                        PROVIDE (__init_array_end = .)
+
+.fini_array     0x0000000000000a20        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.dlalign        0x0000000000000a20        0x0
+                0x0000000000000a20                . = ALIGN (0x4)
+                0x0000000000000a20                PROVIDE (_data_lma = .)
+
+.data           0x0000000020000724        0x4 load address 0x0000000000000a20
+                0x0000000020000724                . = ALIGN (0x4)
+                0x0000000020000724                PROVIDE (_data_vma = .)
+ *(.gnu.linkonce.r.*)
+ *(.data .data.*)
+ *(.gnu.linkonce.d.*)
+                0x0000000020000728                . = ALIGN (0x8)
+ *fill*         0x0000000020000724        0x4 
+                0x0000000020000f28                PROVIDE (__global_pointer$ = (. + 0x800))
+ *(.sdata .sdata.*)
+ *(.gnu.linkonce.s.*)
+                0x0000000020000728                . = ALIGN (0x8)
+ *(.srodata.cst16)
+ *(.srodata.cst8)
+ *(.srodata.cst4)
+ *(.srodata.cst2)
+ *(.srodata .srodata.*)
+                0x0000000020000728                . = ALIGN (0x4)
+                0x0000000020000728                PROVIDE (_edata = .)
+
+.bss            0x0000000020000728        0x0 load address 0x0000000000000a20
+                0x0000000020000728                . = ALIGN (0x4)
+                0x0000000020000728                PROVIDE (_sbss = .)
+ *(.sbss*)
+ *(.gnu.linkonce.sb.*)
+ *(.bss*)
+ *(.gnu.linkonce.b.*)
+ *(COMMON*)
+                0x0000000020000728                . = ALIGN (0x4)
+                0x0000000020000728                PROVIDE (_ebss = .)
+                0x0000000020000728                PROVIDE (_end = _ebss)
+                [!provide]                        PROVIDE (end = .)
+
+.stack          0x0000000020003000        0x0
+                0x0000000020003000                . = ALIGN (0x4)
+                0x0000000020003000                PROVIDE (_eusrstack = .)
+OUTPUT(obj/firmware.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x33
+ .comment       0x0000000000000000       0x33 obj/Main.o
+                                         0x34 (size before relaxing)
+ .comment       0x0000000000000033       0x34 obj/CH57x_gpio.o
+ .comment       0x0000000000000033       0x34 obj/CH57x_sys.o
+ .comment       0x0000000000000033       0x34 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+
+Cross Reference Table
+
+Symbol                                            File
+AnalyzeBulkEndp                                   obj/CH57x_usbhostClass.o
+AnalyzeHidIntEndp                                 obj/CH57x_usbhostClass.o
+AnalyzeRootHub                                    obj/CH57x_usbhostBase.o
+BB_IRQHandler                                     obj/startup_CH572.o
+Break_Point_Handler                               obj/startup_CH572.o
+CMP_INTCfg                                        obj/CH57x_cmp.o
+CMP_IRQHandler                                    obj/startup_CH572.o
+CMP_Init                                          obj/CH57x_cmp.o
+CMP_OutToTIMCAPCfg                                obj/CH57x_cmp.o
+Com_Buffer                                        obj/CH57x_usbhostClass.o
+                                                  obj/CH57x_usbhostBase.o
+CopySetupReqPkg                                   obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+CtrlClearEndpStall                                obj/CH57x_usbhostBase.o
+CtrlGetConfigDescr                                obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+CtrlGetDeviceDescr                                obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+CtrlGetHIDDeviceReport                            obj/CH57x_usbhostClass.o
+CtrlGetHubDescr                                   obj/CH57x_usbhostClass.o
+CtrlSetUsbAddress                                 obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+CtrlSetUsbConfig                                  obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+CtrlSetUsbIntercace                               obj/CH57x_usbhostBase.o
+DevEP1_IN_Deal                                    obj/CH57x_usbdev.o
+DevEP2_IN_Deal                                    obj/CH57x_usbdev.o
+DevEP3_IN_Deal                                    obj/CH57x_usbdev.o
+DevEP4_IN_Deal                                    obj/CH57x_usbdev.o
+DevOnHubPort                                      obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+DisableRootHubPort                                obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+ENCODER_IRQHandler                                obj/startup_CH572.o
+ENC_Config                                        obj/CH57x_timer.o
+Ecall_M_Mode_Handler                              obj/startup_CH572.o
+Ecall_U_Mode_Handler                              obj/startup_CH572.o
+EnableRootHubPort                                 obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+EnumAllHubPort                                    obj/CH57x_usbhostClass.o
+EnumHubPort                                       obj/CH57x_usbhostClass.o
+FLASH_CMD_GET_ROM_INFO                            ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_CMD_GET_UNIQUE_ID                           ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_CMD_ROM_ERASE                               ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_CMD_ROM_PWR                                 ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_CMD_ROM_SW_RESET                            ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_CMD_ROM_VERIFY                              ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_CMD_ROM_WRITE                               ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_EEPROM_CMD                                  ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+                                                  obj/CH57x_sys.o
+                                                  obj/CH57x_pwr.o
+                                                  obj/CH57x_flash.o
+FLASH_ROM_ADDR                                    ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_ROM_BEG                                     ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_ROM_BEG_FF                                  ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_ROM_END                                     ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_ROM_IN                                      ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_ROM_OUT                                     ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_ROM_READ                                    obj/CH57x_flash.o
+FLASH_ROM_WAIT                                    ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FLASH_START                                       ../../SRC/StdPeriphDriver\libISP572.a(ISP572.o)
+FoundNewDev                                       obj/CH57x_usbhostBase.o
+Freq_LSI                                          obj/CH57x_clk.o
+                                                  obj/CH57x_sys.o
+GET_UNIQUE_ID                                     obj/CH57x_flash.o
+GPIOADigitalCfg                                   obj/CH57x_gpio.o
+GPIOA_IRQHandler                                  obj/startup_CH572.o
+GPIOA_ITModeCfg                                   obj/CH57x_gpio.o
+GPIOA_ModeCfg                                     obj/CH57x_gpio.o
+                                                  obj/Main.o
+GPIOPinRemap                                      obj/CH57x_gpio.o
+GetSysClock                                       obj/CH57x_sys.o
+                                                  obj/CH57x_uart.o
+                                                  obj/CH57x_i2c.o
+                                                  obj/CH57x_clk.o
+HSECFG_Capacitance                                obj/CH57x_clk.o
+HSECFG_Current                                    obj/CH57x_clk.o
+HardFault_Handler                                 obj/CH57x_sys.o
+HostCtrlTransfer                                  obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+HubClearPortFeature                               obj/CH57x_usbhostClass.o
+HubGetPortStatus                                  obj/CH57x_usbhostClass.o
+HubSetPortFeature                                 obj/CH57x_usbhostClass.o
+I2C_ARPCmd                                        obj/CH57x_i2c.o
+I2C_AcknowledgeConfig                             obj/CH57x_i2c.o
+I2C_CalculatePEC                                  obj/CH57x_i2c.o
+I2C_CheckEvent                                    obj/CH57x_i2c.o
+I2C_ClearFlag                                     obj/CH57x_i2c.o
+I2C_ClearITPendingBit                             obj/CH57x_i2c.o
+I2C_Cmd                                           obj/CH57x_i2c.o
+I2C_DualAddressCmd                                obj/CH57x_i2c.o
+I2C_FastModeDutyCycleConfig                       obj/CH57x_i2c.o
+I2C_GeneralCallCmd                                obj/CH57x_i2c.o
+I2C_GenerateSTART                                 obj/CH57x_i2c.o
+I2C_GenerateSTOP                                  obj/CH57x_i2c.o
+I2C_GetFlagStatus                                 obj/CH57x_i2c.o
+I2C_GetITStatus                                   obj/CH57x_i2c.o
+I2C_GetLastEvent                                  obj/CH57x_i2c.o
+I2C_GetPEC                                        obj/CH57x_i2c.o
+I2C_IRQHandler                                    obj/startup_CH572.o
+I2C_ITConfig                                      obj/CH57x_i2c.o
+I2C_Init                                          obj/CH57x_i2c.o
+I2C_NACKPositionConfig                            obj/CH57x_i2c.o
+I2C_OwnAddress2Config                             obj/CH57x_i2c.o
+I2C_PECPositionConfig                             obj/CH57x_i2c.o
+I2C_ReceiveData                                   obj/CH57x_i2c.o
+I2C_SMBusAlertConfig                              obj/CH57x_i2c.o
+I2C_Send7bitAddress                               obj/CH57x_i2c.o
+I2C_SendData                                      obj/CH57x_i2c.o
+I2C_SoftwareResetCmd                              obj/CH57x_i2c.o
+I2C_StretchClockCmd                               obj/CH57x_i2c.o
+I2C_TransmitPEC                                   obj/CH57x_i2c.o
+InitDevOnHub                                      obj/CH57x_usbhostClass.o
+InitRootDevice                                    obj/CH57x_usbhostClass.o
+KEYSCAN_IRQHandler                                obj/startup_CH572.o
+KeyPress_Wake                                     obj/CH57x_keyscan.o
+KeyScan_Cfg                                       obj/CH57x_keyscan.o
+LClk_Cfg                                          obj/CH57x_clk.o
+LLE_IRQHandler                                    obj/startup_CH572.o
+LowPower_Halt                                     obj/CH57x_pwr.o
+LowPower_Idle                                     obj/CH57x_pwr.o
+LowPower_Shutdown                                 obj/CH57x_pwr.o
+LowPower_Sleep                                    obj/CH57x_pwr.o
+NMI_Handler                                       obj/CH57x_sys.o
+PWMX_16bit_ACTOUT                                 obj/CH57x_pwm.o
+PWMX_16bit_CycleCfg                               obj/CH57x_pwm.o
+PWMX_ACTOUT                                       obj/CH57x_pwm.o
+PWMX_AlterOutCfg                                  obj/CH57x_pwm.o
+PWMX_CycleCfg                                     obj/CH57x_pwm.o
+PWMX_IRQHandler                                   obj/startup_CH572.o
+PWMX_SyncOutCfg                                   obj/CH57x_pwm.o
+PWM_DMACfg                                        obj/CH57x_pwm.o
+PWR_PeriphClkCfg                                  obj/CH57x_pwr.o
+PWR_PeriphWakeUpCfg                               obj/CH57x_pwr.o
+PowerMonitor                                      obj/CH57x_pwr.o
+RTC_ClearITFlag                                   obj/CH57x_clk.o
+RTC_GetCycleLSI                                   obj/CH57x_clk.o
+RTC_GetITFlag                                     obj/CH57x_clk.o
+RTC_GetTime                                       obj/CH57x_clk.o
+RTC_IRQHandler                                    obj/startup_CH572.o
+RTC_InitClock                                     obj/CH57x_clk.o
+RTC_InitTime                                      obj/CH57x_clk.o
+RTC_ModeFunDisable                                obj/CH57x_clk.o
+RTC_SetCycleLSI                                   obj/CH57x_clk.o
+RTC_TMRFunCfg                                     obj/CH57x_clk.o
+RTC_TRIGFunCfg                                    obj/CH57x_clk.o
+ResetRootHubPort                                  obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+SETorOFFNumLock                                   obj/CH57x_usbhostClass.o
+SPI_2WIRE_MasterOutputInit                        obj/CH57x_spi.o
+SPI_2WIRE_MasterReceiveInit                       obj/CH57x_spi.o
+SPI_2WIRE_SlaveInit                               obj/CH57x_spi.o
+SPI_2WIRE_SlaveInputInit                          obj/CH57x_spi.o
+SPI_2WIRE_SlaveOutputInit                         obj/CH57x_spi.o
+SPI_CLKCfg                                        obj/CH57x_spi.o
+SPI_DataMode                                      obj/CH57x_spi.o
+SPI_IRQHandler                                    obj/startup_CH572.o
+SPI_MasterDMARecv                                 obj/CH57x_spi.o
+SPI_MasterDMATrans                                obj/CH57x_spi.o
+SPI_MasterDefInit                                 obj/CH57x_spi.o
+SPI_MasterRecv                                    obj/CH57x_spi.o
+SPI_MasterRecvByte                                obj/CH57x_spi.o
+SPI_MasterSendByte                                obj/CH57x_spi.o
+SPI_MasterTrans                                   obj/CH57x_spi.o
+SPI_SlaveDMARecv                                  obj/CH57x_spi.o
+SPI_SlaveDMATrans                                 obj/CH57x_spi.o
+SPI_SlaveInit                                     obj/CH57x_spi.o
+SPI_SlaveRecv                                     obj/CH57x_spi.o
+SPI_SlaveRecvByte                                 obj/CH57x_spi.o
+SPI_SlaveSendByte                                 obj/CH57x_spi.o
+SPI_SlaveTrans                                    obj/CH57x_spi.o
+SWI_Handler                                       obj/startup_CH572.o
+SYS_DisableAllIrq                                 obj/CH57x_sys.o
+SYS_GetInfoSta                                    obj/CH57x_sys.o
+SYS_GetSysTickCnt                                 obj/CH57x_sys.o
+SYS_RecoverIrq                                    obj/CH57x_sys.o
+SYS_ResetExecute                                  obj/CH57x_sys.o
+SearchTypeDevice                                  obj/CH57x_usbhostClass.o
+SelectHubPort                                     obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+SetHostUsbAddr                                    obj/CH57x_usbhostBase.o
+SetSysClock                                       obj/CH57x_sys.o
+                                                  obj/CH57x_pwr.o
+                                                  obj/Main.o
+SetUsbSpeed                                       obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+SetupClrEndpStall                                 obj/CH57x_usbhostBase.o
+SetupGetCfgDescr                                  obj/CH57x_usbhostBase.o
+SetupGetDevDescr                                  obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+SetupGetHIDDevReport                              obj/CH57x_usbhostClass.o
+SetupGetHubDescr                                  obj/CH57x_usbhostClass.o
+SetupSetHIDIdle                                   obj/CH57x_usbhostClass.o
+SetupSetUsbAddr                                   obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+SetupSetUsbConfig                                 obj/CH57x_usbhostBase.o
+SetupSetUsbInterface                              obj/CH57x_usbhostBase.o
+SysTick_Handler                                   obj/startup_CH572.o
+TMR_CapInit                                       obj/CH57x_timer.o
+TMR_DMACfg                                        obj/CH57x_timer.o
+TMR_EXTSingleCounterInit                          obj/CH57x_timer.o
+TMR_IRQHandler                                    obj/startup_CH572.o
+TMR_PWMInit                                       obj/CH57x_timer.o
+TMR_TimerInit                                     obj/CH57x_timer.o
+ThisUsbDev                                        obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
+UART_BaudRateCfg                                  obj/CH57x_uart.o
+UART_ByteTrigCfg                                  obj/CH57x_uart.o
+UART_DefInit                                      obj/CH57x_uart.o
+UART_INTCfg                                       obj/CH57x_uart.o
+UART_IRQHandler                                   obj/startup_CH572.o
+UART_RecvString                                   obj/CH57x_uart.o
+UART_Remap                                        obj/CH57x_uart.o
+UART_SendString                                   obj/CH57x_uart.o
+USBHostTransact                                   obj/CH57x_usbhostBase.o
+USB_DeviceInit                                    obj/CH57x_usbdev.o
+USB_HostInit                                      obj/CH57x_usbhostBase.o
+USB_IRQHandler                                    obj/startup_CH572.o
+UsbDevEndp0Size                                   obj/CH57x_usbhostBase.o
+UserOptionByteClose_SWD                           obj/CH57x_flash.o
+UserOptionByteConfig                              obj/CH57x_flash.o
+UserOptionByte_Active                             obj/CH57x_flash.o
+WDOG_BAT_IRQHandler                               obj/startup_CH572.o
+WWDG_ClearFlag                                    obj/CH57x_sys.o
+WWDG_ITCfg                                        obj/CH57x_sys.o
+WWDG_ResetCfg                                     obj/CH57x_sys.o
+WaitUSB_Interrupt                                 obj/CH57x_usbhostBase.o
+__global_pointer$                                 obj/startup_CH572.o
+_data_lma                                         obj/startup_CH572.o
+_data_vma                                         obj/startup_CH572.o
+_ebss                                             obj/startup_CH572.o
+_edata                                            obj/startup_CH572.o
+_end                                              obj/CH57x_sys.o
+_eusrstack                                        obj/startup_CH572.o
+_highcode_lma                                     obj/startup_CH572.o
+_highcode_vma_end                                 obj/startup_CH572.o
+_highcode_vma_start                               obj/startup_CH572.o
+_sbrk                                             obj/CH57x_sys.o
+_sbss                                             obj/startup_CH572.o
+_start                                            obj/startup_CH572.o
+_vector_base                                      obj/startup_CH572.o
+handle_reset                                      obj/startup_CH572.o
+mDelaymS                                          obj/CH57x_sys.o
+                                                  obj/CH57x_usbhostClass.o
+                                                  obj/CH57x_usbhostBase.o
+                                                  obj/Main.o
+mDelayuS                                          obj/CH57x_sys.o
+                                                  obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_pwr.o
+main                                              obj/Main.o
+                                                  obj/startup_CH572.o
+pEP0_RAM_Addr                                     obj/CH57x_usbdev.o
+pEP1_RAM_Addr                                     obj/CH57x_usbdev.o
+pEP2_RAM_Addr                                     obj/CH57x_usbdev.o
+pEP3_RAM_Addr                                     obj/CH57x_usbdev.o
+pHOST_RX_RAM_Addr                                 obj/CH57x_usbhostBase.o
+pHOST_TX_RAM_Addr                                 obj/CH57x_usbhostBase.o
+                                                  obj/CH57x_usbhostClass.o
