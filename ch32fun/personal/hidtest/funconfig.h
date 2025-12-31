@@ -1,0 +1,12 @@
+#ifndef _FUNCONFIG_H
+#define _FUNCONFIG_H
+
+#define CH572 1
+#define FUNCONF_USE_USBFS 1
+
+// Fix compile errors
+#define FUNCONF_USE_CLK_SEC 0
+#define CLK_SOURCE_CH5XX CLK_SOURCE_PLL_60MHz
+#define FUNCONF_SYSTEM_CORE_CLOCK 60000000
+
+#endif

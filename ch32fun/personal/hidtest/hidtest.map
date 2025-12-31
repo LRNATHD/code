@@ -1,0 +1,407 @@
+
+Discarded input sections
+
+ .data          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .bss           0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .sbss          0x0000000000000000        0x4 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .data          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000000000 0x000000000003c000 xr
+RAM              0x0000000020000000 0x0000000000003000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\libgcc.a
+
+.init           0x0000000000000000       0x94
+                0x0000000000000000                _sinit = .
+                0x0000000000000000                . = ALIGN (0x4)
+ *(SORT_NONE(.init))
+ .init          0x0000000000000000       0x92 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+                0x0000000000000000                InterruptVector
+                0x0000000000000000                InterruptVectorDefault
+                0x0000000000000094                . = ALIGN (0x4)
+ *fill*         0x0000000000000092        0x2 
+                0x0000000000000094                _einit = .
+
+.highcodelalign
+                0x0000000000000094        0x0
+                0x0000000000000094                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_lma = .)
+
+.highcode       0x0000000020000000        0x0 load address 0x0000000000000094
+                0x0000000020000000                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_vma_start = .)
+ *(.highcode*)
+                0x0000000020000000                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_highcode_vma_end = .)
+
+.text           0x0000000000000094     0x3398
+                0x0000000000000094                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000000000094     0x208e C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+                0x000000000000012c                printf
+                0x0000000000000182                vprintf
+                0x00000000000001b0                snprintf
+                0x000000000000020c                sprintf
+                0x000000000000026a                strlen
+                0x00000000000002a6                strnlen
+                0x00000000000002ea                memset
+                0x000000000000033c                strcpy
+                0x000000000000038e                strncpy
+                0x00000000000003f4                strcmp
+                0x0000000000000454                strncmp
+                0x0000000000000cda                strchr
+                0x0000000000000d30                strstr
+                0x0000000000000e14                __memrchr
+                0x0000000000000e78                strrchr
+                0x0000000000000eac                memcpy
+                0x0000000000000f0c                memcmp
+                0x0000000000000f90                memmove
+                0x0000000000001070                memchr
+                0x00000000000010da                puts
+                0x0000000000001120                mini_itoa
+                0x0000000000001472                mini_vsnprintf
+                0x00000000000014f2                mini_vpprintf
+                0x00000000000018be                mini_snprintf
+                0x0000000000001918                mini_pprintf
+                0x0000000000001972                PrintHex
+                0x0000000000001a1a                setjmp
+                0x0000000000001a56                longjmp
+                0x0000000000001a92                handle_debug_input
+                0x0000000000001af6                poll_input
+                0x0000000000001b30                _write
+                0x0000000000001d1a                putchar
+                0x0000000000001dc4                SetupDebugPrintf
+                0x0000000000001dec                CallConstructors
+                0x0000000000001e2c                WaitForDebuggerToAttach
+                0x0000000000001ee8                DelaySysTick
+                0x0000000000001f78                SystemInit
+ .text          0x0000000000002122      0x4ee C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+                0x0000000000002186                USBFS_InternalFinishSetup
+                0x0000000000002286                USBFSSetup
+                0x000000000000230e                USBFSReset
+                0x000000000000246a                USBFS_SendEndpointNEW
+                0x00000000000025b8                main
+ *(.text.*)
+ .text.handle_reset
+                0x0000000000002610       0xae C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+                0x0000000000002610                handle_reset
+ .text.vector_handler
+                0x00000000000026be       0x7a C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+                0x00000000000026be                EXTI2_IRQHandler
+                0x00000000000026be                TIM8_TRG_COM_IRQHandler
+                0x00000000000026be                TIM8_CC_IRQHandler
+                0x00000000000026be                USART_WKUP_IRQHandler
+                0x00000000000026be                UART8_IRQHandler
+                0x00000000000026be                SPI4_IRQHandler
+                0x00000000000026be                NFC_IRQHandler
+                0x00000000000026be                DFSDM0_IRQHandler
+                0x00000000000026be                TIM1_CC_IRQHandler
+                0x00000000000026be                HardFault_Handler
+                0x00000000000026be                TIM10_IRQHandler
+                0x00000000000026be                GPIOB_IRQHandler
+                0x00000000000026be                IPC_CH2_Handler
+                0x00000000000026be                USBPD_IRQHandler
+                0x00000000000026be                TIM6_IRQHandler
+                0x00000000000026be                GPIOA_IRQHandler
+                0x00000000000026be                SysTick_Handler
+                0x00000000000026be                CAN3_RX1_IRQHandler
+                0x00000000000026be                I3C_ER_IRQHandler
+                0x00000000000026be                PVD_IRQHandler
+                0x00000000000026be                SDIO_IRQHandler
+                0x00000000000026be                TIM9_BRK_IRQHandler
+                0x00000000000026be                NMI_Handler
+                0x00000000000026be                DMA2_Channel8_IRQHandler
+                0x00000000000026be                CAN2_RX1_IRQHandler
+                0x00000000000026be                EXTI3_IRQHandler
+                0x00000000000026be                HSEM_Handler
+                0x00000000000026be                UART1_IRQHandler
+                0x00000000000026be                USBHS_IRQHandler
+                0x00000000000026be                LPTIM2_IRQHandler
+                0x00000000000026be                DMA2_Channel9_IRQHandler
+                0x00000000000026be                TIM10_CC_IRQHandler
+                0x00000000000026be                EXTI25_16_IRQHandler
+                0x00000000000026be                I2C3_ER_IRQHandler
+                0x00000000000026be                USBFS_IRQHandler
+                0x00000000000026be                UART0_IRQHandler
+                0x00000000000026be                USART8_IRQHandler
+                0x00000000000026be                EXTI0_IRQHandler
+                0x00000000000026be                I2C2_EV_IRQHandler
+                0x00000000000026be                TIM10_TRG_COM_IRQHandler
+                0x00000000000026be                LPTIM_IRQHandler
+                0x00000000000026be                CAN1_RX0_IRQHandler
+                0x00000000000026be                CAN3_SCE_IRQHandler
+                0x00000000000026be                CAN2_SCE_IRQHandler
+                0x00000000000026be                ADC1_2_IRQHandler
+                0x00000000000026be                BB_IRQHandler
+                0x00000000000026be                Break_Point_Handler
+                0x00000000000026be                IPC_CH0_Handler
+                0x00000000000026be                TIM2_CC_IRQHandler
+                0x00000000000026be                SPI1_IRQHandler
+                0x00000000000026be                USART5_IRQHandler
+                0x00000000000026be                TAMPER_IRQHandler
+                0x00000000000026be                TMR0_IRQHandler
+                0x00000000000026be                AWU_IRQHandler
+                0x00000000000026be                EXTI7_0_IRQHandler
+                0x00000000000026be                CAN2_RX0_IRQHandler
+                0x00000000000026be                OSCWakeUp_IRQHandler
+                0x00000000000026be                TIM8_UP_IRQHandler
+                0x00000000000026be                Ecall_M_Mode_Handler
+                0x00000000000026be                ECDC_IRQHandler
+                0x00000000000026be                SDMMC_IRQHandler
+                0x00000000000026be                USART7_IRQHandler
+                0x00000000000026be                DMA2_Channel2_IRQHandler
+                0x00000000000026be                DMA1_Channel4_IRQHandler
+                0x00000000000026be                ADC1_IRQHandler
+                0x00000000000026be                TIM2_BRK_IRQHandler
+                0x00000000000026be                USART6_IRQHandler
+                0x00000000000026be                CAN3_RX0_IRQHandler
+                0x00000000000026be                HSADC_IRQHandler
+                0x00000000000026be                TIM9_UP_IRQHandler
+                0x00000000000026be                USART3_IRQHandler
+                0x00000000000026be                RTC_IRQHandler
+                0x00000000000026be                DMA1_Channel7_IRQHandler
+                0x00000000000026be                LED_IRQHandler
+                0x00000000000026be                CAN1_RX1_IRQHandler
+                0x00000000000026be                DVP_IRQHandler
+                0x00000000000026be                UART5_IRQHandler
+                0x00000000000026be                USBSS_IRQHandler
+                0x00000000000026be                SWPMI_IRQHandler
+                0x00000000000026be                EXTI15_8_IRQHandler
+                0x00000000000026be                USBPDWakeUp_IRQHandler
+                0x00000000000026be                TIM4_IRQHandler
+                0x00000000000026be                DMA2_Channel1_IRQHandler
+                0x00000000000026be                SWPMI_WKUP_IRQHandler
+                0x00000000000026be                USBPD_WKUP_IRQHandler
+                0x00000000000026be                I2C1_EV_IRQHandler
+                0x00000000000026be                UART2_IRQHandler
+                0x00000000000026be                USBSSWakeup_IRQHandler
+                0x00000000000026be                USART4_IRQHandler
+                0x00000000000026be                PWMX_IRQHandler
+                0x00000000000026be                DMA1_Channel6_IRQHandler
+                0x00000000000026be                UART4_IRQHandler
+                0x00000000000026be                DMA2_Channel4_IRQHandler
+                0x00000000000026be                TIM3_IRQHandler
+                0x00000000000026be                RCC_IRQHandler
+                0x00000000000026be                TIM1_TRG_COM_IRQHandler
+                0x00000000000026be                DMA1_Channel1_IRQHandler
+                0x00000000000026be                DMA2_Channel7_IRQHandler
+                0x00000000000026be                QSPI1_IRQHandler
+                0x00000000000026be                EXTI15_10_IRQHandler
+                0x00000000000026be                ADC_IRQHandler
+                0x00000000000026be                DMA1_Channel8_IRQHandler
+                0x00000000000026be                IPC_CH3_Handler
+                0x00000000000026be                I3C_EV_IRQHandler
+                0x00000000000026be                TMR2_IRQHandler
+                0x00000000000026be                I3C_WKUP_IRQHandler
+                0x00000000000026be                DefaultIRQHandler
+                0x00000000000026be                TIM12_IRQHandler
+                0x00000000000026be                TIM7_IRQHandler
+                0x00000000000026be                CAN2_TX_IRQHandler
+                0x00000000000026be                TIM5_IRQHandler
+                0x00000000000026be                I2C3_EV_IRQHandler
+                0x00000000000026be                EXTI9_5_IRQHandler
+                0x00000000000026be                PIOC_IRQHandler
+                0x00000000000026be                TIM9_IRQHandler
+                0x00000000000026be                LTDC_IRQHandler
+                0x00000000000026be                SAI_IRQHandler
+                0x00000000000026be                SPI2_IRQHandler
+                0x00000000000026be                OSC32KCal_IRQHandler
+                0x00000000000026be                IPC_CH1_Handler
+                0x00000000000026be                I2C_IRQHandler
+                0x00000000000026be                LPTIM1_WKUP_IRQHandler
+                0x00000000000026be                TIM10_BRK_IRQHandler
+                0x00000000000026be                TIM9_CC_IRQHandler
+                0x00000000000026be                CAN1_TX_IRQHandler
+                0x00000000000026be                DMA2_Channel5_IRQHandler
+                0x00000000000026be                USB2_IRQHandler
+                0x00000000000026be                USBHSWakeUp_IRQHandler
+                0x00000000000026be                DMA1_Channel5_IRQHandler
+                0x00000000000026be                EXTI4_IRQHandler
+                0x00000000000026be                USB_LP_CAN1_RX0_IRQHandler
+                0x00000000000026be                QSPI2_IRQHandler
+                0x00000000000026be                RNG_IRQHandler
+                0x00000000000026be                USB_HP_CAN1_TX_IRQHandler
+                0x00000000000026be                LLE_IRQHandler
+                0x00000000000026be                CMPWakeUp_IRQHandler
+                0x00000000000026be                DMA1_Channel3_IRQHandler
+                0x00000000000026be                FSMC_IRQHandler
+                0x00000000000026be                ETH_IRQHandler
+                0x00000000000026be                TIM1_UP_IRQHandler
+                0x00000000000026be                LPTIMWakeUp_IRQHandler
+                0x00000000000026be                WWDG_IRQHandler
+                0x00000000000026be                USBHSWakeup_IRQHandler
+                0x00000000000026be                DMA2_Channel11_IRQHandler
+                0x00000000000026be                WDOG_BAT_IRQHandler
+                0x00000000000026be                Ecall_U_Mode_Handler
+                0x00000000000026be                I2C4_EV_IRQHandler
+                0x00000000000026be                CAN3_TX_IRQHandler
+                0x00000000000026be                TMR3_IRQHandler
+                0x00000000000026be                DMA2_Channel6_IRQHandler
+                0x00000000000026be                TIM2_IRQHandler
+                0x00000000000026be                SW_Handler
+                0x00000000000026be                TIM1_BRK_IRQHandler
+                0x00000000000026be                GPHA_IRQHandler
+                0x00000000000026be                OPA_IRQHandler
+                0x00000000000026be                DMA2_Channel10_IRQHandler
+                0x00000000000026be                EXTI1_IRQHandler
+                0x00000000000026be                SPI0_IRQHandler
+                0x00000000000026be                USB2_HOST_IRQHandler
+                0x00000000000026be                LPTIM2_WKUP_IRQHandler
+                0x00000000000026be                RTCAlarm_IRQHandler
+                0x00000000000026be                TIM11_IRQHandler
+                0x00000000000026be                TIM10_UP_IRQHandler
+                0x00000000000026be                UART7_IRQHandler
+                0x00000000000026be                TIM9_TRG_COM_IRQHandler
+                0x00000000000026be                USART2_IRQHandler
+                0x00000000000026be                UART6_IRQHandler
+                0x00000000000026be                UHSIF_IRQHandler
+                0x00000000000026be                ETHWakeUp_IRQHandler
+                0x00000000000026be                I2C2_ER_IRQHandler
+                0x00000000000026be                DMA1_Channel2_IRQHandler
+                0x00000000000026be                TIM8_BRK_IRQHandler
+                0x00000000000026be                TIM2_TRG_IRQHandler
+                0x00000000000026be                CAN1_SCE_IRQHandler
+                0x00000000000026be                FLASH_IRQHandler
+                0x00000000000026be                USBFSWakeUp_IRQHandler
+                0x00000000000026be                USART1_IRQHandler
+                0x00000000000026be                OTG_FS_IRQHandler
+                0x00000000000026be                SPI3_IRQHandler
+                0x00000000000026be                USBFS_WakeUp_IRQHandler
+                0x00000000000026be                UART3_IRQHandler
+                0x00000000000026be                I2C1_ER_IRQHandler
+                0x00000000000026be                FMC_IRQHandler
+                0x00000000000026be                USB2_DEVICE_IRQHandler
+                0x00000000000026be                LPTIM1_IRQHandler
+                0x00000000000026be                DFSDM1_IRQHandler
+                0x00000000000026be                TMR1_IRQHandler
+                0x00000000000026be                I2C4_ER_IRQHandler
+                0x00000000000026be                SERDES_IRQHandler
+                0x00000000000026be                USBSS_LINK_IRQHandler
+                0x00000000000026be                USBWakeUp_IRQHandler
+                0x00000000000026be                DMA2_Channel3_IRQHandler
+ .text.vector_handler
+                0x0000000000002738      0xa76 C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+                0x0000000000002738                USB_IRQHandler
+ *(.rodata)
+ *fill*         0x00000000000031ae        0x2 
+ .rodata        0x00000000000031b0       0x88 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .rodata        0x0000000000003238      0x1f4 C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+ *(.rodata*)
+ *(.gnu.linkonce.t.*)
+                0x000000000000342c                . = ALIGN (0x4)
+
+.rela.dyn       0x000000000000342c        0x0
+ .rela.text     0x000000000000342c        0x0 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .rela.text.handle_reset
+                0x000000000000342c        0x0 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .rela.init     0x000000000000342c        0x0 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .rela.text.vector_handler
+                0x000000000000342c        0x0 C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+
+.fini           0x000000000000342c        0x0
+ *(SORT_NONE(.fini))
+                0x000000000000342c                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (_eitcm = .)
+
+.preinit_array  0x000000000000342c        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x000000000000342c        0x0
+                0x000000000000342c                PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                0x000000000000342c                PROVIDE (__init_array_end = .)
+
+.fini_array     0x000000000000342c        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.dalign         0x0000000020000000        0x0 load address 0x000000000000342c
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_data_vma = .)
+
+.dlalign        0x000000000000342c        0x0
+                0x000000000000342c                . = ALIGN (0x4)
+                0x000000000000342c                PROVIDE (_data_lma = .)
+
+.data           0x0000000020000000        0x0 load address 0x000000000000342c
+                0x0000000020000000                . = ALIGN (0x4)
+                0x00000000200003fc                __global_pointer$ = (. + 0x3fc)
+ *(.gnu.linkonce.r.*)
+ *(.data .data.*)
+ *(.gnu.linkonce.d.*)
+                0x0000000020000000                . = ALIGN (0x8)
+ *(.sdata .sdata.*)
+ *(.sdata2*)
+ *(.gnu.linkonce.s.*)
+                0x0000000020000000                . = ALIGN (0x8)
+ *(.srodata.cst16)
+ *(.srodata.cst8)
+ *(.srodata.cst4)
+ *(.srodata.cst2)
+ *(.srodata .srodata.*)
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_edata = .)
+
+.bss            0x0000000020000000       0xa8 load address 0x000000000000342c
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_sbss = .)
+ *(.sbss*)
+ .sbss          0x0000000020000000        0x1 C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+                0x0000000020000000                usb_debug
+ *(.gnu.linkonce.sb.*)
+ *(.bss*)
+ *fill*         0x0000000020000001        0x3 
+ .bss           0x0000000020000004       0xa4 C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o
+                0x0000000020000004                USBFSCTX
+ *(.gnu.linkonce.b.*)
+ *(COMMON*)
+                0x00000000200000a8                . = ALIGN (0x4)
+                0x00000000200000a8                PROVIDE (_ebss = .)
+                [!provide]                        PROVIDE (_end = _ebss)
+                [!provide]                        PROVIDE (end = .)
+                0x0000000020003000                PROVIDE (_eusrstack = (ORIGIN (RAM) + LENGTH (RAM)))
+
+/DISCARD/
+ *(.note .note.*)
+ *(.eh_frame .eh_frame.*)
+ *(.comment .comment.*)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.ARM.exidx*)
+OUTPUT(hidtest.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x2b
+ .riscv.attributes
+                0x0000000000000000       0x2b C:\Users\LRNA\AppData\Local\Temp\ccceVsQe.o
+ .riscv.attributes
+                0x000000000000002b       0x2b C:\Users\LRNA\AppData\Local\Temp\ccVTdtQ9.o

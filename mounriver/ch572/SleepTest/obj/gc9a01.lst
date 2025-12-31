@@ -1,0 +1,1696 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 1
+
+
+   1              		.file	"gc9a01.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.GC9A01_WriteData,"ax",@progbits
+   5              		.align	1
+   7              	GC9A01_WriteData:
+   8 0000 4111     		addi	sp,sp,-16
+   9 0002 8567     		li	a5,4096
+  10 0004 22C4     		sw	s0,8(sp)
+  11 0006 26C2     		sw	s1,4(sp)
+  12 0008 06C6     		sw	ra,12(sp)
+  13 000a 37140040 		li	s0,1073745920
+  14 000e 93870780 		addi	a5,a5,-2048
+  15 0012 232CF40A 		sw	a5,184(s0)
+  16 0016 C144     		li	s1,16
+  17 0018 2326940A 		sw	s1,172(s0)
+  18 001c 97000000 		call	SPI_Transfer
+  18      E7800000 
+  19 0024 B240     		lw	ra,12(sp)
+  20 0026 232C940A 		sw	s1,184(s0)
+  21 002a 2244     		lw	s0,8(sp)
+  22 002c 9244     		lw	s1,4(sp)
+  23 002e 4101     		addi	sp,sp,16
+  24 0030 8280     		jr	ra
+  26              		.section	.text.GC9A01_WriteCmd,"ax",@progbits
+  27              		.align	1
+  29              	GC9A01_WriteCmd:
+  30 0000 4111     		addi	sp,sp,-16
+  31 0002 8567     		li	a5,4096
+  32 0004 22C4     		sw	s0,8(sp)
+  33 0006 26C2     		sw	s1,4(sp)
+  34 0008 06C6     		sw	ra,12(sp)
+  35 000a 37140040 		li	s0,1073745920
+  36 000e 93870780 		addi	a5,a5,-2048
+  37 0012 2326F40A 		sw	a5,172(s0)
+  38 0016 C144     		li	s1,16
+  39 0018 2326940A 		sw	s1,172(s0)
+  40 001c 97000000 		call	SPI_Transfer
+  40      E7800000 
+  41 0024 B240     		lw	ra,12(sp)
+  42 0026 232C940A 		sw	s1,184(s0)
+  43 002a 2244     		lw	s0,8(sp)
+  44 002c 9244     		lw	s1,4(sp)
+  45 002e 4101     		addi	sp,sp,16
+  46 0030 8280     		jr	ra
+  48              		.section	.text.GC9A01_Init,"ax",@progbits
+  49              		.align	1
+  50              		.globl	GC9A01_Init
+  52              	GC9A01_Init:
+  53 0000 4111     		addi	sp,sp,-16
+  54 0002 9145     		li	a1,4
+  55 0004 4145     		li	a0,16
+  56 0006 06C6     		sw	ra,12(sp)
+  57 0008 22C4     		sw	s0,8(sp)
+  58 000a 26C2     		sw	s1,4(sp)
+  59 000c 97000000 		call	GPIOA_ModeCfg
+  59      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 2
+
+
+  60 0014 8564     		li	s1,4096
+  61 0016 13850480 		addi	a0,s1,-2048
+  62 001a 9145     		li	a1,4
+  63 001c 97000000 		call	GPIOA_ModeCfg
+  63      E7800000 
+  64 0024 9145     		li	a1,4
+  65 0026 13050040 		li	a0,1024
+  66 002a 97000000 		call	GPIOA_ModeCfg
+  66      E7800000 
+  67 0032 C147     		li	a5,16
+  68 0034 37140040 		li	s0,1073745920
+  69 0038 232CF40A 		sw	a5,184(s0)
+  70 003c 93840480 		addi	s1,s1,-2048
+  71 0040 232C940A 		sw	s1,184(s0)
+  72 0044 93040040 		li	s1,1024
+  73 0048 232C940A 		sw	s1,184(s0)
+  74 004c 13054006 		li	a0,100
+  75 0050 97000000 		call	mDelaymS
+  75      E7800000 
+  76 0058 13054006 		li	a0,100
+  77 005c 2326940A 		sw	s1,172(s0)
+  78 0060 97000000 		call	mDelaymS
+  78      E7800000 
+  79 0068 1305800C 		li	a0,200
+  80 006c 232C940A 		sw	s1,184(s0)
+  81 0070 97000000 		call	mDelaymS
+  81      E7800000 
+  82 0078 1305F00E 		li	a0,239
+  83 007c 97000000 		call	GC9A01_WriteCmd
+  83      E7800000 
+  84 0084 1305B00E 		li	a0,235
+  85 0088 97000000 		call	GC9A01_WriteCmd
+  85      E7800000 
+  86 0090 5145     		li	a0,20
+  87 0092 97000000 		call	GC9A01_WriteData
+  87      E7800000 
+  88 009a 1305E00F 		li	a0,254
+  89 009e 97000000 		call	GC9A01_WriteCmd
+  89      E7800000 
+  90 00a6 1305F00E 		li	a0,239
+  91 00aa 97000000 		call	GC9A01_WriteCmd
+  91      E7800000 
+  92 00b2 1305B00E 		li	a0,235
+  93 00b6 97000000 		call	GC9A01_WriteCmd
+  93      E7800000 
+  94 00be 5145     		li	a0,20
+  95 00c0 97000000 		call	GC9A01_WriteData
+  95      E7800000 
+  96 00c8 13054008 		li	a0,132
+  97 00cc 97000000 		call	GC9A01_WriteCmd
+  97      E7800000 
+  98 00d4 13050004 		li	a0,64
+  99 00d8 97000000 		call	GC9A01_WriteData
+  99      E7800000 
+ 100 00e0 13055008 		li	a0,133
+ 101 00e4 97000000 		call	GC9A01_WriteCmd
+ 101      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 3
+
+
+ 102 00ec 1305F00F 		li	a0,255
+ 103 00f0 97000000 		call	GC9A01_WriteData
+ 103      E7800000 
+ 104 00f8 13056008 		li	a0,134
+ 105 00fc 97000000 		call	GC9A01_WriteCmd
+ 105      E7800000 
+ 106 0104 1305F00F 		li	a0,255
+ 107 0108 97000000 		call	GC9A01_WriteData
+ 107      E7800000 
+ 108 0110 13057008 		li	a0,135
+ 109 0114 97000000 		call	GC9A01_WriteCmd
+ 109      E7800000 
+ 110 011c 1305F00F 		li	a0,255
+ 111 0120 97000000 		call	GC9A01_WriteData
+ 111      E7800000 
+ 112 0128 13058008 		li	a0,136
+ 113 012c 97000000 		call	GC9A01_WriteCmd
+ 113      E7800000 
+ 114 0134 2945     		li	a0,10
+ 115 0136 97000000 		call	GC9A01_WriteData
+ 115      E7800000 
+ 116 013e 13059008 		li	a0,137
+ 117 0142 97000000 		call	GC9A01_WriteCmd
+ 117      E7800000 
+ 118 014a 13051002 		li	a0,33
+ 119 014e 97000000 		call	GC9A01_WriteData
+ 119      E7800000 
+ 120 0156 1305A008 		li	a0,138
+ 121 015a 97000000 		call	GC9A01_WriteCmd
+ 121      E7800000 
+ 122 0162 0145     		li	a0,0
+ 123 0164 97000000 		call	GC9A01_WriteData
+ 123      E7800000 
+ 124 016c 1305B008 		li	a0,139
+ 125 0170 97000000 		call	GC9A01_WriteCmd
+ 125      E7800000 
+ 126 0178 13050008 		li	a0,128
+ 127 017c 97000000 		call	GC9A01_WriteData
+ 127      E7800000 
+ 128 0184 1305C008 		li	a0,140
+ 129 0188 97000000 		call	GC9A01_WriteCmd
+ 129      E7800000 
+ 130 0190 0545     		li	a0,1
+ 131 0192 97000000 		call	GC9A01_WriteData
+ 131      E7800000 
+ 132 019a 1305D008 		li	a0,141
+ 133 019e 97000000 		call	GC9A01_WriteCmd
+ 133      E7800000 
+ 134 01a6 0545     		li	a0,1
+ 135 01a8 97000000 		call	GC9A01_WriteData
+ 135      E7800000 
+ 136 01b0 1305E008 		li	a0,142
+ 137 01b4 97000000 		call	GC9A01_WriteCmd
+ 137      E7800000 
+ 138 01bc 1305F00F 		li	a0,255
+ 139 01c0 97000000 		call	GC9A01_WriteData
+ 139      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 4
+
+
+ 140 01c8 1305F008 		li	a0,143
+ 141 01cc 97000000 		call	GC9A01_WriteCmd
+ 141      E7800000 
+ 142 01d4 1305F00F 		li	a0,255
+ 143 01d8 97000000 		call	GC9A01_WriteData
+ 143      E7800000 
+ 144 01e0 1305600B 		li	a0,182
+ 145 01e4 97000000 		call	GC9A01_WriteCmd
+ 145      E7800000 
+ 146 01ec 0145     		li	a0,0
+ 147 01ee 97000000 		call	GC9A01_WriteData
+ 147      E7800000 
+ 148 01f6 13050002 		li	a0,32
+ 149 01fa 97000000 		call	GC9A01_WriteData
+ 149      E7800000 
+ 150 0202 13056003 		li	a0,54
+ 151 0206 97000000 		call	GC9A01_WriteCmd
+ 151      E7800000 
+ 152 020e 2145     		li	a0,8
+ 153 0210 97000000 		call	GC9A01_WriteData
+ 153      E7800000 
+ 154 0218 1305A003 		li	a0,58
+ 155 021c 97000000 		call	GC9A01_WriteCmd
+ 155      E7800000 
+ 156 0224 1545     		li	a0,5
+ 157 0226 97000000 		call	GC9A01_WriteData
+ 157      E7800000 
+ 158 022e 13050009 		li	a0,144
+ 159 0232 97000000 		call	GC9A01_WriteCmd
+ 159      E7800000 
+ 160 023a 2145     		li	a0,8
+ 161 023c 97000000 		call	GC9A01_WriteData
+ 161      E7800000 
+ 162 0244 2145     		li	a0,8
+ 163 0246 97000000 		call	GC9A01_WriteData
+ 163      E7800000 
+ 164 024e 2145     		li	a0,8
+ 165 0250 97000000 		call	GC9A01_WriteData
+ 165      E7800000 
+ 166 0258 2145     		li	a0,8
+ 167 025a 97000000 		call	GC9A01_WriteData
+ 167      E7800000 
+ 168 0262 1305D00B 		li	a0,189
+ 169 0266 97000000 		call	GC9A01_WriteCmd
+ 169      E7800000 
+ 170 026e 1945     		li	a0,6
+ 171 0270 97000000 		call	GC9A01_WriteData
+ 171      E7800000 
+ 172 0278 1305C00B 		li	a0,188
+ 173 027c 97000000 		call	GC9A01_WriteCmd
+ 173      E7800000 
+ 174 0284 0145     		li	a0,0
+ 175 0286 97000000 		call	GC9A01_WriteData
+ 175      E7800000 
+ 176 028e 1305F00F 		li	a0,255
+ 177 0292 97000000 		call	GC9A01_WriteCmd
+ 177      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 5
+
+
+ 178 029a 13050006 		li	a0,96
+ 179 029e 97000000 		call	GC9A01_WriteData
+ 179      E7800000 
+ 180 02a6 0545     		li	a0,1
+ 181 02a8 97000000 		call	GC9A01_WriteData
+ 181      E7800000 
+ 182 02b0 1145     		li	a0,4
+ 183 02b2 97000000 		call	GC9A01_WriteData
+ 183      E7800000 
+ 184 02ba 1305300C 		li	a0,195
+ 185 02be 97000000 		call	GC9A01_WriteCmd
+ 185      E7800000 
+ 186 02c6 4D45     		li	a0,19
+ 187 02c8 97000000 		call	GC9A01_WriteData
+ 187      E7800000 
+ 188 02d0 1305400C 		li	a0,196
+ 189 02d4 97000000 		call	GC9A01_WriteCmd
+ 189      E7800000 
+ 190 02dc 4D45     		li	a0,19
+ 191 02de 97000000 		call	GC9A01_WriteData
+ 191      E7800000 
+ 192 02e6 1305900C 		li	a0,201
+ 193 02ea 97000000 		call	GC9A01_WriteCmd
+ 193      E7800000 
+ 194 02f2 13052002 		li	a0,34
+ 195 02f6 97000000 		call	GC9A01_WriteData
+ 195      E7800000 
+ 196 02fe 1305E00B 		li	a0,190
+ 197 0302 97000000 		call	GC9A01_WriteCmd
+ 197      E7800000 
+ 198 030a 4545     		li	a0,17
+ 199 030c 97000000 		call	GC9A01_WriteData
+ 199      E7800000 
+ 200 0314 1305100E 		li	a0,225
+ 201 0318 97000000 		call	GC9A01_WriteCmd
+ 201      E7800000 
+ 202 0320 4145     		li	a0,16
+ 203 0322 97000000 		call	GC9A01_WriteData
+ 203      E7800000 
+ 204 032a 3945     		li	a0,14
+ 205 032c 97000000 		call	GC9A01_WriteData
+ 205      E7800000 
+ 206 0334 1305F00D 		li	a0,223
+ 207 0338 97000000 		call	GC9A01_WriteCmd
+ 207      E7800000 
+ 208 0340 13051002 		li	a0,33
+ 209 0344 97000000 		call	GC9A01_WriteData
+ 209      E7800000 
+ 210 034c 3145     		li	a0,12
+ 211 034e 97000000 		call	GC9A01_WriteData
+ 211      E7800000 
+ 212 0356 0945     		li	a0,2
+ 213 0358 97000000 		call	GC9A01_WriteData
+ 213      E7800000 
+ 214 0360 1305000F 		li	a0,240
+ 215 0364 97000000 		call	GC9A01_WriteCmd
+ 215      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 6
+
+
+ 216 036c 13055004 		li	a0,69
+ 217 0370 97000000 		call	GC9A01_WriteData
+ 217      E7800000 
+ 218 0378 2545     		li	a0,9
+ 219 037a 97000000 		call	GC9A01_WriteData
+ 219      E7800000 
+ 220 0382 2145     		li	a0,8
+ 221 0384 97000000 		call	GC9A01_WriteData
+ 221      E7800000 
+ 222 038c 2145     		li	a0,8
+ 223 038e 97000000 		call	GC9A01_WriteData
+ 223      E7800000 
+ 224 0396 13056002 		li	a0,38
+ 225 039a 97000000 		call	GC9A01_WriteData
+ 225      E7800000 
+ 226 03a2 1305A002 		li	a0,42
+ 227 03a6 97000000 		call	GC9A01_WriteData
+ 227      E7800000 
+ 228 03ae 1305100F 		li	a0,241
+ 229 03b2 97000000 		call	GC9A01_WriteCmd
+ 229      E7800000 
+ 230 03ba 13053004 		li	a0,67
+ 231 03be 97000000 		call	GC9A01_WriteData
+ 231      E7800000 
+ 232 03c6 13050007 		li	a0,112
+ 233 03ca 97000000 		call	GC9A01_WriteData
+ 233      E7800000 
+ 234 03d2 13052007 		li	a0,114
+ 235 03d6 97000000 		call	GC9A01_WriteData
+ 235      E7800000 
+ 236 03de 13056003 		li	a0,54
+ 237 03e2 97000000 		call	GC9A01_WriteData
+ 237      E7800000 
+ 238 03ea 13057003 		li	a0,55
+ 239 03ee 97000000 		call	GC9A01_WriteData
+ 239      E7800000 
+ 240 03f6 1305F006 		li	a0,111
+ 241 03fa 97000000 		call	GC9A01_WriteData
+ 241      E7800000 
+ 242 0402 1305200F 		li	a0,242
+ 243 0406 97000000 		call	GC9A01_WriteCmd
+ 243      E7800000 
+ 244 040e 13055004 		li	a0,69
+ 245 0412 97000000 		call	GC9A01_WriteData
+ 245      E7800000 
+ 246 041a 2545     		li	a0,9
+ 247 041c 97000000 		call	GC9A01_WriteData
+ 247      E7800000 
+ 248 0424 2145     		li	a0,8
+ 249 0426 97000000 		call	GC9A01_WriteData
+ 249      E7800000 
+ 250 042e 2145     		li	a0,8
+ 251 0430 97000000 		call	GC9A01_WriteData
+ 251      E7800000 
+ 252 0438 13056002 		li	a0,38
+ 253 043c 97000000 		call	GC9A01_WriteData
+ 253      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 7
+
+
+ 254 0444 1305A002 		li	a0,42
+ 255 0448 97000000 		call	GC9A01_WriteData
+ 255      E7800000 
+ 256 0450 1305300F 		li	a0,243
+ 257 0454 97000000 		call	GC9A01_WriteCmd
+ 257      E7800000 
+ 258 045c 13053004 		li	a0,67
+ 259 0460 97000000 		call	GC9A01_WriteData
+ 259      E7800000 
+ 260 0468 13050007 		li	a0,112
+ 261 046c 97000000 		call	GC9A01_WriteData
+ 261      E7800000 
+ 262 0474 13052007 		li	a0,114
+ 263 0478 97000000 		call	GC9A01_WriteData
+ 263      E7800000 
+ 264 0480 13056003 		li	a0,54
+ 265 0484 97000000 		call	GC9A01_WriteData
+ 265      E7800000 
+ 266 048c 13057003 		li	a0,55
+ 267 0490 97000000 		call	GC9A01_WriteData
+ 267      E7800000 
+ 268 0498 1305F006 		li	a0,111
+ 269 049c 97000000 		call	GC9A01_WriteData
+ 269      E7800000 
+ 270 04a4 1305D00E 		li	a0,237
+ 271 04a8 97000000 		call	GC9A01_WriteCmd
+ 271      E7800000 
+ 272 04b0 6D45     		li	a0,27
+ 273 04b2 97000000 		call	GC9A01_WriteData
+ 273      E7800000 
+ 274 04ba 2D45     		li	a0,11
+ 275 04bc 97000000 		call	GC9A01_WriteData
+ 275      E7800000 
+ 276 04c4 1305E00A 		li	a0,174
+ 277 04c8 97000000 		call	GC9A01_WriteCmd
+ 277      E7800000 
+ 278 04d0 13057007 		li	a0,119
+ 279 04d4 97000000 		call	GC9A01_WriteData
+ 279      E7800000 
+ 280 04dc 1305D00C 		li	a0,205
+ 281 04e0 97000000 		call	GC9A01_WriteCmd
+ 281      E7800000 
+ 282 04e8 13053006 		li	a0,99
+ 283 04ec 97000000 		call	GC9A01_WriteData
+ 283      E7800000 
+ 284 04f4 13050007 		li	a0,112
+ 285 04f8 97000000 		call	GC9A01_WriteCmd
+ 285      E7800000 
+ 286 0500 1D45     		li	a0,7
+ 287 0502 97000000 		call	GC9A01_WriteData
+ 287      E7800000 
+ 288 050a 1D45     		li	a0,7
+ 289 050c 97000000 		call	GC9A01_WriteData
+ 289      E7800000 
+ 290 0514 1145     		li	a0,4
+ 291 0516 97000000 		call	GC9A01_WriteData
+ 291      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 8
+
+
+ 292 051e 3945     		li	a0,14
+ 293 0520 97000000 		call	GC9A01_WriteData
+ 293      E7800000 
+ 294 0528 3D45     		li	a0,15
+ 295 052a 97000000 		call	GC9A01_WriteData
+ 295      E7800000 
+ 296 0532 2545     		li	a0,9
+ 297 0534 97000000 		call	GC9A01_WriteData
+ 297      E7800000 
+ 298 053c 1D45     		li	a0,7
+ 299 053e 97000000 		call	GC9A01_WriteData
+ 299      E7800000 
+ 300 0546 2145     		li	a0,8
+ 301 0548 97000000 		call	GC9A01_WriteData
+ 301      E7800000 
+ 302 0550 0D45     		li	a0,3
+ 303 0552 97000000 		call	GC9A01_WriteData
+ 303      E7800000 
+ 304 055a 1305800E 		li	a0,232
+ 305 055e 97000000 		call	GC9A01_WriteCmd
+ 305      E7800000 
+ 306 0566 13054003 		li	a0,52
+ 307 056a 97000000 		call	GC9A01_WriteData
+ 307      E7800000 
+ 308 0572 13052006 		li	a0,98
+ 309 0576 97000000 		call	GC9A01_WriteCmd
+ 309      E7800000 
+ 310 057e 6145     		li	a0,24
+ 311 0580 97000000 		call	GC9A01_WriteData
+ 311      E7800000 
+ 312 0588 3545     		li	a0,13
+ 313 058a 97000000 		call	GC9A01_WriteData
+ 313      E7800000 
+ 314 0592 13051007 		li	a0,113
+ 315 0596 97000000 		call	GC9A01_WriteData
+ 315      E7800000 
+ 316 059e 1305D00E 		li	a0,237
+ 317 05a2 97000000 		call	GC9A01_WriteData
+ 317      E7800000 
+ 318 05aa 13050007 		li	a0,112
+ 319 05ae 97000000 		call	GC9A01_WriteData
+ 319      E7800000 
+ 320 05b6 13050007 		li	a0,112
+ 321 05ba 97000000 		call	GC9A01_WriteData
+ 321      E7800000 
+ 322 05c2 6145     		li	a0,24
+ 323 05c4 97000000 		call	GC9A01_WriteData
+ 323      E7800000 
+ 324 05cc 3D45     		li	a0,15
+ 325 05ce 97000000 		call	GC9A01_WriteData
+ 325      E7800000 
+ 326 05d6 13051007 		li	a0,113
+ 327 05da 97000000 		call	GC9A01_WriteData
+ 327      E7800000 
+ 328 05e2 1305F00E 		li	a0,239
+ 329 05e6 97000000 		call	GC9A01_WriteData
+ 329      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 9
+
+
+ 330 05ee 13050007 		li	a0,112
+ 331 05f2 97000000 		call	GC9A01_WriteData
+ 331      E7800000 
+ 332 05fa 13050007 		li	a0,112
+ 333 05fe 97000000 		call	GC9A01_WriteData
+ 333      E7800000 
+ 334 0606 13053006 		li	a0,99
+ 335 060a 97000000 		call	GC9A01_WriteCmd
+ 335      E7800000 
+ 336 0612 6145     		li	a0,24
+ 337 0614 97000000 		call	GC9A01_WriteData
+ 337      E7800000 
+ 338 061c 4545     		li	a0,17
+ 339 061e 97000000 		call	GC9A01_WriteData
+ 339      E7800000 
+ 340 0626 13051007 		li	a0,113
+ 341 062a 97000000 		call	GC9A01_WriteData
+ 341      E7800000 
+ 342 0632 1305100F 		li	a0,241
+ 343 0636 97000000 		call	GC9A01_WriteData
+ 343      E7800000 
+ 344 063e 13050007 		li	a0,112
+ 345 0642 97000000 		call	GC9A01_WriteData
+ 345      E7800000 
+ 346 064a 13050007 		li	a0,112
+ 347 064e 97000000 		call	GC9A01_WriteData
+ 347      E7800000 
+ 348 0656 6145     		li	a0,24
+ 349 0658 97000000 		call	GC9A01_WriteData
+ 349      E7800000 
+ 350 0660 4D45     		li	a0,19
+ 351 0662 97000000 		call	GC9A01_WriteData
+ 351      E7800000 
+ 352 066a 13051007 		li	a0,113
+ 353 066e 97000000 		call	GC9A01_WriteData
+ 353      E7800000 
+ 354 0676 1305300F 		li	a0,243
+ 355 067a 97000000 		call	GC9A01_WriteData
+ 355      E7800000 
+ 356 0682 13050007 		li	a0,112
+ 357 0686 97000000 		call	GC9A01_WriteData
+ 357      E7800000 
+ 358 068e 13050007 		li	a0,112
+ 359 0692 97000000 		call	GC9A01_WriteData
+ 359      E7800000 
+ 360 069a 13054006 		li	a0,100
+ 361 069e 97000000 		call	GC9A01_WriteCmd
+ 361      E7800000 
+ 362 06a6 13058002 		li	a0,40
+ 363 06aa 97000000 		call	GC9A01_WriteData
+ 363      E7800000 
+ 364 06b2 13059002 		li	a0,41
+ 365 06b6 97000000 		call	GC9A01_WriteData
+ 365      E7800000 
+ 366 06be 1305100F 		li	a0,241
+ 367 06c2 97000000 		call	GC9A01_WriteData
+ 367      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 10
+
+
+ 368 06ca 0545     		li	a0,1
+ 369 06cc 97000000 		call	GC9A01_WriteData
+ 369      E7800000 
+ 370 06d4 1305100F 		li	a0,241
+ 371 06d8 97000000 		call	GC9A01_WriteData
+ 371      E7800000 
+ 372 06e0 0145     		li	a0,0
+ 373 06e2 97000000 		call	GC9A01_WriteData
+ 373      E7800000 
+ 374 06ea 1D45     		li	a0,7
+ 375 06ec 97000000 		call	GC9A01_WriteData
+ 375      E7800000 
+ 376 06f4 13056006 		li	a0,102
+ 377 06f8 97000000 		call	GC9A01_WriteCmd
+ 377      E7800000 
+ 378 0700 1305C003 		li	a0,60
+ 379 0704 97000000 		call	GC9A01_WriteData
+ 379      E7800000 
+ 380 070c 0145     		li	a0,0
+ 381 070e 97000000 		call	GC9A01_WriteData
+ 381      E7800000 
+ 382 0716 1305D00C 		li	a0,205
+ 383 071a 97000000 		call	GC9A01_WriteData
+ 383      E7800000 
+ 384 0722 13057006 		li	a0,103
+ 385 0726 97000000 		call	GC9A01_WriteData
+ 385      E7800000 
+ 386 072e 13055004 		li	a0,69
+ 387 0732 97000000 		call	GC9A01_WriteData
+ 387      E7800000 
+ 388 073a 13055004 		li	a0,69
+ 389 073e 97000000 		call	GC9A01_WriteData
+ 389      E7800000 
+ 390 0746 4145     		li	a0,16
+ 391 0748 97000000 		call	GC9A01_WriteData
+ 391      E7800000 
+ 392 0750 0145     		li	a0,0
+ 393 0752 97000000 		call	GC9A01_WriteData
+ 393      E7800000 
+ 394 075a 0145     		li	a0,0
+ 395 075c 97000000 		call	GC9A01_WriteData
+ 395      E7800000 
+ 396 0764 0145     		li	a0,0
+ 397 0766 97000000 		call	GC9A01_WriteData
+ 397      E7800000 
+ 398 076e 13057006 		li	a0,103
+ 399 0772 97000000 		call	GC9A01_WriteCmd
+ 399      E7800000 
+ 400 077a 0145     		li	a0,0
+ 401 077c 97000000 		call	GC9A01_WriteData
+ 401      E7800000 
+ 402 0784 1305C003 		li	a0,60
+ 403 0788 97000000 		call	GC9A01_WriteData
+ 403      E7800000 
+ 404 0790 0145     		li	a0,0
+ 405 0792 97000000 		call	GC9A01_WriteData
+ 405      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 11
+
+
+ 406 079a 0145     		li	a0,0
+ 407 079c 97000000 		call	GC9A01_WriteData
+ 407      E7800000 
+ 408 07a4 0145     		li	a0,0
+ 409 07a6 97000000 		call	GC9A01_WriteData
+ 409      E7800000 
+ 410 07ae 0545     		li	a0,1
+ 411 07b0 97000000 		call	GC9A01_WriteData
+ 411      E7800000 
+ 412 07b8 13054005 		li	a0,84
+ 413 07bc 97000000 		call	GC9A01_WriteData
+ 413      E7800000 
+ 414 07c4 4145     		li	a0,16
+ 415 07c6 97000000 		call	GC9A01_WriteData
+ 415      E7800000 
+ 416 07ce 13052003 		li	a0,50
+ 417 07d2 97000000 		call	GC9A01_WriteData
+ 417      E7800000 
+ 418 07da 13058009 		li	a0,152
+ 419 07de 97000000 		call	GC9A01_WriteData
+ 419      E7800000 
+ 420 07e6 13054007 		li	a0,116
+ 421 07ea 97000000 		call	GC9A01_WriteCmd
+ 421      E7800000 
+ 422 07f2 4145     		li	a0,16
+ 423 07f4 97000000 		call	GC9A01_WriteData
+ 423      E7800000 
+ 424 07fc 13055008 		li	a0,133
+ 425 0800 97000000 		call	GC9A01_WriteData
+ 425      E7800000 
+ 426 0808 13050008 		li	a0,128
+ 427 080c 97000000 		call	GC9A01_WriteData
+ 427      E7800000 
+ 428 0814 0145     		li	a0,0
+ 429 0816 97000000 		call	GC9A01_WriteData
+ 429      E7800000 
+ 430 081e 0145     		li	a0,0
+ 431 0820 97000000 		call	GC9A01_WriteData
+ 431      E7800000 
+ 432 0828 1305E004 		li	a0,78
+ 433 082c 97000000 		call	GC9A01_WriteData
+ 433      E7800000 
+ 434 0834 0145     		li	a0,0
+ 435 0836 97000000 		call	GC9A01_WriteData
+ 435      E7800000 
+ 436 083e 13058009 		li	a0,152
+ 437 0842 97000000 		call	GC9A01_WriteCmd
+ 437      E7800000 
+ 438 084a 1305E003 		li	a0,62
+ 439 084e 97000000 		call	GC9A01_WriteData
+ 439      E7800000 
+ 440 0856 1D45     		li	a0,7
+ 441 0858 97000000 		call	GC9A01_WriteData
+ 441      E7800000 
+ 442 0860 13055003 		li	a0,53
+ 443 0864 97000000 		call	GC9A01_WriteCmd
+ 443      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 12
+
+
+ 444 086c 13051002 		li	a0,33
+ 445 0870 97000000 		call	GC9A01_WriteCmd
+ 445      E7800000 
+ 446 0878 4545     		li	a0,17
+ 447 087a 97000000 		call	GC9A01_WriteCmd
+ 447      E7800000 
+ 448 0882 13058007 		li	a0,120
+ 449 0886 97000000 		call	mDelaymS
+ 449      E7800000 
+ 450 088e 13059002 		li	a0,41
+ 451 0892 97000000 		call	GC9A01_WriteCmd
+ 451      E7800000 
+ 452 089a 2244     		lw	s0,8(sp)
+ 453 089c B240     		lw	ra,12(sp)
+ 454 089e 9244     		lw	s1,4(sp)
+ 455 08a0 5145     		li	a0,20
+ 456 08a2 4101     		addi	sp,sp,16
+ 457 08a4 17030000 		tail	mDelaymS
+ 457      67000300 
+ 459              		.section	.text.GC9A01_SetWindow,"ax",@progbits
+ 460              		.align	1
+ 461              		.globl	GC9A01_SetWindow
+ 463              	GC9A01_SetWindow:
+ 464 0000 0111     		addi	sp,sp,-32
+ 465 0002 26CA     		sw	s1,20(sp)
+ 466 0004 AA84     		mv	s1,a0
+ 467 0006 1305A002 		li	a0,42
+ 468 000a 06CE     		sw	ra,28(sp)
+ 469 000c 22CC     		sw	s0,24(sp)
+ 470 000e 4AC8     		sw	s2,16(sp)
+ 471 0010 2E84     		mv	s0,a1
+ 472 0012 3689     		mv	s2,a3
+ 473 0014 4EC6     		sw	s3,12(sp)
+ 474 0016 52C4     		sw	s4,8(sp)
+ 475 0018 328A     		mv	s4,a2
+ 476 001a 97000000 		call	GC9A01_WriteCmd
+ 476      E7800000 
+ 477 0022 13D58400 		srli	a0,s1,8
+ 478 0026 97000000 		call	GC9A01_WriteData
+ 478      E7800000 
+ 479 002e 93F9F40F 		andi	s3,s1,0xff
+ 480 0032 4E85     		mv	a0,s3
+ 481 0034 97000000 		call	GC9A01_WriteData
+ 481      E7800000 
+ 482 003c 33854401 		add	a0,s1,s4
+ 483 0040 7D15     		addi	a0,a0,-1
+ 484 0042 2185     		srai	a0,a0,8
+ 485 0044 1375F50F 		andi	a0,a0,0xff
+ 486 0048 97000000 		call	GC9A01_WriteData
+ 486      E7800000 
+ 487 0050 1305FAFF 		addi	a0,s4,-1
+ 488 0054 4E95     		add	a0,s3,a0
+ 489 0056 1375F50F 		andi	a0,a0,0xff
+ 490 005a 97000000 		call	GC9A01_WriteData
+ 490      E7800000 
+ 491 0062 1305B002 		li	a0,43
+ 492 0066 97000000 		call	GC9A01_WriteCmd
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 13
+
+
+ 492      E7800000 
+ 493 006e 13558400 		srli	a0,s0,8
+ 494 0072 97000000 		call	GC9A01_WriteData
+ 494      E7800000 
+ 495 007a 9374F40F 		andi	s1,s0,0xff
+ 496 007e 2685     		mv	a0,s1
+ 497 0080 97000000 		call	GC9A01_WriteData
+ 497      E7800000 
+ 498 0088 33052401 		add	a0,s0,s2
+ 499 008c 7D15     		addi	a0,a0,-1
+ 500 008e 2185     		srai	a0,a0,8
+ 501 0090 1375F50F 		andi	a0,a0,0xff
+ 502 0094 97000000 		call	GC9A01_WriteData
+ 502      E7800000 
+ 503 009c 1305F9FF 		addi	a0,s2,-1
+ 504 00a0 2695     		add	a0,s1,a0
+ 505 00a2 1375F50F 		andi	a0,a0,0xff
+ 506 00a6 97000000 		call	GC9A01_WriteData
+ 506      E7800000 
+ 507 00ae 6244     		lw	s0,24(sp)
+ 508 00b0 F240     		lw	ra,28(sp)
+ 509 00b2 D244     		lw	s1,20(sp)
+ 510 00b4 4249     		lw	s2,16(sp)
+ 511 00b6 B249     		lw	s3,12(sp)
+ 512 00b8 224A     		lw	s4,8(sp)
+ 513 00ba 1305C002 		li	a0,44
+ 514 00be 0561     		addi	sp,sp,32
+ 515 00c0 17030000 		tail	GC9A01_WriteCmd
+ 515      67000300 
+ 517              		.section	.text.GC9A01_FillRect.part.1,"ax",@progbits
+ 518              		.align	1
+ 520              	GC9A01_FillRect.part.1:
+ 521 0000 7971     		addi	sp,sp,-48
+ 522 0002 22D4     		sw	s0,40(sp)
+ 523 0004 26D2     		sw	s1,36(sp)
+ 524 0006 06D6     		sw	ra,44(sp)
+ 525 0008 B684     		mv	s1,a3
+ 526 000a 4AD0     		sw	s2,32(sp)
+ 527 000c 4ECE     		sw	s3,28(sp)
+ 528 000e B306C500 		add	a3,a0,a2
+ 529 0012 9307000F 		li	a5,240
+ 530 0016 3284     		mv	s0,a2
+ 531 0018 63D7D700 		ble	a3,a5,.L10
+ 532 001c 1304000F 		li	s0,240
+ 533 0020 098C     		sub	s0,s0,a0
+ 534 0022 4204     		slli	s0,s0,16
+ 535 0024 4180     		srli	s0,s0,16
+ 536              	.L10:
+ 537 0026 B3879500 		add	a5,a1,s1
+ 538 002a 9306000F 		li	a3,240
+ 539 002e 63D7F600 		ble	a5,a3,.L11
+ 540 0032 9304000F 		li	s1,240
+ 541 0036 8D8C     		sub	s1,s1,a1
+ 542 0038 C204     		slli	s1,s1,16
+ 543 003a C180     		srli	s1,s1,16
+ 544              	.L11:
+ 545 003c A686     		mv	a3,s1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 14
+
+
+ 546 003e 2286     		mv	a2,s0
+ 547 0040 3AC6     		sw	a4,12(sp)
+ 548 0042 97000000 		call	GC9A01_SetWindow
+ 548      E7800000 
+ 549 004a 3247     		lw	a4,12(sp)
+ 550 004c 8567     		li	a5,4096
+ 551 004e B7160040 		li	a3,1073745920
+ 552 0052 93870780 		addi	a5,a5,-2048
+ 553 0056 23ACF60A 		sw	a5,184(a3)
+ 554 005a C147     		li	a5,16
+ 555 005c 23A6F60A 		sw	a5,172(a3)
+ 556 0060 13568700 		srli	a2,a4,8
+ 557 0064 97070000 		lla	a5,.LANCHOR0
+ 557      93870700 
+ 558 006c 1377F70F 		andi	a4,a4,0xff
+ 559 0070 97060000 		lla	a3,.LANCHOR0+1024
+ 559      93860600 
+ 560              	.L12:
+ 561 0078 2380C700 		sb	a2,0(a5)
+ 562 007c A380E700 		sb	a4,1(a5)
+ 563 0080 8907     		addi	a5,a5,2
+ 564 0082 E39BD7FE 		bne	a5,a3,.L12
+ 565 0086 33049402 		mul	s0,s0,s1
+ 566 008a 13090020 		li	s2,512
+ 567 008e 97090000 		lla	s3,.LANCHOR0
+ 567      93890900 
+ 568              	.L13:
+ 569 0096 09EC     		bnez	s0,.L15
+ 570 0098 B250     		lw	ra,44(sp)
+ 571 009a 2254     		lw	s0,40(sp)
+ 572 009c B7170040 		li	a5,1073745920
+ 573 00a0 4147     		li	a4,16
+ 574 00a2 23ACE70A 		sw	a4,184(a5)
+ 575 00a6 9254     		lw	s1,36(sp)
+ 576 00a8 0259     		lw	s2,32(sp)
+ 577 00aa F249     		lw	s3,28(sp)
+ 578 00ac 4561     		addi	sp,sp,48
+ 579 00ae 8280     		jr	ra
+ 580              	.L15:
+ 581 00b0 A284     		mv	s1,s0
+ 582 00b2 63748900 		bleu	s0,s2,.L14
+ 583 00b6 93040020 		li	s1,512
+ 584              	.L14:
+ 585 00ba 93951400 		slli	a1,s1,1
+ 586 00be C205     		slli	a1,a1,16
+ 587 00c0 C181     		srli	a1,a1,16
+ 588 00c2 4E85     		mv	a0,s3
+ 589 00c4 97000000 		call	SPI_Send
+ 589      E7800000 
+ 590 00cc 058C     		sub	s0,s0,s1
+ 591 00ce E1B7     		j	.L13
+ 593              		.section	.text.GC9A01_DrawPixel,"ax",@progbits
+ 594              		.align	1
+ 595              		.globl	GC9A01_DrawPixel
+ 597              	GC9A01_DrawPixel:
+ 598 0000 9307F00E 		li	a5,239
+ 599 0004 63ECA704 		bgtu	a0,a5,.L22
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 15
+
+
+ 600 0008 63EAB704 		bgtu	a1,a5,.L22
+ 601 000c 0111     		addi	sp,sp,-32
+ 602 000e 22CC     		sw	s0,24(sp)
+ 603 0010 8546     		li	a3,1
+ 604 0012 3284     		mv	s0,a2
+ 605 0014 0546     		li	a2,1
+ 606 0016 06CE     		sw	ra,28(sp)
+ 607 0018 26CA     		sw	s1,20(sp)
+ 608 001a 97000000 		call	GC9A01_SetWindow
+ 608      E7800000 
+ 609 0022 13168400 		slli	a2,s0,8
+ 610 0026 2180     		srli	s0,s0,8
+ 611 0028 518C     		or	s0,a2,s0
+ 612 002a 8567     		li	a5,4096
+ 613 002c 23168100 		sh	s0,12(sp)
+ 614 0030 93870780 		addi	a5,a5,-2048
+ 615 0034 37140040 		li	s0,1073745920
+ 616 0038 232CF40A 		sw	a5,184(s0)
+ 617 003c C144     		li	s1,16
+ 618 003e 2326940A 		sw	s1,172(s0)
+ 619 0042 6800     		addi	a0,sp,12
+ 620 0044 8945     		li	a1,2
+ 621 0046 97000000 		call	SPI_Send
+ 621      E7800000 
+ 622 004e F240     		lw	ra,28(sp)
+ 623 0050 232C940A 		sw	s1,184(s0)
+ 624 0054 6244     		lw	s0,24(sp)
+ 625 0056 D244     		lw	s1,20(sp)
+ 626 0058 0561     		addi	sp,sp,32
+ 627 005a 8280     		jr	ra
+ 628              	.L22:
+ 629 005c 8280     		ret
+ 631              		.section	.text.GC9A01_FillRect,"ax",@progbits
+ 632              		.align	1
+ 633              		.globl	GC9A01_FillRect
+ 635              	GC9A01_FillRect:
+ 636 0000 9307F00E 		li	a5,239
+ 637 0004 63E8A700 		bgtu	a0,a5,.L25
+ 638 0008 63E6B700 		bgtu	a1,a5,.L25
+ 639 000c 17030000 		tail	GC9A01_FillRect.part.1
+ 639      67000300 
+ 640              	.L25:
+ 641 0014 8280     		ret
+ 643              		.section	.text.GC9A01_FillScreen,"ax",@progbits
+ 644              		.align	1
+ 645              		.globl	GC9A01_FillScreen
+ 647              	GC9A01_FillScreen:
+ 648 0000 2A87     		mv	a4,a0
+ 649 0002 9306000F 		li	a3,240
+ 650 0006 1306000F 		li	a2,240
+ 651 000a 8145     		li	a1,0
+ 652 000c 0145     		li	a0,0
+ 653 000e 17030000 		tail	GC9A01_FillRect.part.1
+ 653      67000300 
+ 655              		.section	.text.GC9A01_DrawBitmap,"ax",@progbits
+ 656              		.align	1
+ 657              		.globl	GC9A01_DrawBitmap
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 16
+
+
+ 659              	GC9A01_DrawBitmap:
+ 660 0000 0111     		addi	sp,sp,-32
+ 661 0002 06CE     		sw	ra,28(sp)
+ 662 0004 22CC     		sw	s0,24(sp)
+ 663 0006 26CA     		sw	s1,20(sp)
+ 664 0008 3284     		mv	s0,a2
+ 665 000a B684     		mv	s1,a3
+ 666 000c 3AC6     		sw	a4,12(sp)
+ 667 000e 97000000 		call	GC9A01_SetWindow
+ 667      E7800000 
+ 668 0016 B3059402 		mul	a1,s0,s1
+ 669 001a 3247     		lw	a4,12(sp)
+ 670 001c 8567     		li	a5,4096
+ 671 001e B7160040 		li	a3,1073745920
+ 672 0022 93870780 		addi	a5,a5,-2048
+ 673 0026 23ACF60A 		sw	a5,184(a3)
+ 674 002a C147     		li	a5,16
+ 675 002c 3A85     		mv	a0,a4
+ 676 002e 23A6F60A 		sw	a5,172(a3)
+ 677 0032 8605     		slli	a1,a1,1
+ 678 0034 C205     		slli	a1,a1,16
+ 679 0036 C181     		srli	a1,a1,16
+ 680 0038 97000000 		call	SPI_Send
+ 680      E7800000 
+ 681 0040 37470040 		li	a4,1073758208
+ 682              	.L29:
+ 683 0044 83476700 		lbu	a5,6(a4)
+ 684 0048 93F70704 		andi	a5,a5,64
+ 685 004c E5DF     		beqz	a5,.L29
+ 686 004e F240     		lw	ra,28(sp)
+ 687 0050 6244     		lw	s0,24(sp)
+ 688 0052 B7170040 		li	a5,1073745920
+ 689 0056 4147     		li	a4,16
+ 690 0058 23ACE70A 		sw	a4,184(a5)
+ 691 005c D244     		lw	s1,20(sp)
+ 692 005e 0561     		addi	sp,sp,32
+ 693 0060 8280     		jr	ra
+ 695              		.section	.text.GC9A01_DrawChar,"ax",@progbits
+ 696              		.align	1
+ 697              		.globl	GC9A01_DrawChar
+ 699              	GC9A01_DrawChar:
+ 700 0000 5D71     		addi	sp,sp,-80
+ 701 0002 5ED6     		sw	s7,44(sp)
+ 702 0004 86C6     		sw	ra,76(sp)
+ 703 0006 BE8B     		mv	s7,a5
+ 704 0008 A2C4     		sw	s0,72(sp)
+ 705 000a A6C2     		sw	s1,68(sp)
+ 706 000c CAC0     		sw	s2,64(sp)
+ 707 000e 4EDE     		sw	s3,60(sp)
+ 708 0010 52DC     		sw	s4,56(sp)
+ 709 0012 56DA     		sw	s5,52(sp)
+ 710 0014 5AD8     		sw	s6,48(sp)
+ 711 0016 62D4     		sw	s8,40(sp)
+ 712 0018 66D2     		sw	s9,36(sp)
+ 713 001a 6AD0     		sw	s10,32(sp)
+ 714 001c 6ECE     		sw	s11,28(sp)
+ 715 001e 36C4     		sw	a3,8(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 17
+
+
+ 716 0020 3AC6     		sw	a4,12(sp)
+ 717 0022 9307F00E 		li	a5,239
+ 718 0026 63ECA708 		bgtu	a0,a5,.L33
+ 719 002a AE8A     		mv	s5,a1
+ 720 002c 63E9B708 		bgtu	a1,a5,.L33
+ 721 0030 930706FE 		addi	a5,a2,-32
+ 722 0034 93F7F70F 		andi	a5,a5,0xff
+ 723 0038 1307E005 		li	a4,94
+ 724 003c 2A84     		mv	s0,a0
+ 725 003e 6374F700 		bleu	a5,a4,.L36
+ 726 0042 13060002 		li	a2,32
+ 727              	.L36:
+ 728 0046 0116     		addi	a2,a2,-32
+ 729 0048 9547     		li	a5,5
+ 730 004a 3306F602 		mul	a2,a2,a5
+ 731 004e 130A5400 		addi	s4,s0,5
+ 732 0052 17090000 		lla	s2,.LANCHOR1
+ 732      13090900 
+ 733 005a 139D0B01 		slli	s10,s7,16
+ 734 005e 420A     		slli	s4,s4,16
+ 735 0060 135D0D01 		srli	s10,s10,16
+ 736 0064 135A0A01 		srli	s4,s4,16
+ 737 0068 A284     		mv	s1,s0
+ 738 006a 054C     		li	s8,1
+ 739 006c 9D4C     		li	s9,7
+ 740 006e 3299     		add	s2,s2,a2
+ 741              	.L41:
+ 742 0070 034B0900 		lbu	s6,0(s2)
+ 743 0074 D689     		mv	s3,s5
+ 744 0076 814D     		li	s11,0
+ 745              	.L40:
+ 746 0078 93761B00 		andi	a3,s6,1
+ 747 007c 2247     		lw	a4,8(sp)
+ 748 007e 91E2     		bnez	a3,.L37
+ 749 0080 3247     		lw	a4,12(sp)
+ 750              	.L37:
+ 751 0082 135B1B00 		srli	s6,s6,1
+ 752 0086 639B8B05 		bne	s7,s8,.L38
+ 753 008a B385BA01 		add	a1,s5,s11
+ 754 008e C205     		slli	a1,a1,16
+ 755 0090 3A86     		mv	a2,a4
+ 756 0092 C181     		srli	a1,a1,16
+ 757 0094 2285     		mv	a0,s0
+ 758 0096 97000000 		call	GC9A01_DrawPixel
+ 758      E7800000 
+ 759              	.L39:
+ 760 009e EA99     		add	s3,s10,s3
+ 761 00a0 C209     		slli	s3,s3,16
+ 762 00a2 850D     		addi	s11,s11,1
+ 763 00a4 93D90901 		srli	s3,s3,16
+ 764 00a8 E3989DFD 		bne	s11,s9,.L40
+ 765 00ac 0504     		addi	s0,s0,1
+ 766 00ae 4204     		slli	s0,s0,16
+ 767 00b0 EA94     		add	s1,s10,s1
+ 768 00b2 C204     		slli	s1,s1,16
+ 769 00b4 4180     		srli	s0,s0,16
+ 770 00b6 0509     		addi	s2,s2,1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 18
+
+
+ 771 00b8 C180     		srli	s1,s1,16
+ 772 00ba E31B8AFA 		bne	s4,s0,.L41
+ 773              	.L33:
+ 774 00be B640     		lw	ra,76(sp)
+ 775 00c0 2644     		lw	s0,72(sp)
+ 776 00c2 9644     		lw	s1,68(sp)
+ 777 00c4 0649     		lw	s2,64(sp)
+ 778 00c6 F259     		lw	s3,60(sp)
+ 779 00c8 625A     		lw	s4,56(sp)
+ 780 00ca D25A     		lw	s5,52(sp)
+ 781 00cc 425B     		lw	s6,48(sp)
+ 782 00ce B25B     		lw	s7,44(sp)
+ 783 00d0 225C     		lw	s8,40(sp)
+ 784 00d2 925C     		lw	s9,36(sp)
+ 785 00d4 025D     		lw	s10,32(sp)
+ 786 00d6 F24D     		lw	s11,28(sp)
+ 787 00d8 6161     		addi	sp,sp,80
+ 788 00da 8280     		jr	ra
+ 789              	.L38:
+ 790 00dc EA86     		mv	a3,s10
+ 791 00de 6A86     		mv	a2,s10
+ 792 00e0 CE85     		mv	a1,s3
+ 793 00e2 2685     		mv	a0,s1
+ 794 00e4 97000000 		call	GC9A01_FillRect
+ 794      E7800000 
+ 795 00ec 4DBF     		j	.L39
+ 797              		.section	.text.GC9A01_DrawString,"ax",@progbits
+ 798              		.align	1
+ 799              		.globl	GC9A01_DrawString
+ 801              	GC9A01_DrawString:
+ 802 0000 7971     		addi	sp,sp,-48
+ 803 0002 52CC     		sw	s4,24(sp)
+ 804 0004 154A     		li	s4,5
+ 805 0006 56CA     		sw	s5,20(sp)
+ 806 0008 338A4703 		mul	s4,a5,s4
+ 807 000c BE8A     		mv	s5,a5
+ 808 000e C207     		slli	a5,a5,16
+ 809 0010 C183     		srli	a5,a5,16
+ 810 0012 4AD0     		sw	s2,32(sp)
+ 811 0014 1949     		li	s2,6
+ 812 0016 22D4     		sw	s0,40(sp)
+ 813 0018 26D2     		sw	s1,36(sp)
+ 814 001a 4ECE     		sw	s3,28(sp)
+ 815 001c 5AC8     		sw	s6,16(sp)
+ 816 001e 33892703 		mul	s2,a5,s2
+ 817 0022 5EC6     		sw	s7,12(sp)
+ 818 0024 62C4     		sw	s8,8(sp)
+ 819 0026 66C2     		sw	s9,4(sp)
+ 820 0028 06D6     		sw	ra,44(sp)
+ 821 002a 2A84     		mv	s0,a0
+ 822 002c AE84     		mv	s1,a1
+ 823 002e B289     		mv	s3,a2
+ 824 0030 B68B     		mv	s7,a3
+ 825 0032 3A8C     		mv	s8,a4
+ 826 0034 139B3700 		slli	s6,a5,3
+ 827 0038 930CF00E 		li	s9,239
+ 828              	.L47:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 19
+
+
+ 829 003c 03C60900 		lbu	a2,0(s3)
+ 830 0040 11EE     		bnez	a2,.L49
+ 831 0042 B250     		lw	ra,44(sp)
+ 832 0044 2254     		lw	s0,40(sp)
+ 833 0046 9254     		lw	s1,36(sp)
+ 834 0048 0259     		lw	s2,32(sp)
+ 835 004a F249     		lw	s3,28(sp)
+ 836 004c 624A     		lw	s4,24(sp)
+ 837 004e D24A     		lw	s5,20(sp)
+ 838 0050 424B     		lw	s6,16(sp)
+ 839 0052 B24B     		lw	s7,12(sp)
+ 840 0054 224C     		lw	s8,8(sp)
+ 841 0056 924C     		lw	s9,4(sp)
+ 842 0058 4561     		addi	sp,sp,48
+ 843 005a 8280     		jr	ra
+ 844              	.L49:
+ 845 005c B3074401 		add	a5,s0,s4
+ 846 0060 63D6FC00 		ble	a5,s9,.L48
+ 847 0064 DA94     		add	s1,s6,s1
+ 848 0066 C204     		slli	s1,s1,16
+ 849 0068 C180     		srli	s1,s1,16
+ 850 006a 0144     		li	s0,0
+ 851              	.L48:
+ 852 006c 2285     		mv	a0,s0
+ 853 006e 4A94     		add	s0,s2,s0
+ 854 0070 D687     		mv	a5,s5
+ 855 0072 6287     		mv	a4,s8
+ 856 0074 DE86     		mv	a3,s7
+ 857 0076 A685     		mv	a1,s1
+ 858 0078 4204     		slli	s0,s0,16
+ 859 007a 97000000 		call	GC9A01_DrawChar
+ 859      E7800000 
+ 860 0082 4180     		srli	s0,s0,16
+ 861 0084 8509     		addi	s3,s3,1
+ 862 0086 5DBF     		j	.L47
+ 864              		.section	.text.GC9A01_Sleep,"ax",@progbits
+ 865              		.align	1
+ 866              		.globl	GC9A01_Sleep
+ 868              	GC9A01_Sleep:
+ 869 0000 4111     		addi	sp,sp,-16
+ 870 0002 13058002 		li	a0,40
+ 871 0006 06C6     		sw	ra,12(sp)
+ 872 0008 97000000 		call	GC9A01_WriteCmd
+ 872      E7800000 
+ 873 0010 4145     		li	a0,16
+ 874 0012 97000000 		call	GC9A01_WriteCmd
+ 874      E7800000 
+ 875 001a B240     		lw	ra,12(sp)
+ 876 001c 13058007 		li	a0,120
+ 877 0020 4101     		addi	sp,sp,16
+ 878 0022 17030000 		tail	mDelaymS
+ 878      67000300 
+ 880              		.section	.bss.buffer.3883,"aw",@nobits
+ 881              		.align	2
+ 882              		.set	.LANCHOR0,. + 0
+ 885              	buffer.3883:
+ 886 0000 00000000 		.zero	1024
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 20
+
+
+ 886      00000000 
+ 886      00000000 
+ 886      00000000 
+ 886      00000000 
+ 887              		.section	.rodata.Font5x7,"a"
+ 888              		.align	2
+ 889              		.set	.LANCHOR1,. + 0
+ 892              	Font5x7:
+ 893 0000 00       		.byte	0
+ 894 0001 00       		.byte	0
+ 895 0002 00       		.byte	0
+ 896 0003 00       		.byte	0
+ 897 0004 00       		.byte	0
+ 898 0005 00       		.byte	0
+ 899 0006 00       		.byte	0
+ 900 0007 5F       		.byte	95
+ 901 0008 00       		.byte	0
+ 902 0009 00       		.byte	0
+ 903 000a 00       		.byte	0
+ 904 000b 07       		.byte	7
+ 905 000c 00       		.byte	0
+ 906 000d 07       		.byte	7
+ 907 000e 00       		.byte	0
+ 908 000f 14       		.byte	20
+ 909 0010 7F       		.byte	127
+ 910 0011 14       		.byte	20
+ 911 0012 7F       		.byte	127
+ 912 0013 14       		.byte	20
+ 913 0014 24       		.byte	36
+ 914 0015 2A       		.byte	42
+ 915 0016 7F       		.byte	127
+ 916 0017 2A       		.byte	42
+ 917 0018 12       		.byte	18
+ 918 0019 23       		.byte	35
+ 919 001a 13       		.byte	19
+ 920 001b 08       		.byte	8
+ 921 001c 64       		.byte	100
+ 922 001d 62       		.byte	98
+ 923 001e 36       		.byte	54
+ 924 001f 49       		.byte	73
+ 925 0020 55       		.byte	85
+ 926 0021 22       		.byte	34
+ 927 0022 50       		.byte	80
+ 928 0023 00       		.byte	0
+ 929 0024 05       		.byte	5
+ 930 0025 03       		.byte	3
+ 931 0026 00       		.byte	0
+ 932 0027 00       		.byte	0
+ 933 0028 00       		.byte	0
+ 934 0029 1C       		.byte	28
+ 935 002a 22       		.byte	34
+ 936 002b 41       		.byte	65
+ 937 002c 00       		.byte	0
+ 938 002d 00       		.byte	0
+ 939 002e 41       		.byte	65
+ 940 002f 22       		.byte	34
+ 941 0030 1C       		.byte	28
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 21
+
+
+ 942 0031 00       		.byte	0
+ 943 0032 14       		.byte	20
+ 944 0033 08       		.byte	8
+ 945 0034 3E       		.byte	62
+ 946 0035 08       		.byte	8
+ 947 0036 14       		.byte	20
+ 948 0037 08       		.byte	8
+ 949 0038 08       		.byte	8
+ 950 0039 3E       		.byte	62
+ 951 003a 08       		.byte	8
+ 952 003b 08       		.byte	8
+ 953 003c 00       		.byte	0
+ 954 003d 50       		.byte	80
+ 955 003e 30       		.byte	48
+ 956 003f 00       		.byte	0
+ 957 0040 00       		.byte	0
+ 958 0041 08       		.byte	8
+ 959 0042 08       		.byte	8
+ 960 0043 08       		.byte	8
+ 961 0044 08       		.byte	8
+ 962 0045 08       		.byte	8
+ 963 0046 00       		.byte	0
+ 964 0047 60       		.byte	96
+ 965 0048 60       		.byte	96
+ 966 0049 00       		.byte	0
+ 967 004a 00       		.byte	0
+ 968 004b 20       		.byte	32
+ 969 004c 10       		.byte	16
+ 970 004d 08       		.byte	8
+ 971 004e 04       		.byte	4
+ 972 004f 02       		.byte	2
+ 973 0050 3E       		.byte	62
+ 974 0051 51       		.byte	81
+ 975 0052 49       		.byte	73
+ 976 0053 45       		.byte	69
+ 977 0054 3E       		.byte	62
+ 978 0055 00       		.byte	0
+ 979 0056 42       		.byte	66
+ 980 0057 7F       		.byte	127
+ 981 0058 40       		.byte	64
+ 982 0059 00       		.byte	0
+ 983 005a 42       		.byte	66
+ 984 005b 61       		.byte	97
+ 985 005c 51       		.byte	81
+ 986 005d 49       		.byte	73
+ 987 005e 46       		.byte	70
+ 988 005f 21       		.byte	33
+ 989 0060 41       		.byte	65
+ 990 0061 45       		.byte	69
+ 991 0062 4B       		.byte	75
+ 992 0063 31       		.byte	49
+ 993 0064 18       		.byte	24
+ 994 0065 14       		.byte	20
+ 995 0066 12       		.byte	18
+ 996 0067 7F       		.byte	127
+ 997 0068 10       		.byte	16
+ 998 0069 27       		.byte	39
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 22
+
+
+ 999 006a 45       		.byte	69
+ 1000 006b 45       		.byte	69
+ 1001 006c 45       		.byte	69
+ 1002 006d 39       		.byte	57
+ 1003 006e 3C       		.byte	60
+ 1004 006f 4A       		.byte	74
+ 1005 0070 49       		.byte	73
+ 1006 0071 49       		.byte	73
+ 1007 0072 30       		.byte	48
+ 1008 0073 01       		.byte	1
+ 1009 0074 71       		.byte	113
+ 1010 0075 09       		.byte	9
+ 1011 0076 05       		.byte	5
+ 1012 0077 03       		.byte	3
+ 1013 0078 36       		.byte	54
+ 1014 0079 49       		.byte	73
+ 1015 007a 49       		.byte	73
+ 1016 007b 49       		.byte	73
+ 1017 007c 36       		.byte	54
+ 1018 007d 06       		.byte	6
+ 1019 007e 49       		.byte	73
+ 1020 007f 49       		.byte	73
+ 1021 0080 29       		.byte	41
+ 1022 0081 1E       		.byte	30
+ 1023 0082 00       		.byte	0
+ 1024 0083 36       		.byte	54
+ 1025 0084 36       		.byte	54
+ 1026 0085 00       		.byte	0
+ 1027 0086 00       		.byte	0
+ 1028 0087 00       		.byte	0
+ 1029 0088 56       		.byte	86
+ 1030 0089 36       		.byte	54
+ 1031 008a 00       		.byte	0
+ 1032 008b 00       		.byte	0
+ 1033 008c 08       		.byte	8
+ 1034 008d 14       		.byte	20
+ 1035 008e 22       		.byte	34
+ 1036 008f 41       		.byte	65
+ 1037 0090 00       		.byte	0
+ 1038 0091 14       		.byte	20
+ 1039 0092 14       		.byte	20
+ 1040 0093 14       		.byte	20
+ 1041 0094 14       		.byte	20
+ 1042 0095 14       		.byte	20
+ 1043 0096 00       		.byte	0
+ 1044 0097 41       		.byte	65
+ 1045 0098 22       		.byte	34
+ 1046 0099 14       		.byte	20
+ 1047 009a 08       		.byte	8
+ 1048 009b 02       		.byte	2
+ 1049 009c 01       		.byte	1
+ 1050 009d 51       		.byte	81
+ 1051 009e 09       		.byte	9
+ 1052 009f 06       		.byte	6
+ 1053 00a0 32       		.byte	50
+ 1054 00a1 49       		.byte	73
+ 1055 00a2 79       		.byte	121
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 23
+
+
+ 1056 00a3 41       		.byte	65
+ 1057 00a4 3E       		.byte	62
+ 1058 00a5 7E       		.byte	126
+ 1059 00a6 11       		.byte	17
+ 1060 00a7 11       		.byte	17
+ 1061 00a8 11       		.byte	17
+ 1062 00a9 7E       		.byte	126
+ 1063 00aa 7F       		.byte	127
+ 1064 00ab 49       		.byte	73
+ 1065 00ac 49       		.byte	73
+ 1066 00ad 49       		.byte	73
+ 1067 00ae 36       		.byte	54
+ 1068 00af 3E       		.byte	62
+ 1069 00b0 41       		.byte	65
+ 1070 00b1 41       		.byte	65
+ 1071 00b2 41       		.byte	65
+ 1072 00b3 22       		.byte	34
+ 1073 00b4 7F       		.byte	127
+ 1074 00b5 41       		.byte	65
+ 1075 00b6 41       		.byte	65
+ 1076 00b7 22       		.byte	34
+ 1077 00b8 1C       		.byte	28
+ 1078 00b9 7F       		.byte	127
+ 1079 00ba 49       		.byte	73
+ 1080 00bb 49       		.byte	73
+ 1081 00bc 49       		.byte	73
+ 1082 00bd 41       		.byte	65
+ 1083 00be 7F       		.byte	127
+ 1084 00bf 09       		.byte	9
+ 1085 00c0 09       		.byte	9
+ 1086 00c1 09       		.byte	9
+ 1087 00c2 01       		.byte	1
+ 1088 00c3 3E       		.byte	62
+ 1089 00c4 41       		.byte	65
+ 1090 00c5 49       		.byte	73
+ 1091 00c6 49       		.byte	73
+ 1092 00c7 7A       		.byte	122
+ 1093 00c8 7F       		.byte	127
+ 1094 00c9 08       		.byte	8
+ 1095 00ca 08       		.byte	8
+ 1096 00cb 08       		.byte	8
+ 1097 00cc 7F       		.byte	127
+ 1098 00cd 00       		.byte	0
+ 1099 00ce 41       		.byte	65
+ 1100 00cf 7F       		.byte	127
+ 1101 00d0 41       		.byte	65
+ 1102 00d1 00       		.byte	0
+ 1103 00d2 20       		.byte	32
+ 1104 00d3 40       		.byte	64
+ 1105 00d4 41       		.byte	65
+ 1106 00d5 3F       		.byte	63
+ 1107 00d6 01       		.byte	1
+ 1108 00d7 7F       		.byte	127
+ 1109 00d8 08       		.byte	8
+ 1110 00d9 14       		.byte	20
+ 1111 00da 22       		.byte	34
+ 1112 00db 41       		.byte	65
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 24
+
+
+ 1113 00dc 7F       		.byte	127
+ 1114 00dd 40       		.byte	64
+ 1115 00de 40       		.byte	64
+ 1116 00df 40       		.byte	64
+ 1117 00e0 40       		.byte	64
+ 1118 00e1 7F       		.byte	127
+ 1119 00e2 02       		.byte	2
+ 1120 00e3 0C       		.byte	12
+ 1121 00e4 02       		.byte	2
+ 1122 00e5 7F       		.byte	127
+ 1123 00e6 7F       		.byte	127
+ 1124 00e7 04       		.byte	4
+ 1125 00e8 08       		.byte	8
+ 1126 00e9 10       		.byte	16
+ 1127 00ea 7F       		.byte	127
+ 1128 00eb 3E       		.byte	62
+ 1129 00ec 41       		.byte	65
+ 1130 00ed 41       		.byte	65
+ 1131 00ee 41       		.byte	65
+ 1132 00ef 3E       		.byte	62
+ 1133 00f0 7F       		.byte	127
+ 1134 00f1 09       		.byte	9
+ 1135 00f2 09       		.byte	9
+ 1136 00f3 09       		.byte	9
+ 1137 00f4 06       		.byte	6
+ 1138 00f5 3E       		.byte	62
+ 1139 00f6 41       		.byte	65
+ 1140 00f7 51       		.byte	81
+ 1141 00f8 21       		.byte	33
+ 1142 00f9 5E       		.byte	94
+ 1143 00fa 7F       		.byte	127
+ 1144 00fb 09       		.byte	9
+ 1145 00fc 19       		.byte	25
+ 1146 00fd 29       		.byte	41
+ 1147 00fe 46       		.byte	70
+ 1148 00ff 46       		.byte	70
+ 1149 0100 49       		.byte	73
+ 1150 0101 49       		.byte	73
+ 1151 0102 49       		.byte	73
+ 1152 0103 31       		.byte	49
+ 1153 0104 01       		.byte	1
+ 1154 0105 01       		.byte	1
+ 1155 0106 7F       		.byte	127
+ 1156 0107 01       		.byte	1
+ 1157 0108 01       		.byte	1
+ 1158 0109 3F       		.byte	63
+ 1159 010a 40       		.byte	64
+ 1160 010b 40       		.byte	64
+ 1161 010c 40       		.byte	64
+ 1162 010d 3F       		.byte	63
+ 1163 010e 1F       		.byte	31
+ 1164 010f 20       		.byte	32
+ 1165 0110 40       		.byte	64
+ 1166 0111 20       		.byte	32
+ 1167 0112 1F       		.byte	31
+ 1168 0113 3F       		.byte	63
+ 1169 0114 40       		.byte	64
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 25
+
+
+ 1170 0115 38       		.byte	56
+ 1171 0116 40       		.byte	64
+ 1172 0117 3F       		.byte	63
+ 1173 0118 63       		.byte	99
+ 1174 0119 14       		.byte	20
+ 1175 011a 08       		.byte	8
+ 1176 011b 14       		.byte	20
+ 1177 011c 63       		.byte	99
+ 1178 011d 07       		.byte	7
+ 1179 011e 08       		.byte	8
+ 1180 011f 70       		.byte	112
+ 1181 0120 08       		.byte	8
+ 1182 0121 07       		.byte	7
+ 1183 0122 61       		.byte	97
+ 1184 0123 51       		.byte	81
+ 1185 0124 49       		.byte	73
+ 1186 0125 45       		.byte	69
+ 1187 0126 43       		.byte	67
+ 1188 0127 00       		.byte	0
+ 1189 0128 7F       		.byte	127
+ 1190 0129 41       		.byte	65
+ 1191 012a 41       		.byte	65
+ 1192 012b 00       		.byte	0
+ 1193 012c 02       		.byte	2
+ 1194 012d 04       		.byte	4
+ 1195 012e 08       		.byte	8
+ 1196 012f 10       		.byte	16
+ 1197 0130 20       		.byte	32
+ 1198 0131 04       		.byte	4
+ 1199 0132 02       		.byte	2
+ 1200 0133 01       		.byte	1
+ 1201 0134 02       		.byte	2
+ 1202 0135 04       		.byte	4
+ 1203 0136 40       		.byte	64
+ 1204 0137 40       		.byte	64
+ 1205 0138 40       		.byte	64
+ 1206 0139 40       		.byte	64
+ 1207 013a 40       		.byte	64
+ 1208 013b 00       		.byte	0
+ 1209 013c 01       		.byte	1
+ 1210 013d 02       		.byte	2
+ 1211 013e 04       		.byte	4
+ 1212 013f 00       		.byte	0
+ 1213 0140 20       		.byte	32
+ 1214 0141 54       		.byte	84
+ 1215 0142 54       		.byte	84
+ 1216 0143 54       		.byte	84
+ 1217 0144 78       		.byte	120
+ 1218 0145 7F       		.byte	127
+ 1219 0146 48       		.byte	72
+ 1220 0147 44       		.byte	68
+ 1221 0148 44       		.byte	68
+ 1222 0149 38       		.byte	56
+ 1223 014a 38       		.byte	56
+ 1224 014b 44       		.byte	68
+ 1225 014c 44       		.byte	68
+ 1226 014d 44       		.byte	68
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 26
+
+
+ 1227 014e 20       		.byte	32
+ 1228 014f 38       		.byte	56
+ 1229 0150 44       		.byte	68
+ 1230 0151 44       		.byte	68
+ 1231 0152 48       		.byte	72
+ 1232 0153 7F       		.byte	127
+ 1233 0154 38       		.byte	56
+ 1234 0155 54       		.byte	84
+ 1235 0156 54       		.byte	84
+ 1236 0157 54       		.byte	84
+ 1237 0158 18       		.byte	24
+ 1238 0159 08       		.byte	8
+ 1239 015a 7E       		.byte	126
+ 1240 015b 09       		.byte	9
+ 1241 015c 01       		.byte	1
+ 1242 015d 02       		.byte	2
+ 1243 015e 0C       		.byte	12
+ 1244 015f 52       		.byte	82
+ 1245 0160 52       		.byte	82
+ 1246 0161 52       		.byte	82
+ 1247 0162 3E       		.byte	62
+ 1248 0163 7F       		.byte	127
+ 1249 0164 08       		.byte	8
+ 1250 0165 04       		.byte	4
+ 1251 0166 04       		.byte	4
+ 1252 0167 78       		.byte	120
+ 1253 0168 00       		.byte	0
+ 1254 0169 44       		.byte	68
+ 1255 016a 7D       		.byte	125
+ 1256 016b 40       		.byte	64
+ 1257 016c 00       		.byte	0
+ 1258 016d 20       		.byte	32
+ 1259 016e 40       		.byte	64
+ 1260 016f 44       		.byte	68
+ 1261 0170 3D       		.byte	61
+ 1262 0171 00       		.byte	0
+ 1263 0172 7F       		.byte	127
+ 1264 0173 10       		.byte	16
+ 1265 0174 28       		.byte	40
+ 1266 0175 44       		.byte	68
+ 1267 0176 00       		.byte	0
+ 1268 0177 00       		.byte	0
+ 1269 0178 41       		.byte	65
+ 1270 0179 7F       		.byte	127
+ 1271 017a 40       		.byte	64
+ 1272 017b 00       		.byte	0
+ 1273 017c 7C       		.byte	124
+ 1274 017d 04       		.byte	4
+ 1275 017e 18       		.byte	24
+ 1276 017f 04       		.byte	4
+ 1277 0180 78       		.byte	120
+ 1278 0181 7C       		.byte	124
+ 1279 0182 08       		.byte	8
+ 1280 0183 04       		.byte	4
+ 1281 0184 04       		.byte	4
+ 1282 0185 78       		.byte	120
+ 1283 0186 38       		.byte	56
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 27
+
+
+ 1284 0187 44       		.byte	68
+ 1285 0188 44       		.byte	68
+ 1286 0189 44       		.byte	68
+ 1287 018a 38       		.byte	56
+ 1288 018b 7C       		.byte	124
+ 1289 018c 14       		.byte	20
+ 1290 018d 14       		.byte	20
+ 1291 018e 14       		.byte	20
+ 1292 018f 08       		.byte	8
+ 1293 0190 08       		.byte	8
+ 1294 0191 14       		.byte	20
+ 1295 0192 14       		.byte	20
+ 1296 0193 18       		.byte	24
+ 1297 0194 7C       		.byte	124
+ 1298 0195 7C       		.byte	124
+ 1299 0196 08       		.byte	8
+ 1300 0197 04       		.byte	4
+ 1301 0198 04       		.byte	4
+ 1302 0199 08       		.byte	8
+ 1303 019a 48       		.byte	72
+ 1304 019b 54       		.byte	84
+ 1305 019c 54       		.byte	84
+ 1306 019d 54       		.byte	84
+ 1307 019e 20       		.byte	32
+ 1308 019f 04       		.byte	4
+ 1309 01a0 3F       		.byte	63
+ 1310 01a1 44       		.byte	68
+ 1311 01a2 40       		.byte	64
+ 1312 01a3 20       		.byte	32
+ 1313 01a4 3C       		.byte	60
+ 1314 01a5 40       		.byte	64
+ 1315 01a6 40       		.byte	64
+ 1316 01a7 20       		.byte	32
+ 1317 01a8 7C       		.byte	124
+ 1318 01a9 1C       		.byte	28
+ 1319 01aa 20       		.byte	32
+ 1320 01ab 40       		.byte	64
+ 1321 01ac 20       		.byte	32
+ 1322 01ad 1C       		.byte	28
+ 1323 01ae 3C       		.byte	60
+ 1324 01af 40       		.byte	64
+ 1325 01b0 30       		.byte	48
+ 1326 01b1 40       		.byte	64
+ 1327 01b2 3C       		.byte	60
+ 1328 01b3 44       		.byte	68
+ 1329 01b4 28       		.byte	40
+ 1330 01b5 10       		.byte	16
+ 1331 01b6 28       		.byte	40
+ 1332 01b7 44       		.byte	68
+ 1333 01b8 0C       		.byte	12
+ 1334 01b9 50       		.byte	80
+ 1335 01ba 50       		.byte	80
+ 1336 01bb 50       		.byte	80
+ 1337 01bc 3C       		.byte	60
+ 1338 01bd 44       		.byte	68
+ 1339 01be 64       		.byte	100
+ 1340 01bf 54       		.byte	84
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 28
+
+
+ 1341 01c0 4C       		.byte	76
+ 1342 01c1 44       		.byte	68
+ 1343 01c2 00       		.byte	0
+ 1344 01c3 08       		.byte	8
+ 1345 01c4 36       		.byte	54
+ 1346 01c5 41       		.byte	65
+ 1347 01c6 00       		.byte	0
+ 1348 01c7 00       		.byte	0
+ 1349 01c8 00       		.byte	0
+ 1350 01c9 7F       		.byte	127
+ 1351 01ca 00       		.byte	0
+ 1352 01cb 00       		.byte	0
+ 1353 01cc 00       		.byte	0
+ 1354 01cd 41       		.byte	65
+ 1355 01ce 36       		.byte	54
+ 1356 01cf 08       		.byte	8
+ 1357 01d0 00       		.byte	0
+ 1358 01d1 10       		.byte	16
+ 1359 01d2 08       		.byte	8
+ 1360 01d3 08       		.byte	8
+ 1361 01d4 10       		.byte	16
+ 1362 01d5 08       		.byte	8
+ 1363              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 gc9a01.c
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:7      .text.GC9A01_WriteData:0000000000000000 GC9A01_WriteData
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:29     .text.GC9A01_WriteCmd:0000000000000000 GC9A01_WriteCmd
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:52     .text.GC9A01_Init:0000000000000000 GC9A01_Init
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:463    .text.GC9A01_SetWindow:0000000000000000 GC9A01_SetWindow
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:520    .text.GC9A01_FillRect.part.1:0000000000000000 GC9A01_FillRect.part.1
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:597    .text.GC9A01_DrawPixel:0000000000000000 GC9A01_DrawPixel
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:635    .text.GC9A01_FillRect:0000000000000000 GC9A01_FillRect
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:647    .text.GC9A01_FillScreen:0000000000000000 GC9A01_FillScreen
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:659    .text.GC9A01_DrawBitmap:0000000000000000 GC9A01_DrawBitmap
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:699    .text.GC9A01_DrawChar:0000000000000000 GC9A01_DrawChar
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:801    .text.GC9A01_DrawString:0000000000000000 GC9A01_DrawString
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:868    .text.GC9A01_Sleep:0000000000000000 GC9A01_Sleep
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:882    .bss.buffer.3883:0000000000000000 .LANCHOR0
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:885    .bss.buffer.3883:0000000000000000 buffer.3883
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:889    .rodata.Font5x7:0000000000000000 .LANCHOR1
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:892    .rodata.Font5x7:0000000000000000 Font5x7
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:557    .text.GC9A01_FillRect.part.1:0000000000000064 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:559    .text.GC9A01_FillRect.part.1:0000000000000070 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:567    .text.GC9A01_FillRect.part.1:000000000000008e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:536    .text.GC9A01_FillRect.part.1:0000000000000026 .L10
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:544    .text.GC9A01_FillRect.part.1:000000000000003c .L11
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:560    .text.GC9A01_FillRect.part.1:0000000000000078 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:580    .text.GC9A01_FillRect.part.1:00000000000000b0 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:584    .text.GC9A01_FillRect.part.1:00000000000000ba .L14
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:568    .text.GC9A01_FillRect.part.1:0000000000000096 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:628    .text.GC9A01_DrawPixel:000000000000005c .L22
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:640    .text.GC9A01_FillRect:0000000000000014 .L25
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:682    .text.GC9A01_DrawBitmap:0000000000000044 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:732    .text.GC9A01_DrawChar:0000000000000052 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:773    .text.GC9A01_DrawChar:00000000000000be .L33
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:727    .text.GC9A01_DrawChar:0000000000000046 .L36
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:750    .text.GC9A01_DrawChar:0000000000000082 .L37
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:789    .text.GC9A01_DrawChar:00000000000000dc .L38
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:745    .text.GC9A01_DrawChar:0000000000000078 .L40
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:741    .text.GC9A01_DrawChar:0000000000000070 .L41
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:759    .text.GC9A01_DrawChar:000000000000009e .L39
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:844    .text.GC9A01_DrawString:000000000000005c .L49
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:851    .text.GC9A01_DrawString:000000000000006c .L48
+C:\Users\LRNA\AppData\Local\Temp\ccFAW8V1.s:828    .text.GC9A01_DrawString:000000000000003c .L47
+
+UNDEFINED SYMBOLS
+SPI_Transfer
+GPIOA_ModeCfg
+mDelaymS
+SPI_Send

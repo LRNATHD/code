@@ -1,0 +1,382 @@
+#include "gc9a01.h"
+#include "font.h"
+
+// Private Helper Functions
+static void GC9A01_WriteCmd(uint8_t cmd) {
+  funDigitalWrite(PIN_DC, FUN_LOW);
+  funDigitalWrite(PIN_CS, FUN_LOW);
+  SPI_Transfer(cmd);
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+}
+
+static void GC9A01_WriteData(uint8_t data) {
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+  funDigitalWrite(PIN_CS, FUN_LOW);
+  SPI_Transfer(data);
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+}
+
+static void GC9A01_WriteDataArray(uint8_t *data, uint16_t len) {
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+  funDigitalWrite(PIN_CS, FUN_LOW);
+  SPI_Send(data, len);
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+}
+
+void GC9A01_Init(void) {
+  // Initialize Pins
+  funPinMode(PIN_CS, GPIO_CFGLR_OUT_10Mhz_PP);
+  funPinMode(PIN_DC, GPIO_CFGLR_OUT_10Mhz_PP);
+  funPinMode(PIN_RST, GPIO_CFGLR_OUT_10Mhz_PP);
+
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+
+  // Reset Sequence
+  funDigitalWrite(PIN_RST, FUN_HIGH);
+  Delay_Ms(100);
+  funDigitalWrite(PIN_RST, FUN_LOW);
+  Delay_Ms(100);
+  funDigitalWrite(PIN_RST, FUN_HIGH);
+  Delay_Ms(200);
+
+  // Initialization Commands
+  GC9A01_WriteCmd(0xEF);
+
+  GC9A01_WriteCmd(0xEB);
+  GC9A01_WriteData(0x14);
+
+  GC9A01_WriteCmd(0xFE);
+  GC9A01_WriteCmd(0xEF);
+
+  GC9A01_WriteCmd(0xEB);
+  GC9A01_WriteData(0x14);
+
+  GC9A01_WriteCmd(0x84);
+  GC9A01_WriteData(0x40);
+
+  GC9A01_WriteCmd(0x85);
+  GC9A01_WriteData(0xFF);
+
+  GC9A01_WriteCmd(0x86);
+  GC9A01_WriteData(0xFF);
+
+  GC9A01_WriteCmd(0x87);
+  GC9A01_WriteData(0xFF);
+
+  GC9A01_WriteCmd(0x88);
+  GC9A01_WriteData(0x0A);
+
+  GC9A01_WriteCmd(0x89);
+  GC9A01_WriteData(0x21);
+
+  GC9A01_WriteCmd(0x8A);
+  GC9A01_WriteData(0x00);
+
+  GC9A01_WriteCmd(0x8B);
+  GC9A01_WriteData(0x80);
+
+  GC9A01_WriteCmd(0x8C);
+  GC9A01_WriteData(0x01);
+
+  GC9A01_WriteCmd(0x8D);
+  GC9A01_WriteData(0x01);
+
+  GC9A01_WriteCmd(0x8E);
+  GC9A01_WriteData(0xFF);
+
+  GC9A01_WriteCmd(0x8F);
+  GC9A01_WriteData(0xFF);
+
+  GC9A01_WriteCmd(0xB6);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(
+      0x20); // 0x20 or 0x00? Example said 0x00, 0x00. Let's stick to simple.
+
+  GC9A01_WriteCmd(0x36);
+  GC9A01_WriteData(0x08); // Orientation 180 or others.
+
+  GC9A01_WriteCmd(0x3A);
+  GC9A01_WriteData(0x05); // 16-bit color
+
+  GC9A01_WriteCmd(0x90);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x08);
+
+  GC9A01_WriteCmd(0xBD);
+  GC9A01_WriteData(0x06);
+
+  GC9A01_WriteCmd(0xBC);
+  GC9A01_WriteData(0x00);
+
+  GC9A01_WriteCmd(0xFF);
+  GC9A01_WriteData(0x60);
+  GC9A01_WriteData(0x01);
+  GC9A01_WriteData(0x04);
+
+  GC9A01_WriteCmd(0xC3);
+  GC9A01_WriteData(0x13);
+
+  GC9A01_WriteCmd(0xC4);
+  GC9A01_WriteData(0x13);
+
+  GC9A01_WriteCmd(0xC9);
+  GC9A01_WriteData(0x22);
+
+  GC9A01_WriteCmd(0xBE);
+  GC9A01_WriteData(0x11);
+
+  GC9A01_WriteCmd(0xE1);
+  GC9A01_WriteData(0x10);
+  GC9A01_WriteData(0x0E);
+
+  GC9A01_WriteCmd(0xDF);
+  GC9A01_WriteData(0x21);
+  GC9A01_WriteData(0x0c);
+  GC9A01_WriteData(0x02);
+
+  GC9A01_WriteCmd(0xF0);
+  GC9A01_WriteData(0x45);
+  GC9A01_WriteData(0x09);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x26);
+  GC9A01_WriteData(0x2A);
+
+  GC9A01_WriteCmd(0xF1);
+  GC9A01_WriteData(0x43);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x72);
+  GC9A01_WriteData(0x36);
+  GC9A01_WriteData(0x37);
+  GC9A01_WriteData(0x6F);
+
+  GC9A01_WriteCmd(0xF2);
+  GC9A01_WriteData(0x45);
+  GC9A01_WriteData(0x09);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x26);
+  GC9A01_WriteData(0x2A);
+
+  GC9A01_WriteCmd(0xF3);
+  GC9A01_WriteData(0x43);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x72);
+  GC9A01_WriteData(0x36);
+  GC9A01_WriteData(0x37);
+  GC9A01_WriteData(0x6F);
+
+  GC9A01_WriteCmd(0xED);
+  GC9A01_WriteData(0x1B);
+  GC9A01_WriteData(0x0B);
+
+  GC9A01_WriteCmd(0xAE);
+  GC9A01_WriteData(0x77);
+
+  GC9A01_WriteCmd(0xCD);
+  GC9A01_WriteData(0x63);
+
+  GC9A01_WriteCmd(0x70);
+  GC9A01_WriteData(0x07);
+  GC9A01_WriteData(0x07);
+  GC9A01_WriteData(0x04);
+  GC9A01_WriteData(0x0E);
+  GC9A01_WriteData(0x0F);
+  GC9A01_WriteData(0x09);
+  GC9A01_WriteData(0x07);
+  GC9A01_WriteData(0x08);
+  GC9A01_WriteData(0x03);
+
+  GC9A01_WriteCmd(0xE8);
+  GC9A01_WriteData(0x34);
+
+  GC9A01_WriteCmd(0x62);
+  GC9A01_WriteData(0x18);
+  GC9A01_WriteData(0x0D);
+  GC9A01_WriteData(0x71);
+  GC9A01_WriteData(0xED);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x18);
+  GC9A01_WriteData(0x0F);
+  GC9A01_WriteData(0x71);
+  GC9A01_WriteData(0xEF);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x70);
+
+  GC9A01_WriteCmd(0x63);
+  GC9A01_WriteData(0x18);
+  GC9A01_WriteData(0x11);
+  GC9A01_WriteData(0x71);
+  GC9A01_WriteData(0xF1);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x18);
+  GC9A01_WriteData(0x13);
+  GC9A01_WriteData(0x71);
+  GC9A01_WriteData(0xF3);
+  GC9A01_WriteData(0x70);
+  GC9A01_WriteData(0x70);
+
+  GC9A01_WriteCmd(0x64);
+  GC9A01_WriteData(0x28);
+  GC9A01_WriteData(0x29);
+  GC9A01_WriteData(0xF1);
+  GC9A01_WriteData(0x01);
+  GC9A01_WriteData(0xF1);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x07);
+
+  GC9A01_WriteCmd(0x66);
+  GC9A01_WriteData(0x3C);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0xCD);
+  GC9A01_WriteData(0x67);
+  GC9A01_WriteData(0x45);
+  GC9A01_WriteData(0x45);
+  GC9A01_WriteData(0x10);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x00);
+
+  GC9A01_WriteCmd(0x67);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x3C);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x01);
+  GC9A01_WriteData(0x54);
+  GC9A01_WriteData(0x10);
+  GC9A01_WriteData(0x32);
+  GC9A01_WriteData(0x98);
+
+  GC9A01_WriteCmd(0x74);
+  GC9A01_WriteData(0x10);
+  GC9A01_WriteData(0x85);
+  GC9A01_WriteData(0x80);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x00);
+  GC9A01_WriteData(0x4E);
+  GC9A01_WriteData(0x00);
+
+  GC9A01_WriteCmd(0x98);
+  GC9A01_WriteData(0x3e);
+  GC9A01_WriteData(0x07);
+
+  GC9A01_WriteCmd(0x35);
+  GC9A01_WriteCmd(0x21); // Inversion invert
+
+  GC9A01_WriteCmd(0x11);
+  Delay_Ms(120);
+  GC9A01_WriteCmd(0x29);
+  Delay_Ms(20);
+}
+
+void GC9A01_SetWindow(uint16_t x, uint16_t y, uint16_t w, uint16_t h) {
+  GC9A01_WriteCmd(0x2A); // Column Address Set
+  GC9A01_WriteData(x >> 8);
+  GC9A01_WriteData(x & 0xFF);
+  GC9A01_WriteData((x + w - 1) >> 8);
+  GC9A01_WriteData((x + w - 1) & 0xFF);
+
+  GC9A01_WriteCmd(0x2B); // Row Address Set
+  GC9A01_WriteData(y >> 8);
+  GC9A01_WriteData(y & 0xFF);
+  GC9A01_WriteData((y + h - 1) >> 8);
+  GC9A01_WriteData((y + h - 1) & 0xFF);
+
+  GC9A01_WriteCmd(0x2C); // Memory Write
+}
+
+void GC9A01_DrawPixel(uint16_t x, uint16_t y, uint16_t color) {
+  if (x >= 240 || y >= 240)
+    return;
+  GC9A01_SetWindow(x, y, 1, 1);
+
+  uint8_t data[2] = {color >> 8, color & 0xFF};
+  GC9A01_WriteDataArray(data, 2);
+}
+
+void GC9A01_FillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h,
+                     uint16_t color) {
+  if ((x >= 240) || (y >= 240))
+    return;
+  if ((x + w - 1) >= 240)
+    w = 240 - x;
+  if ((y + h - 1) >= 240)
+    h = 240 - y;
+
+  GC9A01_SetWindow(x, y, w, h);
+
+  uint8_t hi = color >> 8;
+  uint8_t lo = color & 0xFF;
+
+  // Simple loop for now (optimize with larger buffer later)
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+  funDigitalWrite(PIN_CS, FUN_LOW);
+
+// We can make a small buffer to speed up
+#define BUF_SIZE 64
+  uint8_t buffer[BUF_SIZE * 2];
+  for (int k = 0; k < BUF_SIZE; k++) {
+    buffer[k * 2] = hi;
+    buffer[k * 2 + 1] = lo;
+  }
+
+  uint32_t count = w * h;
+  while (count > 0) {
+    uint32_t chunk = (count > BUF_SIZE) ? BUF_SIZE : count;
+    SPI_Send(buffer, chunk * 2);
+    count -= chunk;
+  }
+
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+}
+
+void GC9A01_FillScreen(uint16_t color) {
+  GC9A01_FillRect(0, 0, 240, 240, color);
+}
+
+void GC9A01_DrawChar(uint16_t x, uint16_t y, char c, uint16_t color,
+                     uint16_t bg, uint8_t size) {
+  if ((x >= 240) || (y >= 240))
+    return;
+  if (c < 32 || c > 127)
+    c = '?';
+
+  for (int8_t i = 0; i < 5; i++) {
+    uint8_t line = Font5x7[(c - 32) * 5 + i];
+    for (int8_t j = 0; j < 7; j++, line >>= 1) {
+      if (line & 1) {
+        if (size == 1)
+          GC9A01_DrawPixel(x + i, y + j, color);
+        else
+          GC9A01_FillRect(x + i * size, y + j * size, size, size, color);
+      } else if (bg != color) {
+        if (size == 1)
+          GC9A01_DrawPixel(x + i, y + j, bg);
+        else
+          GC9A01_FillRect(x + i * size, y + j * size, size, size, bg);
+      }
+    }
+  }
+}
+
+void GC9A01_DrawString(uint16_t x, uint16_t y, char *str, uint16_t color,
+                       uint16_t bg, uint8_t size) {
+  while (*str) {
+    if (x + 5 * size >= 240) {
+      x = 0;
+      y += 8 * size;
+    }
+    if (y + 8 * size >= 240)
+      break;
+    GC9A01_DrawChar(x, y, *str, color, bg, size);
+    x += 6 * size;
+    str++;
+  }
+}

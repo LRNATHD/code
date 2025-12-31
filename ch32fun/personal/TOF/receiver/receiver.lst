@@ -1,0 +1,1668 @@
+
+receiver.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .init:
+
+00000000 <InterruptVector>:
+	void InterruptVector()         __attribute__((naked)) __attribute((section(".init"))) __attribute((weak,alias("InterruptVectorDefault"))) __attribute((naked));
+	void InterruptVectorDefault()  __attribute__((naked)) __attribute((section(".init"))) __attribute((naked));
+	void InterruptVectorDefault( void )
+	{
+		#if !defined(FUNCONF_TINYVECTOR) || !FUNCONF_TINYVECTOR
+			asm volatile( DEFAULT_INTERRUPT_VECTOR_CONTENTS );
+   0:	2c20006f          	j	2c2 <handle_reset>
+   4:	0000                	unimp
+   6:	0000                	unimp
+   8:	0344                	addi	s1,sp,388
+   a:	0000                	unimp
+   c:	0344                	addi	s1,sp,388
+   e:	0000                	unimp
+  10:	bda9                	j	fffffe6a <_eusrstack+0xdfffce6a>
+  12:	f3f9                	bnez	a5,ffffffd8 <_eusrstack+0xdfffcfd8>
+  14:	0344                	addi	s1,sp,388
+	...
+  1e:	0000                	unimp
+  20:	0344                	addi	s1,sp,388
+  22:	0000                	unimp
+  24:	0344                	addi	s1,sp,388
+	...
+  2e:	0000                	unimp
+  30:	0344                	addi	s1,sp,388
+  32:	0000                	unimp
+  34:	0000                	unimp
+  36:	0000                	unimp
+  38:	0344                	addi	s1,sp,388
+  3a:	0000                	unimp
+  3c:	0000                	unimp
+  3e:	0000                	unimp
+  40:	0344                	addi	s1,sp,388
+  42:	0000                	unimp
+  44:	0344                	addi	s1,sp,388
+  46:	0000                	unimp
+  48:	0344                	addi	s1,sp,388
+  4a:	0000                	unimp
+  4c:	0344                	addi	s1,sp,388
+  4e:	0000                	unimp
+  50:	0344                	addi	s1,sp,388
+  52:	0000                	unimp
+  54:	0b94                	addi	a3,sp,464
+  56:	0000                	unimp
+  58:	0344                	addi	s1,sp,388
+  5a:	0000                	unimp
+  5c:	0000                	unimp
+  5e:	0000                	unimp
+  60:	0344                	addi	s1,sp,388
+  62:	0000                	unimp
+  64:	0344                	addi	s1,sp,388
+  66:	0000                	unimp
+  68:	0344                	addi	s1,sp,388
+  6a:	0000                	unimp
+  6c:	0344                	addi	s1,sp,388
+  6e:	0000                	unimp
+  70:	0344                	addi	s1,sp,388
+  72:	0000                	unimp
+  74:	0344                	addi	s1,sp,388
+  76:	0000                	unimp
+  78:	0344                	addi	s1,sp,388
+  7a:	0000                	unimp
+  7c:	0344                	addi	s1,sp,388
+  7e:	0000                	unimp
+  80:	0344                	addi	s1,sp,388
+  82:	0000                	unimp
+  84:	0344                	addi	s1,sp,388
+  86:	0000                	unimp
+  88:	0344                	addi	s1,sp,388
+  8a:	0000                	unimp
+  8c:	0344                	addi	s1,sp,388
+	...
+
+Disassembly of section .text:
+
+00000090 <PrintHex>:
+	while( (*DMDATA0) & 0x80 );
+  90:	e0000737          	lui	a4,0xe0000
+  94:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+  98:	34070693          	addi	a3,a4,832
+  9c:	0807f793          	andi	a5,a5,128
+  a0:	fbf5                	bnez	a5,94 <PrintHex+0x4>
+	*DMDATA0 = 0x78302088; //" 0x"
+  a2:	783027b7          	lui	a5,0x78302
+  a6:	08878793          	addi	a5,a5,136 # 78302088 <_eusrstack+0x582ff088>
+  aa:	c29c                	sw	a5,0(a3)
+	for( shift = 28; shift >= 0; shift -= 4 )
+  ac:	4771                	li	a4,28
+		while( (*DMDATA0) & 0x80 );
+  ae:	e0000637          	lui	a2,0xe0000
+		s += ( s < 10 ) ? '0' : ('a' - 10);
+  b2:	4825                	li	a6,9
+	for( shift = 28; shift >= 0; shift -= 4 )
+  b4:	55f1                	li	a1,-4
+		while( (*DMDATA0) & 0x80 );
+  b6:	34062783          	lw	a5,832(a2) # e0000340 <_eusrstack+0xbfffd340>
+  ba:	0807f793          	andi	a5,a5,128
+  be:	ffe5                	bnez	a5,b6 <PrintHex+0x26>
+		int s = (n>>shift) & 0xf;
+  c0:	00e557b3          	srl	a5,a0,a4
+  c4:	00f7f693          	andi	a3,a5,15
+		s += ( s < 10 ) ? '0' : ('a' - 10);
+  c8:	03000793          	li	a5,48
+  cc:	00d85463          	bge	a6,a3,d4 <PrintHex+0x44>
+  d0:	05700793          	li	a5,87
+  d4:	97b6                	add	a5,a5,a3
+		*DMDATA0 = 0x85 | (s<<8); //" 0x"
+  d6:	07a2                	slli	a5,a5,0x8
+  d8:	0857e793          	ori	a5,a5,133
+  dc:	34f62023          	sw	a5,832(a2)
+	for( shift = 28; shift >= 0; shift -= 4 )
+  e0:	1771                	addi	a4,a4,-4
+  e2:	fcb71ae3          	bne	a4,a1,b6 <PrintHex+0x26>
+}
+  e6:	8082                	ret
+
+000000e8 <DevSetMode>:
+	NVIC->VTFIDR[3] = 0x14;
+}
+
+void DevSetMode(uint16_t mode) {
+#if !defined(CH571_CH573)
+	if(mode) {
+  e8:	fffd07b7          	lui	a5,0xfffd0
+		BB->CTRL_CFG = DEVSETMODE_ON;
+  ec:	4000c6b7          	lui	a3,0x4000c
+  f0:	fff78713          	addi	a4,a5,-1 # fffcffff <_eusrstack+0xdffccfff>
+  f4:	1006a783          	lw	a5,256(a3) # 4000c100 <_eusrstack+0x20009100>
+  f8:	8ff9                	and	a5,a5,a4
+	if(mode) {
+  fa:	c11d                	beqz	a0,120 <DevSetMode+0x38>
+		BB->CTRL_CFG = DEVSETMODE_ON;
+  fc:	00020737          	lui	a4,0x20
+ 100:	8fd9                	or	a5,a5,a4
+ 102:	10f6a023          	sw	a5,256(a3)
+		RF->RF2 |= 0x330000;
+ 106:	4000d737          	lui	a4,0x4000d
+ 10a:	471c                	lw	a5,8(a4)
+ 10c:	003306b7          	lui	a3,0x330
+ 110:	8fd5                	or	a5,a5,a3
+ 112:	c71c                	sw	a5,8(a4)
+	mode = (mode == 0) ? 0x80 : mode;
+#elif !defined(CH32V208)
+	mode |= 0x30000;
+#endif
+#endif // ! CH571_CH573
+	LL->CTRL_MOD = mode;
+ 114:	4000c7b7          	lui	a5,0x4000c
+ 118:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+ 11c:	cba8                	sw	a0,80(a5)
+}
+ 11e:	8082                	ret
+		BB->CTRL_CFG = DEVSETMODE_OFF;
+ 120:	6741                	lui	a4,0x10
+ 122:	8fd9                	or	a5,a5,a4
+ 124:	10f6a023          	sw	a5,256(a3) # 330100 <radio.c.aaa41e85+0x32db4c>
+		RF->RF2 &= 0xffcdffff;
+ 128:	4000d6b7          	lui	a3,0x4000d
+ 12c:	469c                	lw	a5,8(a3)
+ 12e:	ffce0737          	lui	a4,0xffce0
+ 132:	177d                	addi	a4,a4,-1
+ 134:	8ff9                	and	a5,a5,a4
+ 136:	c69c                	sw	a5,8(a3)
+ 138:	bff1                	j	114 <DevSetMode+0x2c>
+
+0000013a <RFEND_TXCTune>:
+
+uint32_t RFEND_TXCTune(uint8_t channel) {
+	// 0xbf = 2401 MHz
+	RF->RF1 &= 0xfffffffe;
+ 13a:	4000d737          	lui	a4,0x4000d
+ 13e:	435c                	lw	a5,4(a4)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xfffe00ff) | (0xbf00 + (channel_map[channel] << 8));
+ 140:	6685                	lui	a3,0x1
+ 142:	c4c68693          	addi	a3,a3,-948 # c4c <channel_map>
+	RF->RF1 &= 0xfffffffe;
+ 146:	9bf9                	andi	a5,a5,-2
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xfffe00ff) | (0xbf00 + (channel_map[channel] << 8));
+ 148:	96aa                	add	a3,a3,a0
+	RF->RF1 &= 0xfffffffe;
+ 14a:	c35c                	sw	a5,4(a4)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xfffe00ff) | (0xbf00 + (channel_map[channel] << 8));
+ 14c:	0006c783          	lbu	a5,0(a3)
+ 150:	66b1                	lui	a3,0xc
+ 152:	5f10                	lw	a2,56(a4)
+ 154:	f0068693          	addi	a3,a3,-256 # bf00 <radio.c.aaa41e85+0x994c>
+ 158:	07a2                	slli	a5,a5,0x8
+ 15a:	97b6                	add	a5,a5,a3
+ 15c:	7681                	lui	a3,0xfffe0
+ 15e:	0ff68693          	addi	a3,a3,255 # fffe00ff <_eusrstack+0xdffdd0ff>
+ 162:	8e75                	and	a2,a2,a3
+ 164:	8fd1                	or	a5,a5,a2
+ 166:	df1c                	sw	a5,56(a4)
+	RF->RF1 |= 1;
+ 168:	435c                	lw	a5,4(a4)
+
+	LL->TMR = 8000;
+	while(!(RF->TXCTUNE_CO_CTRL & (1 << 25)) || !(RF->TXCTUNE_CO_CTRL & (1 << 26))) {
+ 16a:	02000637          	lui	a2,0x2000
+ 16e:	040006b7          	lui	a3,0x4000
+	RF->RF1 |= 1;
+ 172:	0017e793          	ori	a5,a5,1
+ 176:	c35c                	sw	a5,4(a4)
+	LL->TMR = 8000;
+ 178:	4000c7b7          	lui	a5,0x4000c
+ 17c:	6709                	lui	a4,0x2
+ 17e:	f4070713          	addi	a4,a4,-192 # 1f40 <ch32fun.c.f59297d2+0xa7d>
+ 182:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+ 186:	d3f8                	sw	a4,100(a5)
+		if(LL->TMR == 0) {
+ 188:	4000c5b7          	lui	a1,0x4000c
+	while(!(RF->TXCTUNE_CO_CTRL & (1 << 25)) || !(RF->TXCTUNE_CO_CTRL & (1 << 26))) {
+ 18c:	4000d737          	lui	a4,0x4000d
+ 190:	09072783          	lw	a5,144(a4) # 4000d090 <_eusrstack+0x2000a090>
+ 194:	8ff1                	and	a5,a5,a2
+ 196:	c789                	beqz	a5,1a0 <RFEND_TXCTune+0x66>
+ 198:	09072783          	lw	a5,144(a4)
+ 19c:	8ff5                	and	a5,a5,a3
+ 19e:	e789                	bnez	a5,1a8 <RFEND_TXCTune+0x6e>
+		if(LL->TMR == 0) {
+ 1a0:	20058793          	addi	a5,a1,512 # 4000c200 <_eusrstack+0x20009200>
+ 1a4:	53fc                	lw	a5,100(a5)
+ 1a6:	f7ed                	bnez	a5,190 <RFEND_TXCTune+0x56>
+			break;
+		}
+	}
+
+	uint8_t nCO = (uint8_t)RF->TXCTUNE_CO_CTRL & 0x3f;
+ 1a8:	4000d7b7          	lui	a5,0x4000d
+ 1ac:	0907a503          	lw	a0,144(a5) # 4000d090 <_eusrstack+0x2000a090>
+	uint8_t nGA = (uint8_t)(RF->TXCTUNE_GA_CTRL >> 10) & 0x7f;
+ 1b0:	0947a783          	lw	a5,148(a5)
+
+	// printf("nCO,nGA ch:%u idx:%u %u,%u\n", channel, channel_map[channel], nCO,nGA);
+
+	return (nGA << 24) | nCO;
+ 1b4:	03f57513          	andi	a0,a0,63
+	uint8_t nGA = (uint8_t)(RF->TXCTUNE_GA_CTRL >> 10) & 0x7f;
+ 1b8:	83a9                	srli	a5,a5,0xa
+	return (nGA << 24) | nCO;
+ 1ba:	07f7f793          	andi	a5,a5,127
+ 1be:	07e2                	slli	a5,a5,0x18
+}
+ 1c0:	8d5d                	or	a0,a0,a5
+ 1c2:	8082                	ret
+
+000001c4 <internal_handle_input.constprop.0>:
+void handle_debug_input( int numbytes, uint8_t * data ) __attribute__((weak));
+void handle_debug_input( int numbytes, uint8_t * data ) { (void)numbytes; (void)data; }
+
+static void internal_handle_input( volatile uint32_t * dmdata0 )
+{
+	uint32_t dmd0 = *dmdata0;
+ 1c4:	e00007b7          	lui	a5,0xe0000
+ 1c8:	3407a783          	lw	a5,832(a5) # e0000340 <_eusrstack+0xbfffd340>
+	int bytes = (dmd0 & 0x3f) - 4;
+	if( bytes > 0 && bytes < 16 )
+	{
+		handle_debug_input( bytes, ((uint8_t*)dmdata0) + 1 );
+	}
+}
+ 1cc:	8082                	ret
+
+000001ce <_write.constprop.0>:
+//     status word = 0xcx = timed out.
+// declare as weak to allow overriding.
+WEAK int _write(int fd, const char *buf, int size)
+{
+	(void)fd;
+	if( ( *DMDATA0 & 0xc0 ) == 0xc0 ) return 0;
+ 1ce:	e0000737          	lui	a4,0xe0000
+ 1d2:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+WEAK int _write(int fd, const char *buf, int size)
+ 1d6:	7139                	addi	sp,sp,-64
+ 1d8:	de06                	sw	ra,60(sp)
+ 1da:	dc22                	sw	s0,56(sp)
+ 1dc:	da26                	sw	s1,52(sp)
+ 1de:	d84a                	sw	s2,48(sp)
+ 1e0:	d64e                	sw	s3,44(sp)
+ 1e2:	d452                	sw	s4,40(sp)
+ 1e4:	d256                	sw	s5,36(sp)
+ 1e6:	d05a                	sw	s6,32(sp)
+ 1e8:	ce5e                	sw	s7,28(sp)
+ 1ea:	cc62                	sw	s8,24(sp)
+ 1ec:	ca66                	sw	s9,20(sp)
+	if( ( *DMDATA0 & 0xc0 ) == 0xc0 ) return 0;
+ 1ee:	0c07f793          	andi	a5,a5,192
+ 1f2:	0c000693          	li	a3,192
+ 1f6:	0ad78a63          	beq	a5,a3,2aa <_write.constprop.0+0xdc>
+
+	char buffer[4] = { 0 };
+ 1fa:	c602                	sw	zero,12(sp)
+ 1fc:	842e                	mv	s0,a1
+	int place = 0;
+	uint32_t lastdmd;
+	uint32_t timeout = FUNCONF_DEBUGPRINTF_TIMEOUT; // Give up after ~120ms
+
+	if( size == 0 )
+ 1fe:	e9c5                	bnez	a1,2ae <_write.constprop.0+0xe0>
+	{
+		lastdmd = (*DMDATA0);
+ 200:	34072783          	lw	a5,832(a4)
+		if( lastdmd && !(lastdmd&0x80) ) internal_handle_input( (uint32_t*)DMDATA0 );
+ 204:	c789                	beqz	a5,20e <_write.constprop.0+0x40>
+ 206:	0807f793          	andi	a5,a5,128
+ 20a:	e391                	bnez	a5,20e <_write.constprop.0+0x40>
+ 20c:	3f65                	jal	1c4 <internal_handle_input.constprop.0>
+
+		//buf += tosend;
+		place += tosend;
+	}
+	return size;
+}
+ 20e:	50f2                	lw	ra,60(sp)
+ 210:	8522                	mv	a0,s0
+ 212:	5462                	lw	s0,56(sp)
+ 214:	54d2                	lw	s1,52(sp)
+ 216:	5942                	lw	s2,48(sp)
+ 218:	59b2                	lw	s3,44(sp)
+ 21a:	5a22                	lw	s4,40(sp)
+ 21c:	5a92                	lw	s5,36(sp)
+ 21e:	5b02                	lw	s6,32(sp)
+ 220:	4bf2                	lw	s7,28(sp)
+ 222:	4c62                	lw	s8,24(sp)
+ 224:	4cd2                	lw	s9,20(sp)
+ 226:	6121                	addi	sp,sp,64
+ 228:	8082                	ret
+		int tosend = size - place;
+ 22a:	40940cb3          	sub	s9,s0,s1
+ 22e:	8966                	mv	s2,s9
+ 230:	019ad363          	bge	s5,s9,236 <_write.constprop.0+0x68>
+ 234:	491d                	li	s2,7
+ 236:	001b0793          	addi	a5,s6,1
+		while( ( lastdmd = (*DMDATA0) ) & 0x80 )
+ 23a:	340a2703          	lw	a4,832(s4)
+ 23e:	340a0693          	addi	a3,s4,832
+ 242:	08077613          	andi	a2,a4,128
+ 246:	ee21                	bnez	a2,29e <_write.constprop.0+0xd0>
+		if( lastdmd ) internal_handle_input( (uint32_t*)DMDATA0 );
+ 248:	c311                	beqz	a4,24c <_write.constprop.0+0x7e>
+ 24a:	3fad                	jal	1c4 <internal_handle_input.constprop.0>
+			buffer[t-3] = buf[t+place];
+ 24c:	4601                	li	a2,0
+ 24e:	019bd463          	bge	s7,s9,256 <_write.constprop.0+0x88>
+ 252:	ffd90613          	addi	a2,s2,-3
+ 256:	00348593          	addi	a1,s1,3
+ 25a:	95ce                	add	a1,a1,s3
+ 25c:	0068                	addi	a0,sp,12
+ 25e:	2a71                	jal	3fa <memcpy>
+		*DMDATA1 = *(uint32_t*)&(buffer[0]);
+ 260:	47b2                	lw	a5,12(sp)
+ 262:	00998733          	add	a4,s3,s1
+ 266:	34fa2223          	sw	a5,836(s4)
+		t = 0;
+ 26a:	4781                	li	a5,0
+			buffer[t+1] = buf[t+place];
+ 26c:	00074603          	lbu	a2,0(a4)
+ 270:	0785                	addi	a5,a5,1
+ 272:	0074                	addi	a3,sp,12
+ 274:	96be                	add	a3,a3,a5
+ 276:	00c68023          	sb	a2,0(a3) # 4000000 <radio.c.aaa41e85+0x3ffda4c>
+		while( t < tosend && t < 3 )
+ 27a:	00f90563          	beq	s2,a5,284 <_write.constprop.0+0xb6>
+ 27e:	0705                	addi	a4,a4,1
+ 280:	ff8796e3          	bne	a5,s8,26c <_write.constprop.0+0x9e>
+		buffer[0] = 0x80 | (tosend + 4);
+ 284:	00490793          	addi	a5,s2,4
+ 288:	f807e793          	ori	a5,a5,-128
+ 28c:	00f10623          	sb	a5,12(sp)
+		*DMDATA0 = *(uint32_t*)&(buffer[0]);
+ 290:	47b2                	lw	a5,12(sp)
+		place += tosend;
+ 292:	94ca                	add	s1,s1,s2
+		*DMDATA0 = *(uint32_t*)&(buffer[0]);
+ 294:	34fa2023          	sw	a5,832(s4)
+	while( place < size )
+ 298:	f884c9e3          	blt	s1,s0,22a <_write.constprop.0+0x5c>
+ 29c:	bf8d                	j	20e <_write.constprop.0+0x40>
+			if( timeout-- == 0 )
+ 29e:	17fd                	addi	a5,a5,-1
+ 2a0:	ffc9                	bnez	a5,23a <_write.constprop.0+0x6c>
+				*DMDATA0 |= 0xc0;
+ 2a2:	429c                	lw	a5,0(a3)
+ 2a4:	0c07e793          	ori	a5,a5,192
+ 2a8:	c29c                	sw	a5,0(a3)
+	if( ( *DMDATA0 & 0xc0 ) == 0xc0 ) return 0;
+ 2aa:	4401                	li	s0,0
+ 2ac:	b78d                	j	20e <_write.constprop.0+0x40>
+ 2ae:	89aa                	mv	s3,a0
+	if( size == 0 )
+ 2b0:	4481                	li	s1,0
+ 2b2:	4a9d                	li	s5,7
+		int tosend = size - place;
+ 2b4:	00100b37          	lui	s6,0x100
+		while( ( lastdmd = (*DMDATA0) ) & 0x80 )
+ 2b8:	e0000a37          	lui	s4,0xe0000
+			buffer[t-3] = buf[t+place];
+ 2bc:	4b89                	li	s7,2
+		while( t < tosend && t < 3 )
+ 2be:	4c0d                	li	s8,3
+ 2c0:	bfe1                	j	298 <_write.constprop.0+0xca>
+
+000002c2 <handle_reset>:
+	asm volatile( "\n\
+ 2c2:	20000197          	auipc	gp,0x20000
+ 2c6:	13a18193          	addi	gp,gp,314 # 200003fc <__global_pointer$>
+ 2ca:	20003117          	auipc	sp,0x20003
+ 2ce:	d3610113          	addi	sp,sp,-714 # 20003000 <_eusrstack>
+	asm volatile(
+ 2d2:	c0418513          	addi	a0,gp,-1020 # 20000000 <rx_ready>
+ 2d6:	09018593          	addi	a1,gp,144 # 2000048c <_ebss>
+ 2da:	00b57763          	bgeu	a0,a1,2e8 <handle_reset+0x26>
+ 2de:	00052023          	sw	zero,0(a0)
+ 2e2:	0511                	addi	a0,a0,4
+ 2e4:	feb56de3          	bltu	a0,a1,2de <handle_reset+0x1c>
+ 2e8:	00001517          	auipc	a0,0x1
+ 2ec:	98c50513          	addi	a0,a0,-1652 # c74 <_data_lma>
+ 2f0:	c0418593          	addi	a1,gp,-1020 # 20000000 <rx_ready>
+ 2f4:	c0418613          	addi	a2,gp,-1020 # 20000000 <rx_ready>
+ 2f8:	00c58a63          	beq	a1,a2,30c <handle_reset+0x4a>
+ 2fc:	00052283          	lw	t0,0(a0)
+ 300:	0055a023          	sw	t0,0(a1)
+ 304:	0511                	addi	a0,a0,4
+ 306:	0591                	addi	a1,a1,4
+ 308:	fec5eae3          	bltu	a1,a2,2fc <handle_reset+0x3a>
+	asm volatile(
+ 30c:	00000793          	li	a5,0
+ 310:	42fd                	li	t0,31
+ 312:	bc029073          	csrw	0xbc0,t0
+ 316:	6289                	lui	t0,0x2
+ 318:	88828293          	addi	t0,t0,-1912 # 1888 <ch32fun.c.f59297d2+0x3c5>
+ 31c:	3002a073          	csrs	mstatus,t0
+ 320:	00000297          	auipc	t0,0x0
+ 324:	ce028293          	addi	t0,t0,-800 # 0 <InterruptVector>
+ 328:	0032e293          	ori	t0,t0,3
+ 32c:	30529073          	csrw	mtvec,t0
+	SysTick->CTLR = 1;
+ 330:	e000f7b7          	lui	a5,0xe000f
+ 334:	4705                	li	a4,1
+ 336:	c398                	sw	a4,0(a5)
+	asm volatile(
+ 338:	4ba00793          	li	a5,1210
+ 33c:	34179073          	csrw	mepc,a5
+ 340:	30200073          	mret
+
+00000344 <ADC1_2_IRQHandler>:
+
+// Return the Machine Exception Program Register (MEPC)
+static inline uint32_t __get_MEPC(void)
+{
+	uint32_t result;
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0," "mepc" : "=r"(result));
+ 344:	34102573          	csrr	a0,mepc
+	PrintHex( __get_MEPC() ); // "addr2line -e debugprintfdemo.elf 0x000007e6" ---> debugprintfdemo.c:45
+ 348:	33a1                	jal	90 <PrintHex>
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0, mstatus": "=r"(result) );
+ 34a:	30002573          	csrr	a0,mstatus
+	PrintHex( __get_MSTATUS() );
+ 34e:	3389                	jal	90 <PrintHex>
+
+// Return the Machine Trap Value Register (MTVAL)
+static inline uint32_t __get_MTVAL(void)
+{
+	uint32_t result;
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0," "mtval" : "=r" (result) );
+ 350:	34302573          	csrr	a0,mtval
+	PrintHex( __get_MTVAL() );
+ 354:	3b35                	jal	90 <PrintHex>
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0," "mcause": "=r"(result));
+ 356:	34202573          	csrr	a0,mcause
+	PrintHex( __get_MCAUSE() );
+ 35a:	3b1d                	jal	90 <PrintHex>
+	while( (*DMDATA0) & 0x80 );
+ 35c:	e0000737          	lui	a4,0xe0000
+ 360:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+ 364:	34070693          	addi	a3,a4,832
+ 368:	0807f793          	andi	a5,a5,128
+ 36c:	fbf5                	bnez	a5,360 <ADC1_2_IRQHandler+0x1c>
+	*DMDATA0 = 0x0a85;
+ 36e:	6785                	lui	a5,0x1
+ 370:	a8578793          	addi	a5,a5,-1403 # a85 <main+0x5cb>
+ 374:	c29c                	sw	a5,0(a3)
+	while( (*DMDATA0) & 0x80 );
+ 376:	e0000737          	lui	a4,0xe0000
+ 37a:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+ 37e:	34070693          	addi	a3,a4,832
+ 382:	0807f793          	andi	a5,a5,128
+ 386:	fbf5                	bnez	a5,37a <ADC1_2_IRQHandler+0x36>
+	*DMDATA0 = 0xaaaaaa83;
+ 388:	aaaab7b7          	lui	a5,0xaaaab
+ 38c:	a8378793          	addi	a5,a5,-1405 # aaaaaa83 <_eusrstack+0x8aaa7a83>
+ 390:	c29c                	sw	a5,0(a3)
+	asm volatile( "1: j 1b" );
+ 392:	a001                	j	392 <ADC1_2_IRQHandler+0x4e>
+
+00000394 <strlen>:
+{
+ 394:	87aa                	mv	a5,a0
+	for (; *s; s++);
+ 396:	0007c703          	lbu	a4,0(a5)
+ 39a:	e701                	bnez	a4,3a2 <strlen+0xe>
+}
+ 39c:	40a78533          	sub	a0,a5,a0
+ 3a0:	8082                	ret
+	for (; *s; s++);
+ 3a2:	0785                	addi	a5,a5,1
+ 3a4:	bfcd                	j	396 <strlen+0x2>
+
+000003a6 <memset>:
+WEAK void *memset(void *dest, int c, size_t n) { unsigned char *s = dest; for (; n; n--, s++) *s = c; return dest; }
+ 3a6:	962a                	add	a2,a2,a0
+ 3a8:	87aa                	mv	a5,a0
+ 3aa:	00c79363          	bne	a5,a2,3b0 <memset+0xa>
+ 3ae:	8082                	ret
+ 3b0:	00b78023          	sb	a1,0(a5)
+ 3b4:	0785                	addi	a5,a5,1
+ 3b6:	bfd5                	j	3aa <memset+0x4>
+
+000003b8 <strcpy>:
+{
+ 3b8:	87aa                	mv	a5,a0
+	for (; (*d=*s); s++, d++);
+ 3ba:	0005c703          	lbu	a4,0(a1)
+ 3be:	00e78023          	sb	a4,0(a5)
+ 3c2:	e311                	bnez	a4,3c6 <strcpy+0xe>
+}
+ 3c4:	8082                	ret
+	for (; (*d=*s); s++, d++);
+ 3c6:	0585                	addi	a1,a1,1
+ 3c8:	0785                	addi	a5,a5,1
+ 3ca:	bfc5                	j	3ba <strcpy+0x2>
+
+000003cc <strncmp>:
+	if (!n--) return 0;
+ 3cc:	c60d                	beqz	a2,3f6 <strncmp+0x2a>
+ 3ce:	167d                	addi	a2,a2,-1
+ 3d0:	4701                	li	a4,0
+	for (; *l && *r && n && *l == *r ; l++, r++, n--);
+ 3d2:	00e507b3          	add	a5,a0,a4
+ 3d6:	0007c783          	lbu	a5,0(a5)
+ 3da:	00e586b3          	add	a3,a1,a4
+ 3de:	0006c683          	lbu	a3,0(a3)
+ 3e2:	c799                	beqz	a5,3f0 <strncmp+0x24>
+ 3e4:	c691                	beqz	a3,3f0 <strncmp+0x24>
+ 3e6:	00e60563          	beq	a2,a4,3f0 <strncmp+0x24>
+ 3ea:	0705                	addi	a4,a4,1
+ 3ec:	fed783e3          	beq	a5,a3,3d2 <strncmp+0x6>
+	return *l - *r;
+ 3f0:	40d78533          	sub	a0,a5,a3
+ 3f4:	8082                	ret
+	if (!n--) return 0;
+ 3f6:	4501                	li	a0,0
+}
+ 3f8:	8082                	ret
+
+000003fa <memcpy>:
+{
+ 3fa:	4781                	li	a5,0
+	for (; n; n--) *d++ = *s++;
+ 3fc:	00f61363          	bne	a2,a5,402 <memcpy+0x8>
+}
+ 400:	8082                	ret
+	for (; n; n--) *d++ = *s++;
+ 402:	00f58733          	add	a4,a1,a5
+ 406:	00074683          	lbu	a3,0(a4)
+ 40a:	00f50733          	add	a4,a0,a5
+ 40e:	0785                	addi	a5,a5,1
+ 410:	00d70023          	sb	a3,0(a4)
+ 414:	b7e5                	j	3fc <memcpy+0x2>
+
+00000416 <puts>:
+{
+ 416:	1141                	addi	sp,sp,-16
+ 418:	c606                	sw	ra,12(sp)
+ 41a:	c422                	sw	s0,8(sp)
+ 41c:	c226                	sw	s1,4(sp)
+ 41e:	84aa                	mv	s1,a0
+	int sl = strlen( s );
+ 420:	3f95                	jal	394 <strlen>
+ 422:	842a                	mv	s0,a0
+	_write(0, s, sl );
+ 424:	85aa                	mv	a1,a0
+ 426:	8526                	mv	a0,s1
+ 428:	335d                	jal	1ce <_write.constprop.0>
+	_write(0, "\n", 1 );
+ 42a:	6505                	lui	a0,0x1
+ 42c:	4585                	li	a1,1
+ 42e:	c2450513          	addi	a0,a0,-988 # c24 <LLE_IRQHandler+0x90>
+ 432:	3b71                	jal	1ce <_write.constprop.0>
+}
+ 434:	40b2                	lw	ra,12(sp)
+ 436:	00140513          	addi	a0,s0,1
+ 43a:	4422                	lw	s0,8(sp)
+ 43c:	4492                	lw	s1,4(sp)
+ 43e:	0141                	addi	sp,sp,16
+ 440:	8082                	ret
+
+00000442 <SystemInit>:
+	}
+	else
+	{
+		if((sc & RB_CLK_SYS_MOD) == 0x40) // PLL div
+		{
+			SYS_SAFE_ACCESS(
+ 442:	400017b7          	lui	a5,0x40001
+ 446:	05700593          	li	a1,87
+ 44a:	04b78023          	sb	a1,64(a5) # 40001040 <_eusrstack+0x1fffe040>
+ 44e:	fa800613          	li	a2,-88
+ 452:	04c78023          	sb	a2,64(a5)
+ 456:	0001                	nop
+ 458:	0001                	nop
+ 45a:	00a7c703          	lbu	a4,10(a5)
+ 45e:	400026b7          	lui	a3,0x40002
+ 462:	0ff77713          	andi	a4,a4,255
+ 466:	01076713          	ori	a4,a4,16
+ 46a:	00e78523          	sb	a4,10(a5)
+ 46e:	4705                	li	a4,1
+ 470:	80e683a3          	sb	a4,-2041(a3) # 40001807 <_eusrstack+0x1fffe807>
+ 474:	8056c703          	lbu	a4,-2043(a3)
+ 478:	0ff77713          	andi	a4,a4,255
+ 47c:	01076713          	ori	a4,a4,16
+ 480:	80e682a3          	sb	a4,-2043(a3)
+ 484:	04078023          	sb	zero,64(a5)
+ 488:	0001                	nop
+ 48a:	0001                	nop
+		{
+			SYS_SAFE_ACCESS(
+				R8_FLASH_CFG = (sc & 0x1F) ? 0x02 : 0x07;
+			);
+		}
+		SYS_SAFE_ACCESS(
+ 48c:	04b78023          	sb	a1,64(a5)
+ 490:	04c78023          	sb	a2,64(a5)
+ 494:	0001                	nop
+ 496:	0001                	nop
+ 498:	04a00713          	li	a4,74
+ 49c:	00e78423          	sb	a4,8(a5)
+ 4a0:	04078023          	sb	zero,64(a5)
+ 4a4:	0001                	nop
+ 4a6:	0001                	nop
+	*DMDATA1 = 0x00;
+ 4a8:	e00007b7          	lui	a5,0xe0000
+ 4ac:	3407a223          	sw	zero,836(a5) # e0000344 <_eusrstack+0xbfffd344>
+	*DMDATA0 = 0x80;
+ 4b0:	08000713          	li	a4,128
+ 4b4:	34e7a023          	sw	a4,832(a5)
+	SetupDebugPrintf();
+#endif
+#if defined(FUNCONF_SUPPORT_CONSTRUCTORS) && FUNCONF_SUPPORT_CONSTRUCTORS
+	CallConstructors();
+#endif
+}
+ 4b8:	8082                	ret
+
+000004ba <main>:
+#define PROTOCOL_ID 0xAA
+
+uint8_t rx_data[RX_PAYLOAD_LEN];
+uint8_t tx_data[RX_PAYLOAD_LEN];
+
+int main() {
+ 4ba:	7119                	addi	sp,sp,-128
+ 4bc:	de86                	sw	ra,124(sp)
+ 4be:	dca2                	sw	s0,120(sp)
+ 4c0:	daa6                	sw	s1,116(sp)
+ 4c2:	0100                	addi	s0,sp,128
+ 4c4:	d8ca                	sw	s2,112(sp)
+ 4c6:	d6ce                	sw	s3,108(sp)
+ 4c8:	d4d2                	sw	s4,104(sp)
+ 4ca:	d2d6                	sw	s5,100(sp)
+ 4cc:	d0da                	sw	s6,96(sp)
+ 4ce:	cede                	sw	s7,92(sp)
+ 4d0:	cce2                	sw	s8,88(sp)
+ 4d2:	cae6                	sw	s9,84(sp)
+ 4d4:	c8ea                	sw	s10,80(sp)
+ 4d6:	c6ee                	sw	s11,76(sp)
+  SystemInit();
+ 4d8:	37ad                	jal	442 <SystemInit>
+  printf("TOF Receiver Start\n");
+ 4da:	6505                	lui	a0,0x1
+ 4dc:	c2850513          	addi	a0,a0,-984 # c28 <LLE_IRQHandler+0x94>
+ 4e0:	3f1d                	jal	416 <puts>
+	LL->LL5 = 0x8c;
+ 4e2:	4000c6b7          	lui	a3,0x4000c
+ 4e6:	20068793          	addi	a5,a3,512 # 4000c200 <_eusrstack+0x20009200>
+ 4ea:	08c00713          	li	a4,140
+ 4ee:	cbd8                	sw	a4,20(a5)
+	LL->LL7 = 0x76;
+ 4f0:	07600613          	li	a2,118
+ 4f4:	cfd0                	sw	a2,28(a5)
+	LL->LL9 = 0x8c;
+ 4f6:	d3d8                	sw	a4,36(a5)
+	LL->LL13 = 0x8c;
+ 4f8:	dbd8                	sw	a4,52(a5)
+	LL->LL17 = 0x8c;
+ 4fa:	c3f8                	sw	a4,68(a5)
+	LL->LL19 = 0x76;
+ 4fc:	c7f0                	sw	a2,76(a5)
+	LL->LL11 = 0x6c;
+ 4fe:	06c00713          	li	a4,108
+ 502:	d7d8                	sw	a4,44(a5)
+	LL->LL15 = 0x6c;
+ 504:	dfd8                	sw	a4,60(a5)
+	LL->LL1 = 0x78;
+ 506:	07800713          	li	a4,120
+ 50a:	c3d8                	sw	a4,4(a5)
+	LL->INT_EN = 0x16000f;
+ 50c:	00160737          	lui	a4,0x160
+	LL->LL21 = 0;
+ 510:	0407aa23          	sw	zero,84(a5)
+	LL->INT_EN = 0x16000f;
+ 514:	073d                	addi	a4,a4,15
+ 516:	c7d8                	sw	a4,12(a5)
+	LL->STATE_BUF = (uint32_t)LLE_BUF;
+ 518:	c1018713          	addi	a4,gp,-1008 # 2000000c <LLE_BUF>
+ 51c:	dff8                	sw	a4,124(a5)
+	LL->STATUS = 0xffffffff;
+ 51e:	577d                	li	a4,-1
+ 520:	c798                	sw	a4,8(a5)
+	RF->RF10 = 0x480;
+ 522:	4000d637          	lui	a2,0x4000d
+ 526:	48000793          	li	a5,1152
+ 52a:	d61c                	sw	a5,40(a2)
+	RF->RF12 &= 0xfff9ffff;
+ 52c:	5a1c                	lw	a5,48(a2)
+ 52e:	fffa0737          	lui	a4,0xfffa0
+ 532:	177d                	addi	a4,a4,-1
+ 534:	8ff9                	and	a5,a5,a4
+ 536:	da1c                	sw	a5,48(a2)
+	RF->RF12 |= 0x70000000;
+ 538:	5a1c                	lw	a5,48(a2)
+ 53a:	70000737          	lui	a4,0x70000
+	RF->RF15 = (RF->RF15 & 0xf8ffffff) | 0x2000000;
+ 53e:	85b2                	mv	a1,a2
+	RF->RF12 |= 0x70000000;
+ 540:	8fd9                	or	a5,a5,a4
+ 542:	da1c                	sw	a5,48(a2)
+	RF->RF15 = (RF->RF15 & 0xf8ffffff) | 0x2000000;
+ 544:	5e58                	lw	a4,60(a2)
+ 546:	f90007b7          	lui	a5,0xf9000
+ 54a:	17fd                	addi	a5,a5,-1
+ 54c:	8f7d                	and	a4,a4,a5
+ 54e:	02000637          	lui	a2,0x2000
+ 552:	8f51                	or	a4,a4,a2
+ 554:	ddd8                	sw	a4,60(a1)
+	RF->RF15 = (RF->RF15 & 0x1fffffff) | 0x40000000;
+ 556:	5ddc                	lw	a5,60(a1)
+ 558:	40000737          	lui	a4,0x40000
+	BB->BB14 = 0x2020c;
+ 55c:	000204b7          	lui	s1,0x20
+	RF->RF15 = (RF->RF15 & 0x1fffffff) | 0x40000000;
+ 560:	078e                	slli	a5,a5,0x3
+ 562:	838d                	srli	a5,a5,0x3
+ 564:	8fd9                	or	a5,a5,a4
+ 566:	dddc                	sw	a5,60(a1)
+	RF->RF18 &= 0xfff8ffff;
+ 568:	45bc                	lw	a5,72(a1)
+ 56a:	fff90737          	lui	a4,0xfff90
+ 56e:	177d                	addi	a4,a4,-1
+ 570:	8ff9                	and	a5,a5,a4
+ 572:	c5bc                	sw	a5,72(a1)
+	RF->RF20 = (RF->RF20 & 0xfffff8ff) | 0x300;
+ 574:	49b8                	lw	a4,80(a1)
+	BB->CTRL_TX = (BB->CTRL_TX & 0x1ffffff) | (TxPower | 0x40) << 0x19;
+ 576:	167d                	addi	a2,a2,-1
+	NVIC->VTFIDR[3] = 0x14;
+ 578:	4ad1                	li	s5,20
+	RF->RF20 = (RF->RF20 & 0xfffff8ff) | 0x300;
+ 57a:	8ff77713          	andi	a4,a4,-1793
+ 57e:	30076713          	ori	a4,a4,768
+ 582:	c9b8                	sw	a4,80(a1)
+	RF->RF23 |= 0x70000;
+ 584:	4dfc                	lw	a5,92(a1)
+ 586:	00070737          	lui	a4,0x70
+	RF->RF3 = (RF->RF3 & 0xfffffeff) | 0x100;
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+}
+
+void RegInit() {
+	DevSetMode(DEVSETMODE_TUNE);
+ 58a:	55800513          	li	a0,1368
+	RF->RF23 |= 0x70000;
+ 58e:	8fd9                	or	a5,a5,a4
+ 590:	cdfc                	sw	a5,92(a1)
+	RF->RF23 |= 0x700000;
+ 592:	4dfc                	lw	a5,92(a1)
+ 594:	00700737          	lui	a4,0x700
+	RF->RF20 = (RF->RF20 & 0xfffff8ff) | 0x300;
+ 598:	89ae                	mv	s3,a1
+	RF->RF23 |= 0x700000;
+ 59a:	8fd9                	or	a5,a5,a4
+ 59c:	cdfc                	sw	a5,92(a1)
+	BB->BB14 = 0x2020c;
+ 59e:	10068713          	addi	a4,a3,256
+ 5a2:	20c48793          	addi	a5,s1,524 # 2020c <radio.c.aaa41e85+0x1dc58>
+ 5a6:	df1c                	sw	a5,56(a4)
+	BB->BB15 = 0x50;
+ 5a8:	05000793          	li	a5,80
+ 5ac:	df5c                	sw	a5,60(a4)
+	BB->CTRL_TX = (BB->CTRL_TX & 0x1ffffff) | (TxPower | 0x40) << 0x19;
+ 5ae:	5b5c                	lw	a5,52(a4)
+ 5b0:	c1018913          	addi	s2,gp,-1008 # 2000000c <LLE_BUF>
+ 5b4:	8ff1                	and	a5,a5,a2
+ 5b6:	a0000637          	lui	a2,0xa0000
+ 5ba:	8fd1                	or	a5,a5,a2
+ 5bc:	db5c                	sw	a5,52(a4)
+	BB->CTRL_CFG &= 0xfffffcff;
+ 5be:	1006a703          	lw	a4,256(a3)
+	NVIC->VTFIDR[3] = 0x14;
+ 5c2:	e000e7b7          	lui	a5,0xe000e
+	BB->CTRL_CFG &= 0xfffffcff;
+ 5c6:	cff77713          	andi	a4,a4,-769
+ 5ca:	10e6a023          	sw	a4,256(a3)
+	NVIC->VTFIDR[3] = 0x14;
+ 5ce:	055789a3          	sb	s5,83(a5) # e000e053 <_eusrstack+0xc000b053>
+	DevSetMode(DEVSETMODE_TUNE);
+ 5d2:	3e19                	jal	e8 <DevSetMode>
+	RF->RF1 &= 0xfffffeff;
+ 5d4:	0049a703          	lw	a4,4(s3)
+	RF->RF10 &= 0xffffefff;
+ 5d8:	76fd                	lui	a3,0xfffff
+ 5da:	16fd                	addi	a3,a3,-1
+	RF->RF1 &= 0xfffffeff;
+ 5dc:	eff77713          	andi	a4,a4,-257
+ 5e0:	00e9a223          	sw	a4,4(s3)
+	RF->RF10 &= 0xffffefff;
+ 5e4:	0289a703          	lw	a4,40(s3)
+	uint32_t tune2401 = RFEND_TXCTune(37);
+ 5e8:	02500513          	li	a0,37
+	RF->RF10 &= 0xffffefff;
+ 5ec:	8f75                	and	a4,a4,a3
+ 5ee:	02e9a423          	sw	a4,40(s3)
+	RF->RF11 &= 0xffffffef;
+ 5f2:	02c9a703          	lw	a4,44(s3)
+ 5f6:	9b3d                	andi	a4,a4,-17
+ 5f8:	02e9a623          	sw	a4,44(s3)
+	RF->RF2 |= 0x20000;
+ 5fc:	0089a783          	lw	a5,8(s3)
+ 600:	8fc5                	or	a5,a5,s1
+ 602:	00f9a423          	sw	a5,8(s3)
+	RF->RF1 |= 0x10;
+ 606:	0049a783          	lw	a5,4(s3)
+ 60a:	0107e793          	ori	a5,a5,16
+ 60e:	00f9a223          	sw	a5,4(s3)
+	uint32_t tune2401 = RFEND_TXCTune(37);
+ 612:	3625                	jal	13a <RFEND_TXCTune>
+ 614:	8caa                	mv	s9,a0
+	uint8_t nGA2401 = (uint8_t)(tune2401 >> 24) & 0x7f;
+ 616:	01855a13          	srli	s4,a0,0x18
+	uint32_t tune2480 = RFEND_TXCTune(39);
+ 61a:	02700513          	li	a0,39
+ 61e:	3e31                	jal	13a <RFEND_TXCTune>
+ 620:	8b2a                	mv	s6,a0
+	uint8_t nGA2480 = (uint8_t)(tune2480 >> 24) & 0x7f;
+ 622:	01855c13          	srli	s8,a0,0x18
+	uint32_t tune2440 = RFEND_TXCTune(18);
+ 626:	4549                	li	a0,18
+ 628:	3e09                	jal	13a <RFEND_TXCTune>
+	uint8_t nCO2440 = (uint8_t)(tune2440 & 0x3f);
+ 62a:	03f57b93          	andi	s7,a0,63
+	uint32_t dCO0140 = nCO2401 - nCO2440;
+ 62e:	03fcf793          	andi	a5,s9,63
+ 632:	417787b3          	sub	a5,a5,s7
+	uint8_t nGA2440 = (uint8_t)(tune2440 >> 24) & 0x7f;
+ 636:	01855993          	srli	s3,a0,0x18
+	uint8_t txctune_co[sizeof(RF->TXCTUNE_CO)] = {0};
+ 63a:	02400613          	li	a2,36
+ 63e:	4581                	li	a1,0
+	uint32_t tune2440 = RFEND_TXCTune(18);
+ 640:	84aa                	mv	s1,a0
+	uint8_t txctune_co[sizeof(RF->TXCTUNE_CO)] = {0};
+ 642:	f9c40513          	addi	a0,s0,-100
+	uint32_t dCO0140 = nCO2401 - nCO2440;
+ 646:	8cbe                	mv	s9,a5
+	uint8_t txctune_co[sizeof(RF->TXCTUNE_CO)] = {0};
+ 648:	f8042c23          	sw	zero,-104(s0)
+ 64c:	3ba9                	jal	3a6 <memset>
+	uint32_t dCO4080 = nCO2440 - nCO2480;
+ 64e:	03fb7b13          	andi	s6,s6,63
+		txctune_co[f] = tune | (tune << 4);
+ 652:	6605                	lui	a2,0x1
+ 654:	035c8733          	mul	a4,s9,s5
+	uint8_t nGA2401 = (uint8_t)(tune2401 >> 24) & 0x7f;
+ 658:	07fa7a13          	andi	s4,s4,127
+	uint8_t nGA2480 = (uint8_t)(tune2480 >> 24) & 0x7f;
+ 65c:	07fc7c13          	andi	s8,s8,127
+	uint8_t nGA2440 = (uint8_t)(tune2440 >> 24) & 0x7f;
+ 660:	07f9f993          	andi	s3,s3,127
+	uint32_t dCO4080 = nCO2440 - nCO2480;
+ 664:	416b8b33          	sub	s6,s7,s6
+	for(int f = 0; f < int_points; f++) {
+ 668:	4781                	li	a5,0
+		tune = (dCO0140 * (int_points -f)) / int_points;
+ 66a:	45d1                	li	a1,20
+		txctune_co[f] = tune | (tune << 4);
+ 66c:	f9840a93          	addi	s5,s0,-104
+ 670:	1641                	addi	a2,a2,-16
+ 672:	00fa8833          	add	a6,s5,a5
+		tune = (dCO0140 * (int_points -f)) / int_points;
+ 676:	02b75533          	divu	a0,a4,a1
+	for(int f = 0; f < int_points; f++) {
+ 67a:	0785                	addi	a5,a5,1
+ 67c:	41970733          	sub	a4,a4,s9
+		txctune_co[f] = tune | (tune << 4);
+ 680:	00451693          	slli	a3,a0,0x4
+ 684:	8ef1                	and	a3,a3,a2
+ 686:	8ec9                	or	a3,a3,a0
+ 688:	00d80023          	sb	a3,0(a6)
+	for(int f = 0; f < int_points; f++) {
+ 68c:	feb793e3          	bne	a5,a1,672 <main+0x1b8>
+		txctune_co[f] = tune | (tune << 4);
+ 690:	6605                	lui	a2,0x1
+	for(int f = 0; f < int_points; f++) {
+ 692:	4681                	li	a3,0
+		tune = (dCO4080 * (f -int_points)) / int_points;
+ 694:	48d1                	li	a7,20
+		txctune_co[f] = tune | (tune << 4);
+ 696:	1641                	addi	a2,a2,-16
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_CO); f++) {
+ 698:	02800513          	li	a0,40
+		tune = (dCO4080 * (f -int_points)) / int_points;
+ 69c:	0316d5b3          	divu	a1,a3,a7
+		txctune_co[f] = tune | (tune << 4);
+ 6a0:	00fa8833          	add	a6,s5,a5
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_CO); f++) {
+ 6a4:	0785                	addi	a5,a5,1
+ 6a6:	96da                	add	a3,a3,s6
+		txctune_co[f] = tune | (tune << 4);
+ 6a8:	00459713          	slli	a4,a1,0x4
+ 6ac:	8f71                	and	a4,a4,a2
+ 6ae:	8f4d                	or	a4,a4,a1
+ 6b0:	00e80023          	sb	a4,0(a6)
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_CO); f++) {
+ 6b4:	fea794e3          	bne	a5,a0,69c <main+0x1e2>
+ 6b8:	86d6                	mv	a3,s5
+	for(int i = 0; i < sizeof(txctune_co) /4; i++) {
+ 6ba:	4701                	li	a4,0
+		RF->TXCTUNE_CO[i] = ((uint32_t*)txctune_co)[i];
+ 6bc:	4000d537          	lui	a0,0x4000d
+	for(int i = 0; i < sizeof(txctune_co) /4; i++) {
+ 6c0:	4629                	li	a2,10
+		RF->TXCTUNE_CO[i] = ((uint32_t*)txctune_co)[i];
+ 6c2:	428c                	lw	a1,0(a3)
+ 6c4:	02870793          	addi	a5,a4,40 # 700028 <radio.c.aaa41e85+0x6fda74>
+ 6c8:	078a                	slli	a5,a5,0x2
+ 6ca:	97aa                	add	a5,a5,a0
+ 6cc:	c38c                	sw	a1,0(a5)
+	for(int i = 0; i < sizeof(txctune_co) /4; i++) {
+ 6ce:	0705                	addi	a4,a4,1
+ 6d0:	0691                	addi	a3,a3,4
+ 6d2:	fec718e3          	bne	a4,a2,6c2 <main+0x208>
+	uint32_t dGA0140 = nGA2401 - nGA2440;
+ 6d6:	413a0a33          	sub	s4,s4,s3
+	uint32_t dGA4080 = nGA2440 - nGA2480;
+ 6da:	4695                	li	a3,5
+ 6dc:	02da06b3          	mul	a3,s4,a3
+		txctune_ga[f] = tune | (tune << 4);
+ 6e0:	6705                	lui	a4,0x1
+	uint32_t dGA4080 = nGA2440 - nGA2480;
+ 6e2:	418989b3          	sub	s3,s3,s8
+	uint8_t txctune_ga[sizeof(RF->TXCTUNE_GA)] = {0};
+ 6e6:	f8042623          	sw	zero,-116(s0)
+ 6ea:	f8042823          	sw	zero,-112(s0)
+ 6ee:	f8042a23          	sw	zero,-108(s0)
+	for(int f = 1; f < int_points; f++) {
+ 6f2:	4785                	li	a5,1
+		tune = (dGA0140 * (int_points -f)) / int_points;
+ 6f4:	4599                	li	a1,6
+		txctune_ga[f] = tune | (tune << 4);
+ 6f6:	1741                	addi	a4,a4,-16
+ 6f8:	f8c40613          	addi	a2,s0,-116
+		tune = (dGA0140 * (int_points -f)) / int_points;
+ 6fc:	02b6d533          	divu	a0,a3,a1
+		txctune_ga[f] = tune | (tune << 4);
+ 700:	00f60833          	add	a6,a2,a5
+	for(int f = 1; f < int_points; f++) {
+ 704:	0785                	addi	a5,a5,1
+ 706:	414686b3          	sub	a3,a3,s4
+		txctune_ga[f] = tune | (tune << 4);
+ 70a:	00451613          	slli	a2,a0,0x4
+ 70e:	8e79                	and	a2,a2,a4
+ 710:	8e49                	or	a2,a2,a0
+ 712:	00c80023          	sb	a2,0(a6)
+	for(int f = 1; f < int_points; f++) {
+ 716:	feb791e3          	bne	a5,a1,6f8 <main+0x23e>
+		txctune_ga[f] = tune | (tune << 4);
+ 71a:	6605                	lui	a2,0x1
+	for(int f = 1; f < int_points; f++) {
+ 71c:	4701                	li	a4,0
+		tune = (dGA4080 * (f -int_points)) / int_points;
+ 71e:	4319                	li	t1,6
+		txctune_ga[f] = tune | (tune << 4);
+ 720:	ff060893          	addi	a7,a2,-16 # ff0 <_data_lma+0x37c>
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_GA) -1; f++) {
+ 724:	452d                	li	a0,11
+		tune = (dGA4080 * (f -int_points)) / int_points;
+ 726:	026755b3          	divu	a1,a4,t1
+		txctune_ga[f] = tune | (tune << 4);
+ 72a:	f8c40693          	addi	a3,s0,-116
+ 72e:	00f68833          	add	a6,a3,a5
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_GA) -1; f++) {
+ 732:	0785                	addi	a5,a5,1
+ 734:	974e                	add	a4,a4,s3
+		txctune_ga[f] = tune | (tune << 4);
+ 736:	00459693          	slli	a3,a1,0x4
+ 73a:	0116f6b3          	and	a3,a3,a7
+ 73e:	8ecd                	or	a3,a3,a1
+ 740:	00d80023          	sb	a3,0(a6)
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_GA) -1; f++) {
+ 744:	fea791e3          	bne	a5,a0,726 <main+0x26c>
+		RF->TXCTUNE_GA[i] = ((uint32_t*)txctune_ga)[i];
+ 748:	f8c42683          	lw	a3,-116(s0)
+ 74c:	4000d7b7          	lui	a5,0x4000d
+ 750:	08078713          	addi	a4,a5,128 # 4000d080 <_eusrstack+0x2000a080>
+ 754:	c734                	sw	a3,72(a4)
+ 756:	f9042683          	lw	a3,-112(s0)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0x80ffffff) | (tune2440 & 0x7f000000);
+ 75a:	7f000537          	lui	a0,0x7f000
+ 75e:	8ce9                	and	s1,s1,a0
+		RF->TXCTUNE_GA[i] = ((uint32_t*)txctune_ga)[i];
+ 760:	c774                	sw	a3,76(a4)
+ 762:	f9442683          	lw	a3,-108(s0)
+ 766:	cb34                	sw	a3,80(a4)
+	RF->RF1 &= 0xffffffef;
+ 768:	43d8                	lw	a4,4(a5)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0x80ffffff) | (tune2440 & 0x7f000000);
+ 76a:	810006b7          	lui	a3,0x81000
+ 76e:	16fd                	addi	a3,a3,-1
+	RF->RF1 &= 0xffffffef;
+ 770:	9b3d                	andi	a4,a4,-17
+ 772:	c3d8                	sw	a4,4(a5)
+	RF->RF1 &= 0xfffffffe;
+ 774:	43d8                	lw	a4,4(a5)
+ 776:	9b79                	andi	a4,a4,-2
+ 778:	c3d8                	sw	a4,4(a5)
+	RF->RF10 |= 0x1000;
+ 77a:	5798                	lw	a4,40(a5)
+ 77c:	8f51                	or	a4,a4,a2
+ 77e:	d798                	sw	a4,40(a5)
+	RF->RF11 |= 0x10;
+ 780:	57d8                	lw	a4,44(a5)
+ 782:	01076713          	ori	a4,a4,16
+ 786:	d7d8                	sw	a4,44(a5)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xffffffc0) | (tune2440 & 0x3f);
+ 788:	5f98                	lw	a4,56(a5)
+ 78a:	fc077713          	andi	a4,a4,-64
+ 78e:	01776733          	or	a4,a4,s7
+ 792:	df98                	sw	a4,56(a5)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0x80ffffff) | (tune2440 & 0x7f000000);
+ 794:	5f98                	lw	a4,56(a5)
+ 796:	8f75                	and	a4,a4,a3
+ 798:	8cd9                	or	s1,s1,a4
+ 79a:	df84                	sw	s1,56(a5)
+	RF->RF1 |= 0x100;
+ 79c:	43d8                	lw	a4,4(a5)
+	RF->RF20 &= 0xfffeffff;
+ 79e:	76c1                	lui	a3,0xffff0
+ 7a0:	16fd                	addi	a3,a3,-1
+	RF->RF1 |= 0x100;
+ 7a2:	10076713          	ori	a4,a4,256
+ 7a6:	c3d8                	sw	a4,4(a5)
+	RF->RF20 &= 0xfffeffff;
+ 7a8:	4bb8                	lw	a4,80(a5)
+ 7aa:	8f75                	and	a4,a4,a3
+ 7ac:	cbb8                	sw	a4,80(a5)
+	RF->RF2 |= 0x200000;
+ 7ae:	4798                	lw	a4,8(a5)
+ 7b0:	002006b7          	lui	a3,0x200
+ 7b4:	8f55                	or	a4,a4,a3
+ 7b6:	c798                	sw	a4,8(a5)
+	RF->RF3 = (RF->RF3 & 0xffffffef) | 0x10;
+ 7b8:	47d8                	lw	a4,12(a5)
+	while(LL->TMR && ((RF->RXTUNE >> 8) & 1));
+ 7ba:	4000c6b7          	lui	a3,0x4000c
+	RF->RF3 = (RF->RF3 & 0xffffffef) | 0x10;
+ 7be:	01076713          	ori	a4,a4,16
+ 7c2:	c7d8                	sw	a4,12(a5)
+	RF->RF1 |= 0x1000;
+ 7c4:	43d8                	lw	a4,4(a5)
+ 7c6:	8f51                	or	a4,a4,a2
+ 7c8:	c3d8                	sw	a4,4(a5)
+	LL->TMR = 100;
+ 7ca:	4000c7b7          	lui	a5,0x4000c
+ 7ce:	06400713          	li	a4,100
+ 7d2:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+ 7d6:	d3f8                	sw	a4,100(a5)
+	while(LL->TMR && ((RF->RXTUNE >> 8) & 1));
+ 7d8:	4000d737          	lui	a4,0x4000d
+ 7dc:	20068793          	addi	a5,a3,512 # 4000c200 <_eusrstack+0x20009200>
+ 7e0:	53fc                	lw	a5,100(a5)
+ 7e2:	c791                	beqz	a5,7ee <main+0x334>
+ 7e4:	09c72783          	lw	a5,156(a4) # 4000d09c <_eusrstack+0x2000a09c>
+ 7e8:	1007f793          	andi	a5,a5,256
+ 7ec:	fbe5                	bnez	a5,7dc <main+0x322>
+	tuneFilter = RF->RXTUNE & 0x1f;
+ 7ee:	4000d7b7          	lui	a5,0x4000d
+ 7f2:	08078713          	addi	a4,a5,128 # 4000d080 <_eusrstack+0x2000a080>
+ 7f6:	4f58                	lw	a4,28(a4)
+ 7f8:	c0818693          	addi	a3,gp,-1016 # 20000004 <tuneFilter>
+ 7fc:	8b7d                	andi	a4,a4,31
+ 7fe:	c298                	sw	a4,0(a3)
+	RF->RF20 |= 0x10000;
+ 800:	4bb8                	lw	a4,80(a5)
+ 802:	6641                	lui	a2,0x10
+ 804:	c0818993          	addi	s3,gp,-1016 # 20000004 <tuneFilter>
+ 808:	8f51                	or	a4,a4,a2
+ 80a:	cbb8                	sw	a4,80(a5)
+	RF->RF20 = (RF->RF20 & 0xffffffe0) | tuneFilter;
+ 80c:	4bb8                	lw	a4,80(a5)
+ 80e:	4290                	lw	a2,0(a3)
+ 810:	9b01                	andi	a4,a4,-32
+ 812:	8f51                	or	a4,a4,a2
+ 814:	cbb8                	sw	a4,80(a5)
+	RF->RF2 &= 0xffdfffff;
+ 816:	4798                	lw	a4,8(a5)
+ 818:	ffe00637          	lui	a2,0xffe00
+ 81c:	167d                	addi	a2,a2,-1
+ 81e:	8f71                	and	a4,a4,a2
+ 820:	c798                	sw	a4,8(a5)
+	tuneFilter2M = (tuneFilter +2 < 0x1f) ? (tuneFilter +2) : 0x1f;
+ 822:	4298                	lw	a4,0(a3)
+ 824:	46f9                	li	a3,30
+ 826:	47fd                	li	a5,31
+ 828:	0709                	addi	a4,a4,2
+ 82a:	00e6e563          	bltu	a3,a4,834 <main+0x37a>
+ 82e:	0009a783          	lw	a5,0(s3)
+ 832:	0789                	addi	a5,a5,2
+ 834:	c0f1a623          	sw	a5,-1012(gp) # 20000008 <tuneFilter2M>
+	RF->RF22 &= 0xfffeffff;
+ 838:	4000d7b7          	lui	a5,0x4000d
+ 83c:	4fb8                	lw	a4,88(a5)
+ 83e:	76c1                	lui	a3,0xffff0
+ 840:	16fd                	addi	a3,a3,-1
+ 842:	8f75                	and	a4,a4,a3
+ 844:	cfb8                	sw	a4,88(a5)
+	RF->RF2 |= 0x10000;
+ 846:	4798                	lw	a4,8(a5)
+ 848:	66c1                	lui	a3,0x10
+	RFEND_TXTune();
+	RFEND_RXTune();
+	DevSetMode(0);
+ 84a:	4501                	li	a0,0
+	RF->RF2 |= 0x10000;
+ 84c:	8f55                	or	a4,a4,a3
+ 84e:	c798                	sw	a4,8(a5)
+	RF->RF3 = (RF->RF3 & 0xfffffeff) | 0x100;
+ 850:	47d8                	lw	a4,12(a5)
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+ 852:	ffef06b7          	lui	a3,0xffef0
+ 856:	16fd                	addi	a3,a3,-1
+	RF->RF3 = (RF->RF3 & 0xfffffeff) | 0x100;
+ 858:	10076713          	ori	a4,a4,256
+ 85c:	c7d8                	sw	a4,12(a5)
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+ 85e:	43d8                	lw	a4,4(a5)
+ 860:	8f75                	and	a4,a4,a3
+ 862:	001006b7          	lui	a3,0x100
+ 866:	8f55                	or	a4,a4,a3
+ 868:	c3d8                	sw	a4,4(a5)
+	DevSetMode(0);
+ 86a:	38bd                	jal	e8 <DevSetMode>
+	NVIC->IENR[0] = 0x1000;
+	NVIC->IRER[0] = 0x1000;
+#endif
+	DevInit(TxPower);
+	RegInit();
+	NVIC->IPRIOR[0x15] |= 0x80;
+ 86c:	e000e737          	lui	a4,0xe000e
+ 870:	41574783          	lbu	a5,1045(a4) # e000e415 <_eusrstack+0xc000b415>
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+										  CTRL_CFG_PHY_1M; // default 1M for now
+#endif
+
+#ifdef CH570_CH572
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ 874:	fa000b37          	lui	s6,0xfa000
+	RF->RF20 = (RF->RF20 & 0xffffffe0) | ((phy_mode == PHY_2M) ? (tuneFilter2M & 0x1f) : (tuneFilter & 0x1f));
+	BB->BB5 = (BB->BB5 & 0xffffffc0) | ((phy_mode == PHY_2M) ? 0xd : 0xb);
+	BB->BB7 = (BB->BB7 & 0xff00fc00) | ((phy_mode == PHY_2M) ? 0x7f00a0 : 0x79009c);
+ 878:	ff010bb7          	lui	s7,0xff010
+	NVIC->IPRIOR[0x15] |= 0x80;
+ 87c:	f807e793          	ori	a5,a5,-128
+ 880:	0ff7f793          	andi	a5,a5,255
+ 884:	40f70aa3          	sb	a5,1045(a4)
+  if (total_len > 2) {
+    int payload_len = total_len - 2;
+    if (payload_len > max_len)
+      payload_len = max_len;
+
+    memcpy(data, &frame[4], payload_len);
+ 888:	05018493          	addi	s1,gp,80 # 2000044c <rx_data>
+	NVIC->IENR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+ 88c:	002007b7          	lui	a5,0x200
+      if (rx_data[0] == PROTOCOL_ID &&
+          strncmp((char *)&rx_data[1], "PING", 4) == 0) {
+        //
+
+        // Reply
+        tx_data[0] = PROTOCOL_ID;
+ 890:	07018a13          	addi	s4,gp,112 # 2000046c <tx_data>
+ 894:	10f72023          	sw	a5,256(a4)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ 898:	1b7d                	addi	s6,s6,-1
+	BB->BB7 = (BB->BB7 & 0xff00fc00) | ((phy_mode == PHY_2M) ? 0x7f00a0 : 0x79009c);
+ 89a:	c00b8b93          	addi	s7,s7,-1024 # ff00fc00 <_eusrstack+0xdf00cc00>
+          strncmp((char *)&rx_data[1], "PING", 4) == 0) {
+ 89e:	00148c13          	addi	s8,s1,1
+        sprintf((char *)&tx_data[1], "PONG");
+ 8a2:	001a0c93          	addi	s9,s4,1 # e0000001 <_eusrstack+0xbfffd001>
+	DevSetMode(0);
+ 8a6:	4501                	li	a0,0
+ 8a8:	841ff0ef          	jal	ra,e8 <DevSetMode>
+	if(LL->LL0 & 3) {
+ 8ac:	4000c7b7          	lui	a5,0x4000c
+ 8b0:	2007a703          	lw	a4,512(a5) # 4000c200 <_eusrstack+0x20009200>
+ 8b4:	20078693          	addi	a3,a5,512
+ 8b8:	8b0d                	andi	a4,a4,3
+ 8ba:	cb19                	beqz	a4,8d0 <main+0x416>
+		LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+ 8bc:	4ab8                	lw	a4,80(a3)
+ 8be:	8ff77713          	andi	a4,a4,-1793
+ 8c2:	cab8                	sw	a4,80(a3)
+		LL->LL0 |= 0x08;
+ 8c4:	2007a703          	lw	a4,512(a5)
+ 8c8:	00876713          	ori	a4,a4,8
+ 8cc:	20e7a023          	sw	a4,512(a5)
+	LL->TMR = 0;
+ 8d0:	4000cd37          	lui	s10,0x4000c
+ 8d4:	200d0793          	addi	a5,s10,512 # 4000c200 <_eusrstack+0x20009200>
+ 8d8:	0607a223          	sw	zero,100(a5)
+	RF->RF11 &= 0xfffffffd;
+ 8dc:	4000ddb7          	lui	s11,0x4000d
+ 8e0:	02cda783          	lw	a5,44(s11) # 4000d02c <_eusrstack+0x2000a02c>
+	DevSetMode(DEVSETMODE_RX);
+ 8e4:	15800513          	li	a0,344
+	RF->RF11 &= 0xfffffffd;
+ 8e8:	9bf5                	andi	a5,a5,-3
+ 8ea:	02fda623          	sw	a5,44(s11)
+	BB->CTRL_CFG = (BB->CTRL_CFG & 0xffffff80) | (channel & 0x7f);
+ 8ee:	100d2783          	lw	a5,256(s10)
+ 8f2:	f807f793          	andi	a5,a5,-128
+ 8f6:	0057e793          	ori	a5,a5,5
+ 8fa:	10fd2023          	sw	a5,256(s10)
+	DevSetMode(DEVSETMODE_RX);
+ 8fe:	feaff0ef          	jal	ra,e8 <DevSetMode>
+										  CTRL_CFG_PHY_1M; // default 1M for now
+ 902:	100d2783          	lw	a5,256(s10)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ 906:	4000c6b7          	lui	a3,0x4000c
+ 90a:	02000737          	lui	a4,0x2000
+										  CTRL_CFG_PHY_1M; // default 1M for now
+ 90e:	cff7f793          	andi	a5,a5,-769
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+ 912:	1007e793          	ori	a5,a5,256
+ 916:	10fd2023          	sw	a5,256(s10)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ 91a:	10068793          	addi	a5,a3,256 # 4000c100 <_eusrstack+0x20009100>
+ 91e:	53dc                	lw	a5,36(a5)
+	BB->BB6 = (BB->BB6 & 0xfffffc00) | ((phy_mode == PHY_2M) ? 0x13a : 0x132);
+	BB->BB4 = (BB->BB4 & 0x00ffffff) | ((phy_mode == PHY_2M) ? 0x78000000 : 0x7f000000);
+#endif
+
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+	BB->CRCINIT1 = 0x555555; // crc init
+ 920:	10068613          	addi	a2,a3,256
+	uint32_t targend = SysTick->CNTL + n;
+ 924:	e000f537          	lui	a0,0xe000f
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ 928:	0167f7b3          	and	a5,a5,s6
+ 92c:	8fd9                	or	a5,a5,a4
+ 92e:	10068713          	addi	a4,a3,256
+ 932:	d35c                	sw	a5,36(a4)
+	RF->RF20 = (RF->RF20 & 0xffffffe0) | ((phy_mode == PHY_2M) ? (tuneFilter2M & 0x1f) : (tuneFilter & 0x1f));
+ 934:	050da783          	lw	a5,80(s11)
+ 938:	0009a703          	lw	a4,0(s3)
+ 93c:	9b81                	andi	a5,a5,-32
+ 93e:	8b7d                	andi	a4,a4,31
+ 940:	8fd9                	or	a5,a5,a4
+ 942:	04fda823          	sw	a5,80(s11)
+	BB->BB5 = (BB->BB5 & 0xffffffc0) | ((phy_mode == PHY_2M) ? 0xd : 0xb);
+ 946:	10068793          	addi	a5,a3,256
+ 94a:	4bdc                	lw	a5,20(a5)
+ 94c:	10068713          	addi	a4,a3,256
+ 950:	fc07f793          	andi	a5,a5,-64
+ 954:	00b7e793          	ori	a5,a5,11
+ 958:	cb5c                	sw	a5,20(a4)
+	BB->BB7 = (BB->BB7 & 0xff00fc00) | ((phy_mode == PHY_2M) ? 0x7f00a0 : 0x79009c);
+ 95a:	4f5c                	lw	a5,28(a4)
+ 95c:	00790737          	lui	a4,0x790
+ 960:	09c70713          	addi	a4,a4,156 # 79009c <radio.c.aaa41e85+0x78dae8>
+ 964:	0177f7b3          	and	a5,a5,s7
+ 968:	8fd9                	or	a5,a5,a4
+ 96a:	10068713          	addi	a4,a3,256
+ 96e:	cf5c                	sw	a5,28(a4)
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+ 970:	8e89c737          	lui	a4,0x8e89c
+ 974:	ed670713          	addi	a4,a4,-298 # 8e89bed6 <_eusrstack+0x6e898ed6>
+ 978:	10068793          	addi	a5,a3,256
+ 97c:	c7d8                	sw	a4,12(a5)
+	BB->CRCINIT1 = 0x555555; // crc init
+ 97e:	005557b7          	lui	a5,0x555
+ 982:	55578793          	addi	a5,a5,1365 # 555555 <radio.c.aaa41e85+0x552fa1>
+ 986:	c25c                	sw	a5,4(a2)
+#ifdef CH570_CH572
+	BB->ACCESSADDRESS2 = 0x8E89BED6;
+ 988:	d238                	sw	a4,96(a2)
+	BB->CRCINIT2 = 0x555555;
+ 98a:	ce3c                	sw	a5,88(a2)
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+ 98c:	4618                	lw	a4,8(a2)
+ 98e:	87b6                	mv	a5,a3
+ 990:	ff000637          	lui	a2,0xff000
+ 994:	008006b7          	lui	a3,0x800
+ 998:	32d68693          	addi	a3,a3,813 # 80032d <radio.c.aaa41e85+0x7fdd79>
+ 99c:	8f71                	and	a4,a4,a2
+ 99e:	8f55                	or	a4,a4,a3
+ 9a0:	10078593          	addi	a1,a5,256
+ 9a4:	c598                	sw	a4,8(a1)
+	BB->CRCPOLY2 = (BB->CRCPOLY2 & 0xff000000) | 0x80032d;
+ 9a6:	4dfc                	lw	a5,92(a1)
+ 9a8:	8ff1                	and	a5,a5,a2
+ 9aa:	8fd5                	or	a5,a5,a3
+ 9ac:	cdfc                	sw	a5,92(a1)
+#endif
+
+	//LL->LL1 = (LL->LL1 & 0xfffffffe) | 1; // 1: AUTO mode, to swap between RX <-> TX when either happened. 0: BASIC
+	//LL->FRAME_BUF = (uint32_t)frame_info; // also this only in AUTO mode
+
+	LL->LL0 = 1; // Not sure what this does, but on TX it's 2
+ 9ae:	4785                	li	a5,1
+ 9b0:	20fd2023          	sw	a5,512(s10)
+	rx_ready = 0;
+ 9b4:	c0418713          	addi	a4,gp,-1020 # 20000000 <rx_ready>
+ 9b8:	6689                	lui	a3,0x2
+ 9ba:	00072023          	sw	zero,0(a4)
+ 9be:	c0418793          	addi	a5,gp,-1020 # 20000000 <rx_ready>
+ 9c2:	06500713          	li	a4,101
+ 9c6:	d4c68693          	addi	a3,a3,-692 # 1d4c <ch32fun.c.f59297d2+0x889>
+  while (timeout_ms--) {
+ 9ca:	177d                	addi	a4,a4,-1
+ 9cc:	1a071a63          	bnez	a4,b80 <main+0x6c6>
+  if (!rx_ready)
+ 9d0:	4398                	lw	a4,0(a5)
+ 9d2:	ec070ae3          	beqz	a4,8a6 <main+0x3ec>
+  rx_ready = 0;
+ 9d6:	0007a023          	sw	zero,0(a5)
+  int total_len = frame[1];
+ 9da:	00194783          	lbu	a5,1(s2)
+ 9de:	873e                	mv	a4,a5
+  if (total_len > 2) {
+ 9e0:	4789                	li	a5,2
+ 9e2:	ece7d2e3          	bge	a5,a4,8a6 <main+0x3ec>
+    int payload_len = total_len - 2;
+ 9e6:	ffe70793          	addi	a5,a4,-2
+ 9ea:	8d3e                	mv	s10,a5
+    memcpy(data, &frame[4], payload_len);
+ 9ec:	02000793          	li	a5,32
+ 9f0:	01a7d363          	bge	a5,s10,9f6 <main+0x53c>
+ 9f4:	8d3e                	mv	s10,a5
+ 9f6:	866a                	mv	a2,s10
+ 9f8:	00490593          	addi	a1,s2,4
+ 9fc:	8526                	mv	a0,s1
+ 9fe:	3af5                	jal	3fa <memcpy>
+    data[payload_len] = 0; // Null terminate
+ a00:	01a487b3          	add	a5,s1,s10
+ a04:	00078023          	sb	zero,0(a5)
+      if (rx_data[0] == PROTOCOL_ID &&
+ a08:	0004c703          	lbu	a4,0(s1)
+ a0c:	0aa00793          	li	a5,170
+ a10:	e8f71be3          	bne	a4,a5,8a6 <main+0x3ec>
+          strncmp((char *)&rx_data[1], "PING", 4) == 0) {
+ a14:	6585                	lui	a1,0x1
+ a16:	4611                	li	a2,4
+ a18:	c3c58593          	addi	a1,a1,-964 # c3c <LLE_IRQHandler+0xa8>
+ a1c:	8562                	mv	a0,s8
+ a1e:	327d                	jal	3cc <strncmp>
+      if (rx_data[0] == PROTOCOL_ID &&
+ a20:	e80513e3          	bnez	a0,8a6 <main+0x3ec>
+        sprintf((char *)&tx_data[1], "PONG");
+ a24:	6585                	lui	a1,0x1
+        tx_data[0] = PROTOCOL_ID;
+ a26:	faa00793          	li	a5,-86
+        sprintf((char *)&tx_data[1], "PONG");
+ a2a:	c4458593          	addi	a1,a1,-956 # c44 <LLE_IRQHandler+0xb0>
+ a2e:	8566                	mv	a0,s9
+        tx_data[0] = PROTOCOL_ID;
+ a30:	00fa0023          	sb	a5,0(s4)
+        sprintf((char *)&tx_data[1], "PONG");
+ a34:	3251                	jal	3b8 <strcpy>
+	BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+ a36:	4000c737          	lui	a4,0x4000c
+ a3a:	10070793          	addi	a5,a4,256 # 4000c100 <_eusrstack+0x20009100>
+ a3e:	5bdc                	lw	a5,52(a5)
+ a40:	10070613          	addi	a2,a4,256
+	RF->RF11 &= 0xfffffffd;
+ a44:	4000d737          	lui	a4,0x4000d
+	BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+ a48:	9bf1                	andi	a5,a5,-4
+ a4a:	0017e793          	ori	a5,a5,1
+ a4e:	da5c                	sw	a5,52(a2)
+	RF->RF11 &= 0xfffffffd;
+ a50:	575c                	lw	a5,44(a4)
+	BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+ a52:	4000cdb7          	lui	s11,0x4000c
+	DevSetMode(DEVSETMODE_TX);
+ a56:	25800513          	li	a0,600
+	RF->RF11 &= 0xfffffffd;
+ a5a:	9bf5                	andi	a5,a5,-3
+ a5c:	d75c                	sw	a5,44(a4)
+	BB->CTRL_CFG = (BB->CTRL_CFG & 0xffffff80) | (channel & 0x7f);
+ a5e:	100da783          	lw	a5,256(s11) # 4000c100 <_eusrstack+0x20009100>
+void Frame_TX(uint8_t adv[], size_t len, uint8_t channel, uint8_t phy_mode) {
+ a62:	8d0a                	mv	s10,sp
+	BB->CTRL_CFG = (BB->CTRL_CFG & 0xffffff80) | (channel & 0x7f);
+ a64:	f807f793          	andi	a5,a5,-128
+ a68:	0057e793          	ori	a5,a5,5
+ a6c:	10fda023          	sw	a5,256(s11)
+	DevSetMode(DEVSETMODE_TX);
+ a70:	e78ff0ef          	jal	ra,e8 <DevSetMode>
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+ a74:	4000c6b7          	lui	a3,0x4000c
+ a78:	8e89c737          	lui	a4,0x8e89c
+ a7c:	ed670713          	addi	a4,a4,-298 # 8e89bed6 <_eusrstack+0x6e898ed6>
+ a80:	10068793          	addi	a5,a3,256 # 4000c100 <_eusrstack+0x20009100>
+ a84:	c7d8                	sw	a4,12(a5)
+	BB->CRCINIT1 = 0x555555; // crc init
+ a86:	005557b7          	lui	a5,0x555
+ a8a:	10068613          	addi	a2,a3,256
+ a8e:	55578793          	addi	a5,a5,1365 # 555555 <radio.c.aaa41e85+0x552fa1>
+ a92:	c25c                	sw	a5,4(a2)
+	BB->ACCESSADDRESS2 = 0x8E89BED6;
+ a94:	d238                	sw	a4,96(a2)
+	BB->CRCINIT2 = 0x555555;
+ a96:	ce3c                	sw	a5,88(a2)
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+ a98:	4618                	lw	a4,8(a2)
+ a9a:	87b6                	mv	a5,a3
+ a9c:	ff000637          	lui	a2,0xff000
+ aa0:	008006b7          	lui	a3,0x800
+ aa4:	32d68693          	addi	a3,a3,813 # 80032d <radio.c.aaa41e85+0x7fdd79>
+ aa8:	8f71                	and	a4,a4,a2
+ aaa:	10078593          	addi	a1,a5,256
+ aae:	8f55                	or	a4,a4,a3
+ ab0:	c598                	sw	a4,8(a1)
+	BB->CRCPOLY2 = (BB->CRCPOLY2 & 0xff000000) | 0x80032d;
+ ab2:	4dfc                	lw	a5,92(a1)
+	memcpy(&ADV_BUF[2], adv, len);
+ ab4:	f9a40513          	addi	a0,s0,-102
+	BB->CRCPOLY2 = (BB->CRCPOLY2 & 0xff000000) | 0x80032d;
+ ab8:	8ff1                	and	a5,a5,a2
+ aba:	8fd5                	or	a5,a5,a3
+ abc:	cdfc                	sw	a5,92(a1)
+	memcpy(&ADV_BUF[2], adv, len);
+ abe:	4615                	li	a2,5
+	ADV_BUF[0] = 0x02; // PDU 0x00, 0x02, 0x06 seem to work, with only 0x02 showing up on the phone
+ ac0:	50200793          	li	a5,1282
+	memcpy(&ADV_BUF[2], adv, len);
+ ac4:	85d2                	mv	a1,s4
+	ADV_BUF[0] = 0x02; // PDU 0x00, 0x02, 0x06 seem to work, with only 0x02 showing up on the phone
+ ac6:	f8f41c23          	sh	a5,-104(s0)
+	memcpy(&ADV_BUF[2], adv, len);
+ aca:	3a05                	jal	3fa <memcpy>
+	LL->FRAME_BUF = (uint32_t)ADV_BUF;
+ acc:	6785                	lui	a5,0x1
+ ace:	275dac23          	sw	s5,632(s11)
+ ad2:	bba78793          	addi	a5,a5,-1094 # bba <LLE_IRQHandler+0x26>
+	for( int timeout = 3000; !(RF->RF26 & 0x1000000) && timeout >= 0; timeout-- );
+ ad6:	4000d6b7          	lui	a3,0x4000d
+ ada:	01000637          	lui	a2,0x1000
+ ade:	56b8                	lw	a4,104(a3)
+ ae0:	8f71                	and	a4,a4,a2
+ ae2:	e319                	bnez	a4,ae8 <main+0x62e>
+ ae4:	17fd                	addi	a5,a5,-1
+ ae6:	ffe5                	bnez	a5,ade <main+0x624>
+										  CTRL_CFG_PHY_1M; // default 1M for now
+ ae8:	4000c7b7          	lui	a5,0x4000c
+ aec:	1007a703          	lw	a4,256(a5) # 4000c100 <_eusrstack+0x20009100>
+ af0:	10078693          	addi	a3,a5,256
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ af4:	02000637          	lui	a2,0x2000
+										  CTRL_CFG_PHY_1M; // default 1M for now
+ af8:	cff77713          	andi	a4,a4,-769
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+ afc:	10076713          	ori	a4,a4,256
+ b00:	10e7a023          	sw	a4,256(a5)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ b04:	52d8                	lw	a4,36(a3)
+	LL->LL4 &= 0xfffdffff;
+ b06:	7581                	lui	a1,0xfffe0
+ b08:	15fd                	addi	a1,a1,-1
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+ b0a:	01677733          	and	a4,a4,s6
+ b0e:	8f51                	or	a4,a4,a2
+ b10:	d2d8                	sw	a4,36(a3)
+	LL->LL4 &= 0xfffdffff;
+ b12:	20078713          	addi	a4,a5,512
+ b16:	4b10                	lw	a2,16(a4)
+ b18:	8e6d                	and	a2,a2,a1
+ b1a:	cb10                	sw	a2,16(a4)
+	LL->STATUS = LL_STATUS_TX;
+ b1c:	00020637          	lui	a2,0x20
+ b20:	c710                	sw	a2,8(a4)
+	LL->TMR = (uint32_t)(len *512); // needs optimisation, per phy mode
+ b22:	6605                	lui	a2,0x1
+ b24:	a0060613          	addi	a2,a2,-1536 # a00 <main+0x546>
+ b28:	d370                	sw	a2,100(a4)
+	BB->CTRL_CFG |= CTRL_CFG_START_TX;
+ b2a:	1007a703          	lw	a4,256(a5)
+ b2e:	01000637          	lui	a2,0x1000
+ b32:	8f51                	or	a4,a4,a2
+ b34:	10e7a023          	sw	a4,256(a5)
+	BB->CTRL_TX &= 0xfffffffc;
+ b38:	5ad8                	lw	a4,52(a3)
+ b3a:	9b71                	andi	a4,a4,-4
+ b3c:	dad8                	sw	a4,52(a3)
+	LL->LL0 = 2; // Not sure what this does, but on RX it's 1
+ b3e:	4709                	li	a4,2
+ b40:	20e7a023          	sw	a4,512(a5)
+	while(LL->TMR); // wait for tx buffer to empty
+ b44:	4000c7b7          	lui	a5,0x4000c
+ b48:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+ b4c:	53fc                	lw	a5,100(a5)
+ b4e:	fbfd                	bnez	a5,b44 <main+0x68a>
+	DevSetMode(0);
+ b50:	4501                	li	a0,0
+ b52:	d96ff0ef          	jal	ra,e8 <DevSetMode>
+	if(LL->LL0 & 3) {
+ b56:	4000c737          	lui	a4,0x4000c
+ b5a:	20070793          	addi	a5,a4,512 # 4000c200 <_eusrstack+0x20009200>
+ b5e:	439c                	lw	a5,0(a5)
+ b60:	8b8d                	andi	a5,a5,3
+ b62:	cf89                	beqz	a5,b7c <main+0x6c2>
+		LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+ b64:	20070793          	addi	a5,a4,512
+ b68:	4bbc                	lw	a5,80(a5)
+ b6a:	20070693          	addi	a3,a4,512
+ b6e:	8ff7f793          	andi	a5,a5,-1793
+ b72:	cabc                	sw	a5,80(a3)
+		LL->LL0 |= 0x08;
+ b74:	429c                	lw	a5,0(a3)
+ b76:	0087e793          	ori	a5,a5,8
+ b7a:	c29c                	sw	a5,0(a3)
+ b7c:	816a                	mv	sp,s10
+ b7e:	b325                	j	8a6 <main+0x3ec>
+    if (rx_ready)
+ b80:	4390                	lw	a2,0(a5)
+ b82:	e40617e3          	bnez	a2,9d0 <main+0x516>
+ b86:	450c                	lw	a1,8(a0)
+ b88:	95b6                	add	a1,a1,a3
+	while( ((int32_t)( SysTick->CNTL - targend )) < 0 );
+ b8a:	4510                	lw	a2,8(a0)
+ b8c:	8e0d                	sub	a2,a2,a1
+ b8e:	fe064ee3          	bltz	a2,b8a <main+0x6d0>
+ b92:	bd25                	j	9ca <main+0x510>
+
+00000b94 <LLE_IRQHandler>:
+void LLE_IRQHandler() {
+ b94:	715d                	addi	sp,sp,-80
+ b96:	dc26                	sw	s1,56(sp)
+		LL->STATUS &= LL->INT_EN;
+ b98:	4000c4b7          	lui	s1,0x4000c
+void LLE_IRQHandler() {
+ b9c:	de22                	sw	s0,60(sp)
+		LL->STATUS &= LL->INT_EN;
+ b9e:	20048413          	addi	s0,s1,512 # 4000c200 <_eusrstack+0x20009200>
+void LLE_IRQHandler() {
+ ba2:	d23a                	sw	a4,36(sp)
+ ba4:	d03e                	sw	a5,32(sp)
+		LL->STATUS &= LL->INT_EN;
+ ba6:	4458                	lw	a4,12(s0)
+ ba8:	441c                	lw	a5,8(s0)
+void LLE_IRQHandler() {
+ baa:	da2a                	sw	a0,52(sp)
+ bac:	c686                	sw	ra,76(sp)
+ bae:	c496                	sw	t0,72(sp)
+ bb0:	c29a                	sw	t1,68(sp)
+ bb2:	c09e                	sw	t2,64(sp)
+ bb4:	d82e                	sw	a1,48(sp)
+ bb6:	d632                	sw	a2,44(sp)
+ bb8:	d436                	sw	a3,40(sp)
+ bba:	ce42                	sw	a6,28(sp)
+ bbc:	cc46                	sw	a7,24(sp)
+ bbe:	ca72                	sw	t3,20(sp)
+ bc0:	c876                	sw	t4,16(sp)
+ bc2:	c67a                	sw	t5,12(sp)
+ bc4:	c47e                	sw	t6,8(sp)
+		LL->STATUS &= LL->INT_EN;
+ bc6:	8ff9                	and	a5,a5,a4
+ bc8:	c41c                	sw	a5,8(s0)
+		BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+ bca:	10048713          	addi	a4,s1,256
+ bce:	5b5c                	lw	a5,52(a4)
+	DevSetMode(0);
+ bd0:	4501                	li	a0,0
+		BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+ bd2:	9bf1                	andi	a5,a5,-4
+ bd4:	0017e793          	ori	a5,a5,1
+ bd8:	db5c                	sw	a5,52(a4)
+	DevSetMode(0);
+ bda:	d0eff0ef          	jal	ra,e8 <DevSetMode>
+	LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+ bde:	483c                	lw	a5,80(s0)
+	rx_ready = 1;
+ be0:	4705                	li	a4,1
+}
+ be2:	40b6                	lw	ra,76(sp)
+	LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+ be4:	8ff7f793          	andi	a5,a5,-1793
+ be8:	c83c                	sw	a5,80(s0)
+	LL->LL0 |= 0x08;
+ bea:	2004a783          	lw	a5,512(s1)
+}
+ bee:	5472                	lw	s0,60(sp)
+ bf0:	42a6                	lw	t0,72(sp)
+	LL->LL0 |= 0x08;
+ bf2:	0087e793          	ori	a5,a5,8
+ bf6:	20f4a023          	sw	a5,512(s1)
+	rx_ready = 1;
+ bfa:	c0e1a223          	sw	a4,-1020(gp) # 20000000 <rx_ready>
+}
+ bfe:	4316                	lw	t1,68(sp)
+ c00:	4386                	lw	t2,64(sp)
+ c02:	54e2                	lw	s1,56(sp)
+ c04:	5552                	lw	a0,52(sp)
+ c06:	55c2                	lw	a1,48(sp)
+ c08:	5632                	lw	a2,44(sp)
+ c0a:	56a2                	lw	a3,40(sp)
+ c0c:	5712                	lw	a4,36(sp)
+ c0e:	5782                	lw	a5,32(sp)
+ c10:	4872                	lw	a6,28(sp)
+ c12:	48e2                	lw	a7,24(sp)
+ c14:	4e52                	lw	t3,20(sp)
+ c16:	4ec2                	lw	t4,16(sp)
+ c18:	4f32                	lw	t5,12(sp)
+ c1a:	4fa2                	lw	t6,8(sp)
+ c1c:	6161                	addi	sp,sp,80
+ c1e:	30200073          	mret
+ c22:	0000                	unimp
+ c24:	000a                	c.slli	zero,0x2
+ c26:	0000                	unimp
+ c28:	4f54                	lw	a3,28(a4)
+ c2a:	2046                	fld	ft0,80(sp)
+ c2c:	6552                	flw	fa0,20(sp)
+ c2e:	76696563          	bltu	s2,t1,1398 <_data_lma+0x724>
+ c32:	7265                	lui	tp,0xffff9
+ c34:	5320                	lw	s0,96(a4)
+ c36:	6174                	flw	fa3,68(a0)
+ c38:	7472                	flw	fs0,60(sp)
+ c3a:	0000                	unimp
+ c3c:	4950                	lw	a2,20(a0)
+ c3e:	474e                	lw	a4,208(sp)
+ c40:	0000                	unimp
+ c42:	0000                	unimp
+ c44:	4f50                	lw	a2,28(a4)
+ c46:	474e                	lw	a4,208(sp)
+ c48:	0000                	unimp
+	...
+
+00000c4c <channel_map>:
+ c4c:	0201 0403 0605 0807 0a09 0d0c 0f0e 1110     ................
+ c5c:	1312 1514 1716 1918 1b1a 1d1c 1f1e 2120     .............. !
+ c6c:	2322 2524 0026 270b                         "#$%&..'

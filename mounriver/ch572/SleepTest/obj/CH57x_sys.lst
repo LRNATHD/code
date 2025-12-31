@@ -1,0 +1,1863 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 1
+
+
+   1              		.file	"CH57x_sys.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.highcode,"ax",@progbits
+   5              		.align	1
+   6              		.globl	SetSysClock
+   8              	SetSysClock:
+   9 0000 9307000C 		li	a5,192
+  10 0004 0111     		addi	sp,sp,-32
+  11 0006 631CF504 		bne	a0,a5,.L2
+  12 000a 93078008 		li	a5,136
+  13              	 #APP
+  14              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT
+   2              	 * ******************************* File Name          : core_riscv.h Author
+   3              	 *        : WCH Version            : V1.0.0 Date               : 2024/07/25
+   4              	 * Description        : CH585 Series RISC-V Core Peripheral Access Layer Header
+   5              	 * File
+   6              	 *********************************************************************************
+   7              	 * Copyright (c) 2024 Nanjing Qinheng Microelectronics Co., Ltd.
+   8              	 * Attention: This software (modified or not) and binary are used for
+   9              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  10              	 *******************************************************************************/
+  11              	#ifndef __CORE_RISCV_H__
+  12              	#define __CORE_RISCV_H__
+  13              	
+  14              	#include <stdint.h>
+  15              	
+  16              	#ifdef __cplusplus
+  17              	extern "C" {
+  18              	#endif
+  19              	
+  20              	/* define compiler specific symbols */
+  21              	#if defined(__CC_ARM)
+  22              	#define __ASM __asm       /*!< asm keyword for ARM Compiler          */
+  23              	#define __INLINE __inline /*!< inline keyword for ARM Compiler       */
+  24              	
+  25              	#elif defined(__ICCARM__)
+  26              	#define __ASM __asm /*!< asm keyword for IAR Compiler          */
+  27              	#define __INLINE                                                               \
+  28              	  inline /*!< inline keyword for IAR Compiler. Only avaiable in High           \
+  29              	            optimization mode! */
+  30              	
+  31              	#elif defined(__GNUC__)
+  32              	#define __ASM __asm     /*!< asm keyword for GNU Compiler          */
+  33              	#define __INLINE inline /*!< inline keyword for GNU Compiler       */
+  34              	
+  35              	#elif defined(__TASKING__)
+  36              	#define __ASM __asm     /*!< asm keyword for TASKING Compiler      */
+  37              	#define __INLINE inline /*!< inline keyword for TASKING Compiler   */
+  38              	
+  39              	#endif
+  40              	
+  41              	/* IO definitions */
+  42              	#ifdef __cplusplus
+  43              	#define __I volatile /*!< defines 'read only' permissions      */
+  44              	#else
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 2
+
+
+  45              	#define __I volatile const /*!< defines 'read only' permissions     */
+  46              	#endif
+  47              	#define __O volatile  /*!< defines 'write only' permissions     */
+  48              	#define __IO volatile /*!< defines 'read / write' permissions   */
+  49              	#define RV_STATIC_INLINE static inline
+  50              	
+  51              	// typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  52              	
+  53              	typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+  54              	typedef enum { RESET = 0, SET = !RESET } FlagStatus, ITStatus;
+  55              	
+  56              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  57              	typedef struct {
+  58              	  __I uint32_t ISR[8];      // 0
+  59              	  __I uint32_t IPR[8];      // 20H
+  60              	  __IO uint32_t ITHRESDR;   // 40H
+  61              	  uint8_t RESERVED[8];      // 44H
+  62              	  __I uint32_t GISR;        // 4CH
+  63              	  __IO uint8_t VTFIDR[4];   // 50H
+  64              	  uint8_t RESERVED0[0x0C];  // 54H
+  65              	  __IO uint32_t VTFADDR[4]; // 60H
+  66              	  uint8_t RESERVED1[0x90];  // 70H
+  67              	  __O uint32_t IENR[8];     // 100H
+  68              	  uint8_t RESERVED2[0x60];  // 120H
+  69              	  __O uint32_t IRER[8];     // 180H
+  70              	  uint8_t RESERVED3[0x60];  // 1A0H
+  71              	  __O uint32_t IPSR[8];     // 200H
+  72              	  uint8_t RESERVED4[0x60];  // 220H
+  73              	  __O uint32_t IPRR[8];     // 280H
+  74              	  uint8_t RESERVED5[0x60];  // 2A0H
+  75              	  __IO uint32_t IACTR[8];   // 300H
+  76              	  uint8_t RESERVED6[0xE0];  // 320H
+  77              	  __IO uint8_t IPRIOR[256]; // 400H
+  78              	  uint8_t RESERVED7[0x810]; // 500H
+  79              	  __IO uint32_t SCTLR;      // D10H
+  80              	} PFIC_Type;
+  81              	
+  82              	/* memory mapped structure for SysTick */
+  83              	typedef struct {
+  84              	  __IO uint32_t CTLR;
+  85              	  __IO uint32_t SR;
+  86              	  union {
+  87              	    __IO uint32_t CNT;
+  88              	    __IO uint32_t CNTL;
+  89              	  };
+  90              	  uint8_t RESERVED[4];
+  91              	  union {
+  92              	    __IO uint32_t CMP;
+  93              	    __IO uint32_t CMPL;
+  94              	  };
+  95              	  uint8_t RESERVED0[4];
+  96              	} SysTick_Type;
+  97              	
+  98              	#define PFIC ((PFIC_Type *)0xE000E000)
+  99              	#define SysTick ((SysTick_Type *)0xE000F000)
+ 100              	
+ 101              	#define PFIC_KEY1 ((uint32_t)0xFA050000)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 3
+
+
+ 102              	#define PFIC_KEY2 ((uint32_t)0xBCAF0000)
+ 103              	#define PFIC_KEY3 ((uint32_t)0xBEEF0000)
+ 104              	
+ 105              	/* ##########################   define  #################################### */
+ 106              	#define __nop() __asm__ volatile("nop")
+ 107              	
+ 108              	#define read_csr(reg)                                                          \
+ 109              	  ({                                                                           \
+ 110              	    unsigned long __tmp;                                                       \
+ 111              	    __asm__ volatile("csrr %0, " #reg : "=r"(__tmp));                          \
+ 112              	    __tmp;                                                                     \
+ 113              	  })
+ 114              	
+ 115              	#define write_csr(reg, val)                                                    \
+ 116              	  ({                                                                           \
+ 117              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)                \
+ 118              	      __asm__ volatile("csrw  " #reg ", %0" ::"i"(val));                       \
+ 119              	    else                                                                       \
+ 120              	      __asm__ volatile("csrw  " #reg ", %0" ::"r"(val));                       \
+ 121              	  })
+ 122              	
+ 123              	/*********************************************************************
+ 124              	 * @fn      __risc_v_enable_irq
+ 125              	 *
+ 126              	 * @brief   recover Global Interrupt
+ 127              	 *
+ 128              	 * @return  mpie and mie bit in mstatus.
+ 129              	 */
+ 130              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 131              	__risc_v_enable_irq(uint32_t mpie_mie) {
+ 132              	  uint32_t result;
+ 133              	
+ 134              	  __asm volatile("csrrs %0, 0x800, %1"
+ 135              	                 : "=r"(result)
+ 136              	                 : "r"(mpie_mie)
+ 137              	                 : "memory");
+ 138              	  return result;
+ 139              	}
+ 140              	
+ 141              	/*********************************************************************
+ 142              	 * @fn      __disable_irq
+ 143              	 *
+ 144              	 * @brief   Disable Global Interrupt
+ 145              	 *
+ 146              	 * @return  mpie and mie bit in mstatus.
+ 147              	 */
+ 148              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 149              	__risc_v_disable_irq(void) {
+ 150              	  uint32_t result;
+ 151              	
+ 152 000e F3B70780 	  __asm volatile("csrrc %0, 0x800, %1" : "=r"(result) : "r"(0x88) : "memory");
+ 153              	  return result & 0x88;
+  15              		csrrc a5, 0x800, a5
+  16              	# 0 "" 2
+  17              	 #NO_APP
+  18 0012 93F78708 		andi	a5,a5,136
+  19 0016 3EC0     		sw	a5,0(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 4
+
+
+  20              	 #APP
+  21              	# 30 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+   1              	/********************************** (C) COPYRIGHT
+   2              	 * ******************************* File Name          : CH57x_SYS.c Author
+   3              	 *       : WCH Version            : V1.2 Date               : 2021/11/17
+   4              	 * Description        : source file(ch572/ch570)
+   5              	 *********************************************************************************
+   6              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   7              	 * Attention: This software (modified or not) and binary are used for
+   8              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+   9              	 *******************************************************************************/
+  10              	
+  11              	#include "CH57x_common.h"
+  12              	
+  13              	/*********************************************************************
+  14              	 * @fn      SetSysClock
+  15              	 *
+  16              	 * @brief   配置系统运行时钟
+  17              	 *
+  18              	 * @param   sc      - 系统时钟源选择 refer to SYS_CLKTypeDef
+  19              	 *
+  20              	 * @return  none
+  21              	 */
+  22              	__HIGH_CODE
+  23              	void SetSysClock(SYS_CLKTypeDef sc) {
+  24              	  uint16_t clk_sys_cfg;
+  25              	  uint8_t i;
+  26              	  uint8_t x32M_c;
+  27              	
+  28              	  if (sc == RB_CLK_SYS_MOD) // LSI
+  29              	  {
+  30 0018 0F100000 	    sys_safe_access_enable();
+  31              	    R8_SLP_POWER_CTRL |= 0x40;
+  22              		fence.i
+  23              	# 0 "" 2
+  24              	 #NO_APP
+  25 001c B7170040 		li	a5,1073745920
+  26 0020 13077005 		li	a4,87
+  27 0024 2380E704 		sb	a4,64(a5)
+  28 0028 130780FA 		li	a4,-88
+  29 002c 2380E704 		sb	a4,64(a5)
+  30              	 #APP
+  31              	# 30 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+  32              		fence.i
+  33              	# 0 "" 2
+  34              	 #NO_APP
+  35 0034 03C7F700 		lbu	a4,15(a5)
+  36 0038 13670704 		ori	a4,a4,64
+  37 003c A387E700 		sb	a4,15(a5)
+  38 0040 03C78700 		lbu	a4,8(a5)
+  39 0044 1367070C 		ori	a4,a4,192
+  40 0048 2384E700 		sb	a4,8(a5)
+  41 004c 23800704 		sb	zero,64(a5)
+  42 0050 8247     		lw	a5,0(sp)
+  43              	.L12:
+  44              	 #APP
+  45              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 5
+
+
+  46              		csrrs a5, 0x800, a5
+  47              	# 0 "" 2
+  48              	# 77 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+  32              	    R8_CLK_SYS_CFG |= RB_CLK_SYS_MOD;
+  33              	    sys_safe_access_disable();
+  34              	  } else {
+  35              	    if (!(R8_HFCK_PWR_CTRL & RB_CLK_XT32M_PON)) {
+  36              	      x32M_c = R8_XT32M_TUNE;
+  37              	      sys_safe_access_enable();
+  38              	      R8_XT32M_TUNE |= 0x03;
+  39              	      R8_HFCK_PWR_CTRL |= RB_CLK_XT32M_PON;
+  40              	      sys_safe_access_disable();
+  41              	      clk_sys_cfg = R8_CLK_SYS_CFG;
+  42              	      sys_safe_access_enable();
+  43              	      R8_CLK_SYS_CFG |= 0xC0;
+  44              	      sys_safe_access_disable();
+  45              	      for (i = 0; i < 9; i++) {
+  46              	        __nop();
+  47              	      }
+  48              	      sys_safe_access_enable();
+  49              	      R8_CLK_SYS_CFG = clk_sys_cfg;
+  50              	      R8_XT32M_TUNE = x32M_c;
+  51              	      sys_safe_access_disable();
+  52              	    }
+  53              	
+  54              	    if ((sc & RB_CLK_SYS_MOD) == 0x40) // PLL div
+  55              	    {
+  56              	      sys_safe_access_enable();
+  57              	      R8_HFCK_PWR_CTRL |= RB_CLK_PLL_PON;
+  58              	      R8_FLASH_CFG = 0X01;
+  59              	      R8_FLASH_SCK |= 1 << 4; // 50M
+  60              	      sys_safe_access_disable();
+  61              	    } else // 32M div
+  62              	    {
+  63              	      if ((sc & 0x1F)) {
+  64              	        sys_safe_access_enable();
+  65              	        R8_FLASH_CFG = 0X02;
+  66              	        sys_safe_access_disable();
+  67              	      } else {
+  68              	        sys_safe_access_enable();
+  69              	        R8_FLASH_CFG = 0X07;
+  70              	        sys_safe_access_disable();
+  71              	      }
+  72              	    }
+  73              	
+  74              	    sys_safe_access_enable();
+  75              	    R8_SLP_POWER_CTRL |= 0x40;
+  76              	    R8_CLK_SYS_CFG = sc;
+  77 0056 0F100000 	    sys_safe_access_disable();
+  78              	  }
+  49              		fence.i
+  50              	# 0 "" 2
+  51              	 #NO_APP
+  52 005a 0561     		addi	sp,sp,32
+  53 005c 8280     		jr	ra
+  54              	.L2:
+  55 005e B7170040 		li	a5,1073745920
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 6
+
+
+  56 0062 03C7A700 		lbu	a4,10(a5)
+  57 0066 118B     		andi	a4,a4,4
+  58 0068 79EF     		bnez	a4,.L4
+  59 006a 83C6E704 		lbu	a3,78(a5)
+  60 006e 13078008 		li	a4,136
+  61 0072 93F6F60F 		andi	a3,a3,0xff
+  62              	 #APP
+  63              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+  64              		csrrc a2, 0x800, a4
+  65              	# 0 "" 2
+  66              	 #NO_APP
+  67 007a 13768608 		andi	a2,a2,136
+  68 007e 32C2     		sw	a2,4(sp)
+  69              	 #APP
+  70              	# 37 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+  71              		fence.i
+  72              	# 0 "" 2
+  73              	 #NO_APP
+  74 0084 13087005 		li	a6,87
+  75 0088 23800705 		sb	a6,64(a5)
+  76 008c 930580FA 		li	a1,-88
+  77 0090 2380B704 		sb	a1,64(a5)
+  78              	 #APP
+  79              	# 37 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+  80              		fence.i
+  81              	# 0 "" 2
+  82              	 #NO_APP
+  83 0098 03C6E704 		lbu	a2,78(a5)
+  84 009c 13663600 		ori	a2,a2,3
+  85 00a0 2387C704 		sb	a2,78(a5)
+  86 00a4 03C6A700 		lbu	a2,10(a5)
+  87 00a8 13664600 		ori	a2,a2,4
+  88 00ac 2385C700 		sb	a2,10(a5)
+  89 00b0 23800704 		sb	zero,64(a5)
+  90 00b4 1246     		lw	a2,4(sp)
+  91              	 #APP
+  92              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+  93              		csrrs a2, 0x800, a2
+  94              	# 0 "" 2
+  95              	# 40 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+  96              		fence.i
+  97              	# 0 "" 2
+  98              	 #NO_APP
+  99 00be 03C68700 		lbu	a2,8(a5)
+ 100 00c2 1376F60F 		andi	a2,a2,0xff
+ 101              	 #APP
+ 102              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 103              		csrrc a4, 0x800, a4
+ 104              	# 0 "" 2
+ 105              	 #NO_APP
+ 106 00ca 13778708 		andi	a4,a4,136
+ 107 00ce 3AC4     		sw	a4,8(sp)
+ 108              	 #APP
+ 109              	# 42 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 110              		fence.i
+ 111              	# 0 "" 2
+ 112              	 #NO_APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 7
+
+
+ 113 00d4 23800705 		sb	a6,64(a5)
+ 114 00d8 2380B704 		sb	a1,64(a5)
+ 115              	 #APP
+ 116              	# 42 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 117              		fence.i
+ 118              	# 0 "" 2
+ 119              	 #NO_APP
+ 120 00e0 03C78700 		lbu	a4,8(a5)
+ 121 00e4 1367070C 		ori	a4,a4,192
+ 122 00e8 2384E700 		sb	a4,8(a5)
+ 123 00ec 23800704 		sb	zero,64(a5)
+ 124 00f0 A247     		lw	a5,8(sp)
+ 125              	 #APP
+ 126              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 127              		csrrs a5, 0x800, a5
+ 128              	# 0 "" 2
+ 129              	# 44 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 130              		fence.i
+ 131              	# 0 "" 2
+ 132              	 #NO_APP
+ 133 00fa A547     		li	a5,9
+ 134              	.L5:
+ 135              	 #APP
+ 136              	# 46 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 137              		nop
+ 138              	# 0 "" 2
+ 139              	 #NO_APP
+ 140 00fe FD17     		addi	a5,a5,-1
+ 141 0100 93F7F70F 		andi	a5,a5,0xff
+ 142 0104 E5FF     		bnez	a5,.L5
+ 143 0106 93078008 		li	a5,136
+ 144              	 #APP
+ 145              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 146              		csrrc a5, 0x800, a5
+ 147              	# 0 "" 2
+ 148              	 #NO_APP
+ 149 010e 93F78708 		andi	a5,a5,136
+ 150 0112 3EC6     		sw	a5,12(sp)
+ 151              	 #APP
+ 152              	# 48 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 153              		fence.i
+ 154              	# 0 "" 2
+ 155              	 #NO_APP
+ 156 0118 B7170040 		li	a5,1073745920
+ 157 011c 13077005 		li	a4,87
+ 158 0120 2380E704 		sb	a4,64(a5)
+ 159 0124 130780FA 		li	a4,-88
+ 160 0128 2380E704 		sb	a4,64(a5)
+ 161              	 #APP
+ 162              	# 48 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 163              		fence.i
+ 164              	# 0 "" 2
+ 165              	 #NO_APP
+ 166 0130 2384C700 		sb	a2,8(a5)
+ 167 0134 2387D704 		sb	a3,78(a5)
+ 168 0138 23800704 		sb	zero,64(a5)
+ 169 013c B247     		lw	a5,12(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 8
+
+
+ 170              	 #APP
+ 171              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 172              		csrrs a5, 0x800, a5
+ 173              	# 0 "" 2
+ 174              	# 51 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 175              		fence.i
+ 176              	# 0 "" 2
+ 177              	 #NO_APP
+ 178              	.L4:
+ 179 0146 9377050C 		andi	a5,a0,192
+ 180 014a 13070004 		li	a4,64
+ 181 014e 6392E70A 		bne	a5,a4,.L6
+ 182 0152 93078008 		li	a5,136
+ 183              	 #APP
+ 184              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 185              		csrrc a5, 0x800, a5
+ 186              	# 0 "" 2
+ 187              	 #NO_APP
+ 188 015a 93F78708 		andi	a5,a5,136
+ 189 015e 3EC8     		sw	a5,16(sp)
+ 190              	 #APP
+ 191              	# 56 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 192              		fence.i
+ 193              	# 0 "" 2
+ 194              	 #NO_APP
+ 195 0164 B7170040 		li	a5,1073745920
+ 196 0168 13077005 		li	a4,87
+ 197 016c 2380E704 		sb	a4,64(a5)
+ 198 0170 130780FA 		li	a4,-88
+ 199 0174 2380E704 		sb	a4,64(a5)
+ 200              	 #APP
+ 201              	# 56 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 202              		fence.i
+ 203              	# 0 "" 2
+ 204              	 #NO_APP
+ 205 017c 03C7A700 		lbu	a4,10(a5)
+ 206 0180 8546     		li	a3,1
+ 207 0182 13670701 		ori	a4,a4,16
+ 208 0186 2385E700 		sb	a4,10(a5)
+ 209 018a 37270040 		li	a4,1073750016
+ 210 018e A303D780 		sb	a3,-2041(a4)
+ 211 0192 83465780 		lbu	a3,-2043(a4)
+ 212 0196 93E60601 		ori	a3,a3,16
+ 213 019a A302D780 		sb	a3,-2043(a4)
+ 214 019e 23800704 		sb	zero,64(a5)
+ 215 01a2 C247     		lw	a5,16(sp)
+ 216              	.L11:
+ 217              	 #APP
+ 218              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 219              		csrrs a5, 0x800, a5
+ 220              	# 0 "" 2
+ 221              	# 70 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 222              		fence.i
+ 223              	# 0 "" 2
+ 224              	 #NO_APP
+ 225 01ac 93078008 		li	a5,136
+ 226              	 #APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 9
+
+
+ 227              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 228              		csrrc a5, 0x800, a5
+ 229              	# 0 "" 2
+ 230              	 #NO_APP
+ 231 01b4 93F78708 		andi	a5,a5,136
+ 232 01b8 3ECE     		sw	a5,28(sp)
+ 233              	 #APP
+ 234              	# 74 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 235              		fence.i
+ 236              	# 0 "" 2
+ 237              	 #NO_APP
+ 238 01be B7170040 		li	a5,1073745920
+ 239 01c2 13077005 		li	a4,87
+ 240 01c6 2380E704 		sb	a4,64(a5)
+ 241 01ca 130780FA 		li	a4,-88
+ 242 01ce 2380E704 		sb	a4,64(a5)
+ 243              	 #APP
+ 244              	# 74 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 245              		fence.i
+ 246              	# 0 "" 2
+ 247              	 #NO_APP
+ 248 01d6 03C7F700 		lbu	a4,15(a5)
+ 249 01da 1375F50F 		andi	a0,a0,0xff
+ 250 01de 13670704 		ori	a4,a4,64
+ 251 01e2 A387E700 		sb	a4,15(a5)
+ 252 01e6 2384A700 		sb	a0,8(a5)
+ 253 01ea 23800704 		sb	zero,64(a5)
+ 254 01ee F247     		lw	a5,28(sp)
+ 255 01f0 8DB5     		j	.L12
+ 256              	.L6:
+ 257 01f2 9377F501 		andi	a5,a0,31
+ 258 01f6 9DCF     		beqz	a5,.L8
+ 259 01f8 93078008 		li	a5,136
+ 260              	 #APP
+ 261              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 262              		csrrc a5, 0x800, a5
+ 263              	# 0 "" 2
+ 264              	 #NO_APP
+ 265 0200 93F78708 		andi	a5,a5,136
+ 266 0204 3ECA     		sw	a5,20(sp)
+ 267              	 #APP
+ 268              	# 64 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 269              		fence.i
+ 270              	# 0 "" 2
+ 271              	 #NO_APP
+ 272 020a B7170040 		li	a5,1073745920
+ 273 020e 13077005 		li	a4,87
+ 274 0212 2380E704 		sb	a4,64(a5)
+ 275 0216 130780FA 		li	a4,-88
+ 276 021a 2380E704 		sb	a4,64(a5)
+ 277              	 #APP
+ 278              	# 64 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 279              		fence.i
+ 280              	# 0 "" 2
+ 281              	 #NO_APP
+ 282 0222 37270040 		li	a4,1073750016
+ 283 0226 8946     		li	a3,2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 10
+
+
+ 284 0228 A303D780 		sb	a3,-2041(a4)
+ 285 022c 23800704 		sb	zero,64(a5)
+ 286 0230 D247     		lw	a5,20(sp)
+ 287 0232 8DBF     		j	.L11
+ 288              	.L8:
+ 289 0234 93078008 		li	a5,136
+ 290              	 #APP
+ 291              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 292              		csrrc a5, 0x800, a5
+ 293              	# 0 "" 2
+ 294              	 #NO_APP
+ 295 023c 93F78708 		andi	a5,a5,136
+ 296 0240 3ECC     		sw	a5,24(sp)
+ 297              	 #APP
+ 298              	# 68 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 299              		fence.i
+ 300              	# 0 "" 2
+ 301              	 #NO_APP
+ 302 0246 B7170040 		li	a5,1073745920
+ 303 024a 13077005 		li	a4,87
+ 304 024e 2380E704 		sb	a4,64(a5)
+ 305 0252 130780FA 		li	a4,-88
+ 306 0256 2380E704 		sb	a4,64(a5)
+ 307              	 #APP
+ 308              	# 68 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 309              		fence.i
+ 310              	# 0 "" 2
+ 311              	 #NO_APP
+ 312 025e 37270040 		li	a4,1073750016
+ 313 0262 9D46     		li	a3,7
+ 314 0264 A303D780 		sb	a3,-2041(a4)
+ 315 0268 23800704 		sb	zero,64(a5)
+ 316 026c E247     		lw	a5,24(sp)
+ 317 026e 1DBF     		j	.L11
+ 319              		.section	.text.GetSysClock,"ax",@progbits
+ 320              		.align	1
+ 321              		.globl	GetSysClock
+ 323              	GetSysClock:
+ 324 0000 B7170040 		li	a5,1073745920
+ 325 0004 03C78700 		lbu	a4,8(a5)
+ 326 0008 9306000C 		li	a3,192
+ 327 000c 1377070C 		andi	a4,a4,192
+ 328 0010 6318D700 		bne	a4,a3,.L14
+ 329 0014 97070000 		lla	a5,Freq_LSI
+ 329      93870700 
+ 330 001c 8843     		lw	a0,0(a5)
+ 331 001e 8280     		ret
+ 332              	.L14:
+ 333 0020 03C78700 		lbu	a4,8(a5)
+ 334 0024 93060004 		li	a3,64
+ 335 0028 1377070C 		andi	a4,a4,192
+ 336 002c 6311D702 		bne	a4,a3,.L16
+ 337 0030 03C78700 		lbu	a4,8(a5)
+ 338 0034 7D8B     		andi	a4,a4,31
+ 339 0036 0DCB     		beqz	a4,.L17
+ 340 0038 03C58700 		lbu	a0,8(a5)
+ 341 003c 9377F501 		andi	a5,a0,31
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 11
+
+
+ 342 0040 3745C323 		li	a0,599998464
+ 343 0044 13050560 		addi	a0,a0,1536
+ 344              	.L19:
+ 345 0048 3345F502 		div	a0,a0,a5
+ 346 004c 8280     		ret
+ 347              	.L16:
+ 348 004e 03C78700 		lbu	a4,8(a5)
+ 349 0052 7D8B     		andi	a4,a4,31
+ 350 0054 19CF     		beqz	a4,.L18
+ 351 0056 03C58700 		lbu	a0,8(a5)
+ 352 005a 9377F501 		andi	a5,a0,31
+ 353 005e 3755E801 		li	a0,32002048
+ 354 0062 13050580 		addi	a0,a0,-2048
+ 355 0066 CDB7     		j	.L19
+ 356              	.L17:
+ 357 0068 37251E01 		li	a0,18751488
+ 358 006c 130505A3 		addi	a0,a0,-1488
+ 359 0070 8280     		ret
+ 360              	.L18:
+ 361 0072 37450F00 		li	a0,999424
+ 362 0076 13050524 		addi	a0,a0,576
+ 363 007a 8280     		ret
+ 365              		.section	.text.SYS_GetInfoSta,"ax",@progbits
+ 366              		.align	1
+ 367              		.globl	SYS_GetInfoSta
+ 369              	SYS_GetInfoSta:
+ 370 0000 93070003 		li	a5,48
+ 371 0004 6318F500 		bne	a0,a5,.L21
+ 372 0008 B7170040 		li	a5,1073745920
+ 373 000c 03C50704 		lbu	a0,64(a5)
+ 374 0010 1189     		andi	a0,a0,4
+ 375 0012 8280     		ret
+ 376              	.L21:
+ 377 0014 B7170040 		li	a5,1073745920
+ 378 0018 03C75704 		lbu	a4,69(a5)
+ 379 001c 8547     		li	a5,1
+ 380 001e 3395A700 		sll	a0,a5,a0
+ 381 0022 798D     		and	a0,a0,a4
+ 382 0024 8280     		ret
+ 384              		.section	.highcode
+ 385              		.align	1
+ 386              		.globl	SYS_ResetExecute
+ 388              	SYS_ResetExecute:
+ 389 0270 0111     		addi	sp,sp,-32
+ 390 0272 8146     		li	a3,0
+ 391 0274 0146     		li	a2,0
+ 392 0276 8145     		li	a1,0
+ 393 0278 1145     		li	a0,4
+ 394 027a 06CE     		sw	ra,28(sp)
+ 395 027c 97000000 		call	FLASH_EEPROM_CMD
+ 395      E7800000 
+ 396 0284 93078008 		li	a5,136
+ 397              	 #APP
+ 398              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 399              		csrrc a5, 0x800, a5
+ 400              	# 0 "" 2
+ 401              	 #NO_APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 12
+
+
+ 402 028c 93F78708 		andi	a5,a5,136
+ 403 0290 3EC6     		sw	a5,12(sp)
+ 404              	 #APP
+ 405              	# 131 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+  79              	}
+  80              	
+  81              	/*********************************************************************
+  82              	 * @fn      GetSysClock
+  83              	 *
+  84              	 * @brief   获取当前系统时钟
+  85              	 *
+  86              	 * @param   none
+  87              	 *
+  88              	 * @return  Hz
+  89              	 */
+  90              	uint32_t GetSysClock(void) {
+  91              	  if ((R8_CLK_SYS_CFG & RB_CLK_SYS_MOD) == RB_CLK_SYS_MOD) { // 32K做主频
+  92              	    return (Freq_LSI);
+  93              	  } else if ((R8_CLK_SYS_CFG & RB_CLK_SYS_MOD) == 0x40) {
+  94              	    return (600000000 /
+  95              	            ((R8_CLK_SYS_CFG & 0x1f) ? (R8_CLK_SYS_CFG & 0x1f) : 32));
+  96              	  } else { // 32M进行分频
+  97              	    return (32000000 /
+  98              	            ((R8_CLK_SYS_CFG & 0x1f) ? (R8_CLK_SYS_CFG & 0x1f) : 32));
+  99              	  }
+ 100              	}
+ 101              	
+ 102              	/*********************************************************************
+ 103              	 * @fn      SYS_GetInfoSta
+ 104              	 *
+ 105              	 * @brief   获取当前系统信息状态
+ 106              	 *
+ 107              	 * @param   i       - refer to SYS_InfoStaTypeDef
+ 108              	 *
+ 109              	 * @return  是否开启
+ 110              	 */
+ 111              	uint8_t SYS_GetInfoSta(SYS_InfoStaTypeDef i) {
+ 112              	  if (i == STA_SAFEACC_ACT) {
+ 113              	    return (R8_SAFE_ACCESS_SIG & RB_SAFE_ACC_ACT);
+ 114              	  } else {
+ 115              	    return (R8_GLOB_CFG_INFO & (1 << i));
+ 116              	  }
+ 117              	}
+ 118              	
+ 119              	/*********************************************************************
+ 120              	 * @fn      SYS_ResetExecute
+ 121              	 *
+ 122              	 * @brief   执行系统软件复位
+ 123              	 *
+ 124              	 * @param   none
+ 125              	 *
+ 126              	 * @return  none
+ 127              	 */
+ 128              	__HIGH_CODE
+ 129              	void SYS_ResetExecute(void) {
+ 130              	  FLASH_ROM_SW_RESET();
+ 131 0292 0F100000 	  sys_safe_access_enable();
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 13
+
+
+ 132              	  R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+ 406              		fence.i
+ 407              	# 0 "" 2
+ 408              	 #NO_APP
+ 409 0296 B7170040 		li	a5,1073745920
+ 410 029a 13077005 		li	a4,87
+ 411 029e 2380E704 		sb	a4,64(a5)
+ 412 02a2 130780FA 		li	a4,-88
+ 413 02a6 2380E704 		sb	a4,64(a5)
+ 414              	 #APP
+ 415              	# 131 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 416              		fence.i
+ 417              	# 0 "" 2
+ 418              	 #NO_APP
+ 419 02ae 03C76704 		lbu	a4,70(a5)
+ 420 02b2 13671700 		ori	a4,a4,1
+ 421 02b6 2383E704 		sb	a4,70(a5)
+ 422 02ba 23800704 		sb	zero,64(a5)
+ 423 02be B247     		lw	a5,12(sp)
+ 424              	 #APP
+ 425              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 426              		csrrs a5, 0x800, a5
+ 427              	# 0 "" 2
+ 428              	# 133 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 133 02c4 0F100000 	  sys_safe_access_disable();
+ 134              	}
+ 429              		fence.i
+ 430              	# 0 "" 2
+ 431              	 #NO_APP
+ 432 02c8 F240     		lw	ra,28(sp)
+ 433 02ca 0561     		addi	sp,sp,32
+ 434 02cc 8280     		jr	ra
+ 436              		.section	.text.SYS_DisableAllIrq,"ax",@progbits
+ 437              		.align	1
+ 438              		.globl	SYS_DisableAllIrq
+ 440              	SYS_DisableAllIrq:
+ 441 0000 37E700E0 		li	a4,-536813568
+ 442 0004 1C43     		lw	a5,0(a4)
+ 443 0006 5443     		lw	a3,4(a4)
+ 444 0008 A183     		srli	a5,a5,8
+ 445 000a E206     		slli	a3,a3,24
+ 446 000c D58F     		or	a5,a5,a3
+ 447 000e 1CC1     		sw	a5,0(a0)
+ 448 0010 FD57     		li	a5,-1
+ 449 0012 2320F718 		sw	a5,384(a4)
+ 450 0016 2322F718 		sw	a5,388(a4)
+ 451              	 #APP
+ 452              	# 149 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 135              	
+ 136              	/*********************************************************************
+ 137              	 * @fn      SYS_DisableAllIrq
+ 138              	 *
+ 139              	 * @brief   关闭所有中断，并保留当前中断值
+ 140              	 *
+ 141              	 * @param   pirqv   - 当前保留中断值
+ 142              	 *
+ 143              	 * @return  none
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 14
+
+
+ 144              	 */
+ 145              	void SYS_DisableAllIrq(uint32_t *pirqv) {
+ 146              	  *pirqv = (PFIC->ISR[0] >> 8) | (PFIC->ISR[1] << 24);
+ 147              	  PFIC->IRER[0] = 0xffffffff;
+ 148              	  PFIC->IRER[1] = 0xffffffff;
+ 149 001a 0F100000 	  asm volatile("fence.i");
+ 150              	}
+ 453              		fence.i
+ 454              	# 0 "" 2
+ 455              	 #NO_APP
+ 456 001e 8280     		ret
+ 458              		.section	.text.SYS_RecoverIrq,"ax",@progbits
+ 459              		.align	1
+ 460              		.globl	SYS_RecoverIrq
+ 462              	SYS_RecoverIrq:
+ 463 0000 13178500 		slli	a4,a0,8
+ 464 0004 B7E700E0 		li	a5,-536813568
+ 465 0008 23A0E710 		sw	a4,256(a5)
+ 466 000c 6181     		srli	a0,a0,24
+ 467 000e 23A2A710 		sw	a0,260(a5)
+ 468 0012 8280     		ret
+ 470              		.section	.text.SYS_GetSysTickCnt,"ax",@progbits
+ 471              		.align	1
+ 472              		.globl	SYS_GetSysTickCnt
+ 474              	SYS_GetSysTickCnt:
+ 475 0000 B7F700E0 		li	a5,-536809472
+ 476 0004 8847     		lw	a0,8(a5)
+ 477 0006 8280     		ret
+ 479              		.section	.text.WWDG_ITCfg,"ax",@progbits
+ 480              		.align	1
+ 481              		.globl	WWDG_ITCfg
+ 483              	WWDG_ITCfg:
+ 484 0000 B7170040 		li	a5,1073745920
+ 485 0004 83C76704 		lbu	a5,70(a5)
+ 486 0008 4111     		addi	sp,sp,-16
+ 487 000a 93F7F70F 		andi	a5,a5,0xff
+ 488 000e 13F7B70F 		andi	a4,a5,251
+ 489 0012 19C1     		beqz	a0,.L30
+ 490 0014 13E74700 		ori	a4,a5,4
+ 491              	.L30:
+ 492 0018 93078008 		li	a5,136
+ 493              	 #APP
+ 494              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 495              		csrrc a5, 0x800, a5
+ 496              	# 0 "" 2
+ 497              	 #NO_APP
+ 498 0020 93F78708 		andi	a5,a5,136
+ 499 0024 3EC6     		sw	a5,12(sp)
+ 500              	 #APP
+ 501              	# 195 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 151              	
+ 152              	/*********************************************************************
+ 153              	 * @fn      SYS_RecoverIrq
+ 154              	 *
+ 155              	 * @brief   恢复之前关闭的中断值
+ 156              	 *
+ 157              	 * @param   irq_status  - 当前保留中断值
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 15
+
+
+ 158              	 *
+ 159              	 * @return  none
+ 160              	 */
+ 161              	void SYS_RecoverIrq(uint32_t irq_status) {
+ 162              	  PFIC->IENR[0] = (irq_status << 8);
+ 163              	  PFIC->IENR[1] = (irq_status >> 24);
+ 164              	}
+ 165              	
+ 166              	/*********************************************************************
+ 167              	 * @fn      SYS_GetSysTickCnt
+ 168              	 *
+ 169              	 * @brief   获取当前系统(SYSTICK)计数值
+ 170              	 *
+ 171              	 * @param   none
+ 172              	 *
+ 173              	 * @return  当前计数值
+ 174              	 */
+ 175              	uint32_t SYS_GetSysTickCnt(void) { return SysTick->CNTL; }
+ 176              	
+ 177              	/*********************************************************************
+ 178              	 * @fn      WWDG_ITCfg
+ 179              	 *
+ 180              	 * @brief   看门狗定时器溢出中断使能
+ 181              	 *
+ 182              	 * @param   s       - 溢出是否中断
+ 183              	 *
+ 184              	 * @return  none
+ 185              	 */
+ 186              	void WWDG_ITCfg(FunctionalState s) {
+ 187              	  uint8_t ctrl = R8_RST_WDOG_CTRL;
+ 188              	
+ 189              	  if (s == DISABLE) {
+ 190              	    ctrl &= ~RB_WDOG_INT_EN;
+ 191              	  } else {
+ 192              	    ctrl |= RB_WDOG_INT_EN;
+ 193              	  }
+ 194              	
+ 195 0026 0F100000 	  sys_safe_access_enable();
+ 196              	  R8_RST_WDOG_CTRL = ctrl;
+ 502              		fence.i
+ 503              	# 0 "" 2
+ 504              	 #NO_APP
+ 505 002a B7170040 		li	a5,1073745920
+ 506 002e 93067005 		li	a3,87
+ 507 0032 2380D704 		sb	a3,64(a5)
+ 508 0036 930680FA 		li	a3,-88
+ 509 003a 2380D704 		sb	a3,64(a5)
+ 510              	 #APP
+ 511              	# 195 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 512              		fence.i
+ 513              	# 0 "" 2
+ 514              	 #NO_APP
+ 515 0042 2383E704 		sb	a4,70(a5)
+ 516 0046 23800704 		sb	zero,64(a5)
+ 517 004a B247     		lw	a5,12(sp)
+ 518              	 #APP
+ 519              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 16
+
+
+ 520              		csrrs a5, 0x800, a5
+ 521              	# 0 "" 2
+ 522              	# 197 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 197 0050 0F100000 	  sys_safe_access_disable();
+ 198              	}
+ 523              		fence.i
+ 524              	# 0 "" 2
+ 525              	 #NO_APP
+ 526 0054 4101     		addi	sp,sp,16
+ 527 0056 8280     		jr	ra
+ 529              		.section	.text.WWDG_ResetCfg,"ax",@progbits
+ 530              		.align	1
+ 531              		.globl	WWDG_ResetCfg
+ 533              	WWDG_ResetCfg:
+ 534 0000 B7170040 		li	a5,1073745920
+ 535 0004 83C76704 		lbu	a5,70(a5)
+ 536 0008 4111     		addi	sp,sp,-16
+ 537 000a 93F7F70F 		andi	a5,a5,0xff
+ 538 000e 13F7D70F 		andi	a4,a5,253
+ 539 0012 19C1     		beqz	a0,.L35
+ 540 0014 13E72700 		ori	a4,a5,2
+ 541              	.L35:
+ 542 0018 93078008 		li	a5,136
+ 543              	 #APP
+ 544              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 545              		csrrc a5, 0x800, a5
+ 546              	# 0 "" 2
+ 547              	 #NO_APP
+ 548 0020 93F78708 		andi	a5,a5,136
+ 549 0024 3EC6     		sw	a5,12(sp)
+ 550              	 #APP
+ 551              	# 218 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 199              	
+ 200              	/*********************************************************************
+ 201              	 * @fn      WWDG_ResetCfg
+ 202              	 *
+ 203              	 * @brief   看门狗定时器复位功能
+ 204              	 *
+ 205              	 * @param   s       - 溢出是否复位
+ 206              	 *
+ 207              	 * @return  none
+ 208              	 */
+ 209              	void WWDG_ResetCfg(FunctionalState s) {
+ 210              	  uint8_t ctrl = R8_RST_WDOG_CTRL;
+ 211              	
+ 212              	  if (s == DISABLE) {
+ 213              	    ctrl &= ~RB_WDOG_RST_EN;
+ 214              	  } else {
+ 215              	    ctrl |= RB_WDOG_RST_EN;
+ 216              	  }
+ 217              	
+ 218 0026 0F100000 	  sys_safe_access_enable();
+ 219              	  R8_RST_WDOG_CTRL = ctrl;
+ 552              		fence.i
+ 553              	# 0 "" 2
+ 554              	 #NO_APP
+ 555 002a B7170040 		li	a5,1073745920
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 17
+
+
+ 556 002e 93067005 		li	a3,87
+ 557 0032 2380D704 		sb	a3,64(a5)
+ 558 0036 930680FA 		li	a3,-88
+ 559 003a 2380D704 		sb	a3,64(a5)
+ 560              	 #APP
+ 561              	# 218 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 562              		fence.i
+ 563              	# 0 "" 2
+ 564              	 #NO_APP
+ 565 0042 2383E704 		sb	a4,70(a5)
+ 566 0046 23800704 		sb	zero,64(a5)
+ 567 004a B247     		lw	a5,12(sp)
+ 568              	 #APP
+ 569              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 570              		csrrs a5, 0x800, a5
+ 571              	# 0 "" 2
+ 572              	# 220 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 220 0050 0F100000 	  sys_safe_access_disable();
+ 221              	}
+ 573              		fence.i
+ 574              	# 0 "" 2
+ 575              	 #NO_APP
+ 576 0054 4101     		addi	sp,sp,16
+ 577 0056 8280     		jr	ra
+ 579              		.section	.text.WWDG_ClearFlag,"ax",@progbits
+ 580              		.align	1
+ 581              		.globl	WWDG_ClearFlag
+ 583              	WWDG_ClearFlag:
+ 584 0000 4111     		addi	sp,sp,-16
+ 585 0002 93078008 		li	a5,136
+ 586              	 #APP
+ 587              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 588              		csrrc a5, 0x800, a5
+ 589              	# 0 "" 2
+ 590              	 #NO_APP
+ 591 000a 93F78708 		andi	a5,a5,136
+ 592 000e 3EC6     		sw	a5,12(sp)
+ 593              	 #APP
+ 594              	# 233 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 222              	
+ 223              	/*********************************************************************
+ 224              	 * @fn      WWDG_ClearFlag
+ 225              	 *
+ 226              	 * @brief   清除看门狗中断标志，重新加载计数值也可清除
+ 227              	 *
+ 228              	 * @param   none
+ 229              	 *
+ 230              	 * @return  none
+ 231              	 */
+ 232              	void WWDG_ClearFlag(void) {
+ 233 0010 0F100000 	  sys_safe_access_enable();
+ 234              	  R8_RST_WDOG_CTRL |= RB_WDOG_INT_FLAG;
+ 595              		fence.i
+ 596              	# 0 "" 2
+ 597              	 #NO_APP
+ 598 0014 B7170040 		li	a5,1073745920
+ 599 0018 13077005 		li	a4,87
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 18
+
+
+ 600 001c 2380E704 		sb	a4,64(a5)
+ 601 0020 130780FA 		li	a4,-88
+ 602 0024 2380E704 		sb	a4,64(a5)
+ 603              	 #APP
+ 604              	# 233 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 605              		fence.i
+ 606              	# 0 "" 2
+ 607              	 #NO_APP
+ 608 002c 03C76704 		lbu	a4,70(a5)
+ 609 0030 13670701 		ori	a4,a4,16
+ 610 0034 2383E704 		sb	a4,70(a5)
+ 611 0038 23800704 		sb	zero,64(a5)
+ 612 003c B247     		lw	a5,12(sp)
+ 613              	 #APP
+ 614              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 615              		csrrs a5, 0x800, a5
+ 616              	# 0 "" 2
+ 617              	# 235 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 235 0042 0F100000 	  sys_safe_access_disable();
+ 236              	}
+ 618              		fence.i
+ 619              	# 0 "" 2
+ 620              	 #NO_APP
+ 621 0046 4101     		addi	sp,sp,16
+ 622 0048 8280     		jr	ra
+ 624              		.section	.highcode
+ 625              		.align	1
+ 626              		.weak	HardFault_Handler
+ 628              	HardFault_Handler:
+ 629 02ce 4111     		addi	sp,sp,-16
+ 630 02d0 8146     		li	a3,0
+ 631 02d2 0146     		li	a2,0
+ 632 02d4 8145     		li	a1,0
+ 633 02d6 1145     		li	a0,4
+ 634 02d8 97000000 		call	FLASH_EEPROM_CMD
+ 634      E7800000 
+ 635 02e0 13078008 		li	a4,136
+ 636              	 #APP
+ 637              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 638              		csrrc a5, 0x800, a4
+ 639              	# 0 "" 2
+ 640              	 #NO_APP
+ 641 02e8 93F78708 		andi	a5,a5,136
+ 642 02ec 3EC4     		sw	a5,8(sp)
+ 643              	 #APP
+ 644              	# 251 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 237              	
+ 238              	/*********************************************************************
+ 239              	 * @fn      HardFault_Handler
+ 240              	 *
+ 241              	 * @brief   硬件错误中断，进入后执行复位，复位类型为上电复位
+ 242              	 *
+ 243              	 * @param   none
+ 244              	 *
+ 245              	 * @return  none
+ 246              	 */
+ 247              	__INTERRUPT
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 19
+
+
+ 248              	__HIGH_CODE
+ 249              	__attribute__((weak)) void HardFault_Handler(void) {
+ 250              	  FLASH_ROM_SW_RESET();
+ 251 02ee 0F100000 	  sys_safe_access_enable();
+ 252              	  R16_INT_LSI_TUNE = 0xFFFF;
+ 645              		fence.i
+ 646              	# 0 "" 2
+ 647              	 #NO_APP
+ 648 02f2 B7170040 		li	a5,1073745920
+ 649 02f6 13067005 		li	a2,87
+ 650 02fa 2380C704 		sb	a2,64(a5)
+ 651 02fe 930680FA 		li	a3,-88
+ 652 0302 2380D704 		sb	a3,64(a5)
+ 653              	 #APP
+ 654              	# 251 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 655              		fence.i
+ 656              	# 0 "" 2
+ 657              	 #NO_APP
+ 658 030a FD55     		li	a1,-1
+ 659 030c 2396B702 		sh	a1,44(a5)
+ 660 0310 23800704 		sb	zero,64(a5)
+ 661 0314 A245     		lw	a1,8(sp)
+ 662              	 #APP
+ 663              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+ 664              		csrrs a1, 0x800, a1
+ 665              	# 0 "" 2
+ 666              	# 253 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 253 031a 0F100000 	  sys_safe_access_disable();
+ 254              	  sys_safe_access_enable();
+ 667              		fence.i
+ 668              	# 0 "" 2
+ 669              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+ 670              		csrrc a4, 0x800, a4
+ 671              	# 0 "" 2
+ 672              	 #NO_APP
+ 673 0322 13778708 		andi	a4,a4,136
+ 674 0326 3AC6     		sw	a4,12(sp)
+ 675              	 #APP
+ 676              	# 254 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 255              	  R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+ 677              		fence.i
+ 678              	# 0 "" 2
+ 679              	 #NO_APP
+ 680 032c 2380C704 		sb	a2,64(a5)
+ 681 0330 2380D704 		sb	a3,64(a5)
+ 682              	 #APP
+ 683              	# 254 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 684              		fence.i
+ 685              	# 0 "" 2
+ 686              	 #NO_APP
+ 687 0338 03C76704 		lbu	a4,70(a5)
+ 688 033c 13671700 		ori	a4,a4,1
+ 689 0340 2383E704 		sb	a4,70(a5)
+ 690 0344 23800704 		sb	zero,64(a5)
+ 691 0348 B247     		lw	a5,12(sp)
+ 692              	 #APP
+ 693              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 20
+
+
+ 694              		csrrs a5, 0x800, a5
+ 695              	# 0 "" 2
+ 696              	# 256 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 256 034e 0F100000 	  sys_safe_access_disable();
+ 257              	  while (1)
+ 697              		fence.i
+ 698              	# 0 "" 2
+ 699              	 #NO_APP
+ 700              	.L41:
+ 701 0352 01A0     		j	.L41
+ 703              		.align	1
+ 704              		.weak	NMI_Handler
+ 706              	NMI_Handler:
+ 707              	.L44:
+ 708 0354 01A0     		j	.L44
+ 710              		.align	1
+ 711              		.globl	mDelayuS
+ 713              	mDelayuS:
+ 714 0356 A947     		li	a5,10
+ 715 0358 3305F502 		mul	a0,a0,a5
+ 716              	.L46:
+ 717 035c 7D15     		addi	a0,a0,-1
+ 718 035e 11E1     		bnez	a0,.L47
+ 719 0360 8280     		ret
+ 720              	.L47:
+ 721              	 #APP
+ 722              	# 325 "../../SRC/StdPeriphDriver/CH57x_sys.c" 1
+ 258              	    ;
+ 259              	}
+ 260              	
+ 261              	/*********************************************************************
+ 262              	 * @fn      NMI_Handler
+ 263              	 *
+ 264              	 * @brief   不可屏蔽中断，电压监控生效时进入
+ 265              	 *
+ 266              	 * @param   none
+ 267              	 *
+ 268              	 * @return  none
+ 269              	 */
+ 270              	__INTERRUPT
+ 271              	__HIGH_CODE
+ 272              	__attribute__((weak)) void NMI_Handler(void) {
+ 273              	  while (1)
+ 274              	    ;
+ 275              	}
+ 276              	
+ 277              	/*********************************************************************
+ 278              	 * @fn      mDelayuS
+ 279              	 *
+ 280              	 * @brief   uS 延时
+ 281              	 *
+ 282              	 * @param   t       - 时间参数
+ 283              	 *
+ 284              	 * @return  none
+ 285              	 */
+ 286              	__HIGH_CODE
+ 287              	void mDelayuS(uint16_t t) {
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 21
+
+
+ 288              	  uint32_t i;
+ 289              	#if (FREQ_SYS == 100000000)
+ 290              	  i = t * 25;
+ 291              	#elif (FREQ_SYS == 75000000)
+ 292              	  i = (t * 25) >> 1;
+ 293              	#elif (FREQ_SYS == 60000000)
+ 294              	  i = t * 10;
+ 295              	#elif (FREQ_SYS == 50000000)
+ 296              	  i = (t * 25) >> 1;
+ 297              	#elif (FREQ_SYS == 40000000)
+ 298              	  i = t * 10;
+ 299              	#elif (FREQ_SYS == 30000000)
+ 300              	  i = t * 5;
+ 301              	#elif (FREQ_SYS == 25000000)
+ 302              	  i = (t * 25) >> 2;
+ 303              	#elif (FREQ_SYS == 24000000)
+ 304              	  i = t * 6;
+ 305              	#elif (FREQ_SYS == 20000000)
+ 306              	  i = t * 5;
+ 307              	#elif (FREQ_SYS == 16000000)
+ 308              	  i = t << 2;
+ 309              	#elif (FREQ_SYS == 8000000)
+ 310              	  i = t << 1;
+ 311              	#elif (FREQ_SYS == 6400000)
+ 312              	  i = t * 8 / 5;
+ 313              	#elif (FREQ_SYS == 4000000)
+ 314              	  i = t;
+ 315              	#elif (FREQ_SYS == 2000000)
+ 316              	  i = t >> 1;
+ 317              	#elif (FREQ_SYS == 1000000)
+ 318              	  i = t >> 2;
+ 319              	#else
+ 320              	  i = t;
+ 321              	#endif
+ 322              	
+ 323              	#if ((FREQ_SYS == 75000000) || (FREQ_SYS == 60000000) || (FREQ_SYS == 30000000))
+ 324              	  while (--i) {
+ 325 0362 0100     	    __nop();
+ 326              	  };
+ 723              		nop
+ 724              	# 0 "" 2
+ 725              	 #NO_APP
+ 726 0364 E5BF     		j	.L46
+ 728              		.align	1
+ 729              		.globl	mDelaymS
+ 731              	mDelaymS:
+ 732 0366 4111     		addi	sp,sp,-16
+ 733 0368 22C4     		sw	s0,8(sp)
+ 734 036a 06C6     		sw	ra,12(sp)
+ 735 036c 2A84     		mv	s0,a0
+ 736              	.L49:
+ 737 036e 7D14     		addi	s0,s0,-1
+ 738 0370 4204     		slli	s0,s0,16
+ 739 0372 1305803E 		li	a0,1000
+ 740 0376 4180     		srli	s0,s0,16
+ 741 0378 97000000 		call	mDelayuS
+ 741      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 22
+
+
+ 742 0380 7DF4     		bnez	s0,.L49
+ 743 0382 B240     		lw	ra,12(sp)
+ 744 0384 2244     		lw	s0,8(sp)
+ 745 0386 4101     		addi	sp,sp,16
+ 746 0388 8280     		jr	ra
+ 748              		.section	.text._sbrk,"ax",@progbits
+ 749              		.align	1
+ 750              		.globl	_sbrk
+ 752              	_sbrk:
+ 753 0000 97070000 		lla	a5,.LANCHOR0
+ 753      93870700 
+ 754 0008 9C43     		lw	a5,0(a5)
+ 755 000a 17070000 		lla	a4,_end
+ 755      13070700 
+ 756 0012 3E95     		add	a0,a5,a0
+ 757 0014 636DE500 		bltu	a0,a4,.L55
+ 758              	 #APP
+ 759              	# 635 "../../SRC/RVMSIS/core_riscv.h" 1
+ 154              	}
+ 155              	
+ 156              	/* ##########################   PFIC functions
+ 157              	 * #################################### */
+ 158              	
+ 159              	#define PFIC_EnableAllIRQ()                                                    \
+ 160              	  {                                                                            \
+ 161              	    write_csr(0x800, 0x88);                                                    \
+ 162              	  }
+ 163              	#define PFIC_DisableAllIRQ()                                                   \
+ 164              	  {                                                                            \
+ 165              	    write_csr(0x800, 0x80);                                                    \
+ 166              	    asm volatile("fence.i");                                                   \
+ 167              	  }
+ 168              	
+ 169              	/*******************************************************************************
+ 170              	 * @fn      PFIC_EnableIRQ
+ 171              	 *
+ 172              	 * @brief   Enable Interrupt
+ 173              	 *
+ 174              	 * @param   IRQn    - Interrupt Numbers
+ 175              	 */
+ 176              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 177              	PFIC_EnableIRQ(IRQn_Type IRQn) {
+ 178              	  PFIC->IENR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+ 179              	}
+ 180              	
+ 181              	/*******************************************************************************
+ 182              	 * @fn      PFIC_DisableIRQ
+ 183              	 *
+ 184              	 * @brief   Disable Interrupt
+ 185              	 *
+ 186              	 * @param   IRQn    - Interrupt Numbers
+ 187              	 */
+ 188              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 189              	PFIC_DisableIRQ(IRQn_Type IRQn) {
+ 190              	  PFIC->IRER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+ 191              	  asm volatile("fence.i");
+ 192              	}
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 23
+
+
+ 193              	
+ 194              	/*******************************************************************************
+ 195              	 * @fn      PFIC_GetStatusIRQ
+ 196              	 *
+ 197              	 * @brief   Get Interrupt Enable State
+ 198              	 *
+ 199              	 * @param   IRQn    - Interrupt Numbers
+ 200              	 *
+ 201              	 * @return  1: Interrupt Enable
+ 202              	 *          0: Interrupt Disable
+ 203              	 */
+ 204              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 205              	PFIC_GetStatusIRQ(IRQn_Type IRQn) {
+ 206              	  return ((uint32_t)((PFIC->ISR[(uint32_t)(IRQn) >> 5] &
+ 207              	                      (1 << ((uint32_t)(IRQn) & 0x1F)))
+ 208              	                         ? 1
+ 209              	                         : 0));
+ 210              	}
+ 211              	
+ 212              	/*******************************************************************************
+ 213              	 * @fn      PFIC_GetPendingIRQ
+ 214              	 *
+ 215              	 * @brief   Get Interrupt Pending State
+ 216              	 *
+ 217              	 * @param   IRQn    - Interrupt Numbers
+ 218              	 *
+ 219              	 * @return  1: Interrupt Pending Enable
+ 220              	 *          0: Interrupt Pending Disable
+ 221              	 */
+ 222              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 223              	PFIC_GetPendingIRQ(IRQn_Type IRQn) {
+ 224              	  return ((uint32_t)((PFIC->IPR[(uint32_t)(IRQn) >> 5] &
+ 225              	                      (1 << ((uint32_t)(IRQn) & 0x1F)))
+ 226              	                         ? 1
+ 227              	                         : 0));
+ 228              	}
+ 229              	
+ 230              	/*******************************************************************************
+ 231              	 * @fn      PFIC_SetPendingIRQ
+ 232              	 *
+ 233              	 * @brief   Set Interrupt Pending
+ 234              	 *
+ 235              	 * @param   IRQn    - Interrupt Numbers
+ 236              	 */
+ 237              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 238              	PFIC_SetPendingIRQ(IRQn_Type IRQn) {
+ 239              	  PFIC->IPSR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+ 240              	}
+ 241              	
+ 242              	/*******************************************************************************
+ 243              	 * @fn      PFIC_ClearPendingIRQ
+ 244              	 *
+ 245              	 * @brief   Clear Interrupt Pending
+ 246              	 *
+ 247              	 * @param   IRQn    - Interrupt Numbers
+ 248              	 */
+ 249              	__attribute__((always_inline)) RV_STATIC_INLINE void
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 24
+
+
+ 250              	PFIC_ClearPendingIRQ(IRQn_Type IRQn) {
+ 251              	  PFIC->IPRR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+ 252              	}
+ 253              	
+ 254              	/*******************************************************************************
+ 255              	 * @fn      PFIC_GetActive
+ 256              	 *
+ 257              	 * @brief   Get Interrupt Active State
+ 258              	 *
+ 259              	 * @param   IRQn    - Interrupt Numbers
+ 260              	 *
+ 261              	 * @return  1: Interrupt Active
+ 262              	 *          0: Interrupt No Active.
+ 263              	 */
+ 264              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 265              	PFIC_GetActive(IRQn_Type IRQn) {
+ 266              	  return ((uint32_t)((PFIC->IACTR[(uint32_t)(IRQn) >> 5] &
+ 267              	                      (1 << ((uint32_t)(IRQn) & 0x1F)))
+ 268              	                         ? 1
+ 269              	                         : 0));
+ 270              	}
+ 271              	
+ 272              	/*******************************************************************************
+ 273              	 * @fn      PFIC_SetPriority
+ 274              	 *
+ 275              	 * @brief   Set Interrupt Priority
+ 276              	 *
+ 277              	 * @param   IRQn        - Interrupt Numbers
+ 278              	 * @param   priority    - bit7:         pre-emption priority
+ 279              	 */
+ 280              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 281              	PFIC_SetPriority(IRQn_Type IRQn, uint8_t priority) {
+ 282              	  PFIC->IPRIOR[(uint32_t)(IRQn)] = priority ? 0x80 : 0;
+ 283              	}
+ 284              	
+ 285              	/*********************************************************************
+ 286              	 * @fn      SetVTFIRQ
+ 287              	 *
+ 288              	 * @brief   Set VTF Interrupt
+ 289              	 *
+ 290              	 * @param   addr - VTF interrupt service function base address.
+ 291              	 *                  IRQn - Interrupt Numbers
+ 292              	 *                  num - VTF Interrupt Numbers
+ 293              	 *                  NewState -  DISABLE or ENABLE
+ 294              	 *
+ 295              	 * @return  none
+ 296              	 */
+ 297              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 298              	SetVTFIRQ(uint32_t addr, IRQn_Type IRQn, uint8_t num,
+ 299              	          FunctionalState NewState) {
+ 300              	  if (num > 3)
+ 301              	    return;
+ 302              	
+ 303              	  if (NewState != DISABLE) {
+ 304              	    PFIC->VTFIDR[num] = IRQn;
+ 305              	    PFIC->VTFADDR[num] = ((addr & 0xFFFFFFFE) | 0x1);
+ 306              	  } else {
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 25
+
+
+ 307              	    PFIC->VTFIDR[num] = IRQn;
+ 308              	    PFIC->VTFADDR[num] = ((addr & 0xFFFFFFFE) & (~0x1));
+ 309              	  }
+ 310              	}
+ 311              	
+ 312              	/*********************************************************************
+ 313              	 * @fn       _SEV
+ 314              	 *
+ 315              	 * @brief   Set Event
+ 316              	 *
+ 317              	 * @return  none
+ 318              	 */
+ 319              	__attribute__((always_inline)) RV_STATIC_INLINE void _SEV(void) {
+ 320              	
+ 321              	  PFIC->SCTLR |= (1 << 3) | (1 << 5);
+ 322              	}
+ 323              	
+ 324              	/*********************************************************************
+ 325              	 * @fn       _WFE
+ 326              	 *
+ 327              	 * @brief   Wait for Events
+ 328              	 *
+ 329              	 * @return  none
+ 330              	 */
+ 331              	__attribute__((always_inline)) RV_STATIC_INLINE void _WFE(void) {
+ 332              	  PFIC->SCTLR |= (1 << 3);
+ 333              	  asm volatile("wfi");
+ 334              	}
+ 335              	
+ 336              	/*********************************************************************
+ 337              	 * @fn      __WFE
+ 338              	 *
+ 339              	 * @brief   Wait for Events
+ 340              	 *
+ 341              	 * @return  None
+ 342              	 */
+ 343              	__attribute__((always_inline)) RV_STATIC_INLINE void __WFE(void) {
+ 344              	  _SEV();
+ 345              	  _WFE();
+ 346              	  _WFE();
+ 347              	}
+ 348              	
+ 349              	/*********************************************************************
+ 350              	 * @fn      __WFI
+ 351              	 *
+ 352              	 * @brief   Wait for Interrupt
+ 353              	 */
+ 354              	__attribute__((always_inline)) RV_STATIC_INLINE void __WFI(void) {
+ 355              	  PFIC->SCTLR &= ~(1 << 3); // wfi
+ 356              	  __asm__ volatile("wfi");
+ 357              	}
+ 358              	
+ 359              	/*********************************************************************
+ 360              	 * @fn      PFIC_SystemReset
+ 361              	 *
+ 362              	 * @brief   Initiate a system reset request
+ 363              	 */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 26
+
+
+ 364              	__attribute__((always_inline)) RV_STATIC_INLINE void PFIC_SystemReset(void) {
+ 365              	  PFIC->SCTLR = 0x80000000;
+ 366              	}
+ 367              	
+ 368              	/*********************************************************************
+ 369              	 * @fn      __get_MSTATUS
+ 370              	 *
+ 371              	 * @brief   Return the Machine Status Register
+ 372              	 *
+ 373              	 * @return  mstatus value
+ 374              	 */
+ 375              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MSTATUS(void) {
+ 376              	  uint32_t result;
+ 377              	
+ 378              	  __ASM volatile("csrr %0,"
+ 379              	                 "mstatus" : "=r"(result));
+ 380              	  return (result);
+ 381              	}
+ 382              	
+ 383              	/*********************************************************************
+ 384              	 * @fn      __set_MSTATUS
+ 385              	 *
+ 386              	 * @brief   Set the Machine Status Register
+ 387              	 *
+ 388              	 * @param   value  - set mstatus value
+ 389              	 *
+ 390              	 * @return  none
+ 391              	 */
+ 392              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 393              	__set_MSTATUS(uint32_t value) {
+ 394              	  __ASM volatile("csrw mstatus, %0" : : "r"(value));
+ 395              	}
+ 396              	
+ 397              	/*********************************************************************
+ 398              	 * @fn      __get_MISA
+ 399              	 *
+ 400              	 * @brief   Return the Machine ISA Register
+ 401              	 *
+ 402              	 * @return  misa value
+ 403              	 */
+ 404              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MISA(void) {
+ 405              	  uint32_t result;
+ 406              	
+ 407              	  __ASM volatile("csrr %0,"
+ 408              	                 "misa" : "=r"(result));
+ 409              	  return (result);
+ 410              	}
+ 411              	
+ 412              	/*********************************************************************
+ 413              	 * @fn      __set_MISA
+ 414              	 *
+ 415              	 * @brief   Set the Machine ISA Register
+ 416              	 *
+ 417              	 * @param   value  - set misa value
+ 418              	 *
+ 419              	 * @return  none
+ 420              	 */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 27
+
+
+ 421              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 422              	__set_MISA(uint32_t value) {
+ 423              	  __ASM volatile("csrw misa, %0" : : "r"(value));
+ 424              	}
+ 425              	
+ 426              	/*********************************************************************
+ 427              	 * @fn      __get_MTVEC
+ 428              	 *
+ 429              	 * @brief   Return the Machine Trap-Vector Base-Address Register
+ 430              	 *
+ 431              	 * @return  mtvec value
+ 432              	 */
+ 433              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MTVEC(void) {
+ 434              	  uint32_t result;
+ 435              	
+ 436              	  __ASM volatile("csrr %0,"
+ 437              	                 "mtvec" : "=r"(result));
+ 438              	  return (result);
+ 439              	}
+ 440              	
+ 441              	/*********************************************************************
+ 442              	 * @fn      __set_MTVEC
+ 443              	 *
+ 444              	 * @brief   Set the Machine Trap-Vector Base-Address Register
+ 445              	 *
+ 446              	 * @param   value  - set mtvec value
+ 447              	 *
+ 448              	 * @return  none
+ 449              	 */
+ 450              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 451              	__set_MTVEC(uint32_t value) {
+ 452              	  __ASM volatile("csrw mtvec, %0" : : "r"(value));
+ 453              	}
+ 454              	
+ 455              	/*********************************************************************
+ 456              	 * @fn      __get_MSCRATCH
+ 457              	 *
+ 458              	 * @brief   Return the Machine Seratch Register
+ 459              	 *
+ 460              	 * @return  mscratch value
+ 461              	 */
+ 462              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MSCRATCH(void) {
+ 463              	  uint32_t result;
+ 464              	
+ 465              	  __ASM volatile("csrr %0,"
+ 466              	                 "mscratch" : "=r"(result));
+ 467              	  return (result);
+ 468              	}
+ 469              	
+ 470              	/*********************************************************************
+ 471              	 * @fn      __set_MSCRATCH
+ 472              	 *
+ 473              	 * @brief   Set the Machine Seratch Register
+ 474              	 *
+ 475              	 * @param   value  - set mscratch value
+ 476              	 *
+ 477              	 * @return  none
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 28
+
+
+ 478              	 */
+ 479              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 480              	__set_MSCRATCH(uint32_t value) {
+ 481              	  __ASM volatile("csrw mscratch, %0" : : "r"(value));
+ 482              	}
+ 483              	
+ 484              	/*********************************************************************
+ 485              	 * @fn      __get_MEPC
+ 486              	 *
+ 487              	 * @brief   Return the Machine Exception Program Register
+ 488              	 *
+ 489              	 * @return  mepc value
+ 490              	 */
+ 491              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MEPC(void) {
+ 492              	  uint32_t result;
+ 493              	
+ 494              	  __ASM volatile("csrr %0,"
+ 495              	                 "mepc" : "=r"(result));
+ 496              	  return (result);
+ 497              	}
+ 498              	
+ 499              	/*********************************************************************
+ 500              	 * @fn      __set_MEPC
+ 501              	 *
+ 502              	 * @brief   Set the Machine Exception Program Register
+ 503              	 *
+ 504              	 * @return  mepc value
+ 505              	 */
+ 506              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 507              	__set_MEPC(uint32_t value) {
+ 508              	  __ASM volatile("csrw mepc, %0" : : "r"(value));
+ 509              	}
+ 510              	
+ 511              	/*********************************************************************
+ 512              	 * @fn      __get_MCAUSE
+ 513              	 *
+ 514              	 * @brief   Return the Machine Cause Register
+ 515              	 *
+ 516              	 * @return  mcause value
+ 517              	 */
+ 518              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MCAUSE(void) {
+ 519              	  uint32_t result;
+ 520              	
+ 521              	  __ASM volatile("csrr %0,"
+ 522              	                 "mcause" : "=r"(result));
+ 523              	  return (result);
+ 524              	}
+ 525              	
+ 526              	/*********************************************************************
+ 527              	 * @fn      __set_MEPC
+ 528              	 *
+ 529              	 * @brief   Set the Machine Cause Register
+ 530              	 *
+ 531              	 * @return  mcause value
+ 532              	 */
+ 533              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 534              	__set_MCAUSE(uint32_t value) {
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 29
+
+
+ 535              	  __ASM volatile("csrw mcause, %0" : : "r"(value));
+ 536              	}
+ 537              	
+ 538              	/*********************************************************************
+ 539              	 * @fn      __get_MTVAL
+ 540              	 *
+ 541              	 * @brief   Return the Machine Trap Value Register
+ 542              	 *
+ 543              	 * @return  mtval value
+ 544              	 */
+ 545              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MTVAL(void) {
+ 546              	  uint32_t result;
+ 547              	
+ 548              	  __ASM volatile("csrr %0,"
+ 549              	                 "mtval" : "=r"(result));
+ 550              	  return (result);
+ 551              	}
+ 552              	
+ 553              	/*********************************************************************
+ 554              	 * @fn      __set_MTVAL
+ 555              	 *
+ 556              	 * @brief   Set the Machine Trap Value Register
+ 557              	 *
+ 558              	 * @return  mtval value
+ 559              	 */
+ 560              	__attribute__((always_inline)) RV_STATIC_INLINE void
+ 561              	__set_MTVAL(uint32_t value) {
+ 562              	  __ASM volatile("csrw mtval, %0" : : "r"(value));
+ 563              	}
+ 564              	
+ 565              	/*********************************************************************
+ 566              	 * @fn      __get_MVENDORID
+ 567              	 *
+ 568              	 * @brief   Return Vendor ID Register
+ 569              	 *
+ 570              	 * @return  mvendorid value
+ 571              	 */
+ 572              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MVENDORID(void) {
+ 573              	  uint32_t result;
+ 574              	
+ 575              	  __ASM volatile("csrr %0,"
+ 576              	                 "mvendorid" : "=r"(result));
+ 577              	  return (result);
+ 578              	}
+ 579              	
+ 580              	/*********************************************************************
+ 581              	 * @fn      __get_MARCHID
+ 582              	 *
+ 583              	 * @brief   Return Machine Architecture ID Register
+ 584              	 *
+ 585              	 * @return  marchid value
+ 586              	 */
+ 587              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MARCHID(void) {
+ 588              	  uint32_t result;
+ 589              	
+ 590              	  __ASM volatile("csrr %0,"
+ 591              	                 "marchid" : "=r"(result));
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 30
+
+
+ 592              	  return (result);
+ 593              	}
+ 594              	
+ 595              	/*********************************************************************
+ 596              	 * @fn      __get_MIMPID
+ 597              	 *
+ 598              	 * @brief   Return Machine Implementation ID Register
+ 599              	 *
+ 600              	 * @return  mimpid value
+ 601              	 */
+ 602              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MIMPID(void) {
+ 603              	  uint32_t result;
+ 604              	
+ 605              	  __ASM volatile("csrr %0,"
+ 606              	                 "mimpid" : "=r"(result));
+ 607              	  return (result);
+ 608              	}
+ 609              	
+ 610              	/*********************************************************************
+ 611              	 * @fn      __get_MHARTID
+ 612              	 *
+ 613              	 * @brief   Return Hart ID Register
+ 614              	 *
+ 615              	 * @return  mhartid value
+ 616              	 */
+ 617              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_MHARTID(void) {
+ 618              	  uint32_t result;
+ 619              	
+ 620              	  __ASM volatile("csrr %0,"
+ 621              	                 "mhartid" : "=r"(result));
+ 622              	  return (result);
+ 623              	}
+ 624              	
+ 625              	/*********************************************************************
+ 626              	 * @fn      __get_SP
+ 627              	 *
+ 628              	 * @brief   Return SP Register
+ 629              	 *
+ 630              	 * @return  SP value
+ 631              	 */
+ 632              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __get_SP(void) {
+ 633              	  uint32_t result;
+ 634              	
+ 635 0018 0A87     	  __ASM volatile("mv %0,"
+ 636              	                 "sp" : "=r"(result) :);
+ 760              		mv a4,sp
+ 761              	# 0 "" 2
+ 762              	 #NO_APP
+ 763 001a 130707FC 		addi	a4,a4,-64
+ 764 001e 6368A700 		bgtu	a0,a4,.L55
+ 765 0022 17070000 		sw	a0,.LANCHOR0,a4
+ 765      2320A700 
+ 766              	.L52:
+ 767 002a 3E85     		mv	a0,a5
+ 768 002c 8280     		ret
+ 769              	.L55:
+ 770 002e FD57     		li	a5,-1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 31
+
+
+ 771 0030 EDBF     		j	.L52
+ 773              		.section	.sdata.curbrk.3873,"aw"
+ 774              		.align	2
+ 775              		.set	.LANCHOR0,. + 0
+ 778              	curbrk.3873:
+ 779 0000 00000000 		.word	_end
+ 780              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s 			page 32
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_sys.c
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:8      .highcode:0000000000000000 SetSysClock
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:323    .text.GetSysClock:0000000000000000 GetSysClock
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:369    .text.SYS_GetInfoSta:0000000000000000 SYS_GetInfoSta
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:388    .highcode:0000000000000270 SYS_ResetExecute
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:440    .text.SYS_DisableAllIrq:0000000000000000 SYS_DisableAllIrq
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:462    .text.SYS_RecoverIrq:0000000000000000 SYS_RecoverIrq
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:474    .text.SYS_GetSysTickCnt:0000000000000000 SYS_GetSysTickCnt
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:483    .text.WWDG_ITCfg:0000000000000000 WWDG_ITCfg
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:533    .text.WWDG_ResetCfg:0000000000000000 WWDG_ResetCfg
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:583    .text.WWDG_ClearFlag:0000000000000000 WWDG_ClearFlag
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:628    .highcode:00000000000002ce HardFault_Handler
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:706    .highcode:0000000000000354 NMI_Handler
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:713    .highcode:0000000000000356 mDelayuS
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:731    .highcode:0000000000000366 mDelaymS
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:752    .text._sbrk:0000000000000000 _sbrk
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:775    .sdata.curbrk.3873:0000000000000000 .LANCHOR0
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:778    .sdata.curbrk.3873:0000000000000000 curbrk.3873
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:54     .highcode:000000000000005e .L2
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:178    .highcode:0000000000000146 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:134    .highcode:00000000000000fc .L5
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:256    .highcode:00000000000001f2 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:43     .highcode:0000000000000052 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:288    .highcode:0000000000000234 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:216    .highcode:00000000000001a4 .L11
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:700    .highcode:0000000000000352 .L41
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:707    .highcode:0000000000000354 .L44
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:720    .highcode:0000000000000362 .L47
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:716    .highcode:000000000000035c .L46
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:736    .highcode:000000000000036e .L49
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:329    .text.GetSysClock:0000000000000014 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:332    .text.GetSysClock:0000000000000020 .L14
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:347    .text.GetSysClock:000000000000004e .L16
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:356    .text.GetSysClock:0000000000000068 .L17
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:360    .text.GetSysClock:0000000000000072 .L18
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:344    .text.GetSysClock:0000000000000048 .L19
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:376    .text.SYS_GetInfoSta:0000000000000014 .L21
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:491    .text.WWDG_ITCfg:0000000000000018 .L30
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:541    .text.WWDG_ResetCfg:0000000000000018 .L35
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:753    .text._sbrk:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:755    .text._sbrk:000000000000000a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:765    .text._sbrk:0000000000000022 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:769    .text._sbrk:000000000000002e .L55
+C:\Users\LRNA\AppData\Local\Temp\ccgjX6Fc.s:766    .text._sbrk:000000000000002a .L52
+
+UNDEFINED SYMBOLS
+Freq_LSI
+FLASH_EEPROM_CMD
+_end

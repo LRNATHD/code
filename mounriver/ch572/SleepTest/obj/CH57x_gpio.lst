@@ -1,0 +1,203 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s 			page 1
+
+
+   1              		.file	"CH57x_gpio.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.GPIOA_ModeCfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	GPIOA_ModeCfg
+   8              	GPIOA_ModeCfg:
+   9 0000 9147     		li	a5,4
+  10 0002 63EEB702 		bgtu	a1,a5,.L1
+  11 0006 17070000 		lla	a4,.L4
+  11      13070700 
+  12 000e 8A05     		slli	a1,a1,2
+  13 0010 BA95     		add	a1,a1,a4
+  14 0012 9C41     		lw	a5,0(a1)
+  15 0014 BA97     		add	a5,a5,a4
+  16 0016 8287     		jr	a5
+  17              		.section	.rodata.GPIOA_ModeCfg,"a",@progbits
+  18              		.align	2
+  19              		.align	2
+  20              	.L4:
+  21 0000 00000000 		.word	.L8-.L4
+  22 0004 00000000 		.word	.L7-.L4
+  23 0008 00000000 		.word	.L6-.L4
+  24 000c 00000000 		.word	.L5-.L4
+  25 0010 00000000 		.word	.L3-.L4
+  26              		.section	.text.GPIOA_ModeCfg
+  27              	.L8:
+  28 0018 B7170040 		li	a5,1073745920
+  29 001c 03A7470B 		lw	a4,180(a5)
+  30 0020 1345F5FF 		not	a0,a0
+  31 0024 698F     		and	a4,a4,a0
+  32 0026 23AAE70A 		sw	a4,180(a5)
+  33 002a 03A7070B 		lw	a4,176(a5)
+  34              	.L11:
+  35 002e 698F     		and	a4,a4,a0
+  36 0030 23A8E70A 		sw	a4,176(a5)
+  37 0034 03A7070A 		lw	a4,160(a5)
+  38 0038 798D     		and	a0,a0,a4
+  39              	.L9:
+  40 003a 23A0A70A 		sw	a0,160(a5)
+  41              	.L1:
+  42 003e 8280     		ret
+  43              	.L7:
+  44 0040 B7170040 		li	a5,1073745920
+  45 0044 83A6470B 		lw	a3,180(a5)
+  46 0048 1347F5FF 		not	a4,a0
+  47 004c F98E     		and	a3,a3,a4
+  48 004e 23AAD70A 		sw	a3,180(a5)
+  49 0052 83A6070B 		lw	a3,176(a5)
+  50 0056 558D     		or	a0,a3,a0
+  51 0058 23A8A70A 		sw	a0,176(a5)
+  52 005c 83A6070A 		lw	a3,160(a5)
+  53 0060 758F     		and	a4,a4,a3
+  54 0062 23A0E70A 		sw	a4,160(a5)
+  55 0066 8280     		ret
+  56              	.L6:
+  57 0068 B7170040 		li	a5,1073745920
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s 			page 2
+
+
+  58 006c 03A7470B 		lw	a4,180(a5)
+  59 0070 498F     		or	a4,a4,a0
+  60 0072 23AAE70A 		sw	a4,180(a5)
+  61 0076 03A7070B 		lw	a4,176(a5)
+  62 007a 1345F5FF 		not	a0,a0
+  63 007e 45BF     		j	.L11
+  64              	.L5:
+  65 0080 B7170040 		li	a5,1073745920
+  66 0084 83A6470B 		lw	a3,180(a5)
+  67 0088 1347F5FF 		not	a4,a0
+  68 008c 758F     		and	a4,a4,a3
+  69              	.L10:
+  70 008e 23AAE70A 		sw	a4,180(a5)
+  71 0092 03A7070A 		lw	a4,160(a5)
+  72 0096 598D     		or	a0,a4,a0
+  73 0098 4DB7     		j	.L9
+  74              	.L3:
+  75 009a B7170040 		li	a5,1073745920
+  76 009e 03A7470B 		lw	a4,180(a5)
+  77 00a2 498F     		or	a4,a4,a0
+  78 00a4 EDB7     		j	.L10
+  80              		.section	.text.GPIOA_ITModeCfg,"ax",@progbits
+  81              		.align	1
+  82              		.globl	GPIOA_ITModeCfg
+  84              	GPIOA_ITModeCfg:
+  85 0000 93170501 		slli	a5,a0,16
+  86 0004 0547     		li	a4,1
+  87 0006 C183     		srli	a5,a5,16
+  88 0008 6382E504 		beq	a1,a4,.L13
+  89 000c 8DC1     		beqz	a1,.L14
+  90 000e 0947     		li	a4,2
+  91 0010 638DE504 		beq	a1,a4,.L15
+  92 0014 0D47     		li	a4,3
+  93 0016 6380E506 		beq	a1,a4,.L16
+  94              	.L17:
+  95 001a 37170040 		li	a4,1073745920
+  96 001e 231EF708 		sh	a5,156(a4)
+  97 0022 83560709 		lhu	a3,144(a4)
+  98 0026 D58F     		or	a5,a5,a3
+  99 0028 2318F708 		sh	a5,144(a4)
+ 100 002c 8280     		ret
+ 101              	.L14:
+ 102 002e 37170040 		li	a4,1073745920
+ 103 0032 03564709 		lhu	a2,148(a4)
+ 104 0036 93C6F7FF 		not	a3,a5
+ 105 003a F18E     		and	a3,a3,a2
+ 106              	.L18:
+ 107 003c 231AD708 		sh	a3,148(a4)
+ 108 0040 8326C70A 		lw	a3,172(a4)
+ 109 0044 558D     		or	a0,a3,a0
+ 110 0046 2326A70A 		sw	a0,172(a4)
+ 111 004a C1BF     		j	.L17
+ 112              	.L13:
+ 113 004c 37170040 		li	a4,1073745920
+ 114 0050 03564709 		lhu	a2,148(a4)
+ 115 0054 93C6F7FF 		not	a3,a5
+ 116 0058 F18E     		and	a3,a3,a2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s 			page 3
+
+
+ 117              	.L19:
+ 118 005a 231AD708 		sh	a3,148(a4)
+ 119 005e 8326870A 		lw	a3,168(a4)
+ 120 0062 558D     		or	a0,a3,a0
+ 121 0064 2324A70A 		sw	a0,168(a4)
+ 122 0068 4DBF     		j	.L17
+ 123              	.L15:
+ 124 006a 37170040 		li	a4,1073745920
+ 125 006e 83564709 		lhu	a3,148(a4)
+ 126 0072 DD8E     		or	a3,a5,a3
+ 127 0074 E1B7     		j	.L18
+ 128              	.L16:
+ 129 0076 37170040 		li	a4,1073745920
+ 130 007a 83564709 		lhu	a3,148(a4)
+ 131 007e DD8E     		or	a3,a5,a3
+ 132 0080 E9BF     		j	.L19
+ 134              		.section	.text.GPIOPinRemap,"ax",@progbits
+ 135              		.align	1
+ 136              		.globl	GPIOPinRemap
+ 138              	GPIOPinRemap:
+ 139 0000 B7170040 		li	a5,1073745920
+ 140 0004 03D7A701 		lhu	a4,26(a5)
+ 141 0008 09C5     		beqz	a0,.L21
+ 142 000a D98D     		or	a1,a1,a4
+ 143              	.L23:
+ 144 000c 239DB700 		sh	a1,26(a5)
+ 145 0010 8280     		ret
+ 146              	.L21:
+ 147 0012 93C5F5FF 		not	a1,a1
+ 148 0016 F98D     		and	a1,a1,a4
+ 149 0018 D5BF     		j	.L23
+ 151              		.section	.text.GPIOADigitalCfg,"ax",@progbits
+ 152              		.align	1
+ 153              		.globl	GPIOADigitalCfg
+ 155              	GPIOADigitalCfg:
+ 156 0000 B7170040 		li	a5,1073745920
+ 157 0004 03D78701 		lhu	a4,24(a5)
+ 158 0008 19C5     		beqz	a0,.L25
+ 159 000a 93C5F5FF 		not	a1,a1
+ 160 000e F98D     		and	a1,a1,a4
+ 161              	.L27:
+ 162 0010 239CB700 		sh	a1,24(a5)
+ 163 0014 8280     		ret
+ 164              	.L25:
+ 165 0016 D98D     		or	a1,a1,a4
+ 166 0018 E5BF     		j	.L27
+ 168              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_gpio.c
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:8      .text.GPIOA_ModeCfg:0000000000000000 GPIOA_ModeCfg
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:84     .text.GPIOA_ITModeCfg:0000000000000000 GPIOA_ITModeCfg
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:138    .text.GPIOPinRemap:0000000000000000 GPIOPinRemap
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:155    .text.GPIOADigitalCfg:0000000000000000 GPIOADigitalCfg
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:20     .rodata.GPIOA_ModeCfg:0000000000000000 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:11     .text.GPIOA_ModeCfg:0000000000000006 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:41     .text.GPIOA_ModeCfg:000000000000003e .L1
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:34     .text.GPIOA_ModeCfg:000000000000002e .L11
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:39     .text.GPIOA_ModeCfg:000000000000003a .L9
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:69     .text.GPIOA_ModeCfg:000000000000008e .L10
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:27     .text.GPIOA_ModeCfg:0000000000000018 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:43     .text.GPIOA_ModeCfg:0000000000000040 .L7
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:56     .text.GPIOA_ModeCfg:0000000000000068 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:64     .text.GPIOA_ModeCfg:0000000000000080 .L5
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:74     .text.GPIOA_ModeCfg:000000000000009a .L3
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:112    .text.GPIOA_ITModeCfg:000000000000004c .L13
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:101    .text.GPIOA_ITModeCfg:000000000000002e .L14
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:123    .text.GPIOA_ITModeCfg:000000000000006a .L15
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:128    .text.GPIOA_ITModeCfg:0000000000000076 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:94     .text.GPIOA_ITModeCfg:000000000000001a .L17
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:106    .text.GPIOA_ITModeCfg:000000000000003c .L18
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:117    .text.GPIOA_ITModeCfg:000000000000005a .L19
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:146    .text.GPIOPinRemap:0000000000000012 .L21
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:143    .text.GPIOPinRemap:000000000000000c .L23
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:164    .text.GPIOADigitalCfg:0000000000000016 .L25
+C:\Users\LRNA\AppData\Local\Temp\ccv71OWh.s:161    .text.GPIOADigitalCfg:0000000000000010 .L27
+
+NO UNDEFINED SYMBOLS

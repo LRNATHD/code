@@ -1,0 +1,3545 @@
+
+sender.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .init:
+
+00000000 <InterruptVector>:
+	void InterruptVector()         __attribute__((naked)) __attribute((section(".init"))) __attribute((weak,alias("InterruptVectorDefault"))) __attribute((naked));
+	void InterruptVectorDefault()  __attribute__((naked)) __attribute((section(".init"))) __attribute((naked));
+	void InterruptVectorDefault( void )
+	{
+		#if !defined(FUNCONF_TINYVECTOR) || !FUNCONF_TINYVECTOR
+			asm volatile( DEFAULT_INTERRUPT_VECTOR_CONTENTS );
+   0:	70c0006f          	j	70c <handle_reset>
+   4:	0000                	unimp
+   6:	0000                	unimp
+   8:	0790                	addi	a2,sp,960
+   a:	0000                	unimp
+   c:	0790                	addi	a2,sp,960
+   e:	0000                	unimp
+  10:	bda9                	j	fffffe6a <_eusrstack+0xdfffce6a>
+  12:	f3f9                	bnez	a5,ffffffd8 <_eusrstack+0xdfffcfd8>
+  14:	0790                	addi	a2,sp,960
+	...
+  1e:	0000                	unimp
+  20:	0790                	addi	a2,sp,960
+  22:	0000                	unimp
+  24:	0790                	addi	a2,sp,960
+	...
+  2e:	0000                	unimp
+  30:	0790                	addi	a2,sp,960
+  32:	0000                	unimp
+  34:	0000                	unimp
+  36:	0000                	unimp
+  38:	0790                	addi	a2,sp,960
+  3a:	0000                	unimp
+  3c:	0000                	unimp
+  3e:	0000                	unimp
+  40:	0790                	addi	a2,sp,960
+  42:	0000                	unimp
+  44:	0790                	addi	a2,sp,960
+  46:	0000                	unimp
+  48:	0790                	addi	a2,sp,960
+  4a:	0000                	unimp
+  4c:	0790                	addi	a2,sp,960
+  4e:	0000                	unimp
+  50:	0790                	addi	a2,sp,960
+  52:	0000                	unimp
+  54:	19f4                	addi	a3,sp,252
+  56:	0000                	unimp
+  58:	0790                	addi	a2,sp,960
+  5a:	0000                	unimp
+  5c:	0000                	unimp
+  5e:	0000                	unimp
+  60:	0790                	addi	a2,sp,960
+  62:	0000                	unimp
+  64:	0790                	addi	a2,sp,960
+  66:	0000                	unimp
+  68:	0790                	addi	a2,sp,960
+  6a:	0000                	unimp
+  6c:	0790                	addi	a2,sp,960
+  6e:	0000                	unimp
+  70:	0790                	addi	a2,sp,960
+  72:	0000                	unimp
+  74:	0790                	addi	a2,sp,960
+  76:	0000                	unimp
+  78:	0790                	addi	a2,sp,960
+  7a:	0000                	unimp
+  7c:	0790                	addi	a2,sp,960
+  7e:	0000                	unimp
+  80:	0790                	addi	a2,sp,960
+  82:	0000                	unimp
+  84:	0790                	addi	a2,sp,960
+  86:	0000                	unimp
+  88:	0790                	addi	a2,sp,960
+  8a:	0000                	unimp
+  8c:	0790                	addi	a2,sp,960
+	...
+
+Disassembly of section .text:
+
+00000090 <mini_pad>:
+{
+      90:	1101                	addi	sp,sp,-32
+      92:	ca26                	sw	s1,20(sp)
+      94:	c84a                	sw	s2,16(sp)
+      96:	c64e                	sw	s3,12(sp)
+      98:	ce06                	sw	ra,28(sp)
+      9a:	cc22                	sw	s0,24(sp)
+      9c:	84ae                	mv	s1,a1
+      9e:	89aa                	mv	s3,a0
+      a0:	85b2                	mv	a1,a2
+	int overflow = 0;
+      a2:	4901                	li	s2,0
+	if(pad_to == 0) pad_to = len;
+      a4:	caa5                	beqz	a3,114 <mini_pad+0x84>
+	if(len > pad_to) {
+      a6:	0096d463          	bge	a3,s1,ae <mini_pad+0x1e>
+      aa:	84b6                	mv	s1,a3
+		overflow = 1;
+      ac:	4905                	li	s2,1
+	for(i = pad_to - len; i > 0; i --) {
+      ae:	40968433          	sub	s0,a3,s1
+		*(pbuffer++) = pad_char;
+      b2:	00045363          	bgez	s0,b8 <mini_pad+0x28>
+      b6:	4401                	li	s0,0
+      b8:	853a                	mv	a0,a4
+      ba:	8622                	mv	a2,s0
+      bc:	269000ef          	jal	ra,b24 <memset>
+      c0:	872a                	mv	a4,a0
+      c2:	008506b3          	add	a3,a0,s0
+      c6:	4781                	li	a5,0
+	for(i = len; i > 0; i --) {
+      c8:	40f48633          	sub	a2,s1,a5
+      cc:	04c04663          	bgtz	a2,118 <mini_pad+0x88>
+      d0:	0004d363          	bgez	s1,d6 <mini_pad+0x46>
+      d4:	4481                	li	s1,0
+      d6:	00968633          	add	a2,a3,s1
+	len = pbuffer - buffer;
+      da:	40e60533          	sub	a0,a2,a4
+	if(overflow) {
+      de:	02090463          	beqz	s2,106 <mini_pad+0x76>
+		for (i = 0; i < 3 && pbuffer > buffer; i ++) {
+      e2:	02c77263          	bgeu	a4,a2,106 <mini_pad+0x76>
+			*(pbuffer-- - 1) = '*';
+      e6:	02a00793          	li	a5,42
+      ea:	fef60fa3          	sb	a5,-1(a2)
+      ee:	fff60693          	addi	a3,a2,-1
+		for (i = 0; i < 3 && pbuffer > buffer; i ++) {
+      f2:	00d77a63          	bgeu	a4,a3,106 <mini_pad+0x76>
+			*(pbuffer-- - 1) = '*';
+      f6:	fef60f23          	sb	a5,-2(a2)
+      fa:	ffe60693          	addi	a3,a2,-2
+		for (i = 0; i < 3 && pbuffer > buffer; i ++) {
+      fe:	00d77463          	bgeu	a4,a3,106 <mini_pad+0x76>
+			*(pbuffer-- - 1) = '*';
+     102:	fef60ea3          	sb	a5,-3(a2)
+}
+     106:	40f2                	lw	ra,28(sp)
+     108:	4462                	lw	s0,24(sp)
+     10a:	44d2                	lw	s1,20(sp)
+     10c:	4942                	lw	s2,16(sp)
+     10e:	49b2                	lw	s3,12(sp)
+     110:	6105                	addi	sp,sp,32
+     112:	8082                	ret
+	if(pad_to == 0) pad_to = len;
+     114:	86a6                	mv	a3,s1
+     116:	bf61                	j	ae <mini_pad+0x1e>
+		*(pbuffer++) = *(ptr++);
+     118:	00f98633          	add	a2,s3,a5
+     11c:	00064583          	lbu	a1,0(a2)
+     120:	00f68633          	add	a2,a3,a5
+     124:	0785                	addi	a5,a5,1
+     126:	00b60023          	sb	a1,0(a2)
+	for(i = len; i > 0; i --) {
+     12a:	bf79                	j	c8 <mini_pad+0x38>
+
+0000012c <_puts>:
+{
+     12c:	86aa                	mv	a3,a0
+     12e:	852e                	mv	a0,a1
+	if(!buf) return len;
+     130:	ce01                	beqz	a2,148 <_puts+0x1c>
+	char * p0 = b->buffer;
+     132:	00062883          	lw	a7,0(a2)
+	for (i = 0; i < len; i++) {
+     136:	4701                	li	a4,0
+		if(b->pbuffer == b->buffer + b->buffer_len - 1) {
+     138:	425c                	lw	a5,4(a2)
+	for (i = 0; i < len; i++) {
+     13a:	00a74863          	blt	a4,a0,14a <_puts+0x1e>
+	*(b->pbuffer) = 0;
+     13e:	00078023          	sb	zero,0(a5)
+	return b->pbuffer - p0;
+     142:	4248                	lw	a0,4(a2)
+     144:	41150533          	sub	a0,a0,a7
+}
+     148:	8082                	ret
+		if(b->pbuffer == b->buffer + b->buffer_len - 1) {
+     14a:	460c                	lw	a1,8(a2)
+     14c:	fff58813          	addi	a6,a1,-1
+     150:	420c                	lw	a1,0(a2)
+     152:	95c2                	add	a1,a1,a6
+     154:	feb785e3          	beq	a5,a1,13e <_puts+0x12>
+		*(b->pbuffer ++) = s[i];
+     158:	00178593          	addi	a1,a5,1
+     15c:	c24c                	sw	a1,4(a2)
+     15e:	00e685b3          	add	a1,a3,a4
+     162:	0005c583          	lbu	a1,0(a1)
+	for (i = 0; i < len; i++) {
+     166:	0705                	addi	a4,a4,1
+		*(b->pbuffer ++) = s[i];
+     168:	00b78023          	sb	a1,0(a5)
+	for (i = 0; i < len; i++) {
+     16c:	b7f1                	j	138 <_puts+0xc>
+
+0000016e <PrintHex>:
+	while( (*DMDATA0) & 0x80 );
+     16e:	e0000737          	lui	a4,0xe0000
+     172:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+     176:	34070693          	addi	a3,a4,832
+     17a:	0807f793          	andi	a5,a5,128
+     17e:	fbf5                	bnez	a5,172 <PrintHex+0x4>
+	*DMDATA0 = 0x78302088; //" 0x"
+     180:	783027b7          	lui	a5,0x78302
+     184:	08878793          	addi	a5,a5,136 # 78302088 <_eusrstack+0x582ff088>
+     188:	c29c                	sw	a5,0(a3)
+	for( shift = 28; shift >= 0; shift -= 4 )
+     18a:	4771                	li	a4,28
+		while( (*DMDATA0) & 0x80 );
+     18c:	e0000637          	lui	a2,0xe0000
+		s += ( s < 10 ) ? '0' : ('a' - 10);
+     190:	4825                	li	a6,9
+	for( shift = 28; shift >= 0; shift -= 4 )
+     192:	55f1                	li	a1,-4
+		while( (*DMDATA0) & 0x80 );
+     194:	34062783          	lw	a5,832(a2) # e0000340 <_eusrstack+0xbfffd340>
+     198:	0807f793          	andi	a5,a5,128
+     19c:	ffe5                	bnez	a5,194 <PrintHex+0x26>
+		int s = (n>>shift) & 0xf;
+     19e:	00e557b3          	srl	a5,a0,a4
+     1a2:	00f7f693          	andi	a3,a5,15
+		s += ( s < 10 ) ? '0' : ('a' - 10);
+     1a6:	03000793          	li	a5,48
+     1aa:	00d85463          	bge	a6,a3,1b2 <PrintHex+0x44>
+     1ae:	05700793          	li	a5,87
+     1b2:	97b6                	add	a5,a5,a3
+		*DMDATA0 = 0x85 | (s<<8); //" 0x"
+     1b4:	07a2                	slli	a5,a5,0x8
+     1b6:	0857e793          	ori	a5,a5,133
+     1ba:	34f62023          	sw	a5,832(a2)
+	for( shift = 28; shift >= 0; shift -= 4 )
+     1be:	1771                	addi	a4,a4,-4
+     1c0:	fcb71ae3          	bne	a4,a1,194 <PrintHex+0x26>
+}
+     1c4:	8082                	ret
+
+000001c6 <DelaySysTick>:
+	while( ((int32_t)( SysTick->CNT - targend )) < 0 );
+#elif defined(CH32V20x) || defined(CH32V30x) || defined(CH32X03x) || defined(CH32L103) || defined(CH582_CH583) || defined(CH591_CH592) || defined(CH32H41x)
+	uint64_t targend = SysTick->CNT + n;
+	while( ((int64_t)( SysTick->CNT - targend )) < 0 );
+#elif defined(CH32V10x) || defined(CH570_CH572) || defined(CH584_CH585)
+	uint32_t targend = SysTick->CNTL + n;
+     1c6:	e000f7b7          	lui	a5,0xe000f
+     1ca:	479c                	lw	a5,8(a5)
+	while( ((int32_t)( SysTick->CNTL - targend )) < 0 );
+     1cc:	e000f737          	lui	a4,0xe000f
+	uint32_t targend = SysTick->CNTL + n;
+     1d0:	953e                	add	a0,a0,a5
+	while( ((int32_t)( SysTick->CNTL - targend )) < 0 );
+     1d2:	471c                	lw	a5,8(a4)
+     1d4:	8f89                	sub	a5,a5,a0
+     1d6:	fe07cee3          	bltz	a5,1d2 <DelaySysTick+0xc>
+	uint64_t targend = SysTick->CNT - n;
+	while( ((int64_t)( SysTick->CNT - targend )) > 0 );
+#else
+	#error DelaySysTick not defined.
+#endif
+}
+     1da:	8082                	ret
+
+000001dc <mini_itoa.part.0>:
+	int	negative = 0;
+     1dc:	4881                	li	a7,0
+	if (value < 0 && !unsig) {
+     1de:	00055663          	bgez	a0,1ea <mini_itoa.part.0+0xe>
+     1e2:	e681                	bnez	a3,1ea <mini_itoa.part.0+0xe>
+		value = -value;
+     1e4:	40a00533          	neg	a0,a0
+		negative = 1;
+     1e8:	4885                	li	a7,1
+     1ea:	06100793          	li	a5,97
+     1ee:	c219                	beqz	a2,1f4 <mini_itoa.part.0+0x18>
+     1f0:	04100793          	li	a5,65
+	int	negative = 0;
+     1f4:	883a                	mv	a6,a4
+		*(pbuffer++) = (digit < 10 ? '0' + digit : (uppercase ? 'A' : 'a') + digit - 10);
+     1f6:	4e25                	li	t3,9
+     1f8:	ff678613          	addi	a2,a5,-10 # e000eff6 <_eusrstack+0xc000bff6>
+		int digit = value % radix;
+     1fc:	02b577b3          	remu	a5,a0,a1
+     200:	832a                	mv	t1,a0
+		*(pbuffer++) = (digit < 10 ? '0' + digit : (uppercase ? 'A' : 'a') + digit - 10);
+     202:	0ff7f693          	andi	a3,a5,255
+     206:	04fe6463          	bltu	t3,a5,24e <mini_itoa.part.0+0x72>
+     20a:	03068693          	addi	a3,a3,48
+     20e:	0ff6f693          	andi	a3,a3,255
+     212:	00d80023          	sb	a3,0(a6)
+     216:	00180793          	addi	a5,a6,1
+		value /= radix;
+     21a:	02b55533          	divu	a0,a0,a1
+	} while (value > 0);
+     21e:	02b37663          	bgeu	t1,a1,24a <mini_itoa.part.0+0x6e>
+	if (negative)
+     222:	00088863          	beqz	a7,232 <mini_itoa.part.0+0x56>
+		*(pbuffer++) = '-';
+     226:	02d00693          	li	a3,45
+     22a:	00d78023          	sb	a3,0(a5)
+     22e:	00280793          	addi	a5,a6,2
+	len = (pbuffer - buffer);
+     232:	40e78533          	sub	a0,a5,a4
+	for (i = 0; i < len / 2; i++) {
+     236:	4609                	li	a2,2
+	*(pbuffer) = '\0';
+     238:	00078023          	sb	zero,0(a5)
+	for (i = 0; i < len / 2; i++) {
+     23c:	4681                	li	a3,0
+     23e:	02c54633          	div	a2,a0,a2
+     242:	17fd                	addi	a5,a5,-1
+     244:	00c6c763          	blt	a3,a2,252 <mini_itoa.part.0+0x76>
+}
+     248:	8082                	ret
+	} while (value > 0);
+     24a:	883e                	mv	a6,a5
+     24c:	bf45                	j	1fc <mini_itoa.part.0+0x20>
+		*(pbuffer++) = (digit < 10 ? '0' + digit : (uppercase ? 'A' : 'a') + digit - 10);
+     24e:	96b2                	add	a3,a3,a2
+     250:	bf7d                	j	20e <mini_itoa.part.0+0x32>
+		char j = buffer[i];
+     252:	00d705b3          	add	a1,a4,a3
+		buffer[i] = buffer[len-i-1];
+     256:	0007c883          	lbu	a7,0(a5)
+		char j = buffer[i];
+     25a:	0005c803          	lbu	a6,0(a1)
+	for (i = 0; i < len / 2; i++) {
+     25e:	0685                	addi	a3,a3,1
+		buffer[i] = buffer[len-i-1];
+     260:	01158023          	sb	a7,0(a1)
+		buffer[len-i-1] = j;
+     264:	01078023          	sb	a6,0(a5)
+	for (i = 0; i < len / 2; i++) {
+     268:	bfe9                	j	242 <mini_itoa.part.0+0x66>
+
+0000026a <DevSetMode>:
+	NVIC->VTFIDR[3] = 0x14;
+}
+
+void DevSetMode(uint16_t mode) {
+#if !defined(CH571_CH573)
+	if(mode) {
+     26a:	fffd07b7          	lui	a5,0xfffd0
+		BB->CTRL_CFG = DEVSETMODE_ON;
+     26e:	4000c6b7          	lui	a3,0x4000c
+     272:	fff78713          	addi	a4,a5,-1 # fffcffff <_eusrstack+0xdffccfff>
+     276:	1006a783          	lw	a5,256(a3) # 4000c100 <_eusrstack+0x20009100>
+     27a:	8ff9                	and	a5,a5,a4
+	if(mode) {
+     27c:	c11d                	beqz	a0,2a2 <DevSetMode+0x38>
+		BB->CTRL_CFG = DEVSETMODE_ON;
+     27e:	00020737          	lui	a4,0x20
+     282:	8fd9                	or	a5,a5,a4
+     284:	10f6a023          	sw	a5,256(a3)
+		RF->RF2 |= 0x330000;
+     288:	4000d737          	lui	a4,0x4000d
+     28c:	471c                	lw	a5,8(a4)
+     28e:	003306b7          	lui	a3,0x330
+     292:	8fd5                	or	a5,a5,a3
+     294:	c71c                	sw	a5,8(a4)
+	mode = (mode == 0) ? 0x80 : mode;
+#elif !defined(CH32V208)
+	mode |= 0x30000;
+#endif
+#endif // ! CH571_CH573
+	LL->CTRL_MOD = mode;
+     296:	4000c7b7          	lui	a5,0x4000c
+     29a:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+     29e:	cba8                	sw	a0,80(a5)
+}
+     2a0:	8082                	ret
+		BB->CTRL_CFG = DEVSETMODE_OFF;
+     2a2:	6741                	lui	a4,0x10
+     2a4:	8fd9                	or	a5,a5,a4
+     2a6:	10f6a023          	sw	a5,256(a3) # 330100 <radio.c.b2977aab+0x32b995>
+		RF->RF2 &= 0xffcdffff;
+     2aa:	4000d6b7          	lui	a3,0x4000d
+     2ae:	469c                	lw	a5,8(a3)
+     2b0:	ffce0737          	lui	a4,0xffce0
+     2b4:	177d                	addi	a4,a4,-1
+     2b6:	8ff9                	and	a5,a5,a4
+     2b8:	c69c                	sw	a5,8(a3)
+     2ba:	bff1                	j	296 <DevSetMode+0x2c>
+
+000002bc <RFEND_TXCTune>:
+
+uint32_t RFEND_TXCTune(uint8_t channel) {
+	// 0xbf = 2401 MHz
+	RF->RF1 &= 0xfffffffe;
+     2bc:	4000d737          	lui	a4,0x4000d
+     2c0:	435c                	lw	a5,4(a4)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xfffe00ff) | (0xbf00 + (channel_map[channel] << 8));
+     2c2:	6689                	lui	a3,0x2
+     2c4:	cb868693          	addi	a3,a3,-840 # 1cb8 <channel_map>
+	RF->RF1 &= 0xfffffffe;
+     2c8:	9bf9                	andi	a5,a5,-2
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xfffe00ff) | (0xbf00 + (channel_map[channel] << 8));
+     2ca:	96aa                	add	a3,a3,a0
+	RF->RF1 &= 0xfffffffe;
+     2cc:	c35c                	sw	a5,4(a4)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xfffe00ff) | (0xbf00 + (channel_map[channel] << 8));
+     2ce:	0006c783          	lbu	a5,0(a3)
+     2d2:	66b1                	lui	a3,0xc
+     2d4:	5f10                	lw	a2,56(a4)
+     2d6:	f0068693          	addi	a3,a3,-256 # bf00 <radio.c.b2977aab+0x7795>
+     2da:	07a2                	slli	a5,a5,0x8
+     2dc:	97b6                	add	a5,a5,a3
+     2de:	7681                	lui	a3,0xfffe0
+     2e0:	0ff68693          	addi	a3,a3,255 # fffe00ff <_eusrstack+0xdffdd0ff>
+     2e4:	8e75                	and	a2,a2,a3
+     2e6:	8fd1                	or	a5,a5,a2
+     2e8:	df1c                	sw	a5,56(a4)
+	RF->RF1 |= 1;
+     2ea:	435c                	lw	a5,4(a4)
+
+	LL->TMR = 8000;
+	while(!(RF->TXCTUNE_CO_CTRL & (1 << 25)) || !(RF->TXCTUNE_CO_CTRL & (1 << 26))) {
+     2ec:	02000637          	lui	a2,0x2000
+     2f0:	040006b7          	lui	a3,0x4000
+	RF->RF1 |= 1;
+     2f4:	0017e793          	ori	a5,a5,1
+     2f8:	c35c                	sw	a5,4(a4)
+	LL->TMR = 8000;
+     2fa:	4000c7b7          	lui	a5,0x4000c
+     2fe:	6709                	lui	a4,0x2
+     300:	f4070713          	addi	a4,a4,-192 # 1f40 <_data_lma+0x260>
+     304:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+     308:	d3f8                	sw	a4,100(a5)
+		if(LL->TMR == 0) {
+     30a:	4000c5b7          	lui	a1,0x4000c
+	while(!(RF->TXCTUNE_CO_CTRL & (1 << 25)) || !(RF->TXCTUNE_CO_CTRL & (1 << 26))) {
+     30e:	4000d737          	lui	a4,0x4000d
+     312:	09072783          	lw	a5,144(a4) # 4000d090 <_eusrstack+0x2000a090>
+     316:	8ff1                	and	a5,a5,a2
+     318:	c789                	beqz	a5,322 <RFEND_TXCTune+0x66>
+     31a:	09072783          	lw	a5,144(a4)
+     31e:	8ff5                	and	a5,a5,a3
+     320:	e789                	bnez	a5,32a <RFEND_TXCTune+0x6e>
+		if(LL->TMR == 0) {
+     322:	20058793          	addi	a5,a1,512 # 4000c200 <_eusrstack+0x20009200>
+     326:	53fc                	lw	a5,100(a5)
+     328:	f7ed                	bnez	a5,312 <RFEND_TXCTune+0x56>
+			break;
+		}
+	}
+
+	uint8_t nCO = (uint8_t)RF->TXCTUNE_CO_CTRL & 0x3f;
+     32a:	4000d7b7          	lui	a5,0x4000d
+     32e:	0907a503          	lw	a0,144(a5) # 4000d090 <_eusrstack+0x2000a090>
+	uint8_t nGA = (uint8_t)(RF->TXCTUNE_GA_CTRL >> 10) & 0x7f;
+     332:	0947a783          	lw	a5,148(a5)
+
+	// printf("nCO,nGA ch:%u idx:%u %u,%u\n", channel, channel_map[channel], nCO,nGA);
+
+	return (nGA << 24) | nCO;
+     336:	03f57513          	andi	a0,a0,63
+	uint8_t nGA = (uint8_t)(RF->TXCTUNE_GA_CTRL >> 10) & 0x7f;
+     33a:	83a9                	srli	a5,a5,0xa
+	return (nGA << 24) | nCO;
+     33c:	07f7f793          	andi	a5,a5,127
+     340:	07e2                	slli	a5,a5,0x18
+}
+     342:	8d5d                	or	a0,a0,a5
+     344:	8082                	ret
+
+00000346 <SPI_Transfer.isra.0>:
+uint8_t SPI_Transfer(uint8_t data) {
+  // Unrolled SPI Mode 0 (CPOL=0, CPHA=0)
+  // Write Data (Setup) -> Clock High -> Clock Low
+
+  // Bit 7
+  if (data & 0x80)
+     346:	01851793          	slli	a5,a0,0x18
+     34a:	87e1                	srai	a5,a5,0x18
+     34c:	0e07d963          	bgez	a5,43e <SPI_Transfer.isra.0+0xf8>
+    R32_PA_SET = PIN_MOSI_MASK;
+     350:	400017b7          	lui	a5,0x40001
+     354:	08000713          	li	a4,128
+     358:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     35c:	02000713          	li	a4,32
+     360:	400017b7          	lui	a5,0x40001
+     364:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     368:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 6
+  if (data & 0x40)
+     36c:	04057713          	andi	a4,a0,64
+     370:	cf71                	beqz	a4,44c <SPI_Transfer.isra.0+0x106>
+    R32_PA_SET = PIN_MOSI_MASK;
+     372:	08000713          	li	a4,128
+     376:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     37a:	02000713          	li	a4,32
+     37e:	400017b7          	lui	a5,0x40001
+     382:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     386:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 5
+  if (data & 0x20)
+     38a:	02057713          	andi	a4,a0,32
+     38e:	c761                	beqz	a4,456 <SPI_Transfer.isra.0+0x110>
+    R32_PA_SET = PIN_MOSI_MASK;
+     390:	08000713          	li	a4,128
+     394:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     398:	02000713          	li	a4,32
+     39c:	400017b7          	lui	a5,0x40001
+     3a0:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     3a4:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 4
+  if (data & 0x10)
+     3a8:	01057713          	andi	a4,a0,16
+     3ac:	cb55                	beqz	a4,460 <SPI_Transfer.isra.0+0x11a>
+    R32_PA_SET = PIN_MOSI_MASK;
+     3ae:	08000713          	li	a4,128
+     3b2:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     3b6:	02000713          	li	a4,32
+     3ba:	400017b7          	lui	a5,0x40001
+     3be:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     3c2:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 3
+  if (data & 0x08)
+     3c6:	00857713          	andi	a4,a0,8
+     3ca:	c345                	beqz	a4,46a <SPI_Transfer.isra.0+0x124>
+    R32_PA_SET = PIN_MOSI_MASK;
+     3cc:	08000713          	li	a4,128
+     3d0:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     3d4:	02000713          	li	a4,32
+     3d8:	400017b7          	lui	a5,0x40001
+     3dc:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     3e0:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 2
+  if (data & 0x04)
+     3e4:	00457713          	andi	a4,a0,4
+     3e8:	c751                	beqz	a4,474 <SPI_Transfer.isra.0+0x12e>
+    R32_PA_SET = PIN_MOSI_MASK;
+     3ea:	08000713          	li	a4,128
+     3ee:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     3f2:	02000713          	li	a4,32
+     3f6:	400017b7          	lui	a5,0x40001
+     3fa:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     3fe:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 1
+  if (data & 0x02)
+     402:	00257713          	andi	a4,a0,2
+     406:	cf25                	beqz	a4,47e <SPI_Transfer.isra.0+0x138>
+    R32_PA_SET = PIN_MOSI_MASK;
+     408:	08000713          	li	a4,128
+     40c:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     410:	02000713          	li	a4,32
+     414:	400017b7          	lui	a5,0x40001
+     418:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     41c:	0ae7a623          	sw	a4,172(a5)
+
+  // Bit 0
+  if (data & 0x01)
+     420:	8905                	andi	a0,a0,1
+    R32_PA_SET = PIN_MOSI_MASK;
+     422:	08000713          	li	a4,128
+  if (data & 0x01)
+     426:	c12d                	beqz	a0,488 <SPI_Transfer.isra.0+0x142>
+    R32_PA_SET = PIN_MOSI_MASK;
+     428:	0ae7ac23          	sw	a4,184(a5)
+  else
+    R32_PA_CLR = PIN_MOSI_MASK;
+  R32_PA_SET = PIN_SCK_MASK;
+     42c:	400017b7          	lui	a5,0x40001
+     430:	02000713          	li	a4,32
+     434:	0ae7ac23          	sw	a4,184(a5) # 400010b8 <_eusrstack+0x1fffe0b8>
+  R32_PA_CLR = PIN_SCK_MASK;
+     438:	0ae7a623          	sw	a4,172(a5)
+
+  return 0;
+}
+     43c:	8082                	ret
+    R32_PA_CLR = PIN_MOSI_MASK;
+     43e:	400017b7          	lui	a5,0x40001
+     442:	08000713          	li	a4,128
+     446:	0ae7a623          	sw	a4,172(a5) # 400010ac <_eusrstack+0x1fffe0ac>
+     44a:	bf09                	j	35c <SPI_Transfer.isra.0+0x16>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     44c:	08000713          	li	a4,128
+     450:	0ae7a623          	sw	a4,172(a5)
+     454:	b71d                	j	37a <SPI_Transfer.isra.0+0x34>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     456:	08000713          	li	a4,128
+     45a:	0ae7a623          	sw	a4,172(a5)
+     45e:	bf2d                	j	398 <SPI_Transfer.isra.0+0x52>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     460:	08000713          	li	a4,128
+     464:	0ae7a623          	sw	a4,172(a5)
+     468:	b7b9                	j	3b6 <SPI_Transfer.isra.0+0x70>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     46a:	08000713          	li	a4,128
+     46e:	0ae7a623          	sw	a4,172(a5)
+     472:	b78d                	j	3d4 <SPI_Transfer.isra.0+0x8e>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     474:	08000713          	li	a4,128
+     478:	0ae7a623          	sw	a4,172(a5)
+     47c:	bf9d                	j	3f2 <SPI_Transfer.isra.0+0xac>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     47e:	08000713          	li	a4,128
+     482:	0ae7a623          	sw	a4,172(a5)
+     486:	b769                	j	410 <SPI_Transfer.isra.0+0xca>
+    R32_PA_CLR = PIN_MOSI_MASK;
+     488:	0ae7a623          	sw	a4,172(a5)
+     48c:	b745                	j	42c <SPI_Transfer.isra.0+0xe6>
+
+0000048e <GC9A01_WriteCmd>:
+#include "gc9a01.h"
+#include "font.h"
+
+// Private Helper Functions
+static void GC9A01_WriteCmd(uint8_t cmd) {
+     48e:	1141                	addi	sp,sp,-16
+     490:	c422                	sw	s0,8(sp)
+  funDigitalWrite(PIN_DC, FUN_LOW);
+     492:	40001437          	lui	s0,0x40001
+     496:	08040413          	addi	s0,s0,128 # 40001080 <_eusrstack+0x1fffe080>
+     49a:	545c                	lw	a5,44(s0)
+     49c:	6705                	lui	a4,0x1
+     49e:	80070713          	addi	a4,a4,-2048 # 800 <mini_vpprintf+0xe>
+static void GC9A01_WriteCmd(uint8_t cmd) {
+     4a2:	c606                	sw	ra,12(sp)
+  funDigitalWrite(PIN_DC, FUN_LOW);
+     4a4:	8fd9                	or	a5,a5,a4
+     4a6:	d45c                	sw	a5,44(s0)
+  funDigitalWrite(PIN_CS, FUN_LOW);
+     4a8:	545c                	lw	a5,44(s0)
+     4aa:	0107e793          	ori	a5,a5,16
+     4ae:	d45c                	sw	a5,44(s0)
+  SPI_Transfer(cmd);
+     4b0:	3d59                	jal	346 <SPI_Transfer.isra.0>
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     4b2:	541c                	lw	a5,40(s0)
+}
+     4b4:	40b2                	lw	ra,12(sp)
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     4b6:	0107e793          	ori	a5,a5,16
+     4ba:	d41c                	sw	a5,40(s0)
+}
+     4bc:	4422                	lw	s0,8(sp)
+     4be:	0141                	addi	sp,sp,16
+     4c0:	8082                	ret
+
+000004c2 <GC9A01_WriteData>:
+
+static void GC9A01_WriteData(uint8_t data) {
+     4c2:	1141                	addi	sp,sp,-16
+     4c4:	c422                	sw	s0,8(sp)
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+     4c6:	40001437          	lui	s0,0x40001
+     4ca:	08040413          	addi	s0,s0,128 # 40001080 <_eusrstack+0x1fffe080>
+     4ce:	541c                	lw	a5,40(s0)
+     4d0:	6705                	lui	a4,0x1
+     4d2:	80070713          	addi	a4,a4,-2048 # 800 <mini_vpprintf+0xe>
+static void GC9A01_WriteData(uint8_t data) {
+     4d6:	c606                	sw	ra,12(sp)
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+     4d8:	8fd9                	or	a5,a5,a4
+     4da:	d41c                	sw	a5,40(s0)
+  funDigitalWrite(PIN_CS, FUN_LOW);
+     4dc:	545c                	lw	a5,44(s0)
+     4de:	0107e793          	ori	a5,a5,16
+     4e2:	d45c                	sw	a5,44(s0)
+  SPI_Transfer(data);
+     4e4:	358d                	jal	346 <SPI_Transfer.isra.0>
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     4e6:	541c                	lw	a5,40(s0)
+}
+     4e8:	40b2                	lw	ra,12(sp)
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     4ea:	0107e793          	ori	a5,a5,16
+     4ee:	d41c                	sw	a5,40(s0)
+}
+     4f0:	4422                	lw	s0,8(sp)
+     4f2:	0141                	addi	sp,sp,16
+     4f4:	8082                	ret
+
+000004f6 <GC9A01_FillRect.part.0>:
+
+  uint8_t data[2] = {color >> 8, color & 0xFF};
+  GC9A01_WriteDataArray(data, 2);
+}
+
+void GC9A01_FillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h,
+     4f6:	7135                	addi	sp,sp,-160
+     4f8:	cd22                	sw	s0,152(sp)
+     4fa:	cb26                	sw	s1,148(sp)
+     4fc:	c94a                	sw	s2,144(sp)
+     4fe:	c74e                	sw	s3,140(sp)
+     500:	c552                	sw	s4,136(sp)
+     502:	cf06                	sw	ra,156(sp)
+     504:	8a3a                	mv	s4,a4
+     506:	c356                	sw	s5,132(sp)
+                     uint16_t color) {
+  if ((x >= 240) || (y >= 240))
+    return;
+  if ((x + w - 1) >= 240)
+     508:	00a60733          	add	a4,a2,a0
+     50c:	0f000793          	li	a5,240
+void GC9A01_FillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h,
+     510:	892a                	mv	s2,a0
+     512:	84ae                	mv	s1,a1
+     514:	89b6                	mv	s3,a3
+     516:	8432                	mv	s0,a2
+  if ((x + w - 1) >= 240)
+     518:	00e7d763          	bge	a5,a4,526 <GC9A01_FillRect.part.0+0x30>
+    w = 240 - x;
+     51c:	0f000413          	li	s0,240
+     520:	8c09                	sub	s0,s0,a0
+     522:	0442                	slli	s0,s0,0x10
+     524:	8041                	srli	s0,s0,0x10
+  if ((y + h - 1) >= 240)
+     526:	009987b3          	add	a5,s3,s1
+     52a:	0f000713          	li	a4,240
+     52e:	00f75963          	bge	a4,a5,540 <GC9A01_FillRect.part.0+0x4a>
+    h = 240 - y;
+     532:	0f000993          	li	s3,240
+     536:	409989b3          	sub	s3,s3,s1
+     53a:	09c2                	slli	s3,s3,0x10
+     53c:	0109d993          	srli	s3,s3,0x10
+  GC9A01_WriteCmd(0x2A); // Column Address Set
+     540:	02a00513          	li	a0,42
+     544:	37a9                	jal	48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(x >> 8);
+     546:	00895513          	srli	a0,s2,0x8
+     54a:	3fa5                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(x & 0xFF);
+     54c:	0ff97a93          	andi	s5,s2,255
+     550:	8556                	mv	a0,s5
+     552:	3f85                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteData((x + w - 1) >> 8);
+     554:	00890533          	add	a0,s2,s0
+     558:	157d                	addi	a0,a0,-1
+     55a:	8521                	srai	a0,a0,0x8
+     55c:	0ff57513          	andi	a0,a0,255
+     560:	378d                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteData((x + w - 1) & 0xFF);
+     562:	fffa8513          	addi	a0,s5,-1
+     566:	9522                	add	a0,a0,s0
+     568:	0ff57513          	andi	a0,a0,255
+     56c:	3f99                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x2B); // Row Address Set
+     56e:	02b00513          	li	a0,43
+     572:	3f31                	jal	48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(y >> 8);
+     574:	0084d513          	srli	a0,s1,0x8
+     578:	37a9                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(y & 0xFF);
+     57a:	0ff4f913          	andi	s2,s1,255
+     57e:	854a                	mv	a0,s2
+     580:	3789                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteData((y + h - 1) >> 8);
+     582:	01348533          	add	a0,s1,s3
+     586:	157d                	addi	a0,a0,-1
+     588:	8521                	srai	a0,a0,0x8
+     58a:	0ff57513          	andi	a0,a0,255
+     58e:	3f15                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteData((y + h - 1) & 0xFF);
+     590:	fff90513          	addi	a0,s2,-1
+     594:	954e                	add	a0,a0,s3
+     596:	0ff57513          	andi	a0,a0,255
+     59a:	3725                	jal	4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x2C); // Memory Write
+     59c:	02c00513          	li	a0,44
+     5a0:	35fd                	jal	48e <GC9A01_WriteCmd>
+
+  uint8_t hi = color >> 8;
+  uint8_t lo = color & 0xFF;
+
+  // Simple loop for now (optimize with larger buffer later)
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+     5a2:	400017b7          	lui	a5,0x40001
+     5a6:	08078793          	addi	a5,a5,128 # 40001080 <_eusrstack+0x1fffe080>
+     5aa:	5798                	lw	a4,40(a5)
+     5ac:	6685                	lui	a3,0x1
+     5ae:	80068693          	addi	a3,a3,-2048 # 800 <mini_vpprintf+0xe>
+     5b2:	8f55                	or	a4,a4,a3
+     5b4:	d798                	sw	a4,40(a5)
+  funDigitalWrite(PIN_CS, FUN_LOW);
+     5b6:	57d8                	lw	a4,44(a5)
+  uint8_t hi = color >> 8;
+     5b8:	008a5613          	srli	a2,s4,0x8
+  uint8_t lo = color & 0xFF;
+     5bc:	0ffa7a13          	andi	s4,s4,255
+  funDigitalWrite(PIN_CS, FUN_LOW);
+     5c0:	01076713          	ori	a4,a4,16
+     5c4:	d7d8                	sw	a4,44(a5)
+
+// We can make a small buffer to speed up
+#define BUF_SIZE 64
+  uint8_t buffer[BUF_SIZE * 2];
+  for (int k = 0; k < BUF_SIZE; k++) {
+     5c6:	878a                	mv	a5,sp
+     5c8:	833e                	mv	t1,a5
+    buffer[k * 2] = hi;
+     5ca:	00c78023          	sb	a2,0(a5)
+    buffer[k * 2 + 1] = lo;
+     5ce:	014780a3          	sb	s4,1(a5)
+  for (int k = 0; k < BUF_SIZE; k++) {
+     5d2:	0118                	addi	a4,sp,128
+     5d4:	0789                	addi	a5,a5,2
+     5d6:	fef71ae3          	bne	a4,a5,5ca <GC9A01_FillRect.part.0+0xd4>
+  }
+
+  uint32_t count = w * h;
+     5da:	03340433          	mul	s0,s0,s3
+
+    // Unrolled bit banging
+    if (b & 0x80)
+      *pa_set = PIN_MOSI_MASK;
+    else
+      *pa_clr = PIN_MOSI_MASK;
+     5de:	400017b7          	lui	a5,0x40001
+  while (count > 0) {
+    uint32_t chunk = (count > BUF_SIZE) ? BUF_SIZE : count;
+     5e2:	04000e13          	li	t3,64
+     5e6:	08000713          	li	a4,128
+      *pa_set = PIN_MOSI_MASK;
+     5ea:	0b878693          	addi	a3,a5,184 # 400010b8 <_eusrstack+0x1fffe0b8>
+    *pa_set = PIN_SCK_MASK;
+     5ee:	02000593          	li	a1,32
+  while (count > 0) {
+     5f2:	e015                	bnez	s0,616 <GC9A01_FillRect.part.0+0x120>
+    SPI_Send(buffer, chunk * 2);
+    count -= chunk;
+  }
+
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     5f4:	40001737          	lui	a4,0x40001
+     5f8:	0a872783          	lw	a5,168(a4) # 400010a8 <_eusrstack+0x1fffe0a8>
+}
+     5fc:	40fa                	lw	ra,156(sp)
+     5fe:	446a                	lw	s0,152(sp)
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     600:	0107e793          	ori	a5,a5,16
+     604:	0af72423          	sw	a5,168(a4)
+}
+     608:	44da                	lw	s1,148(sp)
+     60a:	494a                	lw	s2,144(sp)
+     60c:	49ba                	lw	s3,140(sp)
+     60e:	4a2a                	lw	s4,136(sp)
+     610:	4a9a                	lw	s5,132(sp)
+     612:	610d                	addi	sp,sp,160
+     614:	8082                	ret
+    uint32_t chunk = (count > BUF_SIZE) ? BUF_SIZE : count;
+     616:	8822                	mv	a6,s0
+     618:	008e7463          	bgeu	t3,s0,620 <GC9A01_FillRect.part.0+0x12a>
+     61c:	04000813          	li	a6,64
+    SPI_Send(buffer, chunk * 2);
+     620:	00181893          	slli	a7,a6,0x1
+     624:	08c2                	slli	a7,a7,0x10
+     626:	0108d893          	srli	a7,a7,0x10
+     62a:	4501                	li	a0,0
+    uint8_t b = data[i];
+     62c:	00a30633          	add	a2,t1,a0
+     630:	00064603          	lbu	a2,0(a2) # 2000000 <radio.c.b2977aab+0x1ffb895>
+    if (b & 0x80)
+     634:	01861e93          	slli	t4,a2,0x18
+     638:	418ede93          	srai	t4,t4,0x18
+     63c:	080ed563          	bgez	t4,6c6 <GC9A01_FillRect.part.0+0x1d0>
+      *pa_set = PIN_MOSI_MASK;
+     640:	c298                	sw	a4,0(a3)
+    *pa_set = PIN_SCK_MASK;
+     642:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK; // Pulse SCK High then Low
+     644:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x40)
+     648:	04067e93          	andi	t4,a2,64
+     64c:	080e8063          	beqz	t4,6cc <GC9A01_FillRect.part.0+0x1d6>
+      *pa_set = PIN_MOSI_MASK;
+     650:	c298                	sw	a4,0(a3)
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     652:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK;
+     654:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x20)
+     658:	02067e93          	andi	t4,a2,32
+     65c:	060e8b63          	beqz	t4,6d2 <GC9A01_FillRect.part.0+0x1dc>
+      *pa_set = PIN_MOSI_MASK;
+     660:	c298                	sw	a4,0(a3)
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     662:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK;
+     664:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x10)
+     668:	01067e93          	andi	t4,a2,16
+     66c:	060e8663          	beqz	t4,6d8 <GC9A01_FillRect.part.0+0x1e2>
+      *pa_set = PIN_MOSI_MASK;
+     670:	c298                	sw	a4,0(a3)
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     672:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK;
+     674:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x08)
+     678:	00867e93          	andi	t4,a2,8
+     67c:	060e8163          	beqz	t4,6de <GC9A01_FillRect.part.0+0x1e8>
+      *pa_set = PIN_MOSI_MASK;
+     680:	c298                	sw	a4,0(a3)
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     682:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK;
+     684:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x04)
+     688:	00467e93          	andi	t4,a2,4
+     68c:	040e8c63          	beqz	t4,6e4 <GC9A01_FillRect.part.0+0x1ee>
+      *pa_set = PIN_MOSI_MASK;
+     690:	c298                	sw	a4,0(a3)
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     692:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK;
+     694:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x02)
+     698:	00267e93          	andi	t4,a2,2
+     69c:	040e8763          	beqz	t4,6ea <GC9A01_FillRect.part.0+0x1f4>
+      *pa_set = PIN_MOSI_MASK;
+     6a0:	c298                	sw	a4,0(a3)
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     6a2:	c28c                	sw	a1,0(a3)
+    *pa_clr = PIN_SCK_MASK;
+     6a4:	0ab7a623          	sw	a1,172(a5)
+
+    if (b & 0x01)
+     6a8:	8a05                	andi	a2,a2,1
+     6aa:	c239                	beqz	a2,6f0 <GC9A01_FillRect.part.0+0x1fa>
+      *pa_set = PIN_MOSI_MASK;
+     6ac:	c298                	sw	a4,0(a3)
+  for (uint16_t i = 0; i < len; i++) {
+     6ae:	0505                	addi	a0,a0,1
+    else
+      *pa_clr = PIN_MOSI_MASK;
+    *pa_set = PIN_SCK_MASK;
+     6b0:	c28c                	sw	a1,0(a3)
+  for (uint16_t i = 0; i < len; i++) {
+     6b2:	01051613          	slli	a2,a0,0x10
+    *pa_clr = PIN_SCK_MASK;
+     6b6:	0ab7a623          	sw	a1,172(a5)
+  for (uint16_t i = 0; i < len; i++) {
+     6ba:	8241                	srli	a2,a2,0x10
+     6bc:	f71668e3          	bltu	a2,a7,62c <GC9A01_FillRect.part.0+0x136>
+    count -= chunk;
+     6c0:	41040433          	sub	s0,s0,a6
+     6c4:	b73d                	j	5f2 <GC9A01_FillRect.part.0+0xfc>
+      *pa_clr = PIN_MOSI_MASK;
+     6c6:	0ae7a623          	sw	a4,172(a5)
+     6ca:	bfa5                	j	642 <GC9A01_FillRect.part.0+0x14c>
+      *pa_clr = PIN_MOSI_MASK;
+     6cc:	0ae7a623          	sw	a4,172(a5)
+     6d0:	b749                	j	652 <GC9A01_FillRect.part.0+0x15c>
+      *pa_clr = PIN_MOSI_MASK;
+     6d2:	0ae7a623          	sw	a4,172(a5)
+     6d6:	b771                	j	662 <GC9A01_FillRect.part.0+0x16c>
+      *pa_clr = PIN_MOSI_MASK;
+     6d8:	0ae7a623          	sw	a4,172(a5)
+     6dc:	bf59                	j	672 <GC9A01_FillRect.part.0+0x17c>
+      *pa_clr = PIN_MOSI_MASK;
+     6de:	0ae7a623          	sw	a4,172(a5)
+     6e2:	b745                	j	682 <GC9A01_FillRect.part.0+0x18c>
+      *pa_clr = PIN_MOSI_MASK;
+     6e4:	0ae7a623          	sw	a4,172(a5)
+     6e8:	b76d                	j	692 <GC9A01_FillRect.part.0+0x19c>
+      *pa_clr = PIN_MOSI_MASK;
+     6ea:	0ae7a623          	sw	a4,172(a5)
+     6ee:	bf55                	j	6a2 <GC9A01_FillRect.part.0+0x1ac>
+      *pa_clr = PIN_MOSI_MASK;
+     6f0:	0ae7a623          	sw	a4,172(a5)
+     6f4:	bf6d                	j	6ae <GC9A01_FillRect.part.0+0x1b8>
+
+000006f6 <funPinMode.constprop.0>:
+	case GPIO_ModeOut_PP_5mA:
+		*(&R32_PA_PD_DRV + OFFSET_FOR_GPIOB(pin)) &= ~(pin & ~PB);
+		*(&R32_PA_DIR + OFFSET_FOR_GPIOB(pin))    |= (pin & ~PB);
+		break;
+	case GPIO_ModeOut_PP_20mA:
+		*(&R32_PA_PD_DRV + OFFSET_FOR_GPIOB(pin)) |= (pin & ~PB);
+     6f6:	400017b7          	lui	a5,0x40001
+     6fa:	08078793          	addi	a5,a5,128 # 40001080 <_eusrstack+0x1fffe080>
+     6fe:	5bd8                	lw	a4,52(a5)
+     700:	8f49                	or	a4,a4,a0
+     702:	dbd8                	sw	a4,52(a5)
+		*(&R32_PA_DIR + OFFSET_FOR_GPIOB(pin))    |= (pin & ~PB);
+     704:	5398                	lw	a4,32(a5)
+     706:	8d59                	or	a0,a0,a4
+     708:	d388                	sw	a0,32(a5)
+		break;
+	}
+}
+     70a:	8082                	ret
+
+0000070c <handle_reset>:
+	asm volatile( "\n\
+     70c:	20000197          	auipc	gp,0x20000
+     710:	cf018193          	addi	gp,gp,-784 # 200003fc <__global_pointer$>
+     714:	20003117          	auipc	sp,0x20003
+     718:	8ec10113          	addi	sp,sp,-1812 # 20003000 <_eusrstack>
+	asm volatile(
+     71c:	c0418513          	addi	a0,gp,-1020 # 20000000 <act_toggle.0>
+     720:	09418593          	addi	a1,gp,148 # 20000490 <_ebss>
+     724:	00b57763          	bgeu	a0,a1,732 <handle_reset+0x26>
+     728:	00052023          	sw	zero,0(a0)
+     72c:	0511                	addi	a0,a0,4
+     72e:	feb56de3          	bltu	a0,a1,728 <handle_reset+0x1c>
+     732:	00001517          	auipc	a0,0x1
+     736:	5ae50513          	addi	a0,a0,1454 # 1ce0 <_data_lma>
+     73a:	c0418593          	addi	a1,gp,-1020 # 20000000 <act_toggle.0>
+     73e:	c0418613          	addi	a2,gp,-1020 # 20000000 <act_toggle.0>
+     742:	00c58a63          	beq	a1,a2,756 <handle_reset+0x4a>
+     746:	00052283          	lw	t0,0(a0)
+     74a:	0055a023          	sw	t0,0(a1)
+     74e:	0511                	addi	a0,a0,4
+     750:	0591                	addi	a1,a1,4
+     752:	fec5eae3          	bltu	a1,a2,746 <handle_reset+0x3a>
+	asm volatile(
+     756:	00000793          	li	a5,0
+     75a:	42fd                	li	t0,31
+     75c:	bc029073          	csrw	0xbc0,t0
+     760:	6289                	lui	t0,0x2
+     762:	88828293          	addi	t0,t0,-1912 # 1888 <main+0xc90>
+     766:	3002a073          	csrs	mstatus,t0
+     76a:	00000297          	auipc	t0,0x0
+     76e:	89628293          	addi	t0,t0,-1898 # 0 <InterruptVector>
+     772:	0032e293          	ori	t0,t0,3
+     776:	30529073          	csrw	mtvec,t0
+	SysTick->CTLR = 1;
+     77a:	e000f7b7          	lui	a5,0xe000f
+     77e:	4705                	li	a4,1
+     780:	c398                	sw	a4,0(a5)
+	asm volatile(
+     782:	6785                	lui	a5,0x1
+     784:	bf878793          	addi	a5,a5,-1032 # bf8 <main>
+     788:	34179073          	csrw	mepc,a5
+     78c:	30200073          	mret
+
+00000790 <ADC1_2_IRQHandler>:
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0," "mepc" : "=r"(result));
+     790:	34102573          	csrr	a0,mepc
+	PrintHex( __get_MEPC() ); // "addr2line -e debugprintfdemo.elf 0x000007e6" ---> debugprintfdemo.c:45
+     794:	3ae9                	jal	16e <PrintHex>
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0, mstatus": "=r"(result) );
+     796:	30002573          	csrr	a0,mstatus
+	PrintHex( __get_MSTATUS() );
+     79a:	3ad1                	jal	16e <PrintHex>
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0," "mtval" : "=r" (result) );
+     79c:	34302573          	csrr	a0,mtval
+	PrintHex( __get_MTVAL() );
+     7a0:	32f9                	jal	16e <PrintHex>
+	__ASM volatile( ADD_ARCH_ZICSR "csrr %0," "mcause": "=r"(result));
+     7a2:	34202573          	csrr	a0,mcause
+	PrintHex( __get_MCAUSE() );
+     7a6:	32e1                	jal	16e <PrintHex>
+	while( (*DMDATA0) & 0x80 );
+     7a8:	e0000737          	lui	a4,0xe0000
+     7ac:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+     7b0:	34070693          	addi	a3,a4,832
+     7b4:	0807f793          	andi	a5,a5,128
+     7b8:	fbf5                	bnez	a5,7ac <ADC1_2_IRQHandler+0x1c>
+	*DMDATA0 = 0x0a85;
+     7ba:	6785                	lui	a5,0x1
+     7bc:	a8578793          	addi	a5,a5,-1403 # a85 <DrawCentered.constprop.0+0x7b>
+     7c0:	c29c                	sw	a5,0(a3)
+	while( (*DMDATA0) & 0x80 );
+     7c2:	e0000737          	lui	a4,0xe0000
+     7c6:	34072783          	lw	a5,832(a4) # e0000340 <_eusrstack+0xbfffd340>
+     7ca:	34070693          	addi	a3,a4,832
+     7ce:	0807f793          	andi	a5,a5,128
+     7d2:	fbf5                	bnez	a5,7c6 <ADC1_2_IRQHandler+0x36>
+	*DMDATA0 = 0xaaaaaa83;
+     7d4:	aaaab7b7          	lui	a5,0xaaaab
+     7d8:	a8378793          	addi	a5,a5,-1405 # aaaaaa83 <_eusrstack+0x8aaa7a83>
+     7dc:	c29c                	sw	a5,0(a3)
+	asm volatile( "1: j 1b" );
+     7de:	a001                	j	7de <ADC1_2_IRQHandler+0x4e>
+
+000007e0 <strlen>:
+{
+     7e0:	87aa                	mv	a5,a0
+	for (; *s; s++);
+     7e2:	0007c703          	lbu	a4,0(a5)
+     7e6:	e701                	bnez	a4,7ee <strlen+0xe>
+}
+     7e8:	40a78533          	sub	a0,a5,a0
+     7ec:	8082                	ret
+	for (; *s; s++);
+     7ee:	0785                	addi	a5,a5,1
+     7f0:	bfcd                	j	7e2 <strlen+0x2>
+
+000007f2 <mini_vpprintf>:
+{
+     7f2:	7159                	addi	sp,sp,-112
+     7f4:	d4a2                	sw	s0,104(sp)
+     7f6:	d2a6                	sw	s1,100(sp)
+     7f8:	d0ca                	sw	s2,96(sp)
+     7fa:	cece                	sw	s3,92(sp)
+     7fc:	ccd2                	sw	s4,88(sp)
+     7fe:	cad6                	sw	s5,84(sp)
+     800:	c6de                	sw	s7,76(sp)
+     802:	d686                	sw	ra,108(sp)
+     804:	c8da                	sw	s6,80(sp)
+     806:	c4e2                	sw	s8,72(sp)
+     808:	c2e6                	sw	s9,68(sp)
+     80a:	c0ea                	sw	s10,64(sp)
+     80c:	84aa                	mv	s1,a0
+     80e:	892e                	mv	s2,a1
+     810:	8432                	mv	s0,a2
+     812:	8bb6                	mv	s7,a3
+	int n = 0;
+     814:	4981                	li	s3,0
+		if (ch!='%') {
+     816:	02500a13          	li	s4,37
+				pad_to = pad_to * 10 + (ch - '0');
+     81a:	4aa9                	li	s5,10
+	while ((ch=*(fmt++))) {
+     81c:	00044783          	lbu	a5,0(s0)
+     820:	00140c13          	addi	s8,s0,1
+     824:	00f107a3          	sb	a5,15(sp)
+     828:	e385                	bnez	a5,848 <mini_vpprintf+0x56>
+}
+     82a:	50b6                	lw	ra,108(sp)
+     82c:	5426                	lw	s0,104(sp)
+     82e:	5496                	lw	s1,100(sp)
+     830:	5906                	lw	s2,96(sp)
+     832:	4a66                	lw	s4,88(sp)
+     834:	4ad6                	lw	s5,84(sp)
+     836:	4b46                	lw	s6,80(sp)
+     838:	4bb6                	lw	s7,76(sp)
+     83a:	4c26                	lw	s8,72(sp)
+     83c:	4c96                	lw	s9,68(sp)
+     83e:	4d06                	lw	s10,64(sp)
+     840:	854e                	mv	a0,s3
+     842:	49f6                	lw	s3,92(sp)
+     844:	6165                	addi	sp,sp,112
+     846:	8082                	ret
+		if (ch!='%') {
+     848:	01478c63          	beq	a5,s4,860 <mini_vpprintf+0x6e>
+			len = puts(&ch, len, buf);
+     84c:	864a                	mv	a2,s2
+     84e:	4585                	li	a1,1
+     850:	00f10513          	addi	a0,sp,15
+     854:	9482                	jalr	s1
+     856:	8b5e                	mv	s6,s7
+	while ((ch=*(fmt++))) {
+     858:	8462                	mv	s0,s8
+		n = n + len;
+     85a:	99aa                	add	s3,s3,a0
+     85c:	8bda                	mv	s7,s6
+     85e:	bf7d                	j	81c <mini_vpprintf+0x2a>
+			ch=*(fmt++);
+     860:	00144783          	lbu	a5,1(s0)
+			if (ch == '0') pad_char = '0';
+     864:	03000693          	li	a3,48
+			ch=*(fmt++);
+     868:	00240713          	addi	a4,s0,2
+     86c:	00f107a3          	sb	a5,15(sp)
+			if (ch == '0') pad_char = '0';
+     870:	03000c13          	li	s8,48
+     874:	06d79f63          	bne	a5,a3,8f2 <mini_vpprintf+0x100>
+				ch=*(fmt++);
+     878:	843a                	mv	s0,a4
+     87a:	4d01                	li	s10,0
+     87c:	4701                	li	a4,0
+			while (ch >= '0' && ch <= '9') {
+     87e:	4625                	li	a2,9
+     880:	a801                	j	890 <mini_vpprintf+0x9e>
+				pad_to = pad_to * 10 + (ch - '0');
+     882:	035d0d33          	mul	s10,s10,s5
+				ch=*(fmt++);
+     886:	00044783          	lbu	a5,0(s0)
+     88a:	0405                	addi	s0,s0,1
+     88c:	4705                	li	a4,1
+				pad_to = pad_to * 10 + (ch - '0');
+     88e:	9d36                	add	s10,s10,a3
+			while (ch >= '0' && ch <= '9') {
+     890:	fd078693          	addi	a3,a5,-48
+     894:	0ff6f593          	andi	a1,a3,255
+     898:	feb675e3          	bgeu	a2,a1,882 <mini_vpprintf+0x90>
+     89c:	c319                	beqz	a4,8a2 <mini_vpprintf+0xb0>
+     89e:	00f107a3          	sb	a5,15(sp)
+			if(pad_to > (signed int) sizeof(bf)) {
+     8a2:	4761                	li	a4,24
+     8a4:	8cea                	mv	s9,s10
+     8a6:	01a75363          	bge	a4,s10,8ac <mini_vpprintf+0xba>
+     8aa:	4ce1                	li	s9,24
+			if (ch == 'l') {
+     8ac:	06c00693          	li	a3,108
+			char l = 0;
+     8b0:	4701                	li	a4,0
+			if (ch == 'l') {
+     8b2:	00d79863          	bne	a5,a3,8c2 <mini_vpprintf+0xd0>
+				ch=*(fmt++);
+     8b6:	00044783          	lbu	a5,0(s0)
+				l = 1;
+     8ba:	4705                	li	a4,1
+				ch=*(fmt++);
+     8bc:	0405                	addi	s0,s0,1
+     8be:	00f107a3          	sb	a5,15(sp)
+			switch (ch) {
+     8c2:	00f14683          	lbu	a3,15(sp)
+     8c6:	06400793          	li	a5,100
+     8ca:	06f68163          	beq	a3,a5,92c <mini_vpprintf+0x13a>
+     8ce:	02d7e563          	bltu	a5,a3,8f8 <mini_vpprintf+0x106>
+     8d2:	05800793          	li	a5,88
+     8d6:	08f68d63          	beq	a3,a5,970 <mini_vpprintf+0x17e>
+     8da:	06300793          	li	a5,99
+     8de:	0af68b63          	beq	a3,a5,994 <mini_vpprintf+0x1a2>
+     8e2:	d6a1                	beqz	a3,82a <mini_vpprintf+0x38>
+					len = puts(&ch, len, buf);
+     8e4:	864a                	mv	a2,s2
+     8e6:	4585                	li	a1,1
+     8e8:	00f10513          	addi	a0,sp,15
+     8ec:	9482                	jalr	s1
+     8ee:	8b5e                	mv	s6,s7
+     8f0:	b7ad                	j	85a <mini_vpprintf+0x68>
+			char pad_char = ' ';
+     8f2:	02000c13          	li	s8,32
+     8f6:	b749                	j	878 <mini_vpprintf+0x86>
+			switch (ch) {
+     8f8:	07500793          	li	a5,117
+     8fc:	02f68863          	beq	a3,a5,92c <mini_vpprintf+0x13a>
+     900:	07800793          	li	a5,120
+     904:	06f68663          	beq	a3,a5,970 <mini_vpprintf+0x17e>
+     908:	07300793          	li	a5,115
+     90c:	fcf69ce3          	bne	a3,a5,8e4 <mini_vpprintf+0xf2>
+					ptr = va_arg(va, char*);
+     910:	004b8b13          	addi	s6,s7,4
+     914:	000bab83          	lw	s7,0(s7)
+					len = mini_strlen(ptr);
+     918:	855e                	mv	a0,s7
+     91a:	35d9                	jal	7e0 <strlen>
+     91c:	85aa                	mv	a1,a0
+					if (pad_to > 0) {
+     91e:	080d0863          	beqz	s10,9ae <mini_vpprintf+0x1bc>
+						len = mini_pad(ptr, len, pad_char, pad_to, bf);
+     922:	1038                	addi	a4,sp,40
+     924:	86e6                	mv	a3,s9
+     926:	8662                	mv	a2,s8
+     928:	855e                	mv	a0,s7
+     92a:	a01d                	j	950 <mini_vpprintf+0x15e>
+						len = mini_itoa(va_arg(va, unsigned long), 10, 0, (ch=='u'), bf2);
+     92c:	004b8b13          	addi	s6,s7,4
+					if(l) {
+     930:	c71d                	beqz	a4,95e <mini_vpprintf+0x16c>
+						len = mini_itoa(va_arg(va, unsigned long), 10, 0, (ch=='u'), bf2);
+     932:	f8b68693          	addi	a3,a3,-117
+     936:	0818                	addi	a4,sp,16
+     938:	0016b693          	seqz	a3,a3
+     93c:	000ba503          	lw	a0,0(s7)
+     940:	4601                	li	a2,0
+     942:	45a9                	li	a1,10
+     944:	3861                	jal	1dc <mini_itoa.part.0>
+					len = mini_pad(bf2, len, pad_char, pad_to, bf);
+     946:	1038                	addi	a4,sp,40
+     948:	86e6                	mv	a3,s9
+     94a:	8662                	mv	a2,s8
+     94c:	85aa                	mv	a1,a0
+					len = mini_pad(bf2, len, pad_char, pad_to, bf);
+     94e:	0808                	addi	a0,sp,16
+     950:	f40ff0ef          	jal	ra,90 <mini_pad>
+     954:	85aa                	mv	a1,a0
+					len = puts(bf, len, buf);
+     956:	864a                	mv	a2,s2
+     958:	1028                	addi	a0,sp,40
+     95a:	9482                	jalr	s1
+					break;
+     95c:	bdfd                	j	85a <mini_vpprintf+0x68>
+						if(ch == 'u') {
+     95e:	07500793          	li	a5,117
+     962:	0818                	addi	a4,sp,16
+     964:	00f69463          	bne	a3,a5,96c <mini_vpprintf+0x17a>
+	if (radix > 16)
+     968:	4685                	li	a3,1
+     96a:	bfc9                	j	93c <mini_vpprintf+0x14a>
+     96c:	4681                	li	a3,0
+     96e:	b7f9                	j	93c <mini_vpprintf+0x14a>
+					if(l) {
+     970:	000ba503          	lw	a0,0(s7)
+						len = mini_itoa(va_arg(va, unsigned long), 16, (ch=='X'), 1, bf2);
+     974:	fa868613          	addi	a2,a3,-88
+     978:	0818                	addi	a4,sp,16
+     97a:	4685                	li	a3,1
+     97c:	00163613          	seqz	a2,a2
+     980:	45c1                	li	a1,16
+     982:	85bff0ef          	jal	ra,1dc <mini_itoa.part.0>
+						len = mini_itoa(va_arg(va, unsigned long), 10, 0, (ch=='u'), bf2);
+     986:	004b8b13          	addi	s6,s7,4
+	if (radix > 16)
+     98a:	85aa                	mv	a1,a0
+					len = mini_pad(bf2, len, pad_char, pad_to, bf);
+     98c:	1038                	addi	a4,sp,40
+     98e:	86e6                	mv	a3,s9
+     990:	8662                	mv	a2,s8
+     992:	bf75                	j	94e <mini_vpprintf+0x15c>
+					ch = (char)(va_arg(va, int));
+     994:	000ba783          	lw	a5,0(s7)
+     998:	004b8b13          	addi	s6,s7,4
+					len = mini_pad(&ch, 1, pad_char, pad_to, bf);
+     99c:	1038                	addi	a4,sp,40
+					ch = (char)(va_arg(va, int));
+     99e:	00f107a3          	sb	a5,15(sp)
+					len = mini_pad(&ch, 1, pad_char, pad_to, bf);
+     9a2:	86e6                	mv	a3,s9
+     9a4:	8662                	mv	a2,s8
+     9a6:	4585                	li	a1,1
+     9a8:	00f10513          	addi	a0,sp,15
+     9ac:	b755                	j	950 <mini_vpprintf+0x15e>
+						len = puts(ptr, len, buf);
+     9ae:	864a                	mv	a2,s2
+     9b0:	855e                	mv	a0,s7
+     9b2:	b765                	j	95a <mini_vpprintf+0x168>
+
+000009b4 <mini_vsnprintf>:
+{
+     9b4:	1101                	addi	sp,sp,-32
+     9b6:	ce06                	sw	ra,28(sp)
+     9b8:	cc22                	sw	s0,24(sp)
+	b.buffer = buffer;
+     9ba:	c22a                	sw	a0,4(sp)
+	b.pbuffer = buffer;
+     9bc:	c42a                	sw	a0,8(sp)
+	b.buffer_len = buffer_len;
+     9be:	c62e                	sw	a1,12(sp)
+	if(buffer_len == 0) buffer = (void*) 0;
+     9c0:	c185                	beqz	a1,9e0 <mini_vsnprintf+0x2c>
+     9c2:	842a                	mv	s0,a0
+	int n = mini_vpprintf(_puts, (buffer != (void*)0)?&b:(void*)0, fmt, va);
+     9c4:	004c                	addi	a1,sp,4
+     9c6:	e111                	bnez	a0,9ca <mini_vsnprintf+0x16>
+     9c8:	4581                	li	a1,0
+     9ca:	12c00513          	li	a0,300
+     9ce:	3515                	jal	7f2 <mini_vpprintf>
+	if(buffer == (void*) 0) {
+     9d0:	c401                	beqz	s0,9d8 <mini_vsnprintf+0x24>
+	return b.pbuffer - b.buffer;
+     9d2:	4522                	lw	a0,8(sp)
+     9d4:	4792                	lw	a5,4(sp)
+     9d6:	8d1d                	sub	a0,a0,a5
+}
+     9d8:	40f2                	lw	ra,28(sp)
+     9da:	4462                	lw	s0,24(sp)
+     9dc:	6105                	addi	sp,sp,32
+     9de:	8082                	ret
+	if(buffer_len == 0) buffer = (void*) 0;
+     9e0:	4401                	li	s0,0
+     9e2:	b7dd                	j	9c8 <mini_vsnprintf+0x14>
+
+000009e4 <sprintf>:
+{
+     9e4:	7139                	addi	sp,sp,-64
+     9e6:	d432                	sw	a2,40(sp)
+	int ret = mini_vsnprintf( buffer, INT_MAX, format, args );
+     9e8:	862e                	mv	a2,a1
+     9ea:	800005b7          	lui	a1,0x80000
+{
+     9ee:	d636                	sw	a3,44(sp)
+	int ret = mini_vsnprintf( buffer, INT_MAX, format, args );
+     9f0:	fff5c593          	not	a1,a1
+	va_start( args, format );
+     9f4:	1034                	addi	a3,sp,40
+{
+     9f6:	ce06                	sw	ra,28(sp)
+     9f8:	d83a                	sw	a4,48(sp)
+     9fa:	da3e                	sw	a5,52(sp)
+     9fc:	dc42                	sw	a6,56(sp)
+     9fe:	de46                	sw	a7,60(sp)
+	va_start( args, format );
+     a00:	c636                	sw	a3,12(sp)
+	int ret = mini_vsnprintf( buffer, INT_MAX, format, args );
+     a02:	3f4d                	jal	9b4 <mini_vsnprintf>
+}
+     a04:	40f2                	lw	ra,28(sp)
+     a06:	6121                	addi	sp,sp,64
+     a08:	8082                	ret
+
+00000a0a <DrawCentered.constprop.0>:
+
+uint8_t tx_data[TX_PAYLOAD_LEN];
+uint8_t rx_data[TX_PAYLOAD_LEN];
+
+// Helper to draw centered text
+void DrawCentered(const char *msg, uint16_t y, uint16_t color, uint8_t size) {
+     a0a:	715d                	addi	sp,sp,-80
+     a0c:	c686                	sw	ra,76(sp)
+     a0e:	c4a2                	sw	s0,72(sp)
+     a10:	c0ca                	sw	s2,64(sp)
+     a12:	de4e                	sw	s3,60(sp)
+     a14:	da56                	sw	s5,52(sp)
+     a16:	d85a                	sw	s6,48(sp)
+     a18:	d65e                	sw	s7,44(sp)
+     a1a:	d462                	sw	s8,40(sp)
+     a1c:	d266                	sw	s9,36(sp)
+     a1e:	892e                	mv	s2,a1
+     a20:	c232                	sw	a2,4(sp)
+     a22:	c2a6                	sw	s1,68(sp)
+     a24:	dc52                	sw	s4,56(sp)
+     a26:	d06a                	sw	s10,32(sp)
+     a28:	ce6e                	sw	s11,28(sp)
+     a2a:	89aa                	mv	s3,a0
+  size_t len = strlen(msg);
+  uint16_t width = len * 6 * size;
+     a2c:	4431                	li	s0,12
+  size_t len = strlen(msg);
+     a2e:	3b4d                	jal	7e0 <strlen>
+  uint16_t width = len * 6 * size;
+     a30:	02850433          	mul	s0,a0,s0
+  uint16_t x = (240 - width) / 2;
+     a34:	4789                	li	a5,2
+     a36:	4701                	li	a4,0
+     a38:	46c1                	li	a3,16
+     a3a:	0f000613          	li	a2,240
+     a3e:	85ca                	mv	a1,s2
+     a40:	6a89                	lui	s5,0x2
+}
+
+void GC9A01_DrawString(uint16_t x, uint16_t y, char *str, uint16_t color,
+                       uint16_t bg, uint8_t size) {
+  while (*str) {
+    if (x + 5 * size >= 240) {
+     a42:	0e500b13          	li	s6,229
+      x = 0;
+      y += 8 * size;
+    }
+    if (y + 8 * size >= 240)
+     a46:	0df00b93          	li	s7,223
+  if (c < 32 || c > 127)
+     a4a:	05f00c13          	li	s8,95
+     a4e:	01041513          	slli	a0,s0,0x10
+     a52:	8141                	srli	a0,a0,0x10
+     a54:	0f000413          	li	s0,240
+     a58:	8c09                	sub	s0,s0,a0
+     a5a:	02f44433          	div	s0,s0,a5
+     a5e:	4501                	li	a0,0
+     a60:	3c59                	jal	4f6 <GC9A01_FillRect.part.0>
+     a62:	adca8a93          	addi	s5,s5,-1316 # 1adc <Font5x7>
+    uint8_t line = Font5x7[(c - 32) * 5 + i];
+     a66:	4c95                	li	s9,5
+     a68:	0442                	slli	s0,s0,0x10
+     a6a:	8041                	srli	s0,s0,0x10
+  while (*str) {
+     a6c:	0009c783          	lbu	a5,0(s3)
+     a70:	e385                	bnez	a5,a90 <DrawCentered.constprop.0+0x86>
+  // Clear the line area (assuming max width for safety in clearing)
+  // For a cleaner look, we might simply overwrite background if the font
+  // function supported transparent bg, but here we just fill rect.
+  GC9A01_FillRect(0, y, 240, 8 * size, BLACK);
+  GC9A01_DrawString(x, y, (char *)msg, color, BLACK, size);
+}
+     a72:	40b6                	lw	ra,76(sp)
+     a74:	4426                	lw	s0,72(sp)
+     a76:	4496                	lw	s1,68(sp)
+     a78:	4906                	lw	s2,64(sp)
+     a7a:	59f2                	lw	s3,60(sp)
+     a7c:	5a62                	lw	s4,56(sp)
+     a7e:	5ad2                	lw	s5,52(sp)
+     a80:	5b42                	lw	s6,48(sp)
+     a82:	5bb2                	lw	s7,44(sp)
+     a84:	5c22                	lw	s8,40(sp)
+     a86:	5c92                	lw	s9,36(sp)
+     a88:	5d02                	lw	s10,32(sp)
+     a8a:	4df2                	lw	s11,28(sp)
+     a8c:	6161                	addi	sp,sp,80
+     a8e:	8082                	ret
+    if (x + 5 * size >= 240) {
+     a90:	008b7763          	bgeu	s6,s0,a9e <DrawCentered.constprop.0+0x94>
+      y += 8 * size;
+     a94:	0941                	addi	s2,s2,16
+     a96:	0942                	slli	s2,s2,0x10
+     a98:	01095913          	srli	s2,s2,0x10
+      x = 0;
+     a9c:	4401                	li	s0,0
+    if (y + 8 * size >= 240)
+     a9e:	fd2beae3          	bltu	s7,s2,a72 <DrawCentered.constprop.0+0x68>
+  if (c < 32 || c > 127)
+     aa2:	fe078713          	addi	a4,a5,-32
+     aa6:	0ff77713          	andi	a4,a4,255
+     aaa:	00ec7463          	bgeu	s8,a4,ab2 <DrawCentered.constprop.0+0xa8>
+    c = '?';
+     aae:	03f00793          	li	a5,63
+    uint8_t line = Font5x7[(c - 32) * 5 + i];
+     ab2:	fe078493          	addi	s1,a5,-32
+     ab6:	039484b3          	mul	s1,s1,s9
+     aba:	00a40d13          	addi	s10,s0,10
+     abe:	00e90d93          	addi	s11,s2,14
+     ac2:	0d42                	slli	s10,s10,0x10
+     ac4:	0dc2                	slli	s11,s11,0x10
+     ac6:	010d5d13          	srli	s10,s10,0x10
+     aca:	8522                	mv	a0,s0
+     acc:	010ddd93          	srli	s11,s11,0x10
+     ad0:	94d6                	add	s1,s1,s5
+     ad2:	0004ca03          	lbu	s4,0(s1)
+     ad6:	85ca                	mv	a1,s2
+      if (line & 1) {
+     ad8:	001a7713          	andi	a4,s4,1
+     adc:	cb1d                	beqz	a4,b12 <DrawCentered.constprop.0+0x108>
+     ade:	4712                	lw	a4,4(sp)
+     ae0:	4689                	li	a3,2
+     ae2:	4609                	li	a2,2
+     ae4:	c62e                	sw	a1,12(sp)
+     ae6:	c42a                	sw	a0,8(sp)
+     ae8:	3439                	jal	4f6 <GC9A01_FillRect.part.0>
+     aea:	4522                	lw	a0,8(sp)
+     aec:	45b2                	lw	a1,12(sp)
+    for (int8_t j = 0; j < 7; j++, line >>= 1) {
+     aee:	0589                	addi	a1,a1,2
+     af0:	05c2                	slli	a1,a1,0x10
+     af2:	81c1                	srli	a1,a1,0x10
+     af4:	001a5a13          	srli	s4,s4,0x1
+     af8:	febd90e3          	bne	s11,a1,ad8 <DrawCentered.constprop.0+0xce>
+  for (int8_t i = 0; i < 5; i++) {
+     afc:	0509                	addi	a0,a0,2
+     afe:	0542                	slli	a0,a0,0x10
+     b00:	8141                	srli	a0,a0,0x10
+     b02:	0485                	addi	s1,s1,1
+     b04:	fcad17e3          	bne	s10,a0,ad2 <DrawCentered.constprop.0+0xc8>
+      break;
+    GC9A01_DrawChar(x, y, *str, color, bg, size);
+    x += 6 * size;
+     b08:	0431                	addi	s0,s0,12
+     b0a:	0442                	slli	s0,s0,0x10
+     b0c:	8041                	srli	s0,s0,0x10
+    str++;
+     b0e:	0985                	addi	s3,s3,1
+     b10:	bfb1                	j	a6c <DrawCentered.constprop.0+0x62>
+     b12:	4701                	li	a4,0
+     b14:	4689                	li	a3,2
+     b16:	4609                	li	a2,2
+     b18:	c62e                	sw	a1,12(sp)
+     b1a:	c42a                	sw	a0,8(sp)
+     b1c:	3ae9                	jal	4f6 <GC9A01_FillRect.part.0>
+     b1e:	45b2                	lw	a1,12(sp)
+     b20:	4522                	lw	a0,8(sp)
+     b22:	b7f1                	j	aee <DrawCentered.constprop.0+0xe4>
+
+00000b24 <memset>:
+WEAK void *memset(void *dest, int c, size_t n) { unsigned char *s = dest; for (; n; n--, s++) *s = c; return dest; }
+     b24:	962a                	add	a2,a2,a0
+     b26:	87aa                	mv	a5,a0
+     b28:	00c79363          	bne	a5,a2,b2e <memset+0xa>
+     b2c:	8082                	ret
+     b2e:	00b78023          	sb	a1,0(a5)
+     b32:	0785                	addi	a5,a5,1
+     b34:	bfd5                	j	b28 <memset+0x4>
+
+00000b36 <strncmp>:
+	if (!n--) return 0;
+     b36:	c60d                	beqz	a2,b60 <strncmp+0x2a>
+     b38:	167d                	addi	a2,a2,-1
+     b3a:	4701                	li	a4,0
+	for (; *l && *r && n && *l == *r ; l++, r++, n--);
+     b3c:	00e507b3          	add	a5,a0,a4
+     b40:	0007c783          	lbu	a5,0(a5)
+     b44:	00e586b3          	add	a3,a1,a4
+     b48:	0006c683          	lbu	a3,0(a3)
+     b4c:	c799                	beqz	a5,b5a <strncmp+0x24>
+     b4e:	c691                	beqz	a3,b5a <strncmp+0x24>
+     b50:	00e60563          	beq	a2,a4,b5a <strncmp+0x24>
+     b54:	0705                	addi	a4,a4,1
+     b56:	fed783e3          	beq	a5,a3,b3c <strncmp+0x6>
+	return *l - *r;
+     b5a:	40d78533          	sub	a0,a5,a3
+     b5e:	8082                	ret
+	if (!n--) return 0;
+     b60:	4501                	li	a0,0
+}
+     b62:	8082                	ret
+
+00000b64 <memcpy>:
+{
+     b64:	4781                	li	a5,0
+	for (; n; n--) *d++ = *s++;
+     b66:	00f61363          	bne	a2,a5,b6c <memcpy+0x8>
+}
+     b6a:	8082                	ret
+	for (; n; n--) *d++ = *s++;
+     b6c:	00f58733          	add	a4,a1,a5
+     b70:	00074683          	lbu	a3,0(a4)
+     b74:	00f50733          	add	a4,a0,a5
+     b78:	0785                	addi	a5,a5,1
+     b7a:	00d70023          	sb	a3,0(a4)
+     b7e:	b7e5                	j	b66 <memcpy+0x2>
+
+00000b80 <SystemInit>:
+	}
+	else
+	{
+		if((sc & RB_CLK_SYS_MOD) == 0x40) // PLL div
+		{
+			SYS_SAFE_ACCESS(
+     b80:	400017b7          	lui	a5,0x40001
+     b84:	05700593          	li	a1,87
+     b88:	04b78023          	sb	a1,64(a5) # 40001040 <_eusrstack+0x1fffe040>
+     b8c:	fa800613          	li	a2,-88
+     b90:	04c78023          	sb	a2,64(a5)
+     b94:	0001                	nop
+     b96:	0001                	nop
+     b98:	00a7c703          	lbu	a4,10(a5)
+     b9c:	400026b7          	lui	a3,0x40002
+     ba0:	0ff77713          	andi	a4,a4,255
+     ba4:	01076713          	ori	a4,a4,16
+     ba8:	00e78523          	sb	a4,10(a5)
+     bac:	4705                	li	a4,1
+     bae:	80e683a3          	sb	a4,-2041(a3) # 40001807 <_eusrstack+0x1fffe807>
+     bb2:	8056c703          	lbu	a4,-2043(a3)
+     bb6:	0ff77713          	andi	a4,a4,255
+     bba:	01076713          	ori	a4,a4,16
+     bbe:	80e682a3          	sb	a4,-2043(a3)
+     bc2:	04078023          	sb	zero,64(a5)
+     bc6:	0001                	nop
+     bc8:	0001                	nop
+		{
+			SYS_SAFE_ACCESS(
+				R8_FLASH_CFG = (sc & 0x1F) ? 0x02 : 0x07;
+			);
+		}
+		SYS_SAFE_ACCESS(
+     bca:	04b78023          	sb	a1,64(a5)
+     bce:	04c78023          	sb	a2,64(a5)
+     bd2:	0001                	nop
+     bd4:	0001                	nop
+     bd6:	04a00713          	li	a4,74
+     bda:	00e78423          	sb	a4,8(a5)
+     bde:	04078023          	sb	zero,64(a5)
+     be2:	0001                	nop
+     be4:	0001                	nop
+	*DMDATA1 = 0x00;
+     be6:	e00007b7          	lui	a5,0xe0000
+     bea:	3407a223          	sw	zero,836(a5) # e0000344 <_eusrstack+0xbfffd344>
+	*DMDATA0 = 0x80;
+     bee:	08000713          	li	a4,128
+     bf2:	34e7a023          	sw	a4,832(a5)
+	SetupDebugPrintf();
+#endif
+#if defined(FUNCONF_SUPPORT_CONSTRUCTORS) && FUNCONF_SUPPORT_CONSTRUCTORS
+	CallConstructors();
+#endif
+}
+     bf6:	8082                	ret
+
+00000bf8 <main>:
+
+int main() {
+     bf8:	7175                	addi	sp,sp,-144
+     bfa:	c706                	sw	ra,140(sp)
+     bfc:	c522                	sw	s0,136(sp)
+     bfe:	c326                	sw	s1,132(sp)
+     c00:	0900                	addi	s0,sp,144
+     c02:	c14a                	sw	s2,128(sp)
+     c04:	dece                	sw	s3,124(sp)
+     c06:	dcd2                	sw	s4,120(sp)
+     c08:	dad6                	sw	s5,116(sp)
+     c0a:	d8da                	sw	s6,112(sp)
+     c0c:	d6de                	sw	s7,108(sp)
+     c0e:	d4e2                	sw	s8,104(sp)
+     c10:	d2e6                	sw	s9,100(sp)
+     c12:	d0ea                	sw	s10,96(sp)
+     c14:	ceee                	sw	s11,92(sp)
+  SystemInit();
+     c16:	37ad                	jal	b80 <SystemInit>
+	LL->LL5 = 0x8c;
+     c18:	4000c637          	lui	a2,0x4000c
+     c1c:	20060793          	addi	a5,a2,512 # 4000c200 <_eusrstack+0x20009200>
+     c20:	08c00713          	li	a4,140
+     c24:	cbd8                	sw	a4,20(a5)
+	LL->LL7 = 0x76;
+     c26:	07600693          	li	a3,118
+     c2a:	cfd4                	sw	a3,28(a5)
+	LL->LL9 = 0x8c;
+     c2c:	d3d8                	sw	a4,36(a5)
+	LL->LL13 = 0x8c;
+     c2e:	dbd8                	sw	a4,52(a5)
+	LL->LL17 = 0x8c;
+     c30:	c3f8                	sw	a4,68(a5)
+	LL->LL19 = 0x76;
+     c32:	c7f4                	sw	a3,76(a5)
+	LL->LL11 = 0x6c;
+     c34:	06c00713          	li	a4,108
+     c38:	d7d8                	sw	a4,44(a5)
+	LL->LL15 = 0x6c;
+     c3a:	dfd8                	sw	a4,60(a5)
+	LL->LL1 = 0x78;
+     c3c:	07800713          	li	a4,120
+     c40:	c3d8                	sw	a4,4(a5)
+	LL->INT_EN = 0x16000f;
+     c42:	00160737          	lui	a4,0x160
+	LL->LL21 = 0;
+     c46:	0407aa23          	sw	zero,84(a5)
+	LL->INT_EN = 0x16000f;
+     c4a:	073d                	addi	a4,a4,15
+     c4c:	c7d8                	sw	a4,12(a5)
+	LL->STATE_BUF = (uint32_t)LLE_BUF;
+     c4e:	c1418713          	addi	a4,gp,-1004 # 20000010 <LLE_BUF>
+     c52:	dff8                	sw	a4,124(a5)
+	LL->STATUS = 0xffffffff;
+     c54:	577d                	li	a4,-1
+	RF->RF10 = 0x480;
+     c56:	4000d4b7          	lui	s1,0x4000d
+	LL->STATUS = 0xffffffff;
+     c5a:	c798                	sw	a4,8(a5)
+	RF->RF10 = 0x480;
+     c5c:	48000793          	li	a5,1152
+     c60:	d49c                	sw	a5,40(s1)
+	RF->RF12 &= 0xfff9ffff;
+     c62:	589c                	lw	a5,48(s1)
+     c64:	fffa0737          	lui	a4,0xfffa0
+     c68:	177d                	addi	a4,a4,-1
+     c6a:	8ff9                	and	a5,a5,a4
+     c6c:	d89c                	sw	a5,48(s1)
+	RF->RF12 |= 0x70000000;
+     c6e:	589c                	lw	a5,48(s1)
+     c70:	70000737          	lui	a4,0x70000
+	RF->RF15 = (RF->RF15 & 0xf8ffffff) | 0x2000000;
+     c74:	020006b7          	lui	a3,0x2000
+	RF->RF12 |= 0x70000000;
+     c78:	8fd9                	or	a5,a5,a4
+     c7a:	d89c                	sw	a5,48(s1)
+	RF->RF15 = (RF->RF15 & 0xf8ffffff) | 0x2000000;
+     c7c:	5cd8                	lw	a4,60(s1)
+     c7e:	f90007b7          	lui	a5,0xf9000
+     c82:	17fd                	addi	a5,a5,-1
+     c84:	8f7d                	and	a4,a4,a5
+     c86:	8f55                	or	a4,a4,a3
+     c88:	dcd8                	sw	a4,60(s1)
+	RF->RF15 = (RF->RF15 & 0x1fffffff) | 0x40000000;
+     c8a:	5cdc                	lw	a5,60(s1)
+     c8c:	40000737          	lui	a4,0x40000
+	BB->BB14 = 0x2020c;
+     c90:	00020937          	lui	s2,0x20
+	RF->RF15 = (RF->RF15 & 0x1fffffff) | 0x40000000;
+     c94:	078e                	slli	a5,a5,0x3
+     c96:	838d                	srli	a5,a5,0x3
+     c98:	8fd9                	or	a5,a5,a4
+     c9a:	dcdc                	sw	a5,60(s1)
+	RF->RF18 &= 0xfff8ffff;
+     c9c:	44bc                	lw	a5,72(s1)
+     c9e:	fff90737          	lui	a4,0xfff90
+     ca2:	177d                	addi	a4,a4,-1
+     ca4:	8ff9                	and	a5,a5,a4
+     ca6:	c4bc                	sw	a5,72(s1)
+	RF->RF20 = (RF->RF20 & 0xfffff8ff) | 0x300;
+     ca8:	48b8                	lw	a4,80(s1)
+	BB->CTRL_TX = (BB->CTRL_TX & 0x1ffffff) | (TxPower | 0x40) << 0x19;
+     caa:	16fd                	addi	a3,a3,-1
+	NVIC->VTFIDR[3] = 0x14;
+     cac:	4cd1                	li	s9,20
+	RF->RF20 = (RF->RF20 & 0xfffff8ff) | 0x300;
+     cae:	8ff77713          	andi	a4,a4,-1793
+     cb2:	30076713          	ori	a4,a4,768
+     cb6:	c8b8                	sw	a4,80(s1)
+	RF->RF23 |= 0x70000;
+     cb8:	4cfc                	lw	a5,92(s1)
+     cba:	00070737          	lui	a4,0x70
+	RF->RF3 = (RF->RF3 & 0xfffffeff) | 0x100;
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+}
+
+void RegInit() {
+	DevSetMode(DEVSETMODE_TUNE);
+     cbe:	55800513          	li	a0,1368
+	RF->RF23 |= 0x70000;
+     cc2:	8fd9                	or	a5,a5,a4
+     cc4:	ccfc                	sw	a5,92(s1)
+	RF->RF23 |= 0x700000;
+     cc6:	4cfc                	lw	a5,92(s1)
+     cc8:	00700737          	lui	a4,0x700
+     ccc:	c1418b93          	addi	s7,gp,-1004 # 20000010 <LLE_BUF>
+     cd0:	8fd9                	or	a5,a5,a4
+     cd2:	ccfc                	sw	a5,92(s1)
+	BB->BB14 = 0x2020c;
+     cd4:	10060713          	addi	a4,a2,256
+     cd8:	20c90793          	addi	a5,s2,524 # 2020c <radio.c.b2977aab+0x1baa1>
+     cdc:	df1c                	sw	a5,56(a4)
+	BB->BB15 = 0x50;
+     cde:	05000793          	li	a5,80
+     ce2:	df5c                	sw	a5,60(a4)
+	BB->CTRL_TX = (BB->CTRL_TX & 0x1ffffff) | (TxPower | 0x40) << 0x19;
+     ce4:	5b5c                	lw	a5,52(a4)
+     ce6:	8ff5                	and	a5,a5,a3
+     ce8:	a00006b7          	lui	a3,0xa0000
+     cec:	8fd5                	or	a5,a5,a3
+     cee:	db5c                	sw	a5,52(a4)
+	BB->CTRL_CFG &= 0xfffffcff;
+     cf0:	10062703          	lw	a4,256(a2)
+	NVIC->VTFIDR[3] = 0x14;
+     cf4:	e000e7b7          	lui	a5,0xe000e
+	BB->CTRL_CFG &= 0xfffffcff;
+     cf8:	cff77713          	andi	a4,a4,-769
+     cfc:	10e62023          	sw	a4,256(a2)
+	NVIC->VTFIDR[3] = 0x14;
+     d00:	059789a3          	sb	s9,83(a5) # e000e053 <_eusrstack+0xc000b053>
+	DevSetMode(DEVSETMODE_TUNE);
+     d04:	d66ff0ef          	jal	ra,26a <DevSetMode>
+	RF->RF1 &= 0xfffffeff;
+     d08:	40d8                	lw	a4,4(s1)
+	RF->RF10 &= 0xffffefff;
+     d0a:	76fd                	lui	a3,0xfffff
+     d0c:	16fd                	addi	a3,a3,-1
+	RF->RF1 &= 0xfffffeff;
+     d0e:	eff77713          	andi	a4,a4,-257
+     d12:	c0d8                	sw	a4,4(s1)
+	RF->RF10 &= 0xffffefff;
+     d14:	5498                	lw	a4,40(s1)
+	uint32_t tune2401 = RFEND_TXCTune(37);
+     d16:	02500513          	li	a0,37
+	RF->RF10 &= 0xffffefff;
+     d1a:	8f75                	and	a4,a4,a3
+     d1c:	d498                	sw	a4,40(s1)
+	RF->RF11 &= 0xffffffef;
+     d1e:	54d8                	lw	a4,44(s1)
+     d20:	9b3d                	andi	a4,a4,-17
+     d22:	d4d8                	sw	a4,44(s1)
+	RF->RF2 |= 0x20000;
+     d24:	449c                	lw	a5,8(s1)
+     d26:	0127e7b3          	or	a5,a5,s2
+     d2a:	c49c                	sw	a5,8(s1)
+	RF->RF1 |= 0x10;
+     d2c:	40dc                	lw	a5,4(s1)
+     d2e:	0107e793          	ori	a5,a5,16
+     d32:	c0dc                	sw	a5,4(s1)
+	uint32_t tune2401 = RFEND_TXCTune(37);
+     d34:	d88ff0ef          	jal	ra,2bc <RFEND_TXCTune>
+     d38:	84aa                	mv	s1,a0
+	uint8_t nGA2401 = (uint8_t)(tune2401 >> 24) & 0x7f;
+     d3a:	01855b13          	srli	s6,a0,0x18
+	uint32_t tune2480 = RFEND_TXCTune(39);
+     d3e:	02700513          	li	a0,39
+     d42:	d7aff0ef          	jal	ra,2bc <RFEND_TXCTune>
+	uint8_t nGA2480 = (uint8_t)(tune2480 >> 24) & 0x7f;
+     d46:	01855993          	srli	s3,a0,0x18
+	uint32_t tune2480 = RFEND_TXCTune(39);
+     d4a:	8a2a                	mv	s4,a0
+	uint32_t tune2440 = RFEND_TXCTune(18);
+     d4c:	4549                	li	a0,18
+     d4e:	d6eff0ef          	jal	ra,2bc <RFEND_TXCTune>
+	uint8_t nCO2440 = (uint8_t)(tune2440 & 0x3f);
+     d52:	03f57a93          	andi	s5,a0,63
+	uint8_t txctune_co[sizeof(RF->TXCTUNE_CO)] = {0};
+     d56:	02400613          	li	a2,36
+     d5a:	4581                	li	a1,0
+	uint8_t nGA2480 = (uint8_t)(tune2480 >> 24) & 0x7f;
+     d5c:	07f9fc13          	andi	s8,s3,127
+	uint32_t tune2440 = RFEND_TXCTune(18);
+     d60:	892a                	mv	s2,a0
+	uint8_t nGA2440 = (uint8_t)(tune2440 >> 24) & 0x7f;
+     d62:	01855993          	srli	s3,a0,0x18
+	uint32_t dCO0140 = nCO2401 - nCO2440;
+     d66:	03f4f493          	andi	s1,s1,63
+	uint8_t txctune_co[sizeof(RF->TXCTUNE_CO)] = {0};
+     d6a:	f9c40513          	addi	a0,s0,-100
+	uint32_t dCO0140 = nCO2401 - nCO2440;
+     d6e:	415484b3          	sub	s1,s1,s5
+	uint8_t txctune_co[sizeof(RF->TXCTUNE_CO)] = {0};
+     d72:	f8042c23          	sw	zero,-104(s0)
+     d76:	337d                	jal	b24 <memset>
+     d78:	03948733          	mul	a4,s1,s9
+	uint32_t dCO4080 = nCO2440 - nCO2480;
+     d7c:	03fa7a13          	andi	s4,s4,63
+		txctune_co[f] = tune | (tune << 4);
+     d80:	6605                	lui	a2,0x1
+	uint8_t nGA2401 = (uint8_t)(tune2401 >> 24) & 0x7f;
+     d82:	07fb7b13          	andi	s6,s6,127
+	uint8_t nGA2440 = (uint8_t)(tune2440 >> 24) & 0x7f;
+     d86:	07f9f993          	andi	s3,s3,127
+	uint32_t dCO4080 = nCO2440 - nCO2480;
+     d8a:	414a8a33          	sub	s4,s5,s4
+	for(int f = 0; f < int_points; f++) {
+     d8e:	4781                	li	a5,0
+		tune = (dCO0140 * (int_points -f)) / int_points;
+     d90:	45d1                	li	a1,20
+		txctune_co[f] = tune | (tune << 4);
+     d92:	1641                	addi	a2,a2,-16
+     d94:	f9840693          	addi	a3,s0,-104
+		tune = (dCO0140 * (int_points -f)) / int_points;
+     d98:	02b75533          	divu	a0,a4,a1
+		txctune_co[f] = tune | (tune << 4);
+     d9c:	00f68833          	add	a6,a3,a5
+	for(int f = 0; f < int_points; f++) {
+     da0:	0785                	addi	a5,a5,1
+     da2:	8f05                	sub	a4,a4,s1
+		txctune_co[f] = tune | (tune << 4);
+     da4:	00451693          	slli	a3,a0,0x4
+     da8:	8ef1                	and	a3,a3,a2
+     daa:	8ec9                	or	a3,a3,a0
+     dac:	00d80023          	sb	a3,0(a6)
+	for(int f = 0; f < int_points; f++) {
+     db0:	feb792e3          	bne	a5,a1,d94 <main+0x19c>
+		txctune_co[f] = tune | (tune << 4);
+     db4:	6605                	lui	a2,0x1
+	for(int f = 0; f < int_points; f++) {
+     db6:	4681                	li	a3,0
+		tune = (dCO4080 * (f -int_points)) / int_points;
+     db8:	48d1                	li	a7,20
+		txctune_co[f] = tune | (tune << 4);
+     dba:	1641                	addi	a2,a2,-16
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_CO); f++) {
+     dbc:	02800513          	li	a0,40
+		tune = (dCO4080 * (f -int_points)) / int_points;
+     dc0:	0316d5b3          	divu	a1,a3,a7
+		txctune_co[f] = tune | (tune << 4);
+     dc4:	f9840713          	addi	a4,s0,-104
+     dc8:	00f70833          	add	a6,a4,a5
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_CO); f++) {
+     dcc:	0785                	addi	a5,a5,1
+     dce:	96d2                	add	a3,a3,s4
+		txctune_co[f] = tune | (tune << 4);
+     dd0:	00459713          	slli	a4,a1,0x4
+     dd4:	8f71                	and	a4,a4,a2
+     dd6:	8f4d                	or	a4,a4,a1
+     dd8:	00e80023          	sb	a4,0(a6)
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_CO); f++) {
+     ddc:	fea792e3          	bne	a5,a0,dc0 <main+0x1c8>
+     de0:	f9840693          	addi	a3,s0,-104
+	for(int i = 0; i < sizeof(txctune_co) /4; i++) {
+     de4:	4701                	li	a4,0
+		RF->TXCTUNE_CO[i] = ((uint32_t*)txctune_co)[i];
+     de6:	4000d537          	lui	a0,0x4000d
+	for(int i = 0; i < sizeof(txctune_co) /4; i++) {
+     dea:	4629                	li	a2,10
+		RF->TXCTUNE_CO[i] = ((uint32_t*)txctune_co)[i];
+     dec:	428c                	lw	a1,0(a3)
+     dee:	02870793          	addi	a5,a4,40 # 700028 <radio.c.b2977aab+0x6fb8bd>
+     df2:	078a                	slli	a5,a5,0x2
+     df4:	97aa                	add	a5,a5,a0
+     df6:	c38c                	sw	a1,0(a5)
+	for(int i = 0; i < sizeof(txctune_co) /4; i++) {
+     df8:	0705                	addi	a4,a4,1
+     dfa:	0691                	addi	a3,a3,4
+     dfc:	fec718e3          	bne	a4,a2,dec <main+0x1f4>
+	uint32_t dGA0140 = nGA2401 - nGA2440;
+     e00:	413b0b33          	sub	s6,s6,s3
+	uint32_t dGA4080 = nGA2440 - nGA2480;
+     e04:	4695                	li	a3,5
+     e06:	02db06b3          	mul	a3,s6,a3
+		txctune_ga[f] = tune | (tune << 4);
+     e0a:	6705                	lui	a4,0x1
+	uint32_t dGA4080 = nGA2440 - nGA2480;
+     e0c:	418989b3          	sub	s3,s3,s8
+	uint8_t txctune_ga[sizeof(RF->TXCTUNE_GA)] = {0};
+     e10:	f8042623          	sw	zero,-116(s0)
+     e14:	f8042823          	sw	zero,-112(s0)
+     e18:	f8042a23          	sw	zero,-108(s0)
+	for(int f = 1; f < int_points; f++) {
+     e1c:	4785                	li	a5,1
+		tune = (dGA0140 * (int_points -f)) / int_points;
+     e1e:	4599                	li	a1,6
+		txctune_ga[f] = tune | (tune << 4);
+     e20:	1741                	addi	a4,a4,-16
+     e22:	f8c40613          	addi	a2,s0,-116
+		tune = (dGA0140 * (int_points -f)) / int_points;
+     e26:	02b6d533          	divu	a0,a3,a1
+		txctune_ga[f] = tune | (tune << 4);
+     e2a:	00f60833          	add	a6,a2,a5
+	for(int f = 1; f < int_points; f++) {
+     e2e:	0785                	addi	a5,a5,1
+     e30:	416686b3          	sub	a3,a3,s6
+		txctune_ga[f] = tune | (tune << 4);
+     e34:	00451613          	slli	a2,a0,0x4
+     e38:	8e79                	and	a2,a2,a4
+     e3a:	8e49                	or	a2,a2,a0
+     e3c:	00c80023          	sb	a2,0(a6)
+	for(int f = 1; f < int_points; f++) {
+     e40:	feb791e3          	bne	a5,a1,e22 <main+0x22a>
+		txctune_ga[f] = tune | (tune << 4);
+     e44:	6605                	lui	a2,0x1
+	for(int f = 1; f < int_points; f++) {
+     e46:	4701                	li	a4,0
+		tune = (dGA4080 * (f -int_points)) / int_points;
+     e48:	4319                	li	t1,6
+		txctune_ga[f] = tune | (tune << 4);
+     e4a:	ff060893          	addi	a7,a2,-16 # ff0 <main+0x3f8>
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_GA) -1; f++) {
+     e4e:	452d                	li	a0,11
+		tune = (dGA4080 * (f -int_points)) / int_points;
+     e50:	026755b3          	divu	a1,a4,t1
+		txctune_ga[f] = tune | (tune << 4);
+     e54:	f8c40693          	addi	a3,s0,-116
+     e58:	00f68833          	add	a6,a3,a5
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_GA) -1; f++) {
+     e5c:	0785                	addi	a5,a5,1
+     e5e:	974e                	add	a4,a4,s3
+		txctune_ga[f] = tune | (tune << 4);
+     e60:	00459693          	slli	a3,a1,0x4
+     e64:	0116f6b3          	and	a3,a3,a7
+     e68:	8ecd                	or	a3,a3,a1
+     e6a:	00d80023          	sb	a3,0(a6)
+	for(int f = int_points; f < sizeof(RF->TXCTUNE_GA) -1; f++) {
+     e6e:	fea791e3          	bne	a5,a0,e50 <main+0x258>
+		RF->TXCTUNE_GA[i] = ((uint32_t*)txctune_ga)[i];
+     e72:	f8c42683          	lw	a3,-116(s0)
+     e76:	4000d7b7          	lui	a5,0x4000d
+     e7a:	08078713          	addi	a4,a5,128 # 4000d080 <_eusrstack+0x2000a080>
+     e7e:	c734                	sw	a3,72(a4)
+     e80:	f9042683          	lw	a3,-112(s0)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0x80ffffff) | (tune2440 & 0x7f000000);
+     e84:	7f000537          	lui	a0,0x7f000
+     e88:	00a97933          	and	s2,s2,a0
+		RF->TXCTUNE_GA[i] = ((uint32_t*)txctune_ga)[i];
+     e8c:	c774                	sw	a3,76(a4)
+     e8e:	f9442683          	lw	a3,-108(s0)
+     e92:	cb34                	sw	a3,80(a4)
+	RF->RF1 &= 0xffffffef;
+     e94:	43d8                	lw	a4,4(a5)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0x80ffffff) | (tune2440 & 0x7f000000);
+     e96:	810006b7          	lui	a3,0x81000
+     e9a:	16fd                	addi	a3,a3,-1
+	RF->RF1 &= 0xffffffef;
+     e9c:	9b3d                	andi	a4,a4,-17
+     e9e:	c3d8                	sw	a4,4(a5)
+	RF->RF1 &= 0xfffffffe;
+     ea0:	43d8                	lw	a4,4(a5)
+     ea2:	9b79                	andi	a4,a4,-2
+     ea4:	c3d8                	sw	a4,4(a5)
+	RF->RF10 |= 0x1000;
+     ea6:	5798                	lw	a4,40(a5)
+     ea8:	8f51                	or	a4,a4,a2
+     eaa:	d798                	sw	a4,40(a5)
+	RF->RF11 |= 0x10;
+     eac:	57d8                	lw	a4,44(a5)
+     eae:	01076713          	ori	a4,a4,16
+     eb2:	d7d8                	sw	a4,44(a5)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0xffffffc0) | (tune2440 & 0x3f);
+     eb4:	5f98                	lw	a4,56(a5)
+     eb6:	fc077713          	andi	a4,a4,-64
+     eba:	01576733          	or	a4,a4,s5
+     ebe:	df98                	sw	a4,56(a5)
+	RF->TXTUNE_CTRL = (RF->TXTUNE_CTRL & 0x80ffffff) | (tune2440 & 0x7f000000);
+     ec0:	5f98                	lw	a4,56(a5)
+     ec2:	8f75                	and	a4,a4,a3
+     ec4:	01276933          	or	s2,a4,s2
+     ec8:	0327ac23          	sw	s2,56(a5)
+	RF->RF1 |= 0x100;
+     ecc:	43d8                	lw	a4,4(a5)
+	RF->RF20 &= 0xfffeffff;
+     ece:	76c1                	lui	a3,0xffff0
+     ed0:	16fd                	addi	a3,a3,-1
+	RF->RF1 |= 0x100;
+     ed2:	10076713          	ori	a4,a4,256
+     ed6:	c3d8                	sw	a4,4(a5)
+	RF->RF20 &= 0xfffeffff;
+     ed8:	4bb8                	lw	a4,80(a5)
+     eda:	8f75                	and	a4,a4,a3
+     edc:	cbb8                	sw	a4,80(a5)
+	RF->RF2 |= 0x200000;
+     ede:	4798                	lw	a4,8(a5)
+     ee0:	002006b7          	lui	a3,0x200
+     ee4:	8f55                	or	a4,a4,a3
+     ee6:	c798                	sw	a4,8(a5)
+	RF->RF3 = (RF->RF3 & 0xffffffef) | 0x10;
+     ee8:	47d8                	lw	a4,12(a5)
+	while(LL->TMR && ((RF->RXTUNE >> 8) & 1));
+     eea:	4000c6b7          	lui	a3,0x4000c
+	RF->RF3 = (RF->RF3 & 0xffffffef) | 0x10;
+     eee:	01076713          	ori	a4,a4,16
+     ef2:	c7d8                	sw	a4,12(a5)
+	RF->RF1 |= 0x1000;
+     ef4:	43d8                	lw	a4,4(a5)
+     ef6:	8f51                	or	a4,a4,a2
+     ef8:	c3d8                	sw	a4,4(a5)
+	LL->TMR = 100;
+     efa:	4000c7b7          	lui	a5,0x4000c
+     efe:	06400713          	li	a4,100
+     f02:	20078793          	addi	a5,a5,512 # 4000c200 <_eusrstack+0x20009200>
+     f06:	d3f8                	sw	a4,100(a5)
+	while(LL->TMR && ((RF->RXTUNE >> 8) & 1));
+     f08:	4000d737          	lui	a4,0x4000d
+     f0c:	20068793          	addi	a5,a3,512 # 4000c200 <_eusrstack+0x20009200>
+     f10:	53fc                	lw	a5,100(a5)
+     f12:	c791                	beqz	a5,f1e <main+0x326>
+     f14:	09c72783          	lw	a5,156(a4) # 4000d09c <_eusrstack+0x2000a09c>
+     f18:	1007f793          	andi	a5,a5,256
+     f1c:	fbe5                	bnez	a5,f0c <main+0x314>
+	tuneFilter = RF->RXTUNE & 0x1f;
+     f1e:	4000d7b7          	lui	a5,0x4000d
+     f22:	08078713          	addi	a4,a5,128 # 4000d080 <_eusrstack+0x2000a080>
+     f26:	4f58                	lw	a4,28(a4)
+     f28:	c0c18693          	addi	a3,gp,-1012 # 20000008 <tuneFilter>
+     f2c:	8b7d                	andi	a4,a4,31
+     f2e:	c298                	sw	a4,0(a3)
+	RF->RF20 |= 0x10000;
+     f30:	4bb8                	lw	a4,80(a5)
+     f32:	6641                	lui	a2,0x10
+     f34:	c0c18c13          	addi	s8,gp,-1012 # 20000008 <tuneFilter>
+     f38:	8f51                	or	a4,a4,a2
+     f3a:	cbb8                	sw	a4,80(a5)
+	RF->RF20 = (RF->RF20 & 0xffffffe0) | tuneFilter;
+     f3c:	4bb8                	lw	a4,80(a5)
+     f3e:	4290                	lw	a2,0(a3)
+     f40:	9b01                	andi	a4,a4,-32
+     f42:	8f51                	or	a4,a4,a2
+     f44:	cbb8                	sw	a4,80(a5)
+	RF->RF2 &= 0xffdfffff;
+     f46:	4798                	lw	a4,8(a5)
+     f48:	ffe00637          	lui	a2,0xffe00
+     f4c:	167d                	addi	a2,a2,-1
+     f4e:	8f71                	and	a4,a4,a2
+     f50:	c798                	sw	a4,8(a5)
+	tuneFilter2M = (tuneFilter +2 < 0x1f) ? (tuneFilter +2) : 0x1f;
+     f52:	4298                	lw	a4,0(a3)
+     f54:	46f9                	li	a3,30
+     f56:	47fd                	li	a5,31
+     f58:	0709                	addi	a4,a4,2
+     f5a:	00e6e563          	bltu	a3,a4,f64 <main+0x36c>
+     f5e:	000c2783          	lw	a5,0(s8)
+     f62:	0789                	addi	a5,a5,2
+     f64:	c0f1a823          	sw	a5,-1008(gp) # 2000000c <tuneFilter2M>
+	RF->RF22 &= 0xfffeffff;
+     f68:	4000d7b7          	lui	a5,0x4000d
+     f6c:	4fb8                	lw	a4,88(a5)
+     f6e:	76c1                	lui	a3,0xffff0
+     f70:	16fd                	addi	a3,a3,-1
+     f72:	8f75                	and	a4,a4,a3
+     f74:	cfb8                	sw	a4,88(a5)
+	RF->RF2 |= 0x10000;
+     f76:	4798                	lw	a4,8(a5)
+     f78:	69c1                	lui	s3,0x10
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+     f7a:	ffef06b7          	lui	a3,0xffef0
+	RF->RF2 |= 0x10000;
+     f7e:	01376733          	or	a4,a4,s3
+     f82:	c798                	sw	a4,8(a5)
+	RF->RF3 = (RF->RF3 & 0xfffffeff) | 0x100;
+     f84:	47d8                	lw	a4,12(a5)
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+     f86:	16fd                	addi	a3,a3,-1
+	RFEND_TXTune();
+	RFEND_RXTune();
+	DevSetMode(0);
+     f88:	4501                	li	a0,0
+	RF->RF3 = (RF->RF3 & 0xfffffeff) | 0x100;
+     f8a:	10076713          	ori	a4,a4,256
+     f8e:	c7d8                	sw	a4,12(a5)
+	RF->RF1 = (RF->RF1 & 0xfffeffff) | 0x100000;
+     f90:	43d8                	lw	a4,4(a5)
+  R32_PA_CLR = PIN_SCK_MASK;
+     f92:	400014b7          	lui	s1,0x40001
+     f96:	08048493          	addi	s1,s1,128 # 40001080 <_eusrstack+0x1fffe080>
+     f9a:	8f75                	and	a4,a4,a3
+     f9c:	001006b7          	lui	a3,0x100
+     fa0:	8f55                	or	a4,a4,a3
+     fa2:	c3d8                	sw	a4,4(a5)
+	DevSetMode(0);
+     fa4:	ac6ff0ef          	jal	ra,26a <DevSetMode>
+	NVIC->IENR[0] = 0x1000;
+	NVIC->IRER[0] = 0x1000;
+#endif
+	DevInit(TxPower);
+	RegInit();
+	NVIC->IPRIOR[0x15] |= 0x80;
+     fa8:	e000e737          	lui	a4,0xe000e
+     fac:	41574783          	lbu	a5,1045(a4) # e000e415 <_eusrstack+0xc000b415>
+  funPinMode(PA5, GPIO_CFGLR_OUT_10Mhz_PP);
+     fb0:	02000513          	li	a0,32
+  funPinMode(PIN_DC, GPIO_CFGLR_OUT_10Mhz_PP);
+     fb4:	6905                	lui	s2,0x1
+     fb6:	f807e793          	ori	a5,a5,-128
+     fba:	0ff7f793          	andi	a5,a5,255
+     fbe:	40f70aa3          	sb	a5,1045(a4)
+	NVIC->IENR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
+     fc2:	002007b7          	lui	a5,0x200
+     fc6:	10f72023          	sw	a5,256(a4)
+     fca:	f2cff0ef          	jal	ra,6f6 <funPinMode.constprop.0>
+  funPinMode(PA7, GPIO_CFGLR_OUT_10Mhz_PP);
+     fce:	08000513          	li	a0,128
+     fd2:	f24ff0ef          	jal	ra,6f6 <funPinMode.constprop.0>
+  R32_PA_CLR = PIN_SCK_MASK;
+     fd6:	02000793          	li	a5,32
+     fda:	d4dc                	sw	a5,44(s1)
+  R32_PA_CLR = PIN_MOSI_MASK;
+     fdc:	08000793          	li	a5,128
+     fe0:	d4dc                	sw	a5,44(s1)
+  funPinMode(PIN_CS, GPIO_CFGLR_OUT_10Mhz_PP);
+     fe2:	4541                	li	a0,16
+     fe4:	f12ff0ef          	jal	ra,6f6 <funPinMode.constprop.0>
+  funPinMode(PIN_DC, GPIO_CFGLR_OUT_10Mhz_PP);
+     fe8:	80090513          	addi	a0,s2,-2048 # 800 <mini_vpprintf+0xe>
+     fec:	f0aff0ef          	jal	ra,6f6 <funPinMode.constprop.0>
+  funPinMode(PIN_RST, GPIO_CFGLR_OUT_10Mhz_PP);
+     ff0:	40000513          	li	a0,1024
+     ff4:	f02ff0ef          	jal	ra,6f6 <funPinMode.constprop.0>
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     ff8:	549c                	lw	a5,40(s1)
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+     ffa:	80090913          	addi	s2,s2,-2048
+  funDigitalWrite(PIN_CS, FUN_HIGH);
+     ffe:	0107e793          	ori	a5,a5,16
+    1002:	d49c                	sw	a5,40(s1)
+  funDigitalWrite(PIN_DC, FUN_HIGH);
+    1004:	549c                	lw	a5,40(s1)
+	// Uncomment to disable whitening to debug RF.
+	//BB->CTRL_CFG |= (1<<6);
+	DevSetMode(DEVSETMODE_TX);
+
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+	BB->CRCINIT1 = 0x555555; // crc init
+    1006:	00555a37          	lui	s4,0x555
+#ifdef CH570_CH572
+	BB->ACCESSADDRESS2 = 0x8E89BED6;
+	BB->CRCINIT2 = 0x555555;
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+    100a:	00800ab7          	lui	s5,0x800
+    100e:	0127e933          	or	s2,a5,s2
+    1012:	0324a423          	sw	s2,40(s1)
+  funDigitalWrite(PIN_RST, FUN_HIGH);
+    1016:	549c                	lw	a5,40(s1)
+  Delay_Ms(100);
+    1018:	000b7937          	lui	s2,0xb7
+    101c:	1b090513          	addi	a0,s2,432 # b71b0 <radio.c.b2977aab+0xb2a45>
+  funDigitalWrite(PIN_RST, FUN_HIGH);
+    1020:	4007e793          	ori	a5,a5,1024
+    1024:	d49c                	sw	a5,40(s1)
+  Delay_Ms(100);
+    1026:	9a0ff0ef          	jal	ra,1c6 <DelaySysTick>
+  funDigitalWrite(PIN_RST, FUN_LOW);
+    102a:	54dc                	lw	a5,44(s1)
+  Delay_Ms(100);
+    102c:	1b090513          	addi	a0,s2,432
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+										  CTRL_CFG_PHY_1M; // default 1M for now
+#endif
+
+#if defined(CH570_CH572)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    1030:	fa000cb7          	lui	s9,0xfa000
+  funDigitalWrite(PIN_RST, FUN_LOW);
+    1034:	4007e793          	ori	a5,a5,1024
+    1038:	d4dc                	sw	a5,44(s1)
+  Delay_Ms(100);
+    103a:	98cff0ef          	jal	ra,1c6 <DelaySysTick>
+  funDigitalWrite(PIN_RST, FUN_HIGH);
+    103e:	549c                	lw	a5,40(s1)
+  Delay_Ms(200);
+    1040:	0016e537          	lui	a0,0x16e
+    1044:	36050513          	addi	a0,a0,864 # 16e360 <radio.c.b2977aab+0x169bf5>
+  funDigitalWrite(PIN_RST, FUN_HIGH);
+    1048:	4007e793          	ori	a5,a5,1024
+    104c:	d49c                	sw	a5,40(s1)
+  Delay_Ms(200);
+    104e:	978ff0ef          	jal	ra,1c6 <DelaySysTick>
+  GC9A01_WriteCmd(0xEF);
+    1052:	0ef00513          	li	a0,239
+    1056:	c38ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteCmd(0xEB);
+    105a:	0eb00513          	li	a0,235
+    105e:	c30ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x14);
+    1062:	4551                	li	a0,20
+    1064:	c5eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xFE);
+    1068:	0fe00513          	li	a0,254
+    106c:	c22ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteCmd(0xEF);
+    1070:	0ef00513          	li	a0,239
+    1074:	c1aff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteCmd(0xEB);
+    1078:	0eb00513          	li	a0,235
+    107c:	c12ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x14);
+    1080:	4551                	li	a0,20
+    1082:	c40ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x84);
+    1086:	08400513          	li	a0,132
+    108a:	c04ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x40);
+    108e:	04000513          	li	a0,64
+    1092:	c30ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x85);
+    1096:	08500513          	li	a0,133
+    109a:	bf4ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0xFF);
+    109e:	0ff00513          	li	a0,255
+    10a2:	c20ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x86);
+    10a6:	08600513          	li	a0,134
+    10aa:	be4ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0xFF);
+    10ae:	0ff00513          	li	a0,255
+    10b2:	c10ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x87);
+    10b6:	08700513          	li	a0,135
+    10ba:	bd4ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0xFF);
+    10be:	0ff00513          	li	a0,255
+    10c2:	c00ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x88);
+    10c6:	08800513          	li	a0,136
+    10ca:	bc4ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x0A);
+    10ce:	4529                	li	a0,10
+    10d0:	bf2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x89);
+    10d4:	08900513          	li	a0,137
+    10d8:	bb6ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x21);
+    10dc:	02100513          	li	a0,33
+    10e0:	be2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x8A);
+    10e4:	08a00513          	li	a0,138
+    10e8:	ba6ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x00);
+    10ec:	4501                	li	a0,0
+    10ee:	bd4ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x8B);
+    10f2:	08b00513          	li	a0,139
+    10f6:	b98ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x80);
+    10fa:	08000513          	li	a0,128
+    10fe:	bc4ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x8C);
+    1102:	08c00513          	li	a0,140
+    1106:	b88ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x01);
+    110a:	4505                	li	a0,1
+    110c:	bb6ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x8D);
+    1110:	08d00513          	li	a0,141
+    1114:	b7aff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x01);
+    1118:	4505                	li	a0,1
+    111a:	ba8ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x8E);
+    111e:	08e00513          	li	a0,142
+    1122:	b6cff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0xFF);
+    1126:	0ff00513          	li	a0,255
+    112a:	b98ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x8F);
+    112e:	08f00513          	li	a0,143
+    1132:	b5cff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0xFF);
+    1136:	0ff00513          	li	a0,255
+    113a:	b88ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xB6);
+    113e:	0b600513          	li	a0,182
+    1142:	b4cff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x00);
+    1146:	4501                	li	a0,0
+    1148:	b7aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(
+    114c:	02000513          	li	a0,32
+    1150:	b72ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x36);
+    1154:	03600513          	li	a0,54
+    1158:	b36ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x08); // Orientation 180 or others.
+    115c:	4521                	li	a0,8
+    115e:	b64ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x3A);
+    1162:	03a00513          	li	a0,58
+    1166:	b28ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x05); // 16-bit color
+    116a:	4515                	li	a0,5
+    116c:	b56ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x90);
+    1170:	09000513          	li	a0,144
+    1174:	b1aff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x08);
+    1178:	4521                	li	a0,8
+    117a:	b48ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    117e:	4521                	li	a0,8
+    1180:	b42ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    1184:	4521                	li	a0,8
+    1186:	b3cff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    118a:	4521                	li	a0,8
+    118c:	b36ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xBD);
+    1190:	0bd00513          	li	a0,189
+    1194:	afaff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x06);
+    1198:	4519                	li	a0,6
+    119a:	b28ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xBC);
+    119e:	0bc00513          	li	a0,188
+    11a2:	aecff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x00);
+    11a6:	4501                	li	a0,0
+    11a8:	b1aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xFF);
+    11ac:	0ff00513          	li	a0,255
+    11b0:	adeff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x60);
+    11b4:	06000513          	li	a0,96
+    11b8:	b0aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x01);
+    11bc:	4505                	li	a0,1
+    11be:	b04ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x04);
+    11c2:	4511                	li	a0,4
+    11c4:	afeff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xC3);
+    11c8:	0c300513          	li	a0,195
+    11cc:	ac2ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x13);
+    11d0:	454d                	li	a0,19
+    11d2:	af0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xC4);
+    11d6:	0c400513          	li	a0,196
+    11da:	ab4ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x13);
+    11de:	454d                	li	a0,19
+    11e0:	ae2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xC9);
+    11e4:	0c900513          	li	a0,201
+    11e8:	aa6ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x22);
+    11ec:	02200513          	li	a0,34
+    11f0:	ad2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xBE);
+    11f4:	0be00513          	li	a0,190
+    11f8:	a96ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x11);
+    11fc:	4545                	li	a0,17
+    11fe:	ac4ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xE1);
+    1202:	0e100513          	li	a0,225
+    1206:	a88ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x10);
+    120a:	4541                	li	a0,16
+    120c:	ab6ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0E);
+    1210:	4539                	li	a0,14
+    1212:	ab0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xDF);
+    1216:	0df00513          	li	a0,223
+    121a:	a74ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x21);
+    121e:	02100513          	li	a0,33
+    1222:	aa0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0c);
+    1226:	4531                	li	a0,12
+    1228:	a9aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x02);
+    122c:	4509                	li	a0,2
+    122e:	a94ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xF0);
+    1232:	0f000513          	li	a0,240
+    1236:	a58ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x45);
+    123a:	04500513          	li	a0,69
+    123e:	a84ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x09);
+    1242:	4525                	li	a0,9
+    1244:	a7eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    1248:	4521                	li	a0,8
+    124a:	a78ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    124e:	4521                	li	a0,8
+    1250:	a72ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x26);
+    1254:	02600513          	li	a0,38
+    1258:	a6aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x2A);
+    125c:	02a00513          	li	a0,42
+    1260:	a62ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xF1);
+    1264:	0f100513          	li	a0,241
+    1268:	a26ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x43);
+    126c:	04300513          	li	a0,67
+    1270:	a52ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    1274:	07000513          	li	a0,112
+    1278:	a4aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x72);
+    127c:	07200513          	li	a0,114
+    1280:	a42ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x36);
+    1284:	03600513          	li	a0,54
+    1288:	a3aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x37);
+    128c:	03700513          	li	a0,55
+    1290:	a32ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x6F);
+    1294:	06f00513          	li	a0,111
+    1298:	a2aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xF2);
+    129c:	0f200513          	li	a0,242
+    12a0:	9eeff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x45);
+    12a4:	04500513          	li	a0,69
+    12a8:	a1aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x09);
+    12ac:	4525                	li	a0,9
+    12ae:	a14ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    12b2:	4521                	li	a0,8
+    12b4:	a0eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    12b8:	4521                	li	a0,8
+    12ba:	a08ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x26);
+    12be:	02600513          	li	a0,38
+    12c2:	a00ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x2A);
+    12c6:	02a00513          	li	a0,42
+    12ca:	9f8ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xF3);
+    12ce:	0f300513          	li	a0,243
+    12d2:	9bcff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x43);
+    12d6:	04300513          	li	a0,67
+    12da:	9e8ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    12de:	07000513          	li	a0,112
+    12e2:	9e0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x72);
+    12e6:	07200513          	li	a0,114
+    12ea:	9d8ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x36);
+    12ee:	03600513          	li	a0,54
+    12f2:	9d0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x37);
+    12f6:	03700513          	li	a0,55
+    12fa:	9c8ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x6F);
+    12fe:	06f00513          	li	a0,111
+    1302:	9c0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xED);
+    1306:	0ed00513          	li	a0,237
+    130a:	984ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x1B);
+    130e:	456d                	li	a0,27
+    1310:	9b2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0B);
+    1314:	452d                	li	a0,11
+    1316:	9acff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xAE);
+    131a:	0ae00513          	li	a0,174
+    131e:	970ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x77);
+    1322:	07700513          	li	a0,119
+    1326:	99cff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xCD);
+    132a:	0cd00513          	li	a0,205
+    132e:	960ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x63);
+    1332:	06300513          	li	a0,99
+    1336:	98cff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x70);
+    133a:	07000513          	li	a0,112
+    133e:	950ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x07);
+    1342:	451d                	li	a0,7
+    1344:	97eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x07);
+    1348:	451d                	li	a0,7
+    134a:	978ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x04);
+    134e:	4511                	li	a0,4
+    1350:	972ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0E);
+    1354:	4539                	li	a0,14
+    1356:	96cff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0F);
+    135a:	453d                	li	a0,15
+    135c:	966ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x09);
+    1360:	4525                	li	a0,9
+    1362:	960ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x07);
+    1366:	451d                	li	a0,7
+    1368:	95aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x08);
+    136c:	4521                	li	a0,8
+    136e:	954ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x03);
+    1372:	450d                	li	a0,3
+    1374:	94eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0xE8);
+    1378:	0e800513          	li	a0,232
+    137c:	912ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x34);
+    1380:	03400513          	li	a0,52
+    1384:	93eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x62);
+    1388:	06200513          	li	a0,98
+    138c:	902ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x18);
+    1390:	4561                	li	a0,24
+    1392:	930ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0D);
+    1396:	4535                	li	a0,13
+    1398:	92aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x71);
+    139c:	07100513          	li	a0,113
+    13a0:	922ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xED);
+    13a4:	0ed00513          	li	a0,237
+    13a8:	91aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    13ac:	07000513          	li	a0,112
+    13b0:	912ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    13b4:	07000513          	li	a0,112
+    13b8:	90aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x18);
+    13bc:	4561                	li	a0,24
+    13be:	904ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x0F);
+    13c2:	453d                	li	a0,15
+    13c4:	8feff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x71);
+    13c8:	07100513          	li	a0,113
+    13cc:	8f6ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xEF);
+    13d0:	0ef00513          	li	a0,239
+    13d4:	8eeff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    13d8:	07000513          	li	a0,112
+    13dc:	8e6ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    13e0:	07000513          	li	a0,112
+    13e4:	8deff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x63);
+    13e8:	06300513          	li	a0,99
+    13ec:	8a2ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x18);
+    13f0:	4561                	li	a0,24
+    13f2:	8d0ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x11);
+    13f6:	4545                	li	a0,17
+    13f8:	8caff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x71);
+    13fc:	07100513          	li	a0,113
+    1400:	8c2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xF1);
+    1404:	0f100513          	li	a0,241
+    1408:	8baff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    140c:	07000513          	li	a0,112
+    1410:	8b2ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    1414:	07000513          	li	a0,112
+    1418:	8aaff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x18);
+    141c:	4561                	li	a0,24
+    141e:	8a4ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x13);
+    1422:	454d                	li	a0,19
+    1424:	89eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x71);
+    1428:	07100513          	li	a0,113
+    142c:	896ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xF3);
+    1430:	0f300513          	li	a0,243
+    1434:	88eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    1438:	07000513          	li	a0,112
+    143c:	886ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x70);
+    1440:	07000513          	li	a0,112
+    1444:	87eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x64);
+    1448:	06400513          	li	a0,100
+    144c:	842ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x28);
+    1450:	02800513          	li	a0,40
+    1454:	86eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x29);
+    1458:	02900513          	li	a0,41
+    145c:	866ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xF1);
+    1460:	0f100513          	li	a0,241
+    1464:	85eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x01);
+    1468:	4505                	li	a0,1
+    146a:	858ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xF1);
+    146e:	0f100513          	li	a0,241
+    1472:	850ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    1476:	4501                	li	a0,0
+    1478:	84aff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x07);
+    147c:	451d                	li	a0,7
+    147e:	844ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x66);
+    1482:	06600513          	li	a0,102
+    1486:	808ff0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x3C);
+    148a:	03c00513          	li	a0,60
+    148e:	834ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    1492:	4501                	li	a0,0
+    1494:	82eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0xCD);
+    1498:	0cd00513          	li	a0,205
+    149c:	826ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x67);
+    14a0:	06700513          	li	a0,103
+    14a4:	81eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x45);
+    14a8:	04500513          	li	a0,69
+    14ac:	816ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x45);
+    14b0:	04500513          	li	a0,69
+    14b4:	80eff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x10);
+    14b8:	4541                	li	a0,16
+    14ba:	808ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    14be:	4501                	li	a0,0
+    14c0:	802ff0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    14c4:	4501                	li	a0,0
+    14c6:	ffdfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    14ca:	4501                	li	a0,0
+    14cc:	ff7fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x67);
+    14d0:	06700513          	li	a0,103
+    14d4:	fbbfe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x00);
+    14d8:	4501                	li	a0,0
+    14da:	fe9fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x3C);
+    14de:	03c00513          	li	a0,60
+    14e2:	fe1fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    14e6:	4501                	li	a0,0
+    14e8:	fdbfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    14ec:	4501                	li	a0,0
+    14ee:	fd5fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    14f2:	4501                	li	a0,0
+    14f4:	fcffe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x01);
+    14f8:	4505                	li	a0,1
+    14fa:	fc9fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x54);
+    14fe:	05400513          	li	a0,84
+    1502:	fc1fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x10);
+    1506:	4541                	li	a0,16
+    1508:	fbbfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x32);
+    150c:	03200513          	li	a0,50
+    1510:	fb3fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x98);
+    1514:	09800513          	li	a0,152
+    1518:	fabfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x74);
+    151c:	07400513          	li	a0,116
+    1520:	f6ffe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x10);
+    1524:	4541                	li	a0,16
+    1526:	f9dfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x85);
+    152a:	08500513          	li	a0,133
+    152e:	f95fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x80);
+    1532:	08000513          	li	a0,128
+    1536:	f8dfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    153a:	4501                	li	a0,0
+    153c:	f87fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    1540:	4501                	li	a0,0
+    1542:	f81fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x4E);
+    1546:	04e00513          	li	a0,78
+    154a:	f79fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x00);
+    154e:	4501                	li	a0,0
+    1550:	f73fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x98);
+    1554:	09800513          	li	a0,152
+    1558:	f37fe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteData(0x3e);
+    155c:	03e00513          	li	a0,62
+    1560:	f63fe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteData(0x07);
+    1564:	451d                	li	a0,7
+    1566:	f5dfe0ef          	jal	ra,4c2 <GC9A01_WriteData>
+  GC9A01_WriteCmd(0x35);
+    156a:	03500513          	li	a0,53
+    156e:	f21fe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteCmd(0x21); // Inversion invert
+    1572:	02100513          	li	a0,33
+    1576:	f19fe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  GC9A01_WriteCmd(0x11);
+    157a:	4545                	li	a0,17
+    157c:	f13fe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  Delay_Ms(120);
+    1580:	000dc537          	lui	a0,0xdc
+    1584:	ba050513          	addi	a0,a0,-1120 # dbba0 <radio.c.b2977aab+0xd7435>
+    1588:	c3ffe0ef          	jal	ra,1c6 <DelaySysTick>
+  GC9A01_WriteCmd(0x29);
+    158c:	02900513          	li	a0,41
+    1590:	efffe0ef          	jal	ra,48e <GC9A01_WriteCmd>
+  Delay_Ms(20);
+    1594:	00025537          	lui	a0,0x25
+    1598:	9f050513          	addi	a0,a0,-1552 # 249f0 <radio.c.b2977aab+0x20285>
+    159c:	c2bfe0ef          	jal	ra,1c6 <DelaySysTick>
+  Radio_Init(0x10);
+
+  // Init SPI and Screen
+  SPI_Init(4);
+  GC9A01_Init();
+  GC9A01_FillScreen(BLACK);
+    15a0:	4701                	li	a4,0
+    15a2:	0f000693          	li	a3,240
+    15a6:	0f000613          	li	a2,240
+    15aa:	4581                	li	a1,0
+    15ac:	4501                	li	a0,0
+    15ae:	f49fe0ef          	jal	ra,4f6 <GC9A01_FillRect.part.0>
+
+  DrawCentered("TOF Sender", 40, YELLOW, 2);
+    15b2:	6509                	lui	a0,0x2
+    15b4:	fe098613          	addi	a2,s3,-32 # ffe0 <radio.c.b2977aab+0xb875>
+    15b8:	02800593          	li	a1,40
+    15bc:	a8450513          	addi	a0,a0,-1404 # 1a84 <LLE_IRQHandler+0x90>
+    15c0:	c4aff0ef          	jal	ra,a0a <DrawCentered.constprop.0>
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+    15c4:	8e89c9b7          	lui	s3,0x8e89c
+
+  int count = 0;
+  char buffer[32];
+  uint8_t last_state = 2; // 0=Timeout, 1=Connected, 2=Init
+    15c8:	4d09                	li	s10,2
+  int count = 0;
+    15ca:	4601                	li	a2,0
+
+  while (1) {
+    // Prepare Packet
+    tx_data[0] = PROTOCOL_ID;
+    15cc:	07418b13          	addi	s6,gp,116 # 20000470 <tx_data>
+	BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+    15d0:	4000c4b7          	lui	s1,0x4000c
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+    15d4:	ed698993          	addi	s3,s3,-298 # 8e89bed6 <_eusrstack+0x6e898ed6>
+	BB->CRCINIT1 = 0x555555; // crc init
+    15d8:	555a0a13          	addi	s4,s4,1365 # 555555 <radio.c.b2977aab+0x550dea>
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+    15dc:	32da8a93          	addi	s5,s5,813 # 80032d <radio.c.b2977aab+0x7fbbc2>
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    15e0:	1cfd                	addi	s9,s9,-1
+    15e2:	faa00793          	li	a5,-86
+    15e6:	00fb0023          	sb	a5,0(s6)
+    sprintf((char *)&tx_data[1], "PING %d", count++);
+    15ea:	00160793          	addi	a5,a2,1 # ffe00001 <_eusrstack+0xdfdfd001>
+    15ee:	f6f42e23          	sw	a5,-132(s0)
+    15f2:	6589                	lui	a1,0x2
+    15f4:	a9058593          	addi	a1,a1,-1392 # 1a90 <LLE_IRQHandler+0x9c>
+    15f8:	07518513          	addi	a0,gp,117 # 20000471 <tx_data+0x1>
+    15fc:	be8ff0ef          	jal	ra,9e4 <sprintf>
+
+    uint32_t t_start = (uint32_t)(SysTick->CNT);
+    1600:	e000f7b7          	lui	a5,0xe000f
+    1604:	479c                	lw	a5,8(a5)
+void Frame_TX(uint8_t adv[], size_t len, uint8_t channel, uint8_t phy_mode) {
+    1606:	f6242a23          	sw	sp,-140(s0)
+	RF->RF11 &= 0xfffffffd;
+    160a:	4000d737          	lui	a4,0x4000d
+    160e:	f6f42c23          	sw	a5,-136(s0)
+	BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+    1612:	1344a783          	lw	a5,308(s1) # 4000c134 <_eusrstack+0x20009134>
+	__attribute__((aligned(4))) uint8_t  ADV_BUF[len+2]; // for the advertisement, which is 37 bytes + 2 header bytes
+    1616:	7179                	addi	sp,sp,-48
+	DevSetMode(DEVSETMODE_TX);
+    1618:	25800513          	li	a0,600
+	BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+    161c:	9bf1                	andi	a5,a5,-4
+    161e:	0017e793          	ori	a5,a5,1
+    1622:	12f4aa23          	sw	a5,308(s1)
+	RF->RF11 &= 0xfffffffd;
+    1626:	575c                	lw	a5,44(a4)
+	__attribute__((aligned(4))) uint8_t  ADV_BUF[len+2]; // for the advertisement, which is 37 bytes + 2 header bytes
+    1628:	890a                	mv	s2,sp
+	RF->RF11 &= 0xfffffffd;
+    162a:	9bf5                	andi	a5,a5,-3
+    162c:	d75c                	sw	a5,44(a4)
+	BB->CTRL_CFG = (BB->CTRL_CFG & 0xffffff80) | (channel & 0x7f);
+    162e:	1004a783          	lw	a5,256(s1)
+    1632:	f807f793          	andi	a5,a5,-128
+    1636:	0057e793          	ori	a5,a5,5
+    163a:	10f4a023          	sw	a5,256(s1)
+	DevSetMode(DEVSETMODE_TX);
+    163e:	c2dfe0ef          	jal	ra,26a <DevSetMode>
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+    1642:	1134a623          	sw	s3,268(s1)
+	BB->CRCINIT1 = 0x555555; // crc init
+    1646:	1144a223          	sw	s4,260(s1)
+	BB->ACCESSADDRESS2 = 0x8E89BED6;
+    164a:	1734a023          	sw	s3,352(s1)
+	BB->CRCINIT2 = 0x555555;
+    164e:	1544ac23          	sw	s4,344(s1)
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+    1652:	1084a703          	lw	a4,264(s1)
+    1656:	ff000637          	lui	a2,0xff000
+	memcpy(&ADV_BUF[2], adv, len);
+    165a:	85da                	mv	a1,s6
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+    165c:	8f71                	and	a4,a4,a2
+    165e:	01576733          	or	a4,a4,s5
+    1662:	10e4a423          	sw	a4,264(s1)
+	BB->CRCPOLY2 = (BB->CRCPOLY2 & 0xff000000) | 0x80032d;
+    1666:	15c4a783          	lw	a5,348(s1)
+	memcpy(&ADV_BUF[2], adv, len);
+    166a:	00290513          	addi	a0,s2,2
+	BB->CRCPOLY2 = (BB->CRCPOLY2 & 0xff000000) | 0x80032d;
+    166e:	8ff1                	and	a5,a5,a2
+    1670:	0157e7b3          	or	a5,a5,s5
+    1674:	14f4ae23          	sw	a5,348(s1)
+	ADV_BUF[0] = 0x02; // PDU 0x00, 0x02, 0x06 seem to work, with only 0x02 showing up on the phone
+    1678:	6789                	lui	a5,0x2
+    167a:	0789                	addi	a5,a5,2
+    167c:	00f91023          	sh	a5,0(s2)
+	memcpy(&ADV_BUF[2], adv, len);
+    1680:	02000613          	li	a2,32
+    1684:	ce0ff0ef          	jal	ra,b64 <memcpy>
+	LL->FRAME_BUF = (uint32_t)ADV_BUF;
+    1688:	20048793          	addi	a5,s1,512
+    168c:	0727ac23          	sw	s2,120(a5) # 2078 <_data_lma+0x398>
+    1690:	6785                	lui	a5,0x1
+    1692:	bba78793          	addi	a5,a5,-1094 # bba <SystemInit+0x3a>
+	for( int timeout = 3000; !(RF->RF26 & 0x1000000) && timeout >= 0; timeout-- );
+    1696:	4000d6b7          	lui	a3,0x4000d
+    169a:	01000637          	lui	a2,0x1000
+    169e:	56b8                	lw	a4,104(a3)
+    16a0:	8f71                	and	a4,a4,a2
+    16a2:	e319                	bnez	a4,16a8 <main+0xab0>
+    16a4:	17fd                	addi	a5,a5,-1
+    16a6:	ffe5                	bnez	a5,169e <main+0xaa6>
+										  CTRL_CFG_PHY_1M; // default 1M for now
+    16a8:	1004a783          	lw	a5,256(s1)
+    16ac:	10048713          	addi	a4,s1,256
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    16b0:	020006b7          	lui	a3,0x2000
+										  CTRL_CFG_PHY_1M; // default 1M for now
+    16b4:	cff7f793          	andi	a5,a5,-769
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+    16b8:	1007e793          	ori	a5,a5,256
+    16bc:	10f4a023          	sw	a5,256(s1)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    16c0:	535c                	lw	a5,36(a4)
+#if defined(CH571_CH573)
+	BB->BB11 = (BB->BB11 & 0xfffffffc); // |2 for RX
+#endif
+
+	// This clears bit 17 (If set, seems to have no impact.)
+	LL->LL4 &= 0xfffdffff;
+    16c2:	7601                	lui	a2,0xfffe0
+    16c4:	167d                	addi	a2,a2,-1
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    16c6:	0197f7b3          	and	a5,a5,s9
+    16ca:	8fd5                	or	a5,a5,a3
+    16cc:	d35c                	sw	a5,36(a4)
+	LL->LL4 &= 0xfffdffff;
+    16ce:	20048793          	addi	a5,s1,512
+    16d2:	4b94                	lw	a3,16(a5)
+    16d4:	8ef1                	and	a3,a3,a2
+    16d6:	cb94                	sw	a3,16(a5)
+
+#if !defined(CH571_CH573)
+	LL->STATUS = LL_STATUS_TX;
+    16d8:	000206b7          	lui	a3,0x20
+    16dc:	c794                	sw	a3,8(a5)
+#endif
+	LL->TMR = (uint32_t)(len *512); // needs optimisation, per phy mode
+    16de:	6691                	lui	a3,0x4
+    16e0:	d3f4                	sw	a3,100(a5)
+
+	BB->CTRL_CFG |= CTRL_CFG_START_TX;
+    16e2:	1004a783          	lw	a5,256(s1)
+    16e6:	010006b7          	lui	a3,0x1000
+    16ea:	8fd5                	or	a5,a5,a3
+    16ec:	10f4a023          	sw	a5,256(s1)
+	BB->CTRL_TX &= 0xfffffffc;
+    16f0:	5b5c                	lw	a5,52(a4)
+    16f2:	9bf1                	andi	a5,a5,-4
+    16f4:	db5c                	sw	a5,52(a4)
+
+	LL->LL0 = 2; // Not sure what this does, but on RX it's 1
+    16f6:	4789                	li	a5,2
+    16f8:	20f4a023          	sw	a5,512(s1)
+
+	while(LL->TMR); // wait for tx buffer to empty
+    16fc:	2644a783          	lw	a5,612(s1)
+    1700:	fff5                	bnez	a5,16fc <main+0xb04>
+	DevSetMode(0);
+    1702:	4501                	li	a0,0
+    1704:	b67fe0ef          	jal	ra,26a <DevSetMode>
+	if(LL->LL0 & 3) {
+    1708:	2004a783          	lw	a5,512(s1)
+    170c:	8b8d                	andi	a5,a5,3
+    170e:	cf89                	beqz	a5,1728 <main+0xb30>
+		LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+    1710:	2504a783          	lw	a5,592(s1)
+    1714:	8ff7f793          	andi	a5,a5,-1793
+    1718:	24f4a823          	sw	a5,592(s1)
+		LL->LL0 |= 0x08;
+    171c:	2004a783          	lw	a5,512(s1)
+    1720:	0087e793          	ori	a5,a5,8
+    1724:	20f4a023          	sw	a5,512(s1)
+    1728:	f7442103          	lw	sp,-140(s0)
+	}
+}
+
+void Frame_RX(uint8_t frame_info[], uint8_t channel, uint8_t phy_mode) {
+	DevSetMode(0);
+    172c:	4501                	li	a0,0
+    172e:	b3dfe0ef          	jal	ra,26a <DevSetMode>
+	if(LL->LL0 & 3) {
+    1732:	2004a783          	lw	a5,512(s1)
+    1736:	20048713          	addi	a4,s1,512
+    173a:	8b8d                	andi	a5,a5,3
+    173c:	cb99                	beqz	a5,1752 <main+0xb5a>
+		LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+    173e:	4b3c                	lw	a5,80(a4)
+    1740:	8ff7f793          	andi	a5,a5,-1793
+    1744:	cb3c                	sw	a5,80(a4)
+		LL->LL0 |= 0x08;
+    1746:	2004a783          	lw	a5,512(s1)
+    174a:	0087e793          	ori	a5,a5,8
+    174e:	20f4a023          	sw	a5,512(s1)
+	}
+	LL->TMR = 0;
+    1752:	20048793          	addi	a5,s1,512
+    1756:	0607a223          	sw	zero,100(a5)
+	RF->RF11 &= 0xfffffffd;
+    175a:	4000ddb7          	lui	s11,0x4000d
+    175e:	02cda783          	lw	a5,44(s11) # 4000d02c <_eusrstack+0x2000a02c>
+
+	DevSetChannel(channel);
+	DevSetMode(DEVSETMODE_RX);
+    1762:	15800513          	li	a0,344
+	RF->RF11 &= 0xfffffffd;
+    1766:	9bf5                	andi	a5,a5,-3
+    1768:	02fda623          	sw	a5,44(s11)
+	BB->CTRL_CFG = (BB->CTRL_CFG & 0xffffff80) | (channel & 0x7f);
+    176c:	1004a783          	lw	a5,256(s1)
+    1770:	f807f793          	andi	a5,a5,-128
+    1774:	0057e793          	ori	a5,a5,5
+    1778:	10f4a023          	sw	a5,256(s1)
+	DevSetMode(DEVSETMODE_RX);
+    177c:	aeffe0ef          	jal	ra,26a <DevSetMode>
+	}
+#elif defined(CH571_CH573)
+	BB->CTRL_CFG = CTRL_CFG_PHY_1M; // no 2M PHY on ch571/3
+#else
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+										  CTRL_CFG_PHY_1M; // default 1M for now
+    1780:	1004a783          	lw	a5,256(s1)
+#endif
+
+#ifdef CH570_CH572
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    1784:	02000737          	lui	a4,0x2000
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+	BB->CRCINIT1 = 0x555555; // crc init
+#ifdef CH570_CH572
+	BB->ACCESSADDRESS2 = 0x8E89BED6;
+	BB->CRCINIT2 = 0x555555;
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+    1788:	ff0006b7          	lui	a3,0xff000
+										  CTRL_CFG_PHY_1M; // default 1M for now
+    178c:	cff7f793          	andi	a5,a5,-769
+	BB->CTRL_CFG = (phy_mode == PHY_2M) ? CTRL_CFG_PHY_2M:
+    1790:	1007e793          	ori	a5,a5,256
+    1794:	10f4a023          	sw	a5,256(s1)
+	BB->BB9 = (BB->BB9 & 0xf9ffffff) | ((phy_mode == PHY_2M) ? 0 : 0x2000000);
+    1798:	1244a783          	lw	a5,292(s1)
+
+  // Check for packet with timeout
+  while (timeout_ms--) {
+    if (rx_ready)
+      break;
+    Delay_Ms(1);
+    179c:	6509                	lui	a0,0x2
+    179e:	d4c50513          	addi	a0,a0,-692 # 1d4c <_data_lma+0x6c>
+    17a2:	0197f7b3          	and	a5,a5,s9
+    17a6:	8fd9                	or	a5,a5,a4
+    17a8:	12f4a223          	sw	a5,292(s1)
+	RF->RF20 = (RF->RF20 & 0xffffffe0) | ((phy_mode == PHY_2M) ? (tuneFilter2M & 0x1f) : (tuneFilter & 0x1f));
+    17ac:	050da783          	lw	a5,80(s11)
+    17b0:	000c2703          	lw	a4,0(s8)
+    17b4:	9b81                	andi	a5,a5,-32
+    17b6:	8b7d                	andi	a4,a4,31
+    17b8:	8fd9                	or	a5,a5,a4
+    17ba:	04fda823          	sw	a5,80(s11)
+	BB->BB5 = (BB->BB5 & 0xffffffc0) | ((phy_mode == PHY_2M) ? 0xd : 0xb);
+    17be:	1144a783          	lw	a5,276(s1)
+	BB->BB7 = (BB->BB7 & 0xff00fc00) | ((phy_mode == PHY_2M) ? 0x7f00a0 : 0x79009c);
+    17c2:	ff010737          	lui	a4,0xff010
+    17c6:	c0070713          	addi	a4,a4,-1024 # ff00fc00 <_eusrstack+0xdf00cc00>
+	BB->BB5 = (BB->BB5 & 0xffffffc0) | ((phy_mode == PHY_2M) ? 0xd : 0xb);
+    17ca:	fc07f793          	andi	a5,a5,-64
+    17ce:	00b7e793          	ori	a5,a5,11
+    17d2:	10f4aa23          	sw	a5,276(s1)
+	BB->BB7 = (BB->BB7 & 0xff00fc00) | ((phy_mode == PHY_2M) ? 0x7f00a0 : 0x79009c);
+    17d6:	11c4a783          	lw	a5,284(s1)
+
+	//LL->LL1 = (LL->LL1 & 0xfffffffe) | 1; // 1: AUTO mode, to swap between RX <-> TX when either happened. 0: BASIC
+	//LL->FRAME_BUF = (uint32_t)frame_info; // also this only in AUTO mode
+
+	LL->LL0 = 1; // Not sure what this does, but on TX it's 2
+	rx_ready = 0;
+    17da:	0c900d93          	li	s11,201
+	BB->BB7 = (BB->BB7 & 0xff00fc00) | ((phy_mode == PHY_2M) ? 0x7f00a0 : 0x79009c);
+    17de:	8ff9                	and	a5,a5,a4
+    17e0:	00790737          	lui	a4,0x790
+    17e4:	09c70713          	addi	a4,a4,156 # 79009c <radio.c.b2977aab+0x78b931>
+    17e8:	8fd9                	or	a5,a5,a4
+    17ea:	10f4ae23          	sw	a5,284(s1)
+	BB->ACCESSADDRESS1 = 0x8E89BED6; // access address
+    17ee:	1134a623          	sw	s3,268(s1)
+	BB->CRCINIT1 = 0x555555; // crc init
+    17f2:	1144a223          	sw	s4,260(s1)
+	BB->ACCESSADDRESS2 = 0x8E89BED6;
+    17f6:	1734a023          	sw	s3,352(s1)
+	BB->CRCINIT2 = 0x555555;
+    17fa:	1544ac23          	sw	s4,344(s1)
+	BB->CRCPOLY1 = (BB->CRCPOLY1 & 0xff000000) | 0x80032d; // crc poly
+    17fe:	1084a703          	lw	a4,264(s1)
+    1802:	8f75                	and	a4,a4,a3
+    1804:	01576733          	or	a4,a4,s5
+    1808:	10e4a423          	sw	a4,264(s1)
+	BB->CRCPOLY2 = (BB->CRCPOLY2 & 0xff000000) | 0x80032d;
+    180c:	15c4a783          	lw	a5,348(s1)
+    1810:	8ff5                	and	a5,a5,a3
+    1812:	0157e7b3          	or	a5,a5,s5
+    1816:	14f4ae23          	sw	a5,348(s1)
+	LL->LL0 = 1; // Not sure what this does, but on TX it's 2
+    181a:	4785                	li	a5,1
+    181c:	20f4a023          	sw	a5,512(s1)
+	rx_ready = 0;
+    1820:	c0818793          	addi	a5,gp,-1016 # 20000004 <rx_ready>
+    1824:	0007a023          	sw	zero,0(a5)
+    1828:	c0818913          	addi	s2,gp,-1016 # 20000004 <rx_ready>
+  while (timeout_ms--) {
+    182c:	1dfd                	addi	s11,s11,-1
+    182e:	040d9963          	bnez	s11,1880 <main+0xc88>
+  }
+
+  if (!rx_ready)
+    1832:	00092783          	lw	a5,0(s2)
+    1836:	efb1                	bnez	a5,1892 <main+0xc9a>
+
+    Radio_TX(tx_data, TX_PAYLOAD_LEN, RF_CHANNEL);
+
+    // Wait for Reply
+    int len = Radio_RX(rx_data, TX_PAYLOAD_LEN, RF_CHANNEL, 200);
+    uint32_t t_end = (uint32_t)(SysTick->CNT);
+    1838:	e000f7b7          	lui	a5,0xe000f
+    183c:	479c                	lw	a5,8(a5)
+                rx_data[0]); // debug length and first byte
+        DrawCentered(buffer, 130, RED, 2);
+
+        GC9A01_FillRect(110, 160, 20, 20, RED);
+        last_state = 0; // Force update next time
+      } else if (last_state != 0) {
+    183e:	140d0863          	beqz	s10,198e <main+0xd96>
+        DrawCentered("Timeout", 100, RED, 2);
+    1842:	6941                	lui	s2,0x10
+    1844:	6509                	lui	a0,0x2
+    1846:	80090613          	addi	a2,s2,-2048 # f800 <radio.c.b2977aab+0xb095>
+    184a:	06400593          	li	a1,100
+    184e:	ab450513          	addi	a0,a0,-1356 # 1ab4 <LLE_IRQHandler+0xc0>
+    1852:	9b8ff0ef          	jal	ra,a0a <DrawCentered.constprop.0>
+  if ((x >= 240) || (y >= 240))
+    1856:	4701                	li	a4,0
+    1858:	46c1                	li	a3,16
+    185a:	0f000613          	li	a2,240
+    185e:	08200593          	li	a1,130
+    1862:	4501                	li	a0,0
+    1864:	c93fe0ef          	jal	ra,4f6 <GC9A01_FillRect.part.0>
+    1868:	80090713          	addi	a4,s2,-2048
+    186c:	46d1                	li	a3,20
+    186e:	4651                	li	a2,20
+    1870:	0a000593          	li	a1,160
+    1874:	06e00513          	li	a0,110
+    1878:	c7ffe0ef          	jal	ra,4f6 <GC9A01_FillRect.part.0>
+        // Clear RX line
+        GC9A01_FillRect(0, 130, 240, 16, BLACK);
+
+        GC9A01_FillRect(110, 160, 20, 20, RED);
+        last_state = 0;
+    187c:	4d01                	li	s10,0
+    187e:	aa01                	j	198e <main+0xd96>
+    if (rx_ready)
+    1880:	00092783          	lw	a5,0(s2)
+    1884:	f7dd                	bnez	a5,1832 <main+0xc3a>
+    Delay_Ms(1);
+    1886:	941fe0ef          	jal	ra,1c6 <DelaySysTick>
+    188a:	6789                	lui	a5,0x2
+    188c:	d4c78513          	addi	a0,a5,-692 # 1d4c <_data_lma+0x6c>
+    1890:	bf71                	j	182c <main+0xc34>
+    return 0; // Timeout
+
+  // Got a packet!
+  rx_ready = 0;
+    1892:	00092023          	sw	zero,0(s2)
+  // frame[1] = Total PDU Length
+  // frame[2] = Header (0x02 added by Frame_TX)
+  // frame[3] = Length (added by Frame_TX)
+  // frame[4] = Actual Payload (0xAA...)
+
+  int total_len = frame[1];
+    1896:	001bc903          	lbu	s2,1(s7)
+
+  // Strip the 2-byte custom header that Frame_TX adds ([0x02] [Len])
+  if (total_len > 2) {
+    189a:	4789                	li	a5,2
+    189c:	f927dee3          	bge	a5,s2,1838 <main+0xc40>
+    int payload_len = total_len - 2;
+    18a0:	1979                	addi	s2,s2,-2
+    18a2:	02000793          	li	a5,32
+    18a6:	0127d463          	bge	a5,s2,18ae <main+0xcb6>
+    18aa:	02000913          	li	s2,32
+    if (payload_len > max_len)
+      payload_len = max_len;
+
+    memcpy(data, &frame[4], payload_len);
+    18ae:	05418d93          	addi	s11,gp,84 # 20000450 <rx_data>
+    18b2:	05418513          	addi	a0,gp,84 # 20000450 <rx_data>
+    18b6:	864a                	mv	a2,s2
+    18b8:	004b8593          	addi	a1,s7,4
+    18bc:	aa8ff0ef          	jal	ra,b64 <memcpy>
+    data[payload_len] = 0; // Null terminate
+    18c0:	9dca                	add	s11,s11,s2
+    18c2:	000d8023          	sb	zero,0(s11)
+    uint32_t t_end = (uint32_t)(SysTick->CNT);
+    18c6:	e000f7b7          	lui	a5,0xe000f
+    18ca:	479c                	lw	a5,8(a5)
+      GC9A01_FillRect(118, 20, 4, 4, act_toggle ? CYAN : BLUE);
+    18cc:	c041c803          	lbu	a6,-1020(gp) # 20000000 <act_toggle.0>
+    18d0:	05418d93          	addi	s11,gp,84 # 20000450 <rx_data>
+    uint32_t t_end = (uint32_t)(SysTick->CNT);
+    18d4:	f6f42a23          	sw	a5,-140(s0)
+      GC9A01_FillRect(118, 20, 4, 4, act_toggle ? CYAN : BLUE);
+    18d8:	c0418d13          	addi	s10,gp,-1020 # 20000000 <act_toggle.0>
+    18dc:	7ff00713          	li	a4,2047
+    18e0:	00081363          	bnez	a6,18e6 <main+0xcee>
+    18e4:	477d                	li	a4,31
+    18e6:	4691                	li	a3,4
+    18e8:	4611                	li	a2,4
+    18ea:	45d1                	li	a1,20
+    18ec:	07600513          	li	a0,118
+    18f0:	f7042823          	sw	a6,-144(s0)
+    18f4:	c03fe0ef          	jal	ra,4f6 <GC9A01_FillRect.part.0>
+      act_toggle = !act_toggle;
+    18f8:	f7042803          	lw	a6,-144(s0)
+      if (rx_data[0] == PROTOCOL_ID &&
+    18fc:	0aa00713          	li	a4,170
+      act_toggle = !act_toggle;
+    1900:	00183813          	seqz	a6,a6
+    1904:	010d0023          	sb	a6,0(s10)
+      if (rx_data[0] == PROTOCOL_ID &&
+    1908:	000dc803          	lbu	a6,0(s11)
+    190c:	08e81a63          	bne	a6,a4,19a0 <main+0xda8>
+          strncmp((char *)&rx_data[1], "PONG", 4) == 0) {
+    1910:	001d8d13          	addi	s10,s11,1
+    1914:	6589                	lui	a1,0x2
+    1916:	4611                	li	a2,4
+    1918:	a9858593          	addi	a1,a1,-1384 # 1a98 <LLE_IRQHandler+0xa4>
+    191c:	856a                	mv	a0,s10
+    191e:	f7042823          	sw	a6,-144(s0)
+    1922:	a14ff0ef          	jal	ra,b36 <strncmp>
+      if (rx_data[0] == PROTOCOL_ID &&
+    1926:	f7042803          	lw	a6,-144(s0)
+    192a:	e93d                	bnez	a0,19a0 <main+0xda8>
+        sprintf(buffer, "RTT: %lu", diff);
+    192c:	f7442783          	lw	a5,-140(s0)
+    1930:	f7842703          	lw	a4,-136(s0)
+    1934:	6589                	lui	a1,0x2
+    1936:	aa058593          	addi	a1,a1,-1376 # 1aa0 <LLE_IRQHandler+0xac>
+    193a:	40e78633          	sub	a2,a5,a4
+    193e:	f9840513          	addi	a0,s0,-104
+    1942:	8a2ff0ef          	jal	ra,9e4 <sprintf>
+        DrawCentered(buffer, 100, WHITE, 2);
+    1946:	6941                	lui	s2,0x10
+    1948:	fff90613          	addi	a2,s2,-1 # ffff <radio.c.b2977aab+0xb894>
+    194c:	06400593          	li	a1,100
+    1950:	f9840513          	addi	a0,s0,-104
+    1954:	8b6ff0ef          	jal	ra,a0a <DrawCentered.constprop.0>
+        sprintf(buffer, "RX: %s", &rx_data[1]);
+    1958:	6589                	lui	a1,0x2
+    195a:	866a                	mv	a2,s10
+    195c:	aac58593          	addi	a1,a1,-1364 # 1aac <LLE_IRQHandler+0xb8>
+    1960:	f9840513          	addi	a0,s0,-104
+    1964:	880ff0ef          	jal	ra,9e4 <sprintf>
+        DrawCentered(buffer, 130, WHITE, 2);
+    1968:	fff90613          	addi	a2,s2,-1
+    196c:	08200593          	li	a1,130
+    1970:	f9840513          	addi	a0,s0,-104
+    1974:	896ff0ef          	jal	ra,a0a <DrawCentered.constprop.0>
+    1978:	7e000713          	li	a4,2016
+    197c:	46d1                	li	a3,20
+    197e:	4651                	li	a2,20
+    1980:	0a000593          	li	a1,160
+    1984:	06e00513          	li	a0,110
+    1988:	b6ffe0ef          	jal	ra,4f6 <GC9A01_FillRect.part.0>
+        last_state = 1;
+    198c:	4d05                	li	s10,1
+      }
+    }
+
+    Delay_Ms(100);
+    198e:	000b7537          	lui	a0,0xb7
+    1992:	1b050513          	addi	a0,a0,432 # b71b0 <radio.c.b2977aab+0xb2a45>
+    1996:	831fe0ef          	jal	ra,1c6 <DelaySysTick>
+    sprintf((char *)&tx_data[1], "PING %d", count++);
+    199a:	f7c42603          	lw	a2,-132(s0)
+    199e:	b191                	j	15e2 <main+0x9ea>
+        sprintf(buffer, "Bad: %02X %02X %02X", rx_data[0], rx_data[1],
+    19a0:	002dc703          	lbu	a4,2(s11)
+    19a4:	001dc683          	lbu	a3,1(s11)
+    19a8:	6589                	lui	a1,0x2
+    19aa:	8642                	mv	a2,a6
+    19ac:	abc58593          	addi	a1,a1,-1348 # 1abc <LLE_IRQHandler+0xc8>
+    19b0:	f9840513          	addi	a0,s0,-104
+    19b4:	830ff0ef          	jal	ra,9e4 <sprintf>
+        DrawCentered(buffer, 100, RED, 2);
+    19b8:	6d41                	lui	s10,0x10
+    19ba:	800d0613          	addi	a2,s10,-2048 # f800 <radio.c.b2977aab+0xb095>
+    19be:	06400593          	li	a1,100
+    19c2:	f9840513          	addi	a0,s0,-104
+    19c6:	844ff0ef          	jal	ra,a0a <DrawCentered.constprop.0>
+        sprintf(buffer, "L:%d ch:%d", len,
+    19ca:	000dc683          	lbu	a3,0(s11)
+    19ce:	6589                	lui	a1,0x2
+    19d0:	864a                	mv	a2,s2
+    19d2:	ad058593          	addi	a1,a1,-1328 # 1ad0 <LLE_IRQHandler+0xdc>
+    19d6:	f9840513          	addi	a0,s0,-104
+    19da:	80aff0ef          	jal	ra,9e4 <sprintf>
+        DrawCentered(buffer, 130, RED, 2);
+    19de:	800d0613          	addi	a2,s10,-2048
+    19e2:	08200593          	li	a1,130
+    19e6:	f9840513          	addi	a0,s0,-104
+    19ea:	820ff0ef          	jal	ra,a0a <DrawCentered.constprop.0>
+    19ee:	800d0713          	addi	a4,s10,-2048
+    19f2:	bdad                	j	186c <main+0xc74>
+
+000019f4 <LLE_IRQHandler>:
+void LLE_IRQHandler() {
+    19f4:	715d                	addi	sp,sp,-80
+    19f6:	dc26                	sw	s1,56(sp)
+		LL->STATUS &= LL->INT_EN;
+    19f8:	4000c4b7          	lui	s1,0x4000c
+void LLE_IRQHandler() {
+    19fc:	de22                	sw	s0,60(sp)
+		LL->STATUS &= LL->INT_EN;
+    19fe:	20048413          	addi	s0,s1,512 # 4000c200 <_eusrstack+0x20009200>
+void LLE_IRQHandler() {
+    1a02:	d23a                	sw	a4,36(sp)
+    1a04:	d03e                	sw	a5,32(sp)
+		LL->STATUS &= LL->INT_EN;
+    1a06:	4458                	lw	a4,12(s0)
+    1a08:	441c                	lw	a5,8(s0)
+void LLE_IRQHandler() {
+    1a0a:	da2a                	sw	a0,52(sp)
+    1a0c:	c686                	sw	ra,76(sp)
+    1a0e:	c496                	sw	t0,72(sp)
+    1a10:	c29a                	sw	t1,68(sp)
+    1a12:	c09e                	sw	t2,64(sp)
+    1a14:	d82e                	sw	a1,48(sp)
+    1a16:	d632                	sw	a2,44(sp)
+    1a18:	d436                	sw	a3,40(sp)
+    1a1a:	ce42                	sw	a6,28(sp)
+    1a1c:	cc46                	sw	a7,24(sp)
+    1a1e:	ca72                	sw	t3,20(sp)
+    1a20:	c876                	sw	t4,16(sp)
+    1a22:	c67a                	sw	t5,12(sp)
+    1a24:	c47e                	sw	t6,8(sp)
+		LL->STATUS &= LL->INT_EN;
+    1a26:	8ff9                	and	a5,a5,a4
+    1a28:	c41c                	sw	a5,8(s0)
+		BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+    1a2a:	10048713          	addi	a4,s1,256
+    1a2e:	5b5c                	lw	a5,52(a4)
+	DevSetMode(0);
+    1a30:	4501                	li	a0,0
+		BB->CTRL_TX = (BB->CTRL_TX & 0xfffffffc) | 1;
+    1a32:	9bf1                	andi	a5,a5,-4
+    1a34:	0017e793          	ori	a5,a5,1
+    1a38:	db5c                	sw	a5,52(a4)
+	DevSetMode(0);
+    1a3a:	831fe0ef          	jal	ra,26a <DevSetMode>
+	LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+    1a3e:	483c                	lw	a5,80(s0)
+	rx_ready = 1;
+    1a40:	4705                	li	a4,1
+}
+    1a42:	40b6                	lw	ra,76(sp)
+	LL->CTRL_MOD &= CTRL_MOD_RFSTOP;
+    1a44:	8ff7f793          	andi	a5,a5,-1793
+    1a48:	c83c                	sw	a5,80(s0)
+	LL->LL0 |= 0x08;
+    1a4a:	2004a783          	lw	a5,512(s1)
+}
+    1a4e:	5472                	lw	s0,60(sp)
+    1a50:	42a6                	lw	t0,72(sp)
+	LL->LL0 |= 0x08;
+    1a52:	0087e793          	ori	a5,a5,8
+    1a56:	20f4a023          	sw	a5,512(s1)
+	rx_ready = 1;
+    1a5a:	c0e1a423          	sw	a4,-1016(gp) # 20000004 <rx_ready>
+}
+    1a5e:	4316                	lw	t1,68(sp)
+    1a60:	4386                	lw	t2,64(sp)
+    1a62:	54e2                	lw	s1,56(sp)
+    1a64:	5552                	lw	a0,52(sp)
+    1a66:	55c2                	lw	a1,48(sp)
+    1a68:	5632                	lw	a2,44(sp)
+    1a6a:	56a2                	lw	a3,40(sp)
+    1a6c:	5712                	lw	a4,36(sp)
+    1a6e:	5782                	lw	a5,32(sp)
+    1a70:	4872                	lw	a6,28(sp)
+    1a72:	48e2                	lw	a7,24(sp)
+    1a74:	4e52                	lw	t3,20(sp)
+    1a76:	4ec2                	lw	t4,16(sp)
+    1a78:	4f32                	lw	t5,12(sp)
+    1a7a:	4fa2                	lw	t6,8(sp)
+    1a7c:	6161                	addi	sp,sp,80
+    1a7e:	30200073          	mret
+    1a82:	0000                	unimp
+    1a84:	4f54                	lw	a3,28(a4)
+    1a86:	2046                	fld	ft0,80(sp)
+    1a88:	646e6553          	0x646e6553
+    1a8c:	7265                	lui	tp,0xffff9
+    1a8e:	0000                	unimp
+    1a90:	4950                	lw	a2,20(a0)
+    1a92:	474e                	lw	a4,208(sp)
+    1a94:	2520                	fld	fs0,72(a0)
+    1a96:	0064                	addi	s1,sp,12
+    1a98:	4f50                	lw	a2,28(a4)
+    1a9a:	474e                	lw	a4,208(sp)
+    1a9c:	0000                	unimp
+    1a9e:	0000                	unimp
+    1aa0:	5452                	lw	s0,52(sp)
+    1aa2:	3a54                	fld	fa3,176(a2)
+    1aa4:	2520                	fld	fs0,72(a0)
+    1aa6:	756c                	flw	fa1,108(a0)
+    1aa8:	0000                	unimp
+    1aaa:	0000                	unimp
+    1aac:	5852                	lw	a6,52(sp)
+    1aae:	203a                	fld	ft0,392(sp)
+    1ab0:	7325                	lui	t1,0xfffe9
+    1ab2:	0000                	unimp
+    1ab4:	6954                	flw	fa3,20(a0)
+    1ab6:	656d                	lui	a0,0x1b
+    1ab8:	0074756f          	jal	a0,492be <radio.c.b2977aab+0x44b53>
+    1abc:	6142                	flw	ft2,16(sp)
+    1abe:	3a64                	fld	fs1,240(a2)
+    1ac0:	2520                	fld	fs0,72(a0)
+    1ac2:	3230                	fld	fa2,96(a2)
+    1ac4:	2058                	fld	fa4,128(s0)
+    1ac6:	3025                	jal	12ee <main+0x6f6>
+    1ac8:	5832                	lw	a6,44(sp)
+    1aca:	2520                	fld	fs0,72(a0)
+    1acc:	3230                	fld	fa2,96(a2)
+    1ace:	0058                	addi	a4,sp,4
+    1ad0:	3a4c                	fld	fa1,176(a2)
+    1ad2:	6425                	lui	s0,0x9
+    1ad4:	6320                	flw	fs0,64(a4)
+    1ad6:	3a68                	fld	fa0,240(a2)
+    1ad8:	6425                	lui	s0,0x9
+	...
+
+00001adc <Font5x7>:
+    1adc:	0000 0000 0000 5f00 0000 0700 0700 1400     ......._........
+    1aec:	147f 147f 2a24 2a7f 2312 0813 6264 4936     ....$*.*.#..db6I
+    1afc:	2255 0050 0305 0000 1c00 4122 0000 2241     U"P......."A..A"
+    1b0c:	001c 0814 083e 0814 3e08 0808 5000 0030     ....>....>...P0.
+    1b1c:	0800 0808 0808 6000 0060 2000 0810 0204     .......``.. ....
+    1b2c:	513e 4549 003e 7f42 0040 6142 4951 2146     >QIE>.B.@.BaQIF!
+    1b3c:	4541 314b 1418 7f12 2710 4545 3945 4a3c     AEK1.....'EEE9<J
+    1b4c:	4949 0130 0971 0305 4936 4949 0636 4949     II0.q...6III6.II
+    1b5c:	1e29 3600 0036 0000 3656 0000 1408 4122     )..66...V6...."A
+    1b6c:	1400 1414 1414 4100 1422 0208 5101 0609     .......A"....Q..
+    1b7c:	4932 4179 7e3e 1111 7e11 497f 4949 3e36     2IyA>~...~.III6>
+    1b8c:	4141 2241 417f 2241 7f1c 4949 4149 097f     AAA".AA"..IIIA..
+    1b9c:	0909 3e01 4941 7a49 087f 0808 007f 7f41     ...>AIIz......A.
+    1bac:	0041 4020 3f41 7f01 1408 4122 407f 4040     A. @A?...."A.@@@
+    1bbc:	7f40 0c02 7f02 047f 1008 3e7f 4141 3e41     @..........>AAA>
+    1bcc:	097f 0909 3e06 5141 5e21 097f 2919 4646     .....>AQ!^...)FF
+    1bdc:	4949 3149 0101 017f 3f01 4040 3f40 201f     III1.....?@@@?. 
+    1bec:	2040 3f1f 3840 3f40 1463 1408 0763 7008     @ .?@8@?c...c..p
+    1bfc:	0708 5161 4549 0043 417f 0041 0402 1008     ..aQIEC..AA.....
+    1c0c:	0020 4141 007f 0204 0201 4004 4040 4040      .AA.......@@@@@
+    1c1c:	0100 0402 2000 5454 7854 487f 4444 3838     ..... TTTx.HDD88
+    1c2c:	4444 2044 4438 4844 387f 5454 1854 7e08     DDD 8DDH.8TTT..~
+    1c3c:	0109 0c02 5252 3e52 087f 0404 0078 7d44     ....RRR>....x.D}
+    1c4c:	0040 4020 3d44 7f00 2810 0044 4100 407f     @. @D=...(D..A.@
+    1c5c:	7c00 1804 7804 087c 0404 3878 4444 3844     .|...x|...x8DDD8
+    1c6c:	147c 1414 0808 1414 7c18 087c 0404 4808     |........||....H
+    1c7c:	5454 2054 3f04 4044 3c20 4040 7c20 201c     TTT .?D@ <@@ |. 
+    1c8c:	2040 3c1c 3040 3c40 2844 2810 0c44 5050     @ .<@0@<D(.(D.PP
+    1c9c:	3c50 6444 4c54 0044 3608 0041 0000 007f     P<DdTLD..6A.....
+    1cac:	0000 3641 0008 0810 1008 0008               ..A6........
+
+00001cb8 <channel_map>:
+    1cb8:	0201 0403 0605 0807 0a09 0d0c 0f0e 1110     ................
+    1cc8:	1312 1514 1716 1918 1b1a 1d1c 1f1e 2120     .............. !
+    1cd8:	2322 2524 0026 270b                         "#$%&..'

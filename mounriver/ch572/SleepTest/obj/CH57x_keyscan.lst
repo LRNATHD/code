@@ -1,0 +1,348 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 1
+
+
+   1              		.file	"CH57x_keyscan.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.KeyScan_Cfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	KeyScan_Cfg
+   8              	KeyScan_Cfg:
+   9 0000 09ED     		bnez	a0,.L2
+  10 0002 37170040 		li	a4,1073745920
+  11 0006 83574706 		lhu	a5,100(a4)
+  12 000a C207     		slli	a5,a5,16
+  13 000c C183     		srli	a5,a5,16
+  14 000e F99B     		andi	a5,a5,-2
+  15 0010 C207     		slli	a5,a5,16
+  16 0012 C183     		srli	a5,a5,16
+  17 0014 2312F706 		sh	a5,100(a4)
+  18 0018 8280     		ret
+  19              	.L2:
+  20 001a B7170040 		li	a5,1073745920
+  21 001e 03D74706 		lhu	a4,100(a5)
+  22 0022 D98E     		or	a3,a3,a4
+  23 0024 558E     		or	a2,a2,a3
+  24 0026 D18D     		or	a1,a1,a2
+  25 0028 2392B706 		sh	a1,100(a5)
+  26 002c 03D74706 		lhu	a4,100(a5)
+  27 0030 13671700 		ori	a4,a4,1
+  28 0034 2392E706 		sh	a4,100(a5)
+  29 0038 8280     		ret
+  31              		.section	.text.KeyPress_Wake,"ax",@progbits
+  32              		.align	1
+  33              		.globl	KeyPress_Wake
+  35              	KeyPress_Wake:
+  36 0000 4111     		addi	sp,sp,-16
+  37 0002 93078008 		li	a5,136
+  38 0006 39E1     		bnez	a0,.L5
+  39              	 #APP
+  40              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT
+   2              	 * ******************************* File Name          : core_riscv.h Author
+   3              	 *        : WCH Version            : V1.0.0 Date               : 2024/07/25
+   4              	 * Description        : CH585 Series RISC-V Core Peripheral Access Layer Header
+   5              	 * File
+   6              	 *********************************************************************************
+   7              	 * Copyright (c) 2024 Nanjing Qinheng Microelectronics Co., Ltd.
+   8              	 * Attention: This software (modified or not) and binary are used for
+   9              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  10              	 *******************************************************************************/
+  11              	#ifndef __CORE_RISCV_H__
+  12              	#define __CORE_RISCV_H__
+  13              	
+  14              	#include <stdint.h>
+  15              	
+  16              	#ifdef __cplusplus
+  17              	extern "C" {
+  18              	#endif
+  19              	
+  20              	/* define compiler specific symbols */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 2
+
+
+  21              	#if defined(__CC_ARM)
+  22              	#define __ASM __asm       /*!< asm keyword for ARM Compiler          */
+  23              	#define __INLINE __inline /*!< inline keyword for ARM Compiler       */
+  24              	
+  25              	#elif defined(__ICCARM__)
+  26              	#define __ASM __asm /*!< asm keyword for IAR Compiler          */
+  27              	#define __INLINE                                                               \
+  28              	  inline /*!< inline keyword for IAR Compiler. Only avaiable in High           \
+  29              	            optimization mode! */
+  30              	
+  31              	#elif defined(__GNUC__)
+  32              	#define __ASM __asm     /*!< asm keyword for GNU Compiler          */
+  33              	#define __INLINE inline /*!< inline keyword for GNU Compiler       */
+  34              	
+  35              	#elif defined(__TASKING__)
+  36              	#define __ASM __asm     /*!< asm keyword for TASKING Compiler      */
+  37              	#define __INLINE inline /*!< inline keyword for TASKING Compiler   */
+  38              	
+  39              	#endif
+  40              	
+  41              	/* IO definitions */
+  42              	#ifdef __cplusplus
+  43              	#define __I volatile /*!< defines 'read only' permissions      */
+  44              	#else
+  45              	#define __I volatile const /*!< defines 'read only' permissions     */
+  46              	#endif
+  47              	#define __O volatile  /*!< defines 'write only' permissions     */
+  48              	#define __IO volatile /*!< defines 'read / write' permissions   */
+  49              	#define RV_STATIC_INLINE static inline
+  50              	
+  51              	// typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  52              	
+  53              	typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+  54              	typedef enum { RESET = 0, SET = !RESET } FlagStatus, ITStatus;
+  55              	
+  56              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  57              	typedef struct {
+  58              	  __I uint32_t ISR[8];      // 0
+  59              	  __I uint32_t IPR[8];      // 20H
+  60              	  __IO uint32_t ITHRESDR;   // 40H
+  61              	  uint8_t RESERVED[8];      // 44H
+  62              	  __I uint32_t GISR;        // 4CH
+  63              	  __IO uint8_t VTFIDR[4];   // 50H
+  64              	  uint8_t RESERVED0[0x0C];  // 54H
+  65              	  __IO uint32_t VTFADDR[4]; // 60H
+  66              	  uint8_t RESERVED1[0x90];  // 70H
+  67              	  __O uint32_t IENR[8];     // 100H
+  68              	  uint8_t RESERVED2[0x60];  // 120H
+  69              	  __O uint32_t IRER[8];     // 180H
+  70              	  uint8_t RESERVED3[0x60];  // 1A0H
+  71              	  __O uint32_t IPSR[8];     // 200H
+  72              	  uint8_t RESERVED4[0x60];  // 220H
+  73              	  __O uint32_t IPRR[8];     // 280H
+  74              	  uint8_t RESERVED5[0x60];  // 2A0H
+  75              	  __IO uint32_t IACTR[8];   // 300H
+  76              	  uint8_t RESERVED6[0xE0];  // 320H
+  77              	  __IO uint8_t IPRIOR[256]; // 400H
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 3
+
+
+  78              	  uint8_t RESERVED7[0x810]; // 500H
+  79              	  __IO uint32_t SCTLR;      // D10H
+  80              	} PFIC_Type;
+  81              	
+  82              	/* memory mapped structure for SysTick */
+  83              	typedef struct {
+  84              	  __IO uint32_t CTLR;
+  85              	  __IO uint32_t SR;
+  86              	  union {
+  87              	    __IO uint32_t CNT;
+  88              	    __IO uint32_t CNTL;
+  89              	  };
+  90              	  uint8_t RESERVED[4];
+  91              	  union {
+  92              	    __IO uint32_t CMP;
+  93              	    __IO uint32_t CMPL;
+  94              	  };
+  95              	  uint8_t RESERVED0[4];
+  96              	} SysTick_Type;
+  97              	
+  98              	#define PFIC ((PFIC_Type *)0xE000E000)
+  99              	#define SysTick ((SysTick_Type *)0xE000F000)
+ 100              	
+ 101              	#define PFIC_KEY1 ((uint32_t)0xFA050000)
+ 102              	#define PFIC_KEY2 ((uint32_t)0xBCAF0000)
+ 103              	#define PFIC_KEY3 ((uint32_t)0xBEEF0000)
+ 104              	
+ 105              	/* ##########################   define  #################################### */
+ 106              	#define __nop() __asm__ volatile("nop")
+ 107              	
+ 108              	#define read_csr(reg)                                                          \
+ 109              	  ({                                                                           \
+ 110              	    unsigned long __tmp;                                                       \
+ 111              	    __asm__ volatile("csrr %0, " #reg : "=r"(__tmp));                          \
+ 112              	    __tmp;                                                                     \
+ 113              	  })
+ 114              	
+ 115              	#define write_csr(reg, val)                                                    \
+ 116              	  ({                                                                           \
+ 117              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)                \
+ 118              	      __asm__ volatile("csrw  " #reg ", %0" ::"i"(val));                       \
+ 119              	    else                                                                       \
+ 120              	      __asm__ volatile("csrw  " #reg ", %0" ::"r"(val));                       \
+ 121              	  })
+ 122              	
+ 123              	/*********************************************************************
+ 124              	 * @fn      __risc_v_enable_irq
+ 125              	 *
+ 126              	 * @brief   recover Global Interrupt
+ 127              	 *
+ 128              	 * @return  mpie and mie bit in mstatus.
+ 129              	 */
+ 130              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 131              	__risc_v_enable_irq(uint32_t mpie_mie) {
+ 132              	  uint32_t result;
+ 133              	
+ 134              	  __asm volatile("csrrs %0, 0x800, %1"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 4
+
+
+ 135              	                 : "=r"(result)
+ 136              	                 : "r"(mpie_mie)
+ 137              	                 : "memory");
+ 138              	  return result;
+ 139              	}
+ 140              	
+ 141              	/*********************************************************************
+ 142              	 * @fn      __disable_irq
+ 143              	 *
+ 144              	 * @brief   Disable Global Interrupt
+ 145              	 *
+ 146              	 * @return  mpie and mie bit in mstatus.
+ 147              	 */
+ 148              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 149              	__risc_v_disable_irq(void) {
+ 150              	  uint32_t result;
+ 151              	
+ 152 0008 F3B70780 	  __asm volatile("csrrc %0, 0x800, %1" : "=r"(result) : "r"(0x88) : "memory");
+ 153              	  return result & 0x88;
+  41              		csrrc a5, 0x800, a5
+  42              	# 0 "" 2
+  43              	 #NO_APP
+  44 000c 93F78708 		andi	a5,a5,136
+  45 0010 3EC4     		sw	a5,8(sp)
+  46              	 #APP
+  47              	# 53 "../../SRC/StdPeriphDriver/CH57x_keyscan.c" 1
+   1              	/********************************** (C) COPYRIGHT *******************************
+   2              	 * File Name          : CH57x_keyscan.c
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.0
+   5              	 * Date               : 2024/12/17
+   6              	 * Description        : source file(ch572/ch570)
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	
+  13              	#include "CH57x_common.h"
+  14              	
+  15              	/*********************************************************************
+  16              	 * @fn      KeyScan_Cfg
+  17              	 *
+  18              	 * @brief   配置按键扫描功能
+  19              	 *
+  20              	 * @param   s            -  设置是否开启按键扫描功能
+  21              	 * @param   keyScanPin   -  设置参与按键扫描的IO使能
+  22              	 * @param   ClkDiv       -  设置扫描时钟分频，时钟来源LSI
+  23              	 * @param   Rep          -  设置扫描到相同按键值次数
+  24              	 *
+  25              	 * @return  none
+  26              	 */
+  27              	void KeyScan_Cfg(uint8_t s, uint16_t keyScanPin, uint16_t ClkDiv, uint16_t Rep)
+  28              	{
+  29              	    if(s == DISABLE)
+  30              	    {
+  31              	        R16_KEY_SCAN_CTRL &= ~(RB_SCAN_START_EN);
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 5
+
+
+  32              	    }
+  33              	    else
+  34              	    {
+  35              	        R16_KEY_SCAN_CTRL |= keyScanPin | ClkDiv | Rep;
+  36              	        R16_KEY_SCAN_CTRL |= RB_SCAN_START_EN;
+  37              	    }
+  38              	}
+  39              	
+  40              	/*********************************************************************
+  41              	 * @fn      KeyPress_Wake
+  42              	 *
+  43              	 * @brief   按键按下唤醒睡眠使能
+  44              	 *
+  45              	 * @param   s            -  设置是否开启按键唤醒功能
+  46              	 *
+  47              	 * @return  none
+  48              	 */
+  49              	void KeyPress_Wake(uint8_t s)
+  50              	{
+  51              	    if(s == DISABLE)
+  52              	    {
+  53 0012 0F100000 	        sys_safe_access_enable();
+  54              	        R8_SLP_CLK_OFF0 &= ~(RB_SLP_KEYSCAN_WAKE);
+  48              		fence.i
+  49              	# 0 "" 2
+  50              	 #NO_APP
+  51 0016 B7170040 		li	a5,1073745920
+  52 001a 13077005 		li	a4,87
+  53 001e 2380E704 		sb	a4,64(a5)
+  54 0022 130780FA 		li	a4,-88
+  55 0026 2380E704 		sb	a4,64(a5)
+  56              	 #APP
+  57              	# 53 "../../SRC/StdPeriphDriver/CH57x_keyscan.c" 1
+  58              		fence.i
+  59              	# 0 "" 2
+  60              	 #NO_APP
+  61 002e 03C7C700 		lbu	a4,12(a5)
+  62 0032 1377F707 		andi	a4,a4,127
+  63 0036 2386E700 		sb	a4,12(a5)
+  64 003a 23800704 		sb	zero,64(a5)
+  65 003e A247     		lw	a5,8(sp)
+  66              	.L8:
+  67              	 #APP
+  68              	# 134 "../../SRC/RVMSIS/core_riscv.h" 1
+  69              		csrrs a5, 0x800, a5
+  70              	# 0 "" 2
+  71              	# 61 "../../SRC/StdPeriphDriver/CH57x_keyscan.c" 1
+  55              	        sys_safe_access_disable();
+  56              	    }
+  57              	    else
+  58              	    {
+  59              	        sys_safe_access_enable();
+  60              	        R8_SLP_CLK_OFF0 |= RB_SLP_KEYSCAN_WAKE;
+  61 0044 0F100000 	        sys_safe_access_disable();
+  62              	    }
+  72              		fence.i
+  73              	# 0 "" 2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 6
+
+
+  74              	 #NO_APP
+  75 0048 4101     		addi	sp,sp,16
+  76 004a 8280     		jr	ra
+  77              	.L5:
+  78              	 #APP
+  79              	# 152 "../../SRC/RVMSIS/core_riscv.h" 1
+  80              		csrrc a5, 0x800, a5
+  81              	# 0 "" 2
+  82              	 #NO_APP
+  83 0050 93F78708 		andi	a5,a5,136
+  84 0054 3EC6     		sw	a5,12(sp)
+  85              	 #APP
+  86              	# 59 "../../SRC/StdPeriphDriver/CH57x_keyscan.c" 1
+  87              		fence.i
+  88              	# 0 "" 2
+  89              	 #NO_APP
+  90 005a B7170040 		li	a5,1073745920
+  91 005e 13077005 		li	a4,87
+  92 0062 2380E704 		sb	a4,64(a5)
+  93 0066 130780FA 		li	a4,-88
+  94 006a 2380E704 		sb	a4,64(a5)
+  95              	 #APP
+  96              	# 59 "../../SRC/StdPeriphDriver/CH57x_keyscan.c" 1
+  97              		fence.i
+  98              	# 0 "" 2
+  99              	 #NO_APP
+ 100 0072 03C7C700 		lbu	a4,12(a5)
+ 101 0076 13670708 		ori	a4,a4,128
+ 102 007a 2386E700 		sb	a4,12(a5)
+ 103 007e 23800704 		sb	zero,64(a5)
+ 104 0082 B247     		lw	a5,12(sp)
+ 105 0084 75BF     		j	.L8
+ 107              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_keyscan.c
+C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s:8      .text.KeyScan_Cfg:0000000000000000 KeyScan_Cfg
+C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s:35     .text.KeyPress_Wake:0000000000000000 KeyPress_Wake
+C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s:19     .text.KeyScan_Cfg:000000000000001a .L2
+C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s:77     .text.KeyPress_Wake:000000000000004c .L5
+C:\Users\LRNA\AppData\Local\Temp\ccABdWxt.s:66     .text.KeyPress_Wake:0000000000000040 .L8
+
+NO UNDEFINED SYMBOLS

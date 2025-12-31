@@ -1,0 +1,226 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s 			page 1
+
+
+   1              		.file	"Main.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.DebugInit,"ax",@progbits
+   5              		.align	1
+   6              		.globl	DebugInit
+   8              	DebugInit:
+   9 0000 4111     		addi	sp,sp,-16
+  10 0002 06C6     		sw	ra,12(sp)
+  11 0004 B7170040 		li	a5,1073745920
+  12 0008 13070020 		li	a4,512
+  13 000c 23ACE70A 		sw	a4,184(a5)
+  14 0010 8545     		li	a1,1
+  15 0012 13050010 		li	a0,256
+  16 0016 97000000 		call	GPIOA_ModeCfg
+  16      E7800000 
+  17 001e 8D45     		li	a1,3
+  18 0020 13050020 		li	a0,512
+  19 0024 97000000 		call	GPIOA_ModeCfg
+  19      E7800000 
+  20 002c B240     		lw	ra,12(sp)
+  21 002e 4101     		addi	sp,sp,16
+  22 0030 17030000 		tail	UART_DefInit
+  22      67000300 
+  24              		.section	.text.startup.main,"ax",@progbits
+  25              		.align	1
+  26              		.globl	main
+  28              	main:
+  29 0000 4111     		addi	sp,sp,-16
+  30 0002 1305A004 		li	a0,74
+  31 0006 06C6     		sw	ra,12(sp)
+  32 0008 22C4     		sw	s0,8(sp)
+  33 000a 97000000 		call	SetSysClock
+  33      E7800000 
+  34 0012 1145     		li	a0,4
+  35 0014 97000000 		call	SPI_Init
+  35      E7800000 
+  36 001c 97000000 		call	GC9A01_Init
+  36      E7800000 
+  37 0024 0145     		li	a0,0
+  38 0026 97000000 		call	GC9A01_FillScreen
+  38      E7800000 
+  39 002e 4164     		li	s0,65536
+  40 0030 8947     		li	a5,2
+  41 0032 0147     		li	a4,0
+  42 0034 9306F4FF 		addi	a3,s0,-1
+  43 0038 17060000 		lla	a2,.LC0
+  43      13060600 
+  44 0040 9305C003 		li	a1,60
+  45 0044 6145     		li	a0,24
+  46 0046 97000000 		call	GC9A01_DrawString
+  46      E7800000 
+  47 004e 8547     		li	a5,1
+  48 0050 0147     		li	a4,0
+  49 0052 9306007E 		li	a3,2016
+  50 0056 17060000 		lla	a2,.LC1
+  50      13060600 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s 			page 2
+
+
+  51 005e 93054006 		li	a1,100
+  52 0062 13055004 		li	a0,69
+  53 0066 97000000 		call	GC9A01_DrawString
+  53      E7800000 
+  54 006e 8547     		li	a5,1
+  55 0070 0147     		li	a4,0
+  56 0072 93060480 		addi	a3,s0,-2048
+  57 0076 17060000 		lla	a2,.LC2
+  57      13060600 
+  58 007e 93053007 		li	a1,115
+  59 0082 13058004 		li	a0,72
+  60 0086 97000000 		call	GC9A01_DrawString
+  60      E7800000 
+  61 008e 8547     		li	a5,1
+  62 0090 0147     		li	a4,0
+  63 0092 9306F4FF 		addi	a3,s0,-1
+  64 0096 17060000 		lla	a2,.LC3
+  64      13060600 
+  65 009e 93052008 		li	a1,130
+  66 00a2 1305B004 		li	a0,75
+  67 00a6 97000000 		call	GC9A01_DrawString
+  67      E7800000 
+  68 00ae 8547     		li	a5,1
+  69 00b0 0147     		li	a4,0
+  70 00b2 9306F07F 		li	a3,2047
+  71 00b6 17060000 		lla	a2,.LC4
+  71      13060600 
+  72 00be 9305000A 		li	a1,160
+  73 00c2 13055004 		li	a0,69
+  74 00c6 97000000 		call	GC9A01_DrawString
+  74      E7800000 
+  75 00ce 97000000 		call	DebugInit
+  75      E7800000 
+  76 00d6 17050000 		lla	a0,.LC5
+  76      13050500 
+  77 00de 97000000 		call	puts
+  77      E7800000 
+  78 00e6 0565     		li	a0,4096
+  79 00e8 13058538 		addi	a0,a0,904
+  80 00ec 97000000 		call	mDelaymS
+  80      E7800000 
+  81 00f4 8547     		li	a5,1
+  82 00f6 0147     		li	a4,0
+  83 00f8 FD46     		li	a3,31
+  84 00fa 17060000 		lla	a2,.LC6
+  84      13060600 
+  85 0102 9305400B 		li	a1,180
+  86 0106 1305E004 		li	a0,78
+  87 010a 97000000 		call	GC9A01_DrawString
+  87      E7800000 
+  88 0112 13054006 		li	a0,100
+  89 0116 97000000 		call	mDelaymS
+  89      E7800000 
+  90 011e 97000000 		call	GC9A01_Sleep
+  90      E7800000 
+  91 0126 8545     		li	a1,1
+  92 0128 7D55     		li	a0,-1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s 			page 3
+
+
+  93 012a 97000000 		call	GPIOA_ModeCfg
+  93      E7800000 
+  94 0132 0146     		li	a2,0
+  95 0134 A145     		li	a1,8
+  96 0136 0545     		li	a0,1
+  97 0138 97000000 		call	PWR_PeriphWakeUpCfg
+  97      E7800000 
+  98 0140 37750200 		li	a0,159744
+  99 0144 13050510 		addi	a0,a0,256
+ 100 0148 97000000 		call	RTC_TRIGFunCfg
+ 100      E7800000 
+ 101 0150 0145     		li	a0,0
+ 102 0152 97000000 		call	LowPower_Shutdown
+ 102      E7800000 
+ 103              	.L4:
+ 104 015a 01A0     		j	.L4
+ 106              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+ 107              		.align	2
+ 108              	.LC0:
+ 109 0000 536C6565 		.string	"Sleep Power Test"
+ 109      7020506F 
+ 109      77657220 
+ 109      54657374 
+ 109      00
+ 110 0011 000000   		.zero	3
+ 111              	.LC1:
+ 112 0014 4D6F6465 		.string	"Mode: Shutdown(0)"
+ 112      3A205368 
+ 112      7574646F 
+ 112      776E2830 
+ 112      2900
+ 113 0026 0000     		.zero	2
+ 114              	.LC2:
+ 115 0028 52414D20 		.string	"RAM Retained: No"
+ 115      52657461 
+ 115      696E6564 
+ 115      3A204E6F 
+ 115      00
+ 116 0039 000000   		.zero	3
+ 117              	.LC3:
+ 118 003c 41637469 		.string	"Active Time: 2s"
+ 118      76652054 
+ 118      696D653A 
+ 118      20327300 
+ 119              	.LC4:
+ 120 004c 536C6565 		.string	"Sleeping in 5s..."
+ 120      70696E67 
+ 120      20696E20 
+ 120      35732E2E 
+ 120      2E00
+ 121 005e 0000     		.zero	2
+ 122              	.LC5:
+ 123 0060 536C6565 		.string	"Sleep Power Test. Sleeping in 5s..."
+ 123      7020506F 
+ 123      77657220 
+ 123      54657374 
+ 123      2E20536C 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s 			page 4
+
+
+ 124              	.LC6:
+ 125 0084 44697370 		.string	"Display OFF..."
+ 125      6C617920 
+ 125      4F46462E 
+ 125      2E2E00
+ 126              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Main.c
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:8      .text.DebugInit:0000000000000000 DebugInit
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:28     .text.startup.main:0000000000000000 main
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:108    .rodata.main.str1.4:0000000000000000 .LC0
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:43     .text.startup.main:0000000000000038 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:111    .rodata.main.str1.4:0000000000000014 .LC1
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:50     .text.startup.main:0000000000000056 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:114    .rodata.main.str1.4:0000000000000028 .LC2
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:57     .text.startup.main:0000000000000076 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:117    .rodata.main.str1.4:000000000000003c .LC3
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:64     .text.startup.main:0000000000000096 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:119    .rodata.main.str1.4:000000000000004c .LC4
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:71     .text.startup.main:00000000000000b6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:122    .rodata.main.str1.4:0000000000000060 .LC5
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:76     .text.startup.main:00000000000000d6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:124    .rodata.main.str1.4:0000000000000084 .LC6
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:84     .text.startup.main:00000000000000fa .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccCRGHJZ.s:103    .text.startup.main:000000000000015a .L4
+
+UNDEFINED SYMBOLS
+GPIOA_ModeCfg
+UART_DefInit
+SetSysClock
+SPI_Init
+GC9A01_Init
+GC9A01_FillScreen
+GC9A01_DrawString
+puts
+mDelaymS
+GC9A01_Sleep
+PWR_PeriphWakeUpCfg
+RTC_TRIGFunCfg
+LowPower_Shutdown
