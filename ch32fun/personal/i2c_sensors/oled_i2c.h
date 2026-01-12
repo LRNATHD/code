@@ -9,105 +9,105 @@
 // ===================================================================================
 
 // User defined pins for Soft I2C
-#define I2C_SDA PA6
-#define I2C_SCL PA5
+#define I2C_SDA PB4
+#define I2C_SCL PB7
 
 // Simple delay for bit-banging
 static void i2c_delay(void) {
-    for(volatile int i = 0; i < 2; i++) { __asm__("nop"); }
+  for (volatile int i = 0; i < 2; i++) {
+    __asm__("nop");
+  }
 }
 
 static void i2c_sda_high(void) {
-    // Set as Input with Pull-up
-    funPinMode(I2C_SDA, GPIO_CFGLR_IN_PUPD); 
-    funDigitalWrite(I2C_SDA, 1); 
+  // Set as Input with Pull-up
+  funPinMode(I2C_SDA, GPIO_CFGLR_IN_PUPD);
+  funDigitalWrite(I2C_SDA, 1);
 }
 
 static void i2c_sda_low(void) {
-    // Set as Output Low
-    funPinMode(I2C_SDA, GPIO_CFGLR_OUT_10Mhz_PP);
-    funDigitalWrite(I2C_SDA, 0);
+  // Set as Output Low
+  funPinMode(I2C_SDA, GPIO_CFGLR_OUT_10Mhz_PP);
+  funDigitalWrite(I2C_SDA, 0);
 }
 
-static void i2c_scl_high(void) {
-    funDigitalWrite(I2C_SCL, 1);
-}
+static void i2c_scl_high(void) { funDigitalWrite(I2C_SCL, 1); }
 
-static void i2c_scl_low(void) {
-    funDigitalWrite(I2C_SCL, 0);
-}
+static void i2c_scl_low(void) { funDigitalWrite(I2C_SCL, 0); }
 
 static void i2c_start(void) {
-    i2c_sda_high();
-    i2c_scl_high();
-    i2c_delay();
-    i2c_sda_low();
-    i2c_delay();
-    i2c_scl_low();
+  i2c_sda_high();
+  i2c_scl_high();
+  i2c_delay();
+  i2c_sda_low();
+  i2c_delay();
+  i2c_scl_low();
 }
 
 static void i2c_stop(void) {
-    i2c_sda_low();
-    i2c_delay();
-    i2c_scl_high();
-    i2c_delay();
-    i2c_sda_high();
-    i2c_delay();
+  i2c_sda_low();
+  i2c_delay();
+  i2c_scl_high();
+  i2c_delay();
+  i2c_sda_high();
+  i2c_delay();
 }
 
 static u8 i2c_write_byte(u8 byte) {
-    for(int i = 0; i < 8; i++) {
-        if(byte & 0x80) i2c_sda_high();
-        else i2c_sda_low();
-        byte <<= 1;
-        i2c_delay();
-        i2c_scl_high();
-        i2c_delay();
-        i2c_scl_low();
-    }
-    
-    // ACK Pulse
-    i2c_sda_high(); // Release SDA
+  for (int i = 0; i < 8; i++) {
+    if (byte & 0x80)
+      i2c_sda_high();
+    else
+      i2c_sda_low();
+    byte <<= 1;
     i2c_delay();
     i2c_scl_high();
     i2c_delay();
-    
-    // Sample SDA
-    u8 ack = funDigitalRead(I2C_SDA);
-    
     i2c_scl_low();
-    return ack;
+  }
+
+  // ACK Pulse
+  i2c_sda_high(); // Release SDA
+  i2c_delay();
+  i2c_scl_high();
+  i2c_delay();
+
+  // Sample SDA
+  u8 ack = funDigitalRead(I2C_SDA);
+
+  i2c_scl_low();
+  return ack;
 }
 
 static u8 i2c_writeData(u8 address, u8 *data, u8 len) {
-    i2c_start();
-    
-    // Send Address + Write(0)
-    if(i2c_write_byte(address << 1)) {
-        i2c_stop();
-        return 1; // NACK
-    }
-    
-    for(u8 i = 0; i < len; i++) {
-        if(i2c_write_byte(data[i])) {
-            i2c_stop();
-            return 2; // NACK
-        }
-    }
-    
+  i2c_start();
+
+  // Send Address + Write(0)
+  if (i2c_write_byte(address << 1)) {
     i2c_stop();
-    return 0; // Success
+    return 1; // NACK
+  }
+
+  for (u8 i = 0; i < len; i++) {
+    if (i2c_write_byte(data[i])) {
+      i2c_stop();
+      return 2; // NACK
+    }
+  }
+
+  i2c_stop();
+  return 0; // Success
 }
 
 static u8 i2c_init(void) {
-    // SCL Output Push-Pull
-    funPinMode(I2C_SCL, GPIO_CFGLR_OUT_10Mhz_PP);
-    i2c_scl_high();
-    
-    // SDA Init as High (Input)
-    i2c_sda_high();
-    
-    return 0;
+  // SCL Output Push-Pull
+  funPinMode(I2C_SCL, GPIO_CFGLR_OUT_10Mhz_PP);
+  i2c_scl_high();
+
+  // SDA Init as High (Input)
+  i2c_sda_high();
+
+  return 0;
 }
 
 // ===================================================================================
@@ -215,87 +215,88 @@ static const uint8_t font5x7[] = {
 };
 
 static void ssd1306_cmd(uint8_t cmd) {
-    uint8_t data[2] = {0x00, cmd};
-    i2c_writeData(SSD1306_ADDRESS, data, 2);
+  uint8_t data[2] = {0x00, cmd};
+  i2c_writeData(SSD1306_ADDRESS, data, 2);
 }
 
 static void ssd1306_data(uint8_t d) {
-    uint8_t data[2] = {0x40, d};
-    i2c_writeData(SSD1306_ADDRESS, data, 2);
+  uint8_t data[2] = {0x40, d};
+  i2c_writeData(SSD1306_ADDRESS, data, 2);
 }
 
 static void ssd1306_init(void) {
-    // Init sequence for 128x32
-    uint8_t init_sequence[] = {
-        0xAE,       // Display Off
-        0xD5, 0x80, // Set Display Clock Divide Ratio
-        0xA8, 0x1F, // Set Multiplex Ratio (32 lines)
-        0xD3, 0x00, // Set Display Offset
-        0x40,       // Set Start Line 0
-        0x8D, 0x14, // Charge Pump Enable
-        0x20, 0x00, // Memory Addressing Mode (Horizontal)
-        0xA1,       // Segment Re-map
-        0xC8,       // COM Output Scan Direction
-        0xDA, 0x02, // COM Pins Hardware Config
-        0x81, 0x8F, // Set Contrast
-        0xD9, 0xF1, // Set Pre-charge Period
-        0xDB, 0x40, // Set VCOMH Deselect Level
-        0xA4,       // Resume from RAM content
-        0xA6,       // Normal Display
-        0xAF        // Display On
-    };
+  // Init sequence for 128x32
+  uint8_t init_sequence[] = {
+      0xAE,       // Display Off
+      0xD5, 0x80, // Set Display Clock Divide Ratio
+      0xA8, 0x1F, // Set Multiplex Ratio (32 lines)
+      0xD3, 0x00, // Set Display Offset
+      0x40,       // Set Start Line 0
+      0x8D, 0x14, // Charge Pump Enable
+      0x20, 0x00, // Memory Addressing Mode (Horizontal)
+      0xA1,       // Segment Re-map
+      0xC8,       // COM Output Scan Direction
+      0xDA, 0x02, // COM Pins Hardware Config
+      0x81, 0x8F, // Set Contrast
+      0xD9, 0xF1, // Set Pre-charge Period
+      0xDB, 0x40, // Set VCOMH Deselect Level
+      0xA4,       // Resume from RAM content
+      0xA6,       // Normal Display
+      0xAF        // Display On
+  };
 
-    i2c_start();
-    i2c_write_byte(SSD1306_ADDRESS << 1);
-    i2c_write_byte(0x00); // Command Stream (Co=0, D/C#=0)
-    
-    for(int i = 0; i < sizeof(init_sequence); i++) {
-        i2c_write_byte(init_sequence[i]);
-    }
-    
-    i2c_stop();
+  i2c_start();
+  i2c_write_byte(SSD1306_ADDRESS << 1);
+  i2c_write_byte(0x00); // Command Stream (Co=0, D/C#=0)
+
+  for (int i = 0; i < sizeof(init_sequence); i++) {
+    i2c_write_byte(init_sequence[i]);
+  }
+
+  i2c_stop();
 }
 
 static void ssd1306_clear(void) {
-    for (uint8_t page = 0; page < 4; page++) {
-        ssd1306_cmd(0xB0 + page);
-        ssd1306_cmd(0x00);
-        ssd1306_cmd(0x10);
-        
-        i2c_start();
-        i2c_write_byte(SSD1306_ADDRESS << 1);
-        i2c_write_byte(0x40); // Data Stream
-        for (uint8_t col = 0; col < 128; col++) {
-            i2c_write_byte(0x00);
-        }
-        i2c_stop();
-    }
-}
-
-static void ssd1306_set_cursor(uint8_t page, uint8_t col) {
+  for (uint8_t page = 0; page < 4; page++) {
     ssd1306_cmd(0xB0 + page);
-    ssd1306_cmd(0x00 | (col & 0x0F));
-    ssd1306_cmd(0x10 | ((col >> 4) & 0x0F));
-}
+    ssd1306_cmd(0x00);
+    ssd1306_cmd(0x10);
 
-static void ssd1306_write_char(char c) {
-    if (c < 32 || c > 126) return;
-    const uint8_t* bitmap = &font5x7[(c - 32) * 5];
-    
     i2c_start();
     i2c_write_byte(SSD1306_ADDRESS << 1);
     i2c_write_byte(0x40); // Data Stream
-    for (uint8_t i = 0; i < 5; i++) {
-        i2c_write_byte(bitmap[i]);
+    for (uint8_t col = 0; col < 128; col++) {
+      i2c_write_byte(0x00);
     }
-    i2c_write_byte(0x00); // Space
     i2c_stop();
+  }
 }
 
-static void ssd1306_print(const char* str) {
-    while (*str) {
-        ssd1306_write_char(*str++);
-    }
+static void ssd1306_set_cursor(uint8_t page, uint8_t col) {
+  ssd1306_cmd(0xB0 + page);
+  ssd1306_cmd(0x00 | (col & 0x0F));
+  ssd1306_cmd(0x10 | ((col >> 4) & 0x0F));
+}
+
+static void ssd1306_write_char(char c) {
+  if (c < 32 || c > 126)
+    return;
+  const uint8_t *bitmap = &font5x7[(c - 32) * 5];
+
+  i2c_start();
+  i2c_write_byte(SSD1306_ADDRESS << 1);
+  i2c_write_byte(0x40); // Data Stream
+  for (uint8_t i = 0; i < 5; i++) {
+    i2c_write_byte(bitmap[i]);
+  }
+  i2c_write_byte(0x00); // Space
+  i2c_stop();
+}
+
+static void ssd1306_print(const char *str) {
+  while (*str) {
+    ssd1306_write_char(*str++);
+  }
 }
 
 #endif

@@ -3,12 +3,11 @@
 #include "spi.h"
 #include <stdio.h>
 
-
 int main() {
   SystemInit();
 
   printf("GC9A01 SPI Demo\n");
-
+  // set sysclock to 100mhz
   // Initialize SPI with clock divider 4 (15MHz if SysClk is 60MHz) -> fast
   // enough for display
   SPI_Init(4);

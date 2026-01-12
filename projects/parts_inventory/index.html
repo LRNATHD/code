@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Track and search your component order history from LCSC and DigiKey.">
+</head>
+
+<body>
+    <div class="background-glob"></div>
+    <div class="app-container">
+        <!-- Header removed for OLED minimal look -->
+
+        <main>
+            <div id="mainView">
+                <div class="search-container glass-panel">
+                    <div class="input-group">
+                        <input type="text" id="searchInput"
+                            placeholder="Search for ICs, values (e.g., 330nF), or descriptions..." autocomplete="off">
+                        <button id="clearSearch" aria-label="Clear Search">✖</button>
+                    </div>
+                    <!-- Consolidated Toolbar (Left aligned items + Right aligned upload) -->
+                    <div class="toolbar-row">
+                        <div class="toolbar-controls">
+                            <button id="addManualBtn" class="upload-link"
+                                style="background:none; border:none; color:var(--accent-primary); font-weight:600; cursor:pointer;">＋
+                                Add Custom Item</button>
+                            <span class="separator">|</span>
+                            <button id="openBulkBtn" class="upload-link"
+                                style="background:none; border:none; color:var(--text-muted); cursor:pointer;">Topological
+                                Sort (Bulk Edit)</button>
+                            <span class="separator">|</span>
+                            <span id="itemCount" style="color:var(--text-muted); font-size:0.85rem;">0 items</span>
+                            <button id="clearDataBtn" class="text-btn" style="font-size:0.85rem; opacity:0.7;">Reset
+                                Data</button>
+                        </div>
+                        <div id="uploadTrigger" class="upload-link">Import Parts CSV</div>
+                    </div>
+                    <input type="file" id="csvFileInput" accept=".csv" multiple style="display: none;">
+                </div>
+
+                <div id="resultsArea" class="results-grid">
+                    <!-- Results injected here -->
+                    <div class="empty-state">
+                        <div class="icon">📦</div>
+                        <h3>No Parts Found</h3>
+                        <p>Try searching for a component or upload a CSV file to get started.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Editor View (Hidden by default) -->
+            <div id="bulkView" class="hidden">
+                <div class="glass-panel" style="margin-bottom: 20px; position:sticky; top:20px; z-index:20;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h2 style="margin:0;">Bulk Location Editor</h2>
+                        <button id="closeBulkBtn" class="text-btn" style="font-size:1rem;">Done</button>
+                    </div>
+
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                        <input type="text" id="bulkLocationInput" placeholder="Enter Location to Apply (e.g. SMD Box 1)"
+                            style="flex-grow:1; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:rgba(0,0,0,0.3); color:white;">
+                        <button id="applyBulkLocationBtn" class="action-link"
+                            style="background:var(--accent-primary); border:none; color:white; padding:10px 20px; border-radius:8px; cursor:pointer;">Set
+                            Location</button>
+                    </div>
+
+                    <div
+                        style="margin-top: 15px; display:flex; gap: 20px; align-items:center; font-size:0.9rem; color:var(--text-muted);">
+                        <label style="cursor:pointer; display:flex; gap:6px; align-items:center;"><input type="checkbox"
+                                id="bulkSelectAll"> Select / Deselect All</label>
+                        <label style="cursor:pointer; display:flex; gap:6px; align-items:center;"><input type="checkbox"
+                                id="bulkShowNoLoc"> Failed Sort Only (Empty Location)</label>
+                        <span id="bulkSelectedCount" style="margin-left:auto; color:var(--accent-secondary);">0
+                            selected</span>
+                    </div>
+                </div>
+
+                <div id="bulkList" style="display:flex; flex-direction:column; gap:8px;">
+                    <!-- Bulk Lines Injected Here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Manual Item Modal -->
+    <div id="modalOverlay" class="modal-overlay hidden">
+        <div class="modal glass-panel">
+            <h2>Add Custom Item</h2>
+            <form id="manualItemForm">
+                <div class="form-group">
+                    <label>Source</label>
+                    <div class="quick-source-options">
+                        <button type="button" class="quick-source-btn" data-value="AliExpress">AliExpress</button>
+                        <button type="button" class="quick-source-btn" data-value="Amazon">Amazon</button>
+                        <button type="button" class="quick-source-btn" data-value="eBay">eBay</button>
+                    </div>
+                    <input type="text" id="mSource" placeholder="Type source (e.g. Local Store)" required
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color); margin-top:8px;">
+                </div>
+                <div class="form-group">
+                    <label>Part Number / Name</label>
+                    <input type="text" id="mPartNum" placeholder="e.g. ESP32-WROOM or 'Assorted Screws'" required
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <label>Manufacturer (Optional)</label>
+                    <input type="text" id="mMfr" placeholder="e.g. Espressif"
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="mDesc" placeholder="e.g. WiFi Module, Dual Core" rows="3"
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="mQty" value="1" min="1"
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <label>Location (Optional)</label>
+                    <input type="text" id="mLoc" placeholder="e.g. Box 3, Bin A"
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <label>Link (Optional)</label>
+                    <input type="url" id="mLink" placeholder="https://..."
+                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                </div>
+                <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button type="button" id="cancelModalBtn" class="text-btn"
+                        style="color:var(--text-muted);">Cancel</button>
+                    <button type="submit" class="action-link"
+                        style="background:var(--accent-primary); border:none; color:white; padding:8px 16px; border-radius:8px; cursor:pointer;">Add
+                        Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">Message</div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
