@@ -1,0 +1,474 @@
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .data          0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .bss           0x0000000000000000        0x0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.mini_pad
+                0x0000000000000000       0xa0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text._puts    0x0000000000000000       0x42 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.mini_itoa.part.0
+                0x0000000000000000       0x8e C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.__puts_uart
+                0x0000000000000000       0x20 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strlen   0x0000000000000000       0x12 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.mini_vpprintf
+                0x0000000000000000      0x1d6 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.printf   0x0000000000000000       0x30 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.vprintf  0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.mini_vsnprintf
+                0x0000000000000000       0x3a C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.snprintf
+                0x0000000000000000       0x20 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.sprintf  0x0000000000000000       0x2c C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strcpy   0x0000000000000000       0x14 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strncpy  0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strcmp   0x0000000000000000       0x1a C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strncmp  0x0000000000000000       0x2e C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strchr   0x0000000000000000       0x16 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strrchr  0x0000000000000000       0x3c C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.memcpy   0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.memcmp   0x0000000000000000       0x26 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.memmove  0x0000000000000000       0x5e C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.memchr   0x0000000000000000       0x1c C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strnlen  0x0000000000000000       0x2a C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.twoway_strstr
+                0x0000000000000000      0x254 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.strstr   0x0000000000000000      0x13a C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .rodata.puts.str1.4
+                0x0000000000000000        0x2 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.puts     0x0000000000000000       0x40 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccQhXryw.debug.temp.o
+ .comment       0x0000000000000000       0x13 C:\Users\LRNA\AppData\Local\Temp\ccQZFcbn.debug.temp.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000000000 0x000000000003c000 xr
+RAM              0x0000000020000000 0x0000000000003000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccovVoqd.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccQhXryw.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccQZFcbn.debug.temp.o
+LOAD C:\Users\LRNA\AppData\Local\Temp\ccmQaMHR.o
+LOAD c:/sysgcc/risc-v/bin/../lib/gcc/riscv64-unknown-elf/10.1.0/rv32imac/ilp32\libgcc.a
+
+.init           0x0000000000000000       0x90
+                0x0000000000000000                _sinit = .
+                0x0000000000000000                . = ALIGN (0x4)
+ *(SORT_NONE(.init))
+ .init          0x0000000000000000       0x90 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x0000000000000000                InterruptVector
+                0x0000000000000090                . = ALIGN (0x4)
+                0x0000000000000090                _einit = .
+
+.highcodelalign
+                0x0000000000000090        0x0
+                0x0000000000000090                . = ALIGN (0x4)
+                0x0000000000000090                PROVIDE (_highcode_lma = .)
+
+.highcode       0x0000000020000000      0x2b0 load address 0x0000000000000090
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                PROVIDE (_highcode_vma_start = .)
+ *(.highcode*)
+ .highcode      0x0000000020000000      0x2ae C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x0000000020000000                iSLERRSSI
+                0x0000000020000010                iSLERCRCOK
+                0x0000000020000028                iSLERTX
+                0x0000000020000162                iSLERRX
+                0x00000000200002b0                . = ALIGN (0x4)
+ *fill*         0x00000000200002ae        0x2 
+                0x00000000200002b0                PROVIDE (_highcode_vma_end = .)
+
+.text           0x0000000000000340      0x960
+                0x0000000000000340                . = ALIGN (0x4)
+ *(.text)
+ *(.text.*)
+ .text.DelaySysTick
+                0x0000000000000340       0x16 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.DevSetMode
+                0x0000000000000356       0x52 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.RFEND_TXCTune
+                0x00000000000003a8       0x8a C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.DevSetChannel
+                0x0000000000000432       0x22 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.set_stepper_pins
+                0x0000000000000454       0xae C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.step_sequence
+                0x0000000000000502       0x62 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.funPinMode.constprop.0
+                0x0000000000000564       0x16 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.handle_reset
+                0x000000000000057a       0xaa C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x000000000000057a                handle_reset
+ .text.vector_handler
+                0x0000000000000624        0x2 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x0000000000000624                EXTI2_IRQHandler
+                0x0000000000000624                TIM8_TRG_COM_IRQHandler
+                0x0000000000000624                TIM8_CC_IRQHandler
+                0x0000000000000624                USART_WKUP_IRQHandler
+                0x0000000000000624                UART8_IRQHandler
+                0x0000000000000624                SPI4_IRQHandler
+                0x0000000000000624                NFC_IRQHandler
+                0x0000000000000624                DFSDM0_IRQHandler
+                0x0000000000000624                TIM1_CC_IRQHandler
+                0x0000000000000624                HardFault_Handler
+                0x0000000000000624                TIM10_IRQHandler
+                0x0000000000000624                GPIOB_IRQHandler
+                0x0000000000000624                IPC_CH2_Handler
+                0x0000000000000624                USBPD_IRQHandler
+                0x0000000000000624                TIM6_IRQHandler
+                0x0000000000000624                GPIOA_IRQHandler
+                0x0000000000000624                SysTick_Handler
+                0x0000000000000624                CAN3_RX1_IRQHandler
+                0x0000000000000624                I3C_ER_IRQHandler
+                0x0000000000000624                PVD_IRQHandler
+                0x0000000000000624                SDIO_IRQHandler
+                0x0000000000000624                TIM9_BRK_IRQHandler
+                0x0000000000000624                DMA2_Channel8_IRQHandler
+                0x0000000000000624                NMI_Handler
+                0x0000000000000624                CAN2_RX1_IRQHandler
+                0x0000000000000624                EXTI3_IRQHandler
+                0x0000000000000624                HSEM_Handler
+                0x0000000000000624                UART1_IRQHandler
+                0x0000000000000624                USBHS_IRQHandler
+                0x0000000000000624                LPTIM2_IRQHandler
+                0x0000000000000624                DMA2_Channel9_IRQHandler
+                0x0000000000000624                TIM10_CC_IRQHandler
+                0x0000000000000624                EXTI25_16_IRQHandler
+                0x0000000000000624                I2C3_ER_IRQHandler
+                0x0000000000000624                USBFS_IRQHandler
+                0x0000000000000624                UART0_IRQHandler
+                0x0000000000000624                USART8_IRQHandler
+                0x0000000000000624                EXTI0_IRQHandler
+                0x0000000000000624                I2C2_EV_IRQHandler
+                0x0000000000000624                TIM10_TRG_COM_IRQHandler
+                0x0000000000000624                LPTIM_IRQHandler
+                0x0000000000000624                CAN1_RX0_IRQHandler
+                0x0000000000000624                CAN3_SCE_IRQHandler
+                0x0000000000000624                CAN2_SCE_IRQHandler
+                0x0000000000000624                ADC1_2_IRQHandler
+                0x0000000000000624                BB_IRQHandler
+                0x0000000000000624                Break_Point_Handler
+                0x0000000000000624                IPC_CH0_Handler
+                0x0000000000000624                TIM2_CC_IRQHandler
+                0x0000000000000624                SPI1_IRQHandler
+                0x0000000000000624                USART5_IRQHandler
+                0x0000000000000624                TAMPER_IRQHandler
+                0x0000000000000624                TMR0_IRQHandler
+                0x0000000000000624                AWU_IRQHandler
+                0x0000000000000624                EXTI7_0_IRQHandler
+                0x0000000000000624                CAN2_RX0_IRQHandler
+                0x0000000000000624                OSCWakeUp_IRQHandler
+                0x0000000000000624                TIM8_UP_IRQHandler
+                0x0000000000000624                Ecall_M_Mode_Handler
+                0x0000000000000624                ECDC_IRQHandler
+                0x0000000000000624                SDMMC_IRQHandler
+                0x0000000000000624                USART7_IRQHandler
+                0x0000000000000624                DMA2_Channel2_IRQHandler
+                0x0000000000000624                DMA1_Channel4_IRQHandler
+                0x0000000000000624                ADC1_IRQHandler
+                0x0000000000000624                TIM2_BRK_IRQHandler
+                0x0000000000000624                USART6_IRQHandler
+                0x0000000000000624                CAN3_RX0_IRQHandler
+                0x0000000000000624                HSADC_IRQHandler
+                0x0000000000000624                TIM9_UP_IRQHandler
+                0x0000000000000624                USART3_IRQHandler
+                0x0000000000000624                RTC_IRQHandler
+                0x0000000000000624                DMA1_Channel7_IRQHandler
+                0x0000000000000624                LED_IRQHandler
+                0x0000000000000624                CAN1_RX1_IRQHandler
+                0x0000000000000624                DVP_IRQHandler
+                0x0000000000000624                UART5_IRQHandler
+                0x0000000000000624                USBSS_IRQHandler
+                0x0000000000000624                SWPMI_IRQHandler
+                0x0000000000000624                USBPDWakeUp_IRQHandler
+                0x0000000000000624                EXTI15_8_IRQHandler
+                0x0000000000000624                TIM4_IRQHandler
+                0x0000000000000624                DMA2_Channel1_IRQHandler
+                0x0000000000000624                SWPMI_WKUP_IRQHandler
+                0x0000000000000624                USBPD_WKUP_IRQHandler
+                0x0000000000000624                I2C1_EV_IRQHandler
+                0x0000000000000624                USBSSWakeup_IRQHandler
+                0x0000000000000624                UART2_IRQHandler
+                0x0000000000000624                USART4_IRQHandler
+                0x0000000000000624                PWMX_IRQHandler
+                0x0000000000000624                DMA1_Channel6_IRQHandler
+                0x0000000000000624                UART4_IRQHandler
+                0x0000000000000624                DMA2_Channel4_IRQHandler
+                0x0000000000000624                TIM3_IRQHandler
+                0x0000000000000624                RCC_IRQHandler
+                0x0000000000000624                TIM1_TRG_COM_IRQHandler
+                0x0000000000000624                DMA1_Channel1_IRQHandler
+                0x0000000000000624                DMA2_Channel7_IRQHandler
+                0x0000000000000624                QSPI1_IRQHandler
+                0x0000000000000624                EXTI15_10_IRQHandler
+                0x0000000000000624                ADC_IRQHandler
+                0x0000000000000624                IPC_CH3_Handler
+                0x0000000000000624                DMA1_Channel8_IRQHandler
+                0x0000000000000624                I3C_EV_IRQHandler
+                0x0000000000000624                TMR2_IRQHandler
+                0x0000000000000624                I3C_WKUP_IRQHandler
+                0x0000000000000624                DefaultIRQHandler
+                0x0000000000000624                TIM12_IRQHandler
+                0x0000000000000624                TIM7_IRQHandler
+                0x0000000000000624                CAN2_TX_IRQHandler
+                0x0000000000000624                TIM5_IRQHandler
+                0x0000000000000624                I2C3_EV_IRQHandler
+                0x0000000000000624                USB_IRQHandler
+                0x0000000000000624                EXTI9_5_IRQHandler
+                0x0000000000000624                PIOC_IRQHandler
+                0x0000000000000624                TIM9_IRQHandler
+                0x0000000000000624                LTDC_IRQHandler
+                0x0000000000000624                SAI_IRQHandler
+                0x0000000000000624                SPI2_IRQHandler
+                0x0000000000000624                OSC32KCal_IRQHandler
+                0x0000000000000624                IPC_CH1_Handler
+                0x0000000000000624                I2C_IRQHandler
+                0x0000000000000624                LPTIM1_WKUP_IRQHandler
+                0x0000000000000624                TIM10_BRK_IRQHandler
+                0x0000000000000624                TIM9_CC_IRQHandler
+                0x0000000000000624                CAN1_TX_IRQHandler
+                0x0000000000000624                DMA2_Channel5_IRQHandler
+                0x0000000000000624                USB2_IRQHandler
+                0x0000000000000624                USBHSWakeUp_IRQHandler
+                0x0000000000000624                DMA1_Channel5_IRQHandler
+                0x0000000000000624                EXTI4_IRQHandler
+                0x0000000000000624                USB_LP_CAN1_RX0_IRQHandler
+                0x0000000000000624                QSPI2_IRQHandler
+                0x0000000000000624                RNG_IRQHandler
+                0x0000000000000624                USB_HP_CAN1_TX_IRQHandler
+                0x0000000000000624                CMPWakeUp_IRQHandler
+                0x0000000000000624                DMA1_Channel3_IRQHandler
+                0x0000000000000624                FSMC_IRQHandler
+                0x0000000000000624                ETH_IRQHandler
+                0x0000000000000624                TIM1_UP_IRQHandler
+                0x0000000000000624                LPTIMWakeUp_IRQHandler
+                0x0000000000000624                WWDG_IRQHandler
+                0x0000000000000624                USBHSWakeup_IRQHandler
+                0x0000000000000624                DMA2_Channel11_IRQHandler
+                0x0000000000000624                WDOG_BAT_IRQHandler
+                0x0000000000000624                Ecall_U_Mode_Handler
+                0x0000000000000624                I2C4_EV_IRQHandler
+                0x0000000000000624                CAN3_TX_IRQHandler
+                0x0000000000000624                TMR3_IRQHandler
+                0x0000000000000624                DMA2_Channel6_IRQHandler
+                0x0000000000000624                TIM2_IRQHandler
+                0x0000000000000624                SW_Handler
+                0x0000000000000624                TIM1_BRK_IRQHandler
+                0x0000000000000624                GPHA_IRQHandler
+                0x0000000000000624                OPA_IRQHandler
+                0x0000000000000624                DMA2_Channel10_IRQHandler
+                0x0000000000000624                EXTI1_IRQHandler
+                0x0000000000000624                SPI0_IRQHandler
+                0x0000000000000624                USB2_HOST_IRQHandler
+                0x0000000000000624                LPTIM2_WKUP_IRQHandler
+                0x0000000000000624                RTCAlarm_IRQHandler
+                0x0000000000000624                TIM11_IRQHandler
+                0x0000000000000624                TIM10_UP_IRQHandler
+                0x0000000000000624                TIM9_TRG_COM_IRQHandler
+                0x0000000000000624                UART7_IRQHandler
+                0x0000000000000624                USART2_IRQHandler
+                0x0000000000000624                UART6_IRQHandler
+                0x0000000000000624                UHSIF_IRQHandler
+                0x0000000000000624                ETHWakeUp_IRQHandler
+                0x0000000000000624                I2C2_ER_IRQHandler
+                0x0000000000000624                DMA1_Channel2_IRQHandler
+                0x0000000000000624                TIM8_BRK_IRQHandler
+                0x0000000000000624                TIM2_TRG_IRQHandler
+                0x0000000000000624                CAN1_SCE_IRQHandler
+                0x0000000000000624                FLASH_IRQHandler
+                0x0000000000000624                USBFSWakeUp_IRQHandler
+                0x0000000000000624                USART1_IRQHandler
+                0x0000000000000624                OTG_FS_IRQHandler
+                0x0000000000000624                SPI3_IRQHandler
+                0x0000000000000624                USBFS_WakeUp_IRQHandler
+                0x0000000000000624                UART3_IRQHandler
+                0x0000000000000624                I2C1_ER_IRQHandler
+                0x0000000000000624                FMC_IRQHandler
+                0x0000000000000624                USB2_DEVICE_IRQHandler
+                0x0000000000000624                LPTIM1_IRQHandler
+                0x0000000000000624                DFSDM1_IRQHandler
+                0x0000000000000624                TMR1_IRQHandler
+                0x0000000000000624                I2C4_ER_IRQHandler
+                0x0000000000000624                SERDES_IRQHandler
+                0x0000000000000624                USBSS_LINK_IRQHandler
+                0x0000000000000624                USBWakeUp_IRQHandler
+                0x0000000000000624                DMA2_Channel3_IRQHandler
+ .text.memset   0x0000000000000626       0x12 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x0000000000000626                memset
+ .text.SystemInit
+                0x0000000000000638       0x68 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x0000000000000638                SystemInit
+ .text.LLE_IRQHandler
+                0x00000000000006a0       0x9c C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .text.startup.main
+                0x000000000000073c      0x53a C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                0x000000000000073c                main
+ *(.rodata)
+ *(.rodata*)
+ *fill*         0x0000000000000c76        0x2 
+ .rodata.channel_map
+                0x0000000000000c78       0x28 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ *(.gnu.linkonce.t.*)
+                0x0000000000000ca0                . = ALIGN (0x4)
+
+.rela.dyn       0x0000000000000ca0        0x0
+ .rela.text.handle_reset
+                0x0000000000000ca0        0x0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .rela.text.startup.main
+                0x0000000000000ca0        0x0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+
+.fini           0x0000000000000ca0        0x0
+ *(SORT_NONE(.fini))
+                0x0000000000000ca0                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (_eitcm = .)
+
+.preinit_array  0x0000000000000ca0        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0000000000000ca0        0x0
+                [!provide]                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+                [!provide]                        PROVIDE (__init_array_end = .)
+
+.fini_array     0x0000000000000ca0        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.dalign         0x00000000200002b0        0x0 load address 0x0000000000000ca0
+                0x00000000200002b0                . = ALIGN (0x4)
+                0x00000000200002b0                PROVIDE (_data_vma = .)
+
+.dlalign        0x0000000000000ca0        0x0
+                0x0000000000000ca0                . = ALIGN (0x4)
+                0x0000000000000ca0                PROVIDE (_data_lma = .)
+
+.data           0x00000000200002b0        0x8 load address 0x0000000000000ca0
+                0x00000000200002b0                . = ALIGN (0x4)
+                0x00000000200006ac                __global_pointer$ = (. + 0x3fc)
+ *(.gnu.linkonce.r.*)
+ *(.data .data.*)
+ *(.gnu.linkonce.d.*)
+                0x00000000200002b0                . = ALIGN (0x8)
+ *fill*         0x00000000200002b0        0x0 
+ *(.sdata .sdata.*)
+ .sdata.stepperdelay
+                0x00000000200002b0        0x4 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ *(.sdata2*)
+ *(.gnu.linkonce.s.*)
+                0x00000000200002b8                . = ALIGN (0x8)
+ *fill*         0x00000000200002b4        0x4 
+ *(.srodata.cst16)
+ *(.srodata.cst8)
+ *(.srodata.cst4)
+ *(.srodata.cst2)
+ *(.srodata .srodata.*)
+                0x00000000200002b8                . = ALIGN (0x4)
+                0x00000000200002b8                PROVIDE (_edata = .)
+
+.bss            0x00000000200002b8      0x454 load address 0x0000000000000ca8
+                0x00000000200002b8                . = ALIGN (0x4)
+                0x00000000200002b8                PROVIDE (_sbss = .)
+ *(.sbss*)
+ .sbss.motor_dir
+                0x00000000200002b8        0x1 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .sbss.motor_enable
+                0x00000000200002b9        0x1 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .sbss.motor_speed
+                0x00000000200002ba        0x1 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ *fill*         0x00000000200002bb        0x1 
+ .sbss.rx_ready
+                0x00000000200002bc        0x4 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .sbss.step_phase
+                0x00000000200002c0        0x4 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .sbss.tuneFilter
+                0x00000000200002c4        0x4 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .sbss.tuneFilter2M
+                0x00000000200002c8        0x4 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ *(.gnu.linkonce.sb.*)
+ *(.bss*)
+ .bss.LLE_BUF   0x00000000200002cc      0x440 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ *(.gnu.linkonce.b.*)
+ *(COMMON*)
+                0x000000002000070c                . = ALIGN (0x4)
+                0x000000002000070c                PROVIDE (_ebss = .)
+                [!provide]                        PROVIDE (_end = _ebss)
+                [!provide]                        PROVIDE (end = .)
+                0x0000000020003000                PROVIDE (_eusrstack = (ORIGIN (RAM) + LENGTH (RAM)))
+
+/DISCARD/
+ *(.note .note.*)
+ *(.eh_frame .eh_frame.*)
+ *(.comment .comment.*)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.ARM.exidx*)
+OUTPUT(drv8835stepper.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x2b
+ .riscv.attributes
+                0x0000000000000000       0x2b C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+
+.debug_info     0x0000000000000000     0x2fdf
+ .debug_info    0x0000000000000000     0x13bf C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .debug_info    0x00000000000013bf      0xd4c C:\Users\LRNA\AppData\Local\Temp\ccQhXryw.debug.temp.o
+                0x00000000000013bf                ch32fun.c.64217e43
+ .debug_info    0x000000000000210b      0xed4 C:\Users\LRNA\AppData\Local\Temp\ccQZFcbn.debug.temp.o
+                0x000000000000210b                drv8835stepper.c.183f18bc
+
+.debug_abbrev   0x0000000000000000      0x6cd
+ .debug_abbrev  0x0000000000000000      0x1ca C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .debug_abbrev  0x00000000000001ca      0x263 C:\Users\LRNA\AppData\Local\Temp\ccQhXryw.debug.temp.o
+ .debug_abbrev  0x000000000000042d      0x2a0 C:\Users\LRNA\AppData\Local\Temp\ccQZFcbn.debug.temp.o
+
+.debug_loc      0x0000000000000000     0x2430
+ .debug_loc     0x0000000000000000     0x2430 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+
+.debug_aranges  0x0000000000000000      0x170
+ .debug_aranges
+                0x0000000000000000      0x170 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+
+.debug_ranges   0x0000000000000000      0x548
+ .debug_ranges  0x0000000000000000      0x548 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+
+.debug_line     0x0000000000000000     0x3da9
+ .debug_line    0x0000000000000000     0x3ad8 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+ .debug_line    0x0000000000003ad8      0x181 C:\Users\LRNA\AppData\Local\Temp\ccQhXryw.debug.temp.o
+ .debug_line    0x0000000000003c59      0x150 C:\Users\LRNA\AppData\Local\Temp\ccQZFcbn.debug.temp.o
+
+.debug_str      0x0000000000000000      0xd9b
+ .debug_str     0x0000000000000000      0x173 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o
+                                        0x18e (size before relaxing)
+ .debug_str     0x0000000000000173      0x54a C:\Users\LRNA\AppData\Local\Temp\ccQhXryw.debug.temp.o
+                                        0x628 (size before relaxing)
+ .debug_str     0x00000000000006bd      0x6de C:\Users\LRNA\AppData\Local\Temp\ccQZFcbn.debug.temp.o
+                                        0x8f9 (size before relaxing)
+
+.debug_frame    0x0000000000000000      0x4c0
+ .debug_frame   0x0000000000000000      0x4c0 C:\Users\LRNA\AppData\Local\Temp\drv8835stepper.elf.qc59cV.ltrans0.ltrans.o

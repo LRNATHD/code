@@ -207,6 +207,25 @@ typedef struct
 } PFIC_Type;
 #endif /* __ASSEMBLER__*/
 
+typedef struct {
+    __IO uint8_t MCR;
+    __IO uint8_t IER;
+    __IO uint8_t FCR;
+    __IO uint8_t LCR;
+    __IO uint8_t IIR;
+    __IO uint8_t LSR;
+    __IO uint8_t MSR;
+    uint8_t RESERVED1;
+    __IO uint8_t THR_RBR;
+    uint8_t RESERVED2;
+    __IO uint8_t RFC;
+    __IO uint8_t TFC;
+    __IO uint16_t DL;
+    __IO uint8_t DIV;
+    __IO uint8_t ADR;
+} UART_Typedef;
+
+
 #ifdef __ASSEMBLER__
 #define CORE_PERIPH_BASE           (0xE0000000) /* System peripherals base address in the alias region */
 #else
@@ -345,6 +364,10 @@ typedef enum
 	CLK_SOURCE_PLL_24MHz =  (0x40 | 20),
 #endif
 } SYS_CLKTypeDef;
+
+#if (defined(CH570_CH572))
+#define ROM_CFG_MAC_ADDR		((const u32*)0x0003f018)
+#endif
 
 // For debug writing to the debug interface, and USB ISP.
 #if (defined(CH570_CH572) || defined(CH584_CH585))
@@ -1378,6 +1401,12 @@ typedef enum
 #define UART_II_THR_EMPTY   0x02                      // RO, UART interrupt by THR empty
 #define UART_II_MODEM_CHG   0x00                      // RO, UART0 interrupt by modem status change
 #define UART_II_NO_INTER    0x01                      // RO, no UART interrupt is pending
+
+#define UART                ((UART_Typedef*)BA_UART)
+#define UART0                ((UART_Typedef*)BA_UART0)
+#define UART1                ((UART_Typedef*)BA_UART1)
+#define UART2                ((UART_Typedef*)BA_UART2)
+#define UART3                ((UART_Typedef*)BA_UART3)
 
 /* SPI0 register */
 #define R32_SPI0_CONTROL    (*((vu32*)0x40004000))    // RW, SPI0 control
