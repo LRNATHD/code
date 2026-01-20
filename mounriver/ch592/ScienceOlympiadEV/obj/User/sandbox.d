@@ -1,4 +1,4 @@
-StdPeriphDriver/CH59x_i2c.o: ../StdPeriphDriver/CH59x_i2c.c \
+User/sandbox.o: ../User/sandbox.c \
  c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH59x_common.h \
  c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH592SFR.h \
  c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h \

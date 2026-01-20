@@ -6,57 +6,65 @@ EXEC_P, HAS_SYMS, D_PAGED
 start address 0x00000000
 
 Program Header:
+0x70000003 off    0x000062dc vaddr 0x00000000 paddr 0x00000000 align 2**0
+         filesz 0x00000034 memsz 0x00000000 flags r--
     LOAD off    0x00001000 vaddr 0x00000000 paddr 0x00000000 align 2**12
          filesz 0x00000004 memsz 0x00000004 flags r-x
     LOAD off    0x00002000 vaddr 0x20000000 paddr 0x00000004 align 2**12
          filesz 0x00000788 memsz 0x00000788 flags r-x
     LOAD off    0x0000278c vaddr 0x0000078c paddr 0x0000078c align 2**12
-         filesz 0x000001ac memsz 0x000001ac flags r-x
-    LOAD off    0x00003600 vaddr 0x20006600 paddr 0x20006600 align 2**12
+         filesz 0x000001d0 memsz 0x000001d0 flags r-x
+    LOAD off    0x00000600 vaddr 0x20006600 paddr 0x20006600 align 2**12
          filesz 0x00000000 memsz 0x00000200 flags rw-
 
 Sections:
-Idx Name            Size      VMA       LMA       File off  Algn  Flags
-  0 .init           00000004  00000000  00000000  00001000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .highcodelalign 00000000  00000004  00000004  00002938  2**0  CONTENTS
-  2 .highcode       00000788  20000000  00000004  00002000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .text           000001ac  0000078c  0000078c  0000278c  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .fini           00000000  00000938  00000938  00002938  2**0  CONTENTS, ALLOC, LOAD, CODE
-  5 .dalign         00000000  20000788  20000788  00002938  2**0  CONTENTS
-  6 .dlalign        00000000  00000938  00000938  00002938  2**0  CONTENTS
-  7 .data           00000000  20000788  20000788  00002938  2**0  CONTENTS, ALLOC, LOAD, DATA
-  8 .bss            00000000  20000788  0000078c  00000000  2**0  ALLOC
-  9 .stack          00000200  20006600  20006600  00003600  2**0  ALLOC
- 10 .debug_info     0000341e  00000000  00000000  00002938  2**0  CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev   000008fd  00000000  00000000  00005d56  2**0  CONTENTS, READONLY, DEBUGGING
- 12 .debug_aranges  00000128  00000000  00000000  00006658  2**3  CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges   00000150  00000000  00000000  00006780  2**3  CONTENTS, READONLY, DEBUGGING
- 14 .debug_line     00001e59  00000000  00000000  000068d0  2**0  CONTENTS, READONLY, DEBUGGING
- 15 .debug_str      00000cbf  00000000  00000000  00008729  2**0  CONTENTS, READONLY, DEBUGGING
- 16 .comment        00000033  00000000  00000000  000093e8  2**0  CONTENTS, READONLY
- 17 .debug_frame    000001e4  00000000  00000000  0000941c  2**2  CONTENTS, READONLY, DEBUGGING
- 18 .debug_loc      000007b7  00000000  00000000  00009600  2**0  CONTENTS, READONLY, DEBUGGING
+Idx Name              Size      VMA       LMA       File off  Algn  Flags
+  0 .init             00000004  00000000  00000000  00001000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .highcodelalign   00000000  00000004  00000004  0000295c  2**0  CONTENTS
+  2 .highcode         00000788  20000000  00000004  00002000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .text             000001d0  0000078c  0000078c  0000278c  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .fini             00000000  0000095c  0000095c  0000295c  2**0  CONTENTS, ALLOC, LOAD, CODE
+  5 .dalign           00000000  20000788  20000788  0000295c  2**0  CONTENTS
+  6 .dlalign          00000000  0000095c  0000095c  0000295c  2**0  CONTENTS
+  7 .data             00000000  20000788  20000788  0000295c  2**0  CONTENTS, ALLOC, LOAD, DATA
+  8 .bss              00000000  20000788  0000078c  00000000  2**0  ALLOC
+  9 .stack            00000200  20006600  20006600  00003600  2**0  ALLOC
+ 10 .debug_info       00001036  00000000  00000000  0000295c  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .debug_abbrev     00000556  00000000  00000000  00003992  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_aranges    00000128  00000000  00000000  00003ee8  2**3  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_rnglists   0000015f  00000000  00000000  00004010  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_line       0000173f  00000000  00000000  0000416f  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_str        0000067d  00000000  00000000  000058ae  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_line_str   0000034d  00000000  00000000  00005f2b  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .comment          00000064  00000000  00000000  00006278  2**0  CONTENTS, READONLY
+ 18 .riscv.attributes 00000034  00000000  00000000  000062dc  2**0  CONTENTS, READONLY
+ 19 .debug_frame      000001e4  00000000  00000000  00006310  2**2  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 20 .debug_loclists   000004ef  00000000  00000000  000064f4  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 21 .debug_ranges     00000028  00000000  00000000  000069e8  2**3  CONTENTS, READONLY, DEBUGGING, OCTETS
 SYMBOL TABLE:
 00000000 l    d  .init	00000000 .init
 00000004 l    d  .highcodelalign	00000000 .highcodelalign
 20000000 l    d  .highcode	00000000 .highcode
 0000078c l    d  .text	00000000 .text
-00000938 l    d  .fini	00000000 .fini
+0000095c l    d  .fini	00000000 .fini
 20000788 l    d  .dalign	00000000 .dalign
-00000938 l    d  .dlalign	00000000 .dlalign
+0000095c l    d  .dlalign	00000000 .dlalign
 20000788 l    d  .data	00000000 .data
 20000788 l    d  .bss	00000000 .bss
 20006600 l    d  .stack	00000000 .stack
 00000000 l    d  .debug_info	00000000 .debug_info
 00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
 00000000 l    d  .debug_aranges	00000000 .debug_aranges
-00000000 l    d  .debug_ranges	00000000 .debug_ranges
+00000000 l    d  .debug_rnglists	00000000 .debug_rnglists
 00000000 l    d  .debug_line	00000000 .debug_line
 00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .debug_line_str	00000000 .debug_line_str
 00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
 00000000 l    d  .debug_frame	00000000 .debug_frame
-00000000 l    d  .debug_loc	00000000 .debug_loc
-00000000 l    df *ABS*	00000000 ./Startup/startup_CH592.o
+00000000 l    d  .debug_loclists	00000000 .debug_loclists
+00000000 l    d  .debug_ranges	00000000 .debug_ranges
+00000000 l    df *ABS*	00000000 startup_CH592.o
 20000000 l       .highcode	00000000 _vector_base
 00000000 l    df *ABS*	00000000 CH59x_sys.c
 00000000 l    df *ABS*	00000000 ISP583.c
@@ -64,7 +72,7 @@ SYMBOL TABLE:
 20000380 l       .highcode	00000000 .loop29
 2000038e l       .highcode	00000000 .loop40
 2000061a l       .highcode	00000000 .loop402
-00000000 l    df *ABS*	00000000 Main.c
+00000000 l    df *ABS*	00000000 sandbox.c
 00000000 l    df *ABS*	00000000 CH59x_gpio.c
 2000038e g     F .highcode	0000000e FLASH_ROM_OUT
 20000f88 g       .data	00000000 __global_pointer$
@@ -102,7 +110,7 @@ SYMBOL TABLE:
 20000092 g     F .highcode	000001c0 SetSysClock
 20000090  w      .highcode	00000000 USB_IRQHandler
 20000090  w      .highcode	00000000 I2C_IRQHandler
-00000842 g     F .text	0000003a main
+00000842 g     F .text	00000068 main
 00000004 g       .highcodelalign	00000000 _highcode_lma
 20000090  w      .highcode	00000000 LLE_IRQHandler
 00000000 g       .init	00000000 _sinit
@@ -111,12 +119,12 @@ SYMBOL TABLE:
 20000090  w      .highcode	00000000 TMR3_IRQHandler
 20006800 g       .stack	00000000 _eusrstack
 20000090  w      .highcode	00000000 SW_Handler
-0000087c g     F .text	000000a6 GPIOA_ModeCfg
+000008aa g     F .text	0000009e GPIOA_ModeCfg
 20000788 g       .data	00000000 _edata
 20000090  w      .highcode	00000000 SPI0_IRQHandler
 20000788 g       .bss	00000000 _end
 20000788 g       .highcode	00000000 _highcode_vma_end
-00000938 g       .dlalign	00000000 _data_lma
+0000095c g       .dlalign	00000000 _data_lma
 0000078c  w      .text	00000000 handle_reset
 20000090  w      .highcode	00000000 UART3_IRQHandler
 20000372 g     F .highcode	0000000e FLASH_ROM_END
@@ -144,67 +152,67 @@ Disassembly of section .highcode:
 	...
 _vector_base():
 20000008:	0090                	addi	a2,sp,64
-2000000a:	2000                	fld	fs0,0(s0)
+2000000a:	2000                	.2byte	0x2000
 2000000c:	02aa                	slli	t0,t0,0xa
-2000000e:	2000                	fld	fs0,0(s0)
-20000010:	bda9                	j	1ffffe6a <_data_lma+0x1ffff532>
-20000012:	f5f9                	bnez	a1,1fffffe0 <_data_lma+0x1ffff6a8>
+2000000e:	2000                	.2byte	0x2000
+20000010:	bda9                	j	1ffffe6a <_data_lma+0x1ffff50e>
+20000012:	f5f9                	bnez	a1,1fffffe0 <_data_lma+0x1ffff684>
 20000014:	0090                	addi	a2,sp,64
-20000016:	2000                	fld	fs0,0(s0)
+20000016:	2000                	.2byte	0x2000
 	...
 20000020:	0090                	addi	a2,sp,64
-20000022:	2000                	fld	fs0,0(s0)
+20000022:	2000                	.2byte	0x2000
 20000024:	0090                	addi	a2,sp,64
-20000026:	2000                	fld	fs0,0(s0)
+20000026:	2000                	.2byte	0x2000
 	...
 20000030:	0090                	addi	a2,sp,64
-20000032:	2000                	fld	fs0,0(s0)
+20000032:	2000                	.2byte	0x2000
 20000034:	0000                	unimp
 20000036:	0000                	unimp
 20000038:	0090                	addi	a2,sp,64
-2000003a:	2000                	fld	fs0,0(s0)
+2000003a:	2000                	.2byte	0x2000
 2000003c:	0000                	unimp
 2000003e:	0000                	unimp
 20000040:	0090                	addi	a2,sp,64
-20000042:	2000                	fld	fs0,0(s0)
+20000042:	2000                	.2byte	0x2000
 20000044:	0090                	addi	a2,sp,64
-20000046:	2000                	fld	fs0,0(s0)
+20000046:	2000                	.2byte	0x2000
 20000048:	0090                	addi	a2,sp,64
-2000004a:	2000                	fld	fs0,0(s0)
+2000004a:	2000                	.2byte	0x2000
 2000004c:	0090                	addi	a2,sp,64
-2000004e:	2000                	fld	fs0,0(s0)
+2000004e:	2000                	.2byte	0x2000
 20000050:	0090                	addi	a2,sp,64
-20000052:	2000                	fld	fs0,0(s0)
+20000052:	2000                	.2byte	0x2000
 20000054:	0090                	addi	a2,sp,64
-20000056:	2000                	fld	fs0,0(s0)
+20000056:	2000                	.2byte	0x2000
 20000058:	0090                	addi	a2,sp,64
-2000005a:	2000                	fld	fs0,0(s0)
+2000005a:	2000                	.2byte	0x2000
 2000005c:	0000                	unimp
 2000005e:	0000                	unimp
 20000060:	0090                	addi	a2,sp,64
-20000062:	2000                	fld	fs0,0(s0)
+20000062:	2000                	.2byte	0x2000
 20000064:	0090                	addi	a2,sp,64
-20000066:	2000                	fld	fs0,0(s0)
+20000066:	2000                	.2byte	0x2000
 20000068:	0090                	addi	a2,sp,64
-2000006a:	2000                	fld	fs0,0(s0)
+2000006a:	2000                	.2byte	0x2000
 2000006c:	0090                	addi	a2,sp,64
-2000006e:	2000                	fld	fs0,0(s0)
+2000006e:	2000                	.2byte	0x2000
 20000070:	0090                	addi	a2,sp,64
-20000072:	2000                	fld	fs0,0(s0)
+20000072:	2000                	.2byte	0x2000
 20000074:	0090                	addi	a2,sp,64
-20000076:	2000                	fld	fs0,0(s0)
+20000076:	2000                	.2byte	0x2000
 20000078:	0090                	addi	a2,sp,64
-2000007a:	2000                	fld	fs0,0(s0)
+2000007a:	2000                	.2byte	0x2000
 2000007c:	0090                	addi	a2,sp,64
-2000007e:	2000                	fld	fs0,0(s0)
+2000007e:	2000                	.2byte	0x2000
 20000080:	0090                	addi	a2,sp,64
-20000082:	2000                	fld	fs0,0(s0)
+20000082:	2000                	.2byte	0x2000
 20000084:	0090                	addi	a2,sp,64
-20000086:	2000                	fld	fs0,0(s0)
+20000086:	2000                	.2byte	0x2000
 20000088:	0090                	addi	a2,sp,64
-2000008a:	2000                	fld	fs0,0(s0)
+2000008a:	2000                	.2byte	0x2000
 2000008c:	0090                	addi	a2,sp,64
-2000008e:	2000                	fld	fs0,0(s0)
+2000008e:	2000                	.2byte	0x2000
 
 20000090 <ADC_IRQHandler>:
 GPIOB_IRQHandler():
@@ -227,12 +235,10 @@ void SetSysClock(SYS_CLKTypeDef sc)
     uint8_t chip_type=0;
     if(((*(uint32_t*)ROM_CFG_VERISON)&0xFF) == DEF_CHIP_ID_CH592A)
 20000092:	0007f7b7          	lui	a5,0x7f
+20000096:	4b94                	lw	a3,16(a5)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:26
 {
-20000096:	1101                	addi	sp,sp,-32
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:28
-    if(((*(uint32_t*)ROM_CFG_VERISON)&0xFF) == DEF_CHIP_ID_CH592A)
-20000098:	4b94                	lw	a3,16(a5)
+20000098:	1101                	addi	sp,sp,-32
 __risc_v_disable_irq():
 c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
  */
@@ -429,7 +435,7 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:53
         R32_CLK_SYS_CFG = (1 << 6) | (sc & 0x1f) | RB_TX_32M_PWR_EN | RB_PLL_PWR_EN;
 200001be:	00140637          	lui	a2,0x140
-200001c2:	04060613          	addi	a2,a2,64 # 140040 <_data_lma+0x13f708>
+200001c2:	04060613          	addi	a2,a2,64 # 140040 <_data_lma+0x13f6e4>
 200001c6:	897d                	andi	a0,a0,31
 200001c8:	8d51                	or	a0,a0,a2
 200001ca:	c788                	sw	a0,8(a5)
@@ -473,13 +479,13 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 200001f8:	0000100f          	fence.i
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:60
         if(chip_type)
-200001fc:	47a5                	li	a5,9
+200001fc:	4725                	li	a4,9
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:28
     if(((*(uint32_t*)ROM_CFG_VERISON)&0xFF) == DEF_CHIP_ID_CH592A)
-200001fe:	0ff6f693          	andi	a3,a3,255
+200001fe:	0ff6f793          	zext.b	a5,a3
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:60
         if(chip_type)
-20000202:	00f69e63          	bne	a3,a5,2000021e <SetSysClock+0x18c>
+20000202:	00e79e63          	bne	a5,a4,2000021e <SetSysClock+0x18c>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:62
             R8_FLASH_CFG = 0X53;
 20000206:	400027b7          	lui	a5,0x40002
@@ -811,7 +817,7 @@ FLASH_ROM_ADDR():
 200003d2:	0141                	addi	sp,sp,16
 200003d4:	8082                	ret
 200003d6:	01095513          	srli	a0,s2,0x10
-200003da:	0ff57513          	andi	a0,a0,255
+200003da:	0ff57513          	zext.b	a0,a0
 200003de:	3f45                	jal	2000038e <FLASH_ROM_OUT>
 200003e0:	0922                	slli	s2,s2,0x8
 200003e2:	b7cd                	j	200003c4 <FLASH_ROM_ADDR+0x28>
@@ -833,12 +839,12 @@ FLASH_ROM_WAIT():
 200003fe:	00157793          	andi	a5,a0,1
 20000402:	eb89                	bnez	a5,20000414 <FLASH_ROM_WAIT+0x30>
 20000404:	00156513          	ori	a0,a0,1
-20000408:	0ff57513          	andi	a0,a0,255
+20000408:	0ff57513          	zext.b	a0,a0
 2000040c:	40f2                	lw	ra,28(sp)
 2000040e:	44e2                	lw	s1,24(sp)
 20000410:	6105                	addi	sp,sp,32
 20000412:	8082                	ret
-20000414:	14fd                	addi	s1,s1,-1
+20000414:	14fd                	addi	s1,s1,-1 # 7ffff <_data_lma+0x7f6a3>
 20000416:	fce9                	bnez	s1,200003f0 <FLASH_ROM_WAIT+0xc>
 20000418:	4501                	li	a0,0
 2000041a:	bfcd                	j	2000040c <FLASH_ROM_WAIT+0x28>
@@ -872,7 +878,7 @@ FLASH_EEPROM_CMD():
 20000462:	ff750b93          	addi	s7,a0,-9
 20000466:	84b6                	mv	s1,a3
 20000468:	07e2                	slli	a5,a5,0x18
-2000046a:	0ffbfb93          	andi	s7,s7,255
+2000046a:	0ffbfb93          	zext.b	s7,s7
 2000046e:	4685                	li	a3,1
 20000470:	89aa                	mv	s3,a0
 20000472:	8b2e                	mv	s6,a1
@@ -887,7 +893,7 @@ FLASH_EEPROM_CMD():
 2000048c:	00d51363          	bne	a0,a3,20000492 <FLASH_EEPROM_CMD+0x76>
 20000490:	5701                	li	a4,-32
 20000492:	8fd9                	or	a5,a5,a4
-20000494:	0ff7f793          	andi	a5,a5,255
+20000494:	0ff7f793          	zext.b	a5,a5
 20000498:	40001cb7          	lui	s9,0x40001
 2000049c:	04fc8223          	sb	a5,68(s9) # 40001044 <_eusrstack+0x1fffa844>
 200004a0:	4711                	li	a4,4
@@ -919,10 +925,10 @@ FLASH_EEPROM_CMD():
 200004ea:	0905                	addi	s2,s2,1
 200004ec:	fff94503          	lbu	a0,-1(s2)
 200004f0:	14fd                	addi	s1,s1,-1
-200004f2:	0b05                	addi	s6,s6,1
+200004f2:	0b05                	addi	s6,s6,1 # 80001 <_data_lma+0x7f6a5>
 200004f4:	3d69                	jal	2000038e <FLASH_ROM_OUT>
 200004f6:	c481                	beqz	s1,200004fe <FLASH_EEPROM_CMD+0xe2>
-200004f8:	0ffb7793          	andi	a5,s6,255
+200004f8:	0ffb7793          	zext.b	a5,s6
 200004fc:	f7fd                	bnez	a5,200004ea <FLASH_EEPROM_CMD+0xce>
 200004fe:	35dd                	jal	200003e4 <FLASH_ROM_WAIT>
 20000500:	fd69                	bnez	a0,200004da <FLASH_EEPROM_CMD+0xbe>
@@ -963,7 +969,7 @@ FLASH_EEPROM_CMD():
 20000566:	6b85                	lui	s7,0x1
 20000568:	01697933          	and	s2,s2,s6
 2000056c:	6b41                	lui	s6,0x10
-2000056e:	fff98793          	addi	a5,s3,-1 # fff <_data_lma+0x6c7>
+2000056e:	fff98793          	addi	a5,s3,-1 # fff <_data_lma+0x6a3>
 20000572:	0127f7b3          	and	a5,a5,s2
 20000576:	e399                	bnez	a5,2000057c <FLASH_EEPROM_CMD+0x160>
 20000578:	0134fc63          	bgeu	s1,s3,20000590 <FLASH_EEPROM_CMD+0x174>
@@ -973,7 +979,7 @@ FLASH_EEPROM_CMD():
 20000586:	bf99                	j	200004dc <FLASH_EEPROM_CMD+0xc0>
 20000588:	6905                	lui	s2,0x1
 2000058a:	69c1                	lui	s3,0x10
-2000058c:	197d                	addi	s2,s2,-1
+2000058c:	197d                	addi	s2,s2,-1 # fff <_data_lma+0x6a3>
 2000058e:	b7d9                	j	20000554 <FLASH_EEPROM_CMD+0x138>
 20000590:	0d800513          	li	a0,216
 20000594:	01698863          	beq	s3,s6,200005a4 <FLASH_EEPROM_CMD+0x188>
@@ -994,10 +1000,10 @@ FLASH_EEPROM_CMD():
 200005bc:	f29900e3          	beq	s2,s1,200004dc <FLASH_EEPROM_CMD+0xc0>
 200005c0:	0905                	addi	s2,s2,1
 200005c2:	3b7d                	jal	20000380 <FLASH_ROM_IN>
-200005c4:	fea90fa3          	sb	a0,-1(s2) # fff <_data_lma+0x6c7>
+200005c4:	fea90fa3          	sb	a0,-1(s2)
 200005c8:	bfd5                	j	200005bc <FLASH_EEPROM_CMD+0x1a0>
-200005ca:	fff98793          	addi	a5,s3,-1 # ffff <_data_lma+0xf6c7>
-200005ce:	0ff7f793          	andi	a5,a5,255
+200005ca:	fff98793          	addi	a5,s3,-1 # ffff <_data_lma+0xf6a3>
+200005ce:	0ff7f793          	zext.b	a5,a5
 200005d2:	0cfc6163          	bltu	s8,a5,20000694 <.loop402+0x7a>
 200005d6:	041cc783          	lbu	a5,65(s9)
 200005da:	08300713          	li	a4,131
@@ -1028,9 +1034,9 @@ FLASH_EEPROM_CMD():
 20000626:	17fd                	addi	a5,a5,-1
 20000628:	fbed                	bnez	a5,2000061a <.loop402>
 2000062a:	14fd                	addi	s1,s1,-1
-2000062c:	0b11                	addi	s6,s6,4
+2000062c:	0b11                	addi	s6,s6,4 # 10004 <_data_lma+0xf6a8>
 2000062e:	c481                	beqz	s1,20000636 <.loop402+0x1c>
-20000630:	0ffb7793          	andi	a5,s6,255
+20000630:	0ffb7793          	zext.b	a5,s6
 20000634:	ffe9                	bnez	a5,2000060e <FLASH_EEPROM_CMD+0x1f2>
 20000636:	337d                	jal	200003e4 <FLASH_ROM_WAIT>
 20000638:	f571                	bnez	a0,20000604 <FLASH_EEPROM_CMD+0x1e8>
@@ -1051,7 +1057,7 @@ FLASH_EEPROM_CMD():
 20000668:	85da                	mv	a1,s6
 2000066a:	452d                	li	a0,11
 2000066c:	3b05                	jal	2000039c <FLASH_ROM_ADDR>
-2000066e:	fff48993          	addi	s3,s1,-1 # 7ffff <_data_lma+0x7f6c7>
+2000066e:	fff48993          	addi	s3,s1,-1
 20000672:	e60485e3          	beqz	s1,200004dc <FLASH_EEPROM_CMD+0xc0>
 20000676:	3329                	jal	20000380 <FLASH_ROM_IN>
 20000678:	0039f793          	andi	a5,s3,3
@@ -1105,7 +1111,7 @@ FLASH_EEPROM_CMD():
 2000070a:	399d                	jal	20000380 <FLASH_ROM_IN>
 2000070c:	0074f793          	andi	a5,s1,7
 20000710:	97ca                	add	a5,a5,s2
-20000712:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x776c8>
+20000712:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x776a4>
 20000716:	14fd                	addi	s1,s1,-1
 20000718:	8d39                	xor	a0,a0,a4
 2000071a:	00a78023          	sb	a0,0(a5)
@@ -1180,7 +1186,7 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/star
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:136
     la a2, _highcode_vma_end
  7a8:	20000617          	auipc	a2,0x20000
- 7ac:	fe060613          	addi	a2,a2,-32 # 20000788 <_highcode_vma_end>
+ 7ac:	fe060613          	addi	a2,a2,-32 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:137
     bgeu a1, a2, 2f
  7b0:	00c5fa63          	bgeu	a1,a2,7c4 <handle_reset+0x38>
@@ -1206,15 +1212,15 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/star
 2:
 	la a0, _data_lma
  7c4:	00000517          	auipc	a0,0x0
- 7c8:	17450513          	addi	a0,a0,372 # 938 <_data_lma>
+ 7c8:	19850513          	addi	a0,a0,408 # 95c <_data_lma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:148
 	la a1, _data_vma
  7cc:	20000597          	auipc	a1,0x20000
- 7d0:	fbc58593          	addi	a1,a1,-68 # 20000788 <_highcode_vma_end>
+ 7d0:	fbc58593          	addi	a1,a1,-68 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:149
 	la a2, _edata
  7d4:	20000617          	auipc	a2,0x20000
- 7d8:	fb460613          	addi	a2,a2,-76 # 20000788 <_highcode_vma_end>
+ 7d8:	fb460613          	addi	a2,a2,-76 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:150
 	bgeu a1, a2, 2f
  7dc:	00c5fa63          	bgeu	a1,a2,7f0 <handle_reset+0x64>
@@ -1239,11 +1245,11 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/star
 	/* clear bss section */
 	la a0, _sbss
  7f0:	20000517          	auipc	a0,0x20000
- 7f4:	f9850513          	addi	a0,a0,-104 # 20000788 <_highcode_vma_end>
+ 7f4:	f9850513          	addi	a0,a0,-104 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:160
 	la a1, _ebss
  7f8:	20000597          	auipc	a1,0x20000
- 7fc:	f9058593          	addi	a1,a1,-112 # 20000788 <_highcode_vma_end>
+ 7fc:	f9058593          	addi	a1,a1,-112 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:161
 	bgeu a0, a1, 2f
  800:	00b57763          	bgeu	a0,a1,80e <handle_reset+0x82>
@@ -1306,67 +1312,107 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/star
 
 00000842 <main>:
 main():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:26
-#define EN2B GPIO_Pin_12
-#define PH2B GPIO_Pin_14
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:24
 
+// --- MOTOR 4 (Rear Right?) ---
+#define EN2B4   GPIO_Pin_12
+#define PH2B4   GPIO_Pin_14
 
-int main()
-{
+int main() {
  842:	1141                	addi	sp,sp,-16
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:28
-
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:26
+    // 1. System Clock Setup
     SetSysClock(CLK_SOURCE_PLL_60MHz);
  844:	04800513          	li	a0,72
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:26
-{
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:24
+int main() {
  848:	c606                	sw	ra,12(sp)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:28
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:26
     SetSysClock(CLK_SOURCE_PLL_60MHz);
  84a:	20000097          	auipc	ra,0x20000
  84e:	848080e7          	jalr	-1976(ra) # 20000092 <SetSysClock>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:29
-    GPIOA_SetBits(EN2B); //basically turn on this pin
- 852:	400017b7          	lui	a5,0x40001
- 856:	0a87a703          	lw	a4,168(a5) # 400010a8 <_eusrstack+0x1fffa8a8>
- 85a:	6685                	lui	a3,0x1
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:32
-    GPIOA_SetBits(PH2B);
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:31
 
-    GPIOA_ModeCfg(EN2B, GPIO_ModeOut_PP_5mA);
- 85c:	458d                	li	a1,3
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:29
-    GPIOA_SetBits(EN2B); //basically turn on this pin
- 85e:	8f55                	or	a4,a4,a3
- 860:	0ae7a423          	sw	a4,168(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:30
-    GPIOA_SetBits(PH2B);
- 864:	0a87a703          	lw	a4,168(a5)
- 868:	6691                	lui	a3,0x4
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:32
-    GPIOA_ModeCfg(EN2B, GPIO_ModeOut_PP_5mA);
- 86a:	6505                	lui	a0,0x1
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:30
-    GPIOA_SetBits(PH2B);
- 86c:	8f55                	or	a4,a4,a3
- 86e:	0ae7a423          	sw	a4,168(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:32
-    GPIOA_ModeCfg(EN2B, GPIO_ModeOut_PP_5mA);
- 872:	2029                	jal	87c <GPIOA_ModeCfg>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:33
-    GPIOA_ModeCfg(PH2B, GPIO_ModeOut_PP_5mA); 
- 874:	458d                	li	a1,3
- 876:	6511                	lui	a0,0x4
- 878:	2011                	jal	87c <GPIOA_ModeCfg>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Main.c:38 (discriminator 1)
+    // 2. Pin Configuration
+    // Set all 8 Motor pins to Output (Push-Pull, 5mA drive)
+    // Note: Assuming all these are on GPIOA. If any are on B, move them!
+    GPIOA_ModeCfg(EN1A1 | PH1A1 | EN1B2 | PH1B2, GPIO_ModeOut_PP_5mA);
+ 852:	458d                	li	a1,3
+ 854:	3c000513          	li	a0,960
+ 858:	2889                	jal	8aa <GPIOA_ModeCfg>
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:32
+    GPIOA_ModeCfg(EN2A3 | PH2A3 | EN2B4 | PH2B4, GPIO_ModeOut_PP_5mA);
+ 85a:	458d                	li	a1,3
+ 85c:	653d                	lui	a0,0xf
+ 85e:	20b1                	jal	8aa <GPIOA_ModeCfg>
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:38
 
+    // 3. Turn Everything ON
+    // We set both the ENABLE pins and the PHASE (Direction) pins High.
+    
+    // Motor 1
+    GPIOA_SetBits(EN1A1);
+ 860:	400017b7          	lui	a5,0x40001
+ 864:	0a878793          	addi	a5,a5,168 # 400010a8 <_eusrstack+0x1fffa8a8>
+ 868:	4398                	lw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:46
+    // Motor 2
+    GPIOA_SetBits(EN1B2);
+    GPIOA_SetBits(PH1B2);
+
+    // Motor 3
+    GPIOA_SetBits(EN2A3);
+ 86a:	6689                	lui	a3,0x2
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:38
+    GPIOA_SetBits(EN1A1);
+ 86c:	10076713          	ori	a4,a4,256
+ 870:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:39
+    GPIOA_SetBits(PH1A1);
+ 872:	4398                	lw	a4,0(a5)
+ 874:	04076713          	ori	a4,a4,64
+ 878:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:42
+    GPIOA_SetBits(EN1B2);
+ 87a:	4398                	lw	a4,0(a5)
+ 87c:	20076713          	ori	a4,a4,512
+ 880:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:43
+    GPIOA_SetBits(PH1B2);
+ 882:	4398                	lw	a4,0(a5)
+ 884:	08076713          	ori	a4,a4,128
+ 888:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:46
+    GPIOA_SetBits(EN2A3);
+ 88a:	4398                	lw	a4,0(a5)
+ 88c:	8f55                	or	a4,a4,a3
+ 88e:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:47
+    GPIOA_SetBits(PH2A3);
+ 890:	4398                	lw	a4,0(a5)
+ 892:	66a1                	lui	a3,0x8
+ 894:	8f55                	or	a4,a4,a3
+ 896:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:50
+
+    // Motor 4
+    GPIOA_SetBits(EN2B4);
+ 898:	4398                	lw	a4,0(a5)
+ 89a:	6685                	lui	a3,0x1
+ 89c:	8f55                	or	a4,a4,a3
+ 89e:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:51
+    GPIOA_SetBits(PH2B4);
+ 8a0:	4398                	lw	a4,0(a5)
+ 8a2:	6691                	lui	a3,0x4
+ 8a4:	8f55                	or	a4,a4,a3
+ 8a6:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:53 (discriminator 1)
 
     while(1) {
+ 8a8:	a001                	j	8a8 <main+0x66>
 
-    }
- 87a:	a001                	j	87a <main+0x38>
-
-0000087c <GPIOA_ModeCfg>:
+000008aa <GPIOA_ModeCfg>:
 GPIOA_ModeCfg():
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:27
  *
@@ -1375,27 +1421,30 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 void GPIOA_ModeCfg(uint32_t pin, GPIOModeTypeDef mode)
 {
     switch(mode)
- 87c:	4791                	li	a5,4
- 87e:	02b7ee63          	bltu	a5,a1,8ba <GPIOA_ModeCfg+0x3e>
- 882:	00000717          	auipc	a4,0x0
- 886:	0a270713          	addi	a4,a4,162 # 924 <GPIOA_ModeCfg+0xa8>
- 88a:	058a                	slli	a1,a1,0x2
- 88c:	95ba                	add	a1,a1,a4
- 88e:	419c                	lw	a5,0(a1)
- 890:	97ba                	add	a5,a5,a4
- 892:	8782                	jr	a5
+ 8aa:	4791                	li	a5,4
+ 8ac:	08b7ea63          	bltu	a5,a1,940 <GPIOA_ModeCfg+0x96>
+ 8b0:	00000797          	auipc	a5,0x0
+ 8b4:	09878793          	addi	a5,a5,152 # 948 <GPIOA_ModeCfg+0x9e>
+ 8b8:	058a                	slli	a1,a1,0x2
+ 8ba:	95be                	add	a1,a1,a5
+ 8bc:	4198                	lw	a4,0(a1)
+ 8be:	973e                	add	a4,a4,a5
+ 8c0:	400017b7          	lui	a5,0x40001
+ 8c4:	0b478793          	addi	a5,a5,180 # 400010b4 <_eusrstack+0x1fffa8b4>
+ 8c8:	8702                	jr	a4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:30
     {
         case GPIO_ModeIN_Floating:
             R32_PA_PD_DRV &= ~pin;
- 894:	400017b7          	lui	a5,0x40001
- 898:	0b47a703          	lw	a4,180(a5) # 400010b4 <_eusrstack+0x1fffa8b4>
- 89c:	fff54513          	not	a0,a0
- 8a0:	8f69                	and	a4,a4,a0
- 8a2:	0ae7aa23          	sw	a4,180(a5)
+ 8ca:	4394                	lw	a3,0(a5)
+ 8cc:	fff54513          	not	a0,a0
+ 8d0:	40001737          	lui	a4,0x40001
+ 8d4:	8ee9                	and	a3,a3,a0
+ 8d6:	c394                	sw	a3,0(a5)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:31
             R32_PA_PU &= ~pin;
- 8a6:	0b07a703          	lw	a4,176(a5)
+ 8d8:	0b070693          	addi	a3,a4,176 # 400010b0 <_eusrstack+0x1fffa8b0>
+ 8dc:	429c                	lw	a5,0(a3)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:43
             R32_PA_DIR &= ~pin;
             break;
@@ -1403,20 +1452,72 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
         case GPIO_ModeIN_PD:
             R32_PA_PD_DRV |= pin;
             R32_PA_PU &= ~pin;
- 8aa:	8f69                	and	a4,a4,a0
- 8ac:	0ae7a823          	sw	a4,176(a5)
+ 8de:	8fe9                	and	a5,a5,a0
+ 8e0:	c29c                	sw	a5,0(a3)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:44
             R32_PA_DIR &= ~pin;
- 8b0:	0a07a703          	lw	a4,160(a5)
- 8b4:	8d79                	and	a0,a0,a4
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:54
+ 8e2:	0a070793          	addi	a5,a4,160
+ 8e6:	4398                	lw	a4,0(a5)
+ 8e8:	8d79                	and	a0,a0,a4
+ 8ea:	c388                	sw	a0,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:45
+            break;
+ 8ec:	8082                	ret
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:36
+            R32_PA_PD_DRV &= ~pin;
+ 8ee:	4390                	lw	a2,0(a5)
+ 8f0:	fff54693          	not	a3,a0
+ 8f4:	40001737          	lui	a4,0x40001
+ 8f8:	8e75                	and	a2,a2,a3
+ 8fa:	c390                	sw	a2,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:37
+            R32_PA_PU |= pin;
+ 8fc:	0b070613          	addi	a2,a4,176 # 400010b0 <_eusrstack+0x1fffa8b0>
+ 900:	421c                	lw	a5,0(a2)
+ 902:	8fc9                	or	a5,a5,a0
+ 904:	c21c                	sw	a5,0(a2)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:38
+            R32_PA_DIR &= ~pin;
+ 906:	0a070793          	addi	a5,a4,160
+ 90a:	4398                	lw	a4,0(a5)
+ 90c:	8ef9                	and	a3,a3,a4
+ 90e:	c394                	sw	a3,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:39
+            break;
+ 910:	8082                	ret
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:42
+            R32_PA_PD_DRV |= pin;
+ 912:	4394                	lw	a3,0(a5)
+ 914:	40001737          	lui	a4,0x40001
+ 918:	8ec9                	or	a3,a3,a0
+ 91a:	c394                	sw	a3,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:43
+            R32_PA_PU &= ~pin;
+ 91c:	0b070693          	addi	a3,a4,176 # 400010b0 <_eusrstack+0x1fffa8b0>
+ 920:	429c                	lw	a5,0(a3)
+ 922:	fff54513          	not	a0,a0
+ 926:	bf65                	j	8de <GPIOA_ModeCfg+0x34>
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:48
+
+        case GPIO_ModeOut_PP_5mA:
+            R32_PA_PD_DRV &= ~pin;
+ 928:	4394                	lw	a3,0(a5)
+ 92a:	fff54713          	not	a4,a0
+ 92e:	8f75                	and	a4,a4,a3
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:53
             R32_PA_DIR |= pin;
             break;
 
         case GPIO_ModeOut_PP_20mA:
             R32_PA_PD_DRV |= pin;
+ 930:	c398                	sw	a4,0(a5)
+c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:54
             R32_PA_DIR |= pin;
- 8b6:	0aa7a023          	sw	a0,160(a5)
+ 932:	400017b7          	lui	a5,0x40001
+ 936:	0a078793          	addi	a5,a5,160 # 400010a0 <_eusrstack+0x1fffa8a0>
+ 93a:	4398                	lw	a4,0(a5)
+ 93c:	8f49                	or	a4,a4,a0
+ 93e:	c398                	sw	a4,0(a5)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:60
             break;
 
@@ -1424,66 +1525,19 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
             break;
     }
 }
- 8ba:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:36
-            R32_PA_PD_DRV &= ~pin;
- 8bc:	400017b7          	lui	a5,0x40001
- 8c0:	0b47a683          	lw	a3,180(a5) # 400010b4 <_eusrstack+0x1fffa8b4>
- 8c4:	fff54713          	not	a4,a0
- 8c8:	8ef9                	and	a3,a3,a4
- 8ca:	0ad7aa23          	sw	a3,180(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:37
-            R32_PA_PU |= pin;
- 8ce:	0b07a683          	lw	a3,176(a5)
- 8d2:	8d55                	or	a0,a0,a3
- 8d4:	0aa7a823          	sw	a0,176(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:38
-            R32_PA_DIR &= ~pin;
- 8d8:	0a07a683          	lw	a3,160(a5)
- 8dc:	8f75                	and	a4,a4,a3
- 8de:	0ae7a023          	sw	a4,160(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:39
-            break;
- 8e2:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:42
-            R32_PA_PD_DRV |= pin;
- 8e4:	400017b7          	lui	a5,0x40001
- 8e8:	0b47a703          	lw	a4,180(a5) # 400010b4 <_eusrstack+0x1fffa8b4>
- 8ec:	8f49                	or	a4,a4,a0
- 8ee:	0ae7aa23          	sw	a4,180(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:43
-            R32_PA_PU &= ~pin;
- 8f2:	0b07a703          	lw	a4,176(a5)
- 8f6:	fff54513          	not	a0,a0
- 8fa:	bf45                	j	8aa <GPIOA_ModeCfg+0x2e>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:48
-            R32_PA_PD_DRV &= ~pin;
- 8fc:	400017b7          	lui	a5,0x40001
- 900:	0b47a683          	lw	a3,180(a5) # 400010b4 <_eusrstack+0x1fffa8b4>
- 904:	fff54713          	not	a4,a0
- 908:	8f75                	and	a4,a4,a3
+ 940:	8082                	ret
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:53
             R32_PA_PD_DRV |= pin;
- 90a:	0ae7aa23          	sw	a4,180(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:54
-            R32_PA_DIR |= pin;
- 90e:	0a07a703          	lw	a4,160(a5)
- 912:	8d59                	or	a0,a0,a4
- 914:	b74d                	j	8b6 <GPIOA_ModeCfg+0x3a>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:53
-            R32_PA_PD_DRV |= pin;
- 916:	400017b7          	lui	a5,0x40001
- 91a:	0b47a703          	lw	a4,180(a5) # 400010b4 <_eusrstack+0x1fffa8b4>
- 91e:	8f49                	or	a4,a4,a0
- 920:	b7ed                	j	90a <GPIOA_ModeCfg+0x8e>
- 922:	0000                	unimp
- 924:	ff70                	fsw	fa2,124(a4)
- 926:	ffff                	0xffff
- 928:	ff98                	fsw	fa4,56(a5)
- 92a:	ffff                	0xffff
- 92c:	ffc0                	fsw	fs0,60(a5)
- 92e:	ffff                	0xffff
- 930:	ffd8                	fsw	fa4,60(a5)
- 932:	ffff                	0xffff
- 934:	fff2                	fsw	ft8,252(sp)
- 936:	ffff                	0xffff
+ 942:	4398                	lw	a4,0(a5)
+ 944:	8f49                	or	a4,a4,a0
+ 946:	b7ed                	j	930 <GPIOA_ModeCfg+0x86>
+ 948:	ff82                	.2byte	0xff82
+ 94a:	ffff                	.2byte	0xffff
+ 94c:	ffa6                	.2byte	0xffa6
+ 94e:	ffff                	.2byte	0xffff
+ 950:	ffca                	.2byte	0xffca
+ 952:	ffff                	.2byte	0xffff
+ 954:	ffe0                	.2byte	0xffe0
+ 956:	ffff                	.2byte	0xffff
+ 958:	fffa                	.2byte	0xfffa
+ 95a:	ffff                	.2byte	0xffff

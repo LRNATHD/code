@@ -1,0 +1,57 @@
+/********************************** (C) COPYRIGHT *******************************
+ * File Name          : Main.c
+ * Description        : HARDWARE TEST - ALL MOTORS FULL SPEED
+ *******************************************************************************/
+
+#include "CH59x_common.h"
+
+// --- MOTOR 1 (Front Left?) ---
+#define EN1A1   GPIO_Pin_8
+#define PH1A1   GPIO_Pin_6
+
+// --- MOTOR 2 (Front Right?) ---
+#define EN1B2   GPIO_Pin_9
+#define PH1B2   GPIO_Pin_7
+
+// --- MOTOR 3 (Rear Left?) ---
+#define EN2A3   GPIO_Pin_13
+#define PH2A3   GPIO_Pin_15
+
+// --- MOTOR 4 (Rear Right?) ---
+#define EN2B4   GPIO_Pin_12
+#define PH2B4   GPIO_Pin_14
+
+int main() {
+    // 1. System Clock Setup
+    SetSysClock(CLK_SOURCE_PLL_60MHz);
+
+    // 2. Pin Configuration
+    // Set all 8 Motor pins to Output (Push-Pull, 5mA drive)
+    // Note: Assuming all these are on GPIOA. If any are on B, move them!
+    GPIOA_ModeCfg(EN1A1 | PH1A1 | EN1B2 | PH1B2, GPIO_ModeOut_PP_5mA);
+    GPIOA_ModeCfg(EN2A3 | PH2A3 | EN2B4 | PH2B4, GPIO_ModeOut_PP_5mA);
+
+    // 3. Turn Everything ON
+    // We set both the ENABLE pins and the PHASE (Direction) pins High.
+    
+    // Motor 1
+    GPIOA_SetBits(EN1A1);
+    GPIOA_SetBits(PH1A1);
+
+    // Motor 2
+    GPIOA_SetBits(EN1B2);
+    GPIOA_SetBits(PH1B2);
+
+    // Motor 3
+    GPIOA_SetBits(EN2A3);
+    GPIOA_SetBits(PH2A3);
+
+    // Motor 4
+    GPIOA_SetBits(EN2B4);
+    GPIOA_SetBits(PH2B4);
+
+    while(1) {
+        // Just sit here and spin forever.
+        // Use the physical switch on your battery pack to stop.
+    }
+}
