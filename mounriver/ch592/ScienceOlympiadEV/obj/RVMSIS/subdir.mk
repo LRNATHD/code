@@ -25,5 +25,5 @@ DIR_EXPANDS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 RVMSIS/%.o: ../RVMSIS/%.c
-	@	riscv-wch-elf-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized -g -DDEBUG=1 -I"c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc" -I"c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS" -std=gnu99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
+	@	riscv-wch-elf-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized -g -DDEBUG=1 -I"c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc" -I"c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS" -std=gnu99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
 

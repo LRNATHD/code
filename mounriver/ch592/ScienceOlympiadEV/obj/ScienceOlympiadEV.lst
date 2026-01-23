@@ -6,49 +6,49 @@ EXEC_P, HAS_SYMS, D_PAGED
 start address 0x00000000
 
 Program Header:
-0x70000003 off    0x000062dc vaddr 0x00000000 paddr 0x00000000 align 2**0
+0x70000003 off    0x0000784b vaddr 0x00000000 paddr 0x00000000 align 2**0
          filesz 0x00000034 memsz 0x00000000 flags r--
     LOAD off    0x00001000 vaddr 0x00000000 paddr 0x00000000 align 2**12
          filesz 0x00000004 memsz 0x00000004 flags r-x
     LOAD off    0x00002000 vaddr 0x20000000 paddr 0x00000004 align 2**12
          filesz 0x00000788 memsz 0x00000788 flags r-x
     LOAD off    0x0000278c vaddr 0x0000078c paddr 0x0000078c align 2**12
-         filesz 0x000001d0 memsz 0x000001d0 flags r-x
+         filesz 0x000005e8 memsz 0x000005e8 flags r-x
     LOAD off    0x00000600 vaddr 0x20006600 paddr 0x20006600 align 2**12
          filesz 0x00000000 memsz 0x00000200 flags rw-
 
 Sections:
 Idx Name              Size      VMA       LMA       File off  Algn  Flags
   0 .init             00000004  00000000  00000000  00001000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .highcodelalign   00000000  00000004  00000004  0000295c  2**0  CONTENTS
+  1 .highcodelalign   00000000  00000004  00000004  00002d74  2**0  CONTENTS
   2 .highcode         00000788  20000000  00000004  00002000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .text             000001d0  0000078c  0000078c  0000278c  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .fini             00000000  0000095c  0000095c  0000295c  2**0  CONTENTS, ALLOC, LOAD, CODE
-  5 .dalign           00000000  20000788  20000788  0000295c  2**0  CONTENTS
-  6 .dlalign          00000000  0000095c  0000095c  0000295c  2**0  CONTENTS
-  7 .data             00000000  20000788  20000788  0000295c  2**0  CONTENTS, ALLOC, LOAD, DATA
+  3 .text             000005e8  0000078c  0000078c  0000278c  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .fini             00000000  00000d74  00000d74  00002d74  2**0  CONTENTS, ALLOC, LOAD, CODE
+  5 .dalign           00000000  20000788  20000788  00002d74  2**0  CONTENTS
+  6 .dlalign          00000000  00000d74  00000d74  00002d74  2**0  CONTENTS
+  7 .data             00000000  20000788  20000788  00002d74  2**0  CONTENTS, ALLOC, LOAD, DATA
   8 .bss              00000000  20000788  0000078c  00000000  2**0  ALLOC
   9 .stack            00000200  20006600  20006600  00003600  2**0  ALLOC
- 10 .debug_info       00001036  00000000  00000000  0000295c  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_abbrev     00000556  00000000  00000000  00003992  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_aranges    00000128  00000000  00000000  00003ee8  2**3  CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_rnglists   0000015f  00000000  00000000  00004010  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_line       0000173f  00000000  00000000  0000416f  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_str        0000067d  00000000  00000000  000058ae  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_line_str   0000034d  00000000  00000000  00005f2b  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment          00000064  00000000  00000000  00006278  2**0  CONTENTS, READONLY
- 18 .riscv.attributes 00000034  00000000  00000000  000062dc  2**0  CONTENTS, READONLY
- 19 .debug_frame      000001e4  00000000  00000000  00006310  2**2  CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_loclists   000004ef  00000000  00000000  000064f4  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_ranges     00000028  00000000  00000000  000069e8  2**3  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_info       000016dd  00000000  00000000  00002d74  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .debug_abbrev     000006e2  00000000  00000000  00004451  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_aranges    00000198  00000000  00000000  00004b38  2**3  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_rnglists   000001cf  00000000  00000000  00004cd0  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_line       00001eac  00000000  00000000  00004e9f  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_str        00000728  00000000  00000000  00006d4b  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_line_str   00000374  00000000  00000000  00007473  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .comment          00000064  00000000  00000000  000077e7  2**0  CONTENTS, READONLY
+ 18 .riscv.attributes 00000034  00000000  00000000  0000784b  2**0  CONTENTS, READONLY
+ 19 .debug_frame      00000380  00000000  00000000  00007880  2**2  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 20 .debug_loclists   000006d6  00000000  00000000  00007c00  2**0  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 21 .debug_ranges     00000028  00000000  00000000  000082d8  2**3  CONTENTS, READONLY, DEBUGGING, OCTETS
 SYMBOL TABLE:
 00000000 l    d  .init	00000000 .init
 00000004 l    d  .highcodelalign	00000000 .highcodelalign
 20000000 l    d  .highcode	00000000 .highcode
 0000078c l    d  .text	00000000 .text
-0000095c l    d  .fini	00000000 .fini
+00000d74 l    d  .fini	00000000 .fini
 20000788 l    d  .dalign	00000000 .dalign
-0000095c l    d  .dlalign	00000000 .dlalign
+00000d74 l    d  .dlalign	00000000 .dlalign
 20000788 l    d  .data	00000000 .data
 20000788 l    d  .bss	00000000 .bss
 20006600 l    d  .stack	00000000 .stack
@@ -72,7 +72,8 @@ SYMBOL TABLE:
 20000380 l       .highcode	00000000 .loop29
 2000038e l       .highcode	00000000 .loop40
 2000061a l       .highcode	00000000 .loop402
-00000000 l    df *ABS*	00000000 sandbox.c
+00000000 l    df *ABS*	00000000 Sandbox.c
+00000000 l    df *ABS*	00000000 oled_driver.c
 00000000 l    df *ABS*	00000000 CH59x_gpio.c
 2000038e g     F .highcode	0000000e FLASH_ROM_OUT
 20000f88 g       .data	00000000 __global_pointer$
@@ -86,11 +87,16 @@ SYMBOL TABLE:
 20000788 g       .bss	00000000 _sbss
 00000200 g       *ABS*	00000000 __stack_size
 20000380 g     F .highcode	0000000e FLASH_ROM_IN
+0000098e g     F .text	00000020 OLED_WriteCmd
+00000c38 g     O .text	00000127 FONT5x7
 20000090  w      .highcode	00000000 UART0_IRQHandler
+00000902 g     F .text	0000008c I2C_SendByte
+00000a3c g     F .text	000000b0 OLED_Init
 00000004 g       .init	00000000 _einit
 20000090  w      .highcode	00000000 BB_IRQHandler
 2000041c g     F .highcode	0000036a FLASH_EEPROM_CMD
 20000090  w      .highcode	00000000 Break_Point_Handler
+00000b80 g     F .text	0000009e GPIOB_ModeCfg
 20000090  w      .highcode	00000000 TMR0_IRQHandler
 20000360 g     F .highcode	00000012 FLASH_ROM_BEG
 20000338 g     F .highcode	00000028 mDelaymS
@@ -99,7 +105,9 @@ SYMBOL TABLE:
 2000039c g     F .highcode	00000048 FLASH_ROM_ADDR
 20000090  w      .highcode	00000000 RTC_IRQHandler
 20000788 g       .bss	00000000 _ebss
+00000aec g     F .text	00000062 OLED_ShowChar
 200003e4 g     F .highcode	00000038 FLASH_ROM_WAIT
+00000b4e g     F .text	00000032 OLED_ShowString
 20000090  w      .highcode	00000000 UART2_IRQHandler
 20000090  w      .highcode	00000000 PWMX_IRQHandler
 00000000 g       .init	00000000 _start
@@ -109,23 +117,28 @@ SYMBOL TABLE:
 20000788 g       .data	00000000 _data_vma
 20000092 g     F .highcode	000001c0 SetSysClock
 20000090  w      .highcode	00000000 USB_IRQHandler
+000009ae g     F .text	00000022 OLED_WriteData
+000009f8 g     F .text	00000044 OLED_Clear
 20000090  w      .highcode	00000000 I2C_IRQHandler
-00000842 g     F .text	00000068 main
+00000842 g     F .text	00000030 main
+000009d0 g     F .text	00000028 OLED_SetCursor
 00000004 g       .highcodelalign	00000000 _highcode_lma
 20000090  w      .highcode	00000000 LLE_IRQHandler
 00000000 g       .init	00000000 _sinit
+00000890 g     F .text	0000003e I2C_Start
 20000090  w      .highcode	00000000 WDOG_BAT_IRQHandler
 20000090  w      .highcode	00000000 Ecall_U_Mode_Handler
 20000090  w      .highcode	00000000 TMR3_IRQHandler
 20006800 g       .stack	00000000 _eusrstack
 20000090  w      .highcode	00000000 SW_Handler
-000008aa g     F .text	0000009e GPIOA_ModeCfg
 20000788 g       .data	00000000 _edata
 20000090  w      .highcode	00000000 SPI0_IRQHandler
 20000788 g       .bss	00000000 _end
 20000788 g       .highcode	00000000 _highcode_vma_end
-0000095c g       .dlalign	00000000 _data_lma
+00000d74 g       .dlalign	00000000 _data_lma
+00000872 g     F .text	0000001e I2C_Delay
 0000078c  w      .text	00000000 handle_reset
+000008ce g     F .text	00000034 I2C_Stop
 20000090  w      .highcode	00000000 UART3_IRQHandler
 20000372 g     F .highcode	0000000e FLASH_ROM_END
 20000090  w      .highcode	00000000 TMR1_IRQHandler
@@ -138,12 +151,6 @@ Disassembly of section .init:
 00000000 <_sinit>:
 _start():
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:17
-
-	.section	.init,"ax",@progbits
-	.global	_start
-	.align	1
-_start:
-	j	handle_reset
    0:	78c0006f          	j	78c <handle_reset>
 
 Disassembly of section .highcode:
@@ -155,8 +162,8 @@ _vector_base():
 2000000a:	2000                	.2byte	0x2000
 2000000c:	02aa                	slli	t0,t0,0xa
 2000000e:	2000                	.2byte	0x2000
-20000010:	bda9                	j	1ffffe6a <_data_lma+0x1ffff50e>
-20000012:	f5f9                	bnez	a1,1fffffe0 <_data_lma+0x1ffff684>
+20000010:	bda9                	j	1ffffe6a <_data_lma+0x1ffff0f6>
+20000012:	f5f9                	bnez	a1,1fffffe0 <_data_lma+0x1ffff26c>
 20000014:	0090                	addi	a2,sp,64
 20000016:	2000                	.2byte	0x2000
 	...
@@ -217,17 +224,11 @@ _vector_base():
 20000090 <ADC_IRQHandler>:
 GPIOB_IRQHandler():
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:119
-TMR3_IRQHandler:
-UART2_IRQHandler:
-UART3_IRQHandler:
-WDOG_BAT_IRQHandler: 
-1:  
-	j 1b
 20000090:	a001                	j	20000090 <ADC_IRQHandler>
 
 20000092 <SetSysClock>:
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:28
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:28
  */
 __HIGH_CODE
 void SetSysClock(SYS_CLKTypeDef sc)
@@ -236,11 +237,11 @@ void SetSysClock(SYS_CLKTypeDef sc)
     if(((*(uint32_t*)ROM_CFG_VERISON)&0xFF) == DEF_CHIP_ID_CH592A)
 20000092:	0007f7b7          	lui	a5,0x7f
 20000096:	4b94                	lw	a3,16(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:26
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:26
 {
 20000098:	1101                	addi	sp,sp,-32
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
  */
 __attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_disable_irq(void)
 {
@@ -249,12 +250,12 @@ __attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_disable_irq(vo
   __asm volatile ("csrrc %0, 0x800, %1" : \
 2000009a:	08800713          	li	a4,136
 2000009e:	800737f3          	csrrc	a5,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
           "=r"(result): "r"(0x88) : "memory");
   return result & 0x88;
 200000a2:	0887f793          	andi	a5,a5,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:32
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:32
     {
         chip_type = 1;
     }
@@ -267,35 +268,35 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 200000b8:	fa800593          	li	a1,-88
 200000bc:	04b78023          	sb	a1,64(a5)
 200000c0:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:33
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:33
     R8_PLL_CONFIG &= ~(1 << 5); //
 200000c4:	04b7c603          	lbu	a2,75(a5)
 200000c8:	0df67613          	andi	a2,a2,223
 200000cc:	04c785a3          	sb	a2,75(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:34
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:34
     sys_safe_access_disable();
 200000d0:	04078023          	sb	zero,64(a5)
 200000d4:	4612                	lw	a2,4(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 200000d6:	80062673          	csrrs	a2,0x800,a2
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:34
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:34
 200000da:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:35
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:35
     if(sc & 0x20)  // HSE div
 200000de:	02057613          	andi	a2,a0,32
 200000e2:	ce55                	beqz	a2,2000019e <SetSysClock+0x10c>
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 200000e4:	800736f3          	csrrc	a3,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 200000e8:	0886f693          	andi	a3,a3,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:37
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:37
     {
         sys_safe_access_enable();
 200000ec:	c436                	sw	a3,8(sp)
@@ -303,68 +304,68 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 200000f2:	05078023          	sb	a6,64(a5)
 200000f6:	04b78023          	sb	a1,64(a5)
 200000fa:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:38
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:38
         R32_CLK_SYS_CFG = (0 << 6) | (sc & 0x1f) | RB_TX_32M_PWR_EN | RB_PLL_PWR_EN;
 200000fe:	001406b7          	lui	a3,0x140
 20000102:	897d                	andi	a0,a0,31
 20000104:	8d55                	or	a0,a0,a3
 20000106:	c788                	sw	a0,8(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:39
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:39
         __nop();
 20000108:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:40
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:40
         __nop();
 2000010a:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:41
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:41
         __nop();
 2000010c:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:42
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:42
         __nop();
 2000010e:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:43
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:43
         sys_safe_access_disable();
 20000110:	04078023          	sb	zero,64(a5)
 20000114:	46a2                	lw	a3,8(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 20000116:	8006a6f3          	csrrs	a3,0x800,a3
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:43
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:43
 2000011a:	0000100f          	fence.i
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 2000011e:	80073773          	csrrc	a4,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 20000122:	08877713          	andi	a4,a4,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:44
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:44
         sys_safe_access_enable();
 20000126:	c63a                	sw	a4,12(sp)
 20000128:	0000100f          	fence.i
 2000012c:	05078023          	sb	a6,64(a5)
 20000130:	04b78023          	sb	a1,64(a5)
 20000134:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:45
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:45
         SAFEOPERATE;
 20000138:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:46
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:46
         R8_FLASH_CFG = 0X51;
 2000013c:	40002737          	lui	a4,0x40002
 20000140:	05100693          	li	a3,81
 20000144:	80d703a3          	sb	a3,-2041(a4) # 40001807 <_eusrstack+0x1fffb007>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:47
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:47
         sys_safe_access_disable();
 20000148:	04078023          	sb	zero,64(a5)
 2000014c:	47b2                	lw	a5,12(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 2000014e:	8007a7f3          	csrrs	a5,0x800,a5
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:74
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:74
     }
     else
     {
@@ -373,15 +374,15 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
         sys_safe_access_disable();
 20000152:	0000100f          	fence.i
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 20000156:	08800793          	li	a5,136
 2000015a:	8007b7f3          	csrrc	a5,0x800,a5
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 2000015e:	0887f793          	andi	a5,a5,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:77
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:77
     }
     //更改FLASH clk的驱动能力
     sys_safe_access_enable();
@@ -393,142 +394,142 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 20000174:	fa800713          	li	a4,-88
 20000178:	04e78023          	sb	a4,64(a5)
 2000017c:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:78
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:78
     R8_PLL_CONFIG |= 1 << 7;
 20000180:	04b7c703          	lbu	a4,75(a5)
 20000184:	08076713          	ori	a4,a4,128
 20000188:	04e785a3          	sb	a4,75(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:79
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:79
     sys_safe_access_disable();
 2000018c:	04078023          	sb	zero,64(a5)
 20000190:	47f2                	lw	a5,28(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 20000192:	8007a7f3          	csrrs	a5,0x800,a5
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:79
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:79
 20000196:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:80
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:80
 }
 2000019a:	6105                	addi	sp,sp,32
 2000019c:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:50
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:50
     else if(sc & 0x40) // PLL div
 2000019e:	04057613          	andi	a2,a0,64
 200001a2:	c259                	beqz	a2,20000228 <SetSysClock+0x196>
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 200001a4:	80073673          	csrrc	a2,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 200001a8:	08867613          	andi	a2,a2,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:52
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:52
         sys_safe_access_enable();
 200001ac:	c832                	sw	a2,16(sp)
 200001ae:	0000100f          	fence.i
 200001b2:	05078023          	sb	a6,64(a5)
 200001b6:	04b78023          	sb	a1,64(a5)
 200001ba:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:53
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:53
         R32_CLK_SYS_CFG = (1 << 6) | (sc & 0x1f) | RB_TX_32M_PWR_EN | RB_PLL_PWR_EN;
 200001be:	00140637          	lui	a2,0x140
-200001c2:	04060613          	addi	a2,a2,64 # 140040 <_data_lma+0x13f6e4>
+200001c2:	04060613          	addi	a2,a2,64 # 140040 <_data_lma+0x13f2cc>
 200001c6:	897d                	andi	a0,a0,31
 200001c8:	8d51                	or	a0,a0,a2
 200001ca:	c788                	sw	a0,8(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:54
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:54
         __nop();
 200001cc:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:55
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:55
         __nop();
 200001ce:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:56
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:56
         __nop();
 200001d0:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:57
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:57
         __nop();
 200001d2:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:58
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:58
         sys_safe_access_disable();
 200001d4:	04078023          	sb	zero,64(a5)
 200001d8:	4642                	lw	a2,16(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 200001da:	80062673          	csrrs	a2,0x800,a2
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:58
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:58
 200001de:	0000100f          	fence.i
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 200001e2:	80073773          	csrrc	a4,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 200001e6:	08877713          	andi	a4,a4,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:59
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:59
         sys_safe_access_enable();
 200001ea:	ca3a                	sw	a4,20(sp)
 200001ec:	0000100f          	fence.i
 200001f0:	05078023          	sb	a6,64(a5)
 200001f4:	04b78023          	sb	a1,64(a5)
 200001f8:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:60
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:60
         if(chip_type)
 200001fc:	4725                	li	a4,9
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:28
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:28
     if(((*(uint32_t*)ROM_CFG_VERISON)&0xFF) == DEF_CHIP_ID_CH592A)
 200001fe:	0ff6f793          	zext.b	a5,a3
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:60
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:60
         if(chip_type)
 20000202:	00e79e63          	bne	a5,a4,2000021e <SetSysClock+0x18c>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:62
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:62
             R8_FLASH_CFG = 0X53;
 20000206:	400027b7          	lui	a5,0x40002
 2000020a:	05300713          	li	a4,83
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:66
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:66
             R8_FLASH_CFG = 0X52;
 2000020e:	80e783a3          	sb	a4,-2041(a5) # 40001807 <_eusrstack+0x1fffb007>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:68
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:68
         sys_safe_access_disable();
 20000212:	400017b7          	lui	a5,0x40001
 20000216:	04078023          	sb	zero,64(a5) # 40001040 <_eusrstack+0x1fffa840>
 2000021a:	47d2                	lw	a5,20(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 2000021c:	bf0d                	j	2000014e <SetSysClock+0xbc>
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:66
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:66
             R8_FLASH_CFG = 0X52;
 2000021e:	400027b7          	lui	a5,0x40002
 20000222:	05200713          	li	a4,82
 20000226:	b7e5                	j	2000020e <SetSysClock+0x17c>
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 20000228:	80073773          	csrrc	a4,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 2000022c:	08877713          	andi	a4,a4,136
 SetSysClock():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:72
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:72
         sys_safe_access_enable();
 20000230:	cc3a                	sw	a4,24(sp)
 20000232:	0000100f          	fence.i
 20000236:	05078023          	sb	a6,64(a5) # 40002040 <_eusrstack+0x1fffb840>
 2000023a:	04b78023          	sb	a1,64(a5)
 2000023e:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:73
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:73
         R32_CLK_SYS_CFG |= RB_CLK_SYS_MOD;
 20000242:	4798                	lw	a4,8(a5)
 20000244:	0c076713          	ori	a4,a4,192
 20000248:	c798                	sw	a4,8(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:74
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:74
         sys_safe_access_disable();
 2000024a:	04078023          	sb	zero,64(a5)
 2000024e:	47e2                	lw	a5,24(sp)
@@ -536,7 +537,7 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 
 20000252 <SYS_ResetExecute>:
 SYS_ResetExecute():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:142
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:142
  *
  * @return  none
  */
@@ -544,28 +545,28 @@ __HIGH_CODE
 void SYS_ResetExecute(void)
 {
 20000252:	1101                	addi	sp,sp,-32
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:143
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:143
     FLASH_ROM_SW_RESET();
 20000254:	4681                	li	a3,0
 20000256:	4601                	li	a2,0
 20000258:	4581                	li	a1,0
 2000025a:	4511                	li	a0,4
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:142
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:142
 {
 2000025c:	ce06                	sw	ra,28(sp)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:143
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:143
     FLASH_ROM_SW_RESET();
 2000025e:	2a7d                	jal	2000041c <FLASH_EEPROM_CMD>
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 20000260:	08800793          	li	a5,136
 20000264:	8007b7f3          	csrrc	a5,0x800,a5
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 20000268:	0887f793          	andi	a5,a5,136
 SYS_ResetExecute():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:144
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:144
     sys_safe_access_enable();
 2000026c:	c63e                	sw	a5,12(sp)
 2000026e:	0000100f          	fence.i
@@ -575,23 +576,23 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 2000027e:	fa800713          	li	a4,-88
 20000282:	04e78023          	sb	a4,64(a5)
 20000286:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:145
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:145
     R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
 2000028a:	0467c703          	lbu	a4,70(a5)
 2000028e:	00176713          	ori	a4,a4,1
 20000292:	04e78323          	sb	a4,70(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:146
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:146
     sys_safe_access_disable();
 20000296:	04078023          	sb	zero,64(a5)
 2000029a:	47b2                	lw	a5,12(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 2000029c:	8007a7f3          	csrrs	a5,0x800,a5
 SYS_ResetExecute():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:146
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:146
 200002a0:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:147
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:147
 }
 200002a4:	40f2                	lw	ra,28(sp)
 200002a6:	6105                	addi	sp,sp,32
@@ -599,7 +600,7 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 
 200002aa <HardFault_Handler>:
 HardFault_Handler():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:281
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:281
  */
 __INTERRUPT
 __HIGH_CODE
@@ -607,7 +608,7 @@ __attribute__((weak))
 void HardFault_Handler(void)
 {
 200002aa:	1141                	addi	sp,sp,-16
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:282
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:282
     FLASH_ROM_SW_RESET();
 200002ac:	4681                	li	a3,0
 200002ae:	4601                	li	a2,0
@@ -615,15 +616,15 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 200002b2:	4511                	li	a0,4
 200002b4:	22a5                	jal	2000041c <FLASH_EEPROM_CMD>
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 200002b6:	08800713          	li	a4,136
 200002ba:	800737f3          	csrrc	a5,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 200002be:	0887f793          	andi	a5,a5,136
 HardFault_Handler():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:283
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:283
     sys_safe_access_enable();
 200002c2:	c43e                	sw	a5,8(sp)
 200002c4:	0000100f          	fence.i
@@ -633,59 +634,59 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 200002d4:	fa800693          	li	a3,-88
 200002d8:	04d78023          	sb	a3,64(a5)
 200002dc:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:284
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:284
     R16_INT32K_TUNE = 0xFFFF;
 200002e0:	55fd                	li	a1,-1
 200002e2:	02b79623          	sh	a1,44(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:285
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:285
     sys_safe_access_disable();
 200002e6:	04078023          	sb	zero,64(a5)
 200002ea:	45a2                	lw	a1,8(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 200002ec:	8005a5f3          	csrrs	a1,0x800,a1
 HardFault_Handler():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:285
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:285
 200002f0:	0000100f          	fence.i
 __risc_v_disable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:130
   __asm volatile ("csrrc %0, 0x800, %1" : \
 200002f4:	80073773          	csrrc	a4,0x800,a4
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:132
   return result & 0x88;
 200002f8:	08877713          	andi	a4,a4,136
 HardFault_Handler():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:286
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:286
     sys_safe_access_enable();
 200002fc:	c63a                	sw	a4,12(sp)
 200002fe:	0000100f          	fence.i
 20000302:	04c78023          	sb	a2,64(a5)
 20000306:	04d78023          	sb	a3,64(a5)
 2000030a:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:287
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:287
     R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
 2000030e:	0467c703          	lbu	a4,70(a5)
 20000312:	00176713          	ori	a4,a4,1
 20000316:	04e78323          	sb	a4,70(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:288
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:288
     sys_safe_access_disable();
 2000031a:	04078023          	sb	zero,64(a5)
 2000031e:	47b2                	lw	a5,12(sp)
 __risc_v_enable_irq():
-c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
+c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:114
   __asm volatile ("csrrs %0, 0x800, %1" : \
 20000320:	8007a7f3          	csrrs	a5,0x800,a5
 HardFault_Handler():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:288
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:288
 20000324:	0000100f          	fence.i
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:289 (discriminator 1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:289 (discriminator 1)
     while(1);
 20000328:	a001                	j	20000328 <HardFault_Handler+0x7e>
 
 2000032a <mDelayuS>:
 mDelayuS():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:308
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:308
 {
     uint32_t i;
 #if(FREQ_SYS == 80000000)
@@ -694,7 +695,7 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
     i = t * 15;
 2000032a:	47bd                	li	a5,15
 2000032c:	02f50533          	mul	a0,a0,a5
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:332 (discriminator 1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:332 (discriminator 1)
 #else
     i = t << 1;
 #endif
@@ -702,17 +703,17 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
     {
         __nop();
 20000330:	0001                	nop
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:333 (discriminator 1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:333 (discriminator 1)
     } while(--i);
 20000332:	157d                	addi	a0,a0,-1
 20000334:	fd75                	bnez	a0,20000330 <mDelayuS+0x6>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:334
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:334
 }
 20000336:	8082                	ret
 
 20000338 <mDelaymS>:
 mDelaymS():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:347
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:347
  *
  * @return  none
  */
@@ -724,14 +725,14 @@ void mDelaymS(uint16_t t)
 2000033c:	c226                	sw	s1,4(sp)
 2000033e:	c606                	sw	ra,12(sp)
 20000340:	84aa                	mv	s1,a0
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350
     uint16_t i;
 
     for(i = 0; i < t; i++)
 20000342:	4401                	li	s0,0
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 1)
 20000344:	00941763          	bne	s0,s1,20000352 <mDelaymS+0x1a>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:354
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:354
     {
         mDelayuS(1000);
     }
@@ -741,19 +742,19 @@ c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDri
 2000034c:	4492                	lw	s1,4(sp)
 2000034e:	0141                	addi	sp,sp,16
 20000350:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 3)
     for(i = 0; i < t; i++)
 20000352:	0405                	addi	s0,s0,1
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:352 (discriminator 3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:352 (discriminator 3)
         mDelayuS(1000);
 20000354:	3e800513          	li	a0,1000
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 3)
     for(i = 0; i < t; i++)
 20000358:	0442                	slli	s0,s0,0x10
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:352 (discriminator 3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:352 (discriminator 3)
         mDelayuS(1000);
 2000035a:	3fc1                	jal	2000032a <mDelayuS>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_sys.c:350 (discriminator 3)
     for(i = 0; i < t; i++)
 2000035c:	8041                	srli	s0,s0,0x10
 2000035e:	b7dd                	j	20000344 <mDelaymS+0xc>
@@ -844,7 +845,7 @@ FLASH_ROM_WAIT():
 2000040e:	44e2                	lw	s1,24(sp)
 20000410:	6105                	addi	sp,sp,32
 20000412:	8082                	ret
-20000414:	14fd                	addi	s1,s1,-1 # 7ffff <_data_lma+0x7f6a3>
+20000414:	14fd                	addi	s1,s1,-1 # 7ffff <_data_lma+0x7f28b>
 20000416:	fce9                	bnez	s1,200003f0 <FLASH_ROM_WAIT+0xc>
 20000418:	4501                	li	a0,0
 2000041a:	bfcd                	j	2000040c <FLASH_ROM_WAIT+0x28>
@@ -925,7 +926,7 @@ FLASH_EEPROM_CMD():
 200004ea:	0905                	addi	s2,s2,1
 200004ec:	fff94503          	lbu	a0,-1(s2)
 200004f0:	14fd                	addi	s1,s1,-1
-200004f2:	0b05                	addi	s6,s6,1 # 80001 <_data_lma+0x7f6a5>
+200004f2:	0b05                	addi	s6,s6,1 # 80001 <_data_lma+0x7f28d>
 200004f4:	3d69                	jal	2000038e <FLASH_ROM_OUT>
 200004f6:	c481                	beqz	s1,200004fe <FLASH_EEPROM_CMD+0xe2>
 200004f8:	0ffb7793          	zext.b	a5,s6
@@ -969,7 +970,7 @@ FLASH_EEPROM_CMD():
 20000566:	6b85                	lui	s7,0x1
 20000568:	01697933          	and	s2,s2,s6
 2000056c:	6b41                	lui	s6,0x10
-2000056e:	fff98793          	addi	a5,s3,-1 # fff <_data_lma+0x6a3>
+2000056e:	fff98793          	addi	a5,s3,-1 # fff <_data_lma+0x28b>
 20000572:	0127f7b3          	and	a5,a5,s2
 20000576:	e399                	bnez	a5,2000057c <FLASH_EEPROM_CMD+0x160>
 20000578:	0134fc63          	bgeu	s1,s3,20000590 <FLASH_EEPROM_CMD+0x174>
@@ -979,7 +980,7 @@ FLASH_EEPROM_CMD():
 20000586:	bf99                	j	200004dc <FLASH_EEPROM_CMD+0xc0>
 20000588:	6905                	lui	s2,0x1
 2000058a:	69c1                	lui	s3,0x10
-2000058c:	197d                	addi	s2,s2,-1 # fff <_data_lma+0x6a3>
+2000058c:	197d                	addi	s2,s2,-1 # fff <_data_lma+0x28b>
 2000058e:	b7d9                	j	20000554 <FLASH_EEPROM_CMD+0x138>
 20000590:	0d800513          	li	a0,216
 20000594:	01698863          	beq	s3,s6,200005a4 <FLASH_EEPROM_CMD+0x188>
@@ -1002,7 +1003,7 @@ FLASH_EEPROM_CMD():
 200005c2:	3b7d                	jal	20000380 <FLASH_ROM_IN>
 200005c4:	fea90fa3          	sb	a0,-1(s2)
 200005c8:	bfd5                	j	200005bc <FLASH_EEPROM_CMD+0x1a0>
-200005ca:	fff98793          	addi	a5,s3,-1 # ffff <_data_lma+0xf6a3>
+200005ca:	fff98793          	addi	a5,s3,-1 # ffff <_data_lma+0xf28b>
 200005ce:	0ff7f793          	zext.b	a5,a5
 200005d2:	0cfc6163          	bltu	s8,a5,20000694 <.loop402+0x7a>
 200005d6:	041cc783          	lbu	a5,65(s9)
@@ -1034,7 +1035,7 @@ FLASH_EEPROM_CMD():
 20000626:	17fd                	addi	a5,a5,-1
 20000628:	fbed                	bnez	a5,2000061a <.loop402>
 2000062a:	14fd                	addi	s1,s1,-1
-2000062c:	0b11                	addi	s6,s6,4 # 10004 <_data_lma+0xf6a8>
+2000062c:	0b11                	addi	s6,s6,4 # 10004 <_data_lma+0xf290>
 2000062e:	c481                	beqz	s1,20000636 <.loop402+0x1c>
 20000630:	0ffb7793          	zext.b	a5,s6
 20000634:	ffe9                	bnez	a5,2000060e <FLASH_EEPROM_CMD+0x1f2>
@@ -1111,7 +1112,7 @@ FLASH_EEPROM_CMD():
 2000070a:	399d                	jal	20000380 <FLASH_ROM_IN>
 2000070c:	0074f793          	andi	a5,s1,7
 20000710:	97ca                	add	a5,a5,s2
-20000712:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x776a4>
+20000712:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x7728c>
 20000716:	14fd                	addi	s1,s1,-1
 20000718:	8d39                	xor	a0,a0,a4
 2000071a:	00a78023          	sb	a0,0(a5)
@@ -1159,385 +1160,975 @@ Disassembly of section .text:
 0000078c <handle_reset>:
 handle_reset():
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:127
-	.weak	handle_reset
-	.align	1
-handle_reset:
-.option push 
-.option	norelax 
-	la gp, __global_pointer$
  78c:	20000197          	auipc	gp,0x20000
  790:	7fc18193          	addi	gp,gp,2044 # 20000f88 <__global_pointer$>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:130
-.option	pop 
-1:
-	la sp, _eusrstack 
  794:	20006117          	auipc	sp,0x20006
  798:	06c10113          	addi	sp,sp,108 # 20006800 <_eusrstack>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:134
-
-/* Load highcode code  section from flash to RAM */
-2:
-    la a0, _highcode_lma
  79c:	00400513          	li	a0,4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:135
-    la a1, _highcode_vma_start
  7a0:	20000597          	auipc	a1,0x20000
  7a4:	86058593          	addi	a1,a1,-1952 # 20000000 <_highcode_vma_start>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:136
-    la a2, _highcode_vma_end
  7a8:	20000617          	auipc	a2,0x20000
  7ac:	fe060613          	addi	a2,a2,-32 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:137
-    bgeu a1, a2, 2f
  7b0:	00c5fa63          	bgeu	a1,a2,7c4 <handle_reset+0x38>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:139
-1:
-    lw t0, (a0)
  7b4:	00052283          	lw	t0,0(a0)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:140
-    sw t0, (a1)
  7b8:	0055a023          	sw	t0,0(a1)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:141
-    addi a0, a0, 4
  7bc:	0511                	addi	a0,a0,4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:142
-    addi a1, a1, 4
  7be:	0591                	addi	a1,a1,4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:143
-    bltu a1, a2, 1b
  7c0:	fec5eae3          	bltu	a1,a2,7b4 <handle_reset+0x28>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:147
-
-/* Load data section from flash to RAM */
-2:
-	la a0, _data_lma
  7c4:	00000517          	auipc	a0,0x0
- 7c8:	19850513          	addi	a0,a0,408 # 95c <_data_lma>
+ 7c8:	5b050513          	addi	a0,a0,1456 # d74 <_data_lma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:148
-	la a1, _data_vma
  7cc:	20000597          	auipc	a1,0x20000
  7d0:	fbc58593          	addi	a1,a1,-68 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:149
-	la a2, _edata
  7d4:	20000617          	auipc	a2,0x20000
  7d8:	fb460613          	addi	a2,a2,-76 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:150
-	bgeu a1, a2, 2f
  7dc:	00c5fa63          	bgeu	a1,a2,7f0 <handle_reset+0x64>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:152
-1:
-	lw t0, (a0)
  7e0:	00052283          	lw	t0,0(a0)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:153
-	sw t0, (a1)
  7e4:	0055a023          	sw	t0,0(a1)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:154
-	addi a0, a0, 4
  7e8:	0511                	addi	a0,a0,4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:155
-	addi a1, a1, 4
  7ea:	0591                	addi	a1,a1,4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:156
-	bltu a1, a2, 1b
  7ec:	fec5eae3          	bltu	a1,a2,7e0 <handle_reset+0x54>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:159
-2:
-	/* clear bss section */
-	la a0, _sbss
  7f0:	20000517          	auipc	a0,0x20000
  7f4:	f9850513          	addi	a0,a0,-104 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:160
-	la a1, _ebss
  7f8:	20000597          	auipc	a1,0x20000
  7fc:	f9058593          	addi	a1,a1,-112 # 20000788 <_data_vma>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:161
-	bgeu a0, a1, 2f
  800:	00b57763          	bgeu	a0,a1,80e <handle_reset+0x82>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:163
-1:
-	sw zero, (a0)
  804:	00052023          	sw	zero,0(a0)
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:164
-	addi a0, a0, 4
  808:	0511                	addi	a0,a0,4
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:165
-	bltu a0, a1, 1b
  80a:	feb56de3          	bltu	a0,a1,804 <handle_reset+0x78>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:168
-2:
-	/* 流水线控制位 & 动态预测控制位 */
-	li t0, 0x1f
  80e:	42fd                	li	t0,31
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:169
-	csrw 0xbc0, t0
  810:	bc029073          	csrw	0xbc0,t0
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:171
-	/* 打开嵌套中断、硬件压栈功能 */
-	li t0, 0x3
  814:	428d                	li	t0,3
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:172
-	csrw 0x804, t0
  816:	80429073          	csrw	0x804,t0
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:174
-	
-    li t0, 0x88
  81a:	08800293          	li	t0,136
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:175
-    csrw mstatus, t0
  81e:	30029073          	csrw	mstatus,t0
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:176
-	la t0, _vector_base
  822:	1ffff297          	auipc	t0,0x1ffff
  826:	7de28293          	addi	t0,t0,2014 # 20000000 <_highcode_vma_start>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:179
-
-	/* 配置向量表模式为绝对地址模式 */
-    ori t0, t0, 3
  82a:	0032e293          	ori	t0,t0,3
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:180
-	csrw mtvec, t0
  82e:	30529073          	csrw	mtvec,t0
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:182
-
-	la t0, main
  832:	00000297          	auipc	t0,0x0
  836:	01028293          	addi	t0,t0,16 # 842 <main>
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:183
-	csrw mepc, t0
  83a:	34129073          	csrw	mepc,t0
 c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../Startup/startup_CH592.S:185
-	
-	mret
  83e:	30200073          	mret
 
 00000842 <main>:
 main():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:24
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:5
 
-// --- MOTOR 4 (Rear Right?) ---
-#define EN2B4   GPIO_Pin_12
-#define PH2B4   GPIO_Pin_14
 
+#include "CH59x_common.h"
+#include "oled_driver.h"
 int main() {
  842:	1141                	addi	sp,sp,-16
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:26
-    // 1. System Clock Setup
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:6
     SetSysClock(CLK_SOURCE_PLL_60MHz);
  844:	04800513          	li	a0,72
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:24
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:5
 int main() {
  848:	c606                	sw	ra,12(sp)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:26
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:6
     SetSysClock(CLK_SOURCE_PLL_60MHz);
  84a:	20000097          	auipc	ra,0x20000
  84e:	848080e7          	jalr	-1976(ra) # 20000092 <SetSysClock>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:31
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:8
 
-    // 2. Pin Configuration
-    // Set all 8 Motor pins to Output (Push-Pull, 5mA drive)
-    // Note: Assuming all these are on GPIOA. If any are on B, move them!
-    GPIOA_ModeCfg(EN1A1 | PH1A1 | EN1B2 | PH1B2, GPIO_ModeOut_PP_5mA);
- 852:	458d                	li	a1,3
- 854:	3c000513          	li	a0,960
- 858:	2889                	jal	8aa <GPIOA_ModeCfg>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:32
-    GPIOA_ModeCfg(EN2A3 | PH2A3 | EN2B4 | PH2B4, GPIO_ModeOut_PP_5mA);
- 85a:	458d                	li	a1,3
- 85c:	653d                	lui	a0,0xf
- 85e:	20b1                	jal	8aa <GPIOA_ModeCfg>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:38
-
-    // 3. Turn Everything ON
-    // We set both the ENABLE pins and the PHASE (Direction) pins High.
-    
-    // Motor 1
-    GPIOA_SetBits(EN1A1);
- 860:	400017b7          	lui	a5,0x40001
- 864:	0a878793          	addi	a5,a5,168 # 400010a8 <_eusrstack+0x1fffa8a8>
- 868:	4398                	lw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:46
-    // Motor 2
-    GPIOA_SetBits(EN1B2);
-    GPIOA_SetBits(PH1B2);
-
-    // Motor 3
-    GPIOA_SetBits(EN2A3);
- 86a:	6689                	lui	a3,0x2
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:38
-    GPIOA_SetBits(EN1A1);
- 86c:	10076713          	ori	a4,a4,256
- 870:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:39
-    GPIOA_SetBits(PH1A1);
- 872:	4398                	lw	a4,0(a5)
- 874:	04076713          	ori	a4,a4,64
- 878:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:42
-    GPIOA_SetBits(EN1B2);
- 87a:	4398                	lw	a4,0(a5)
- 87c:	20076713          	ori	a4,a4,512
- 880:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:43
-    GPIOA_SetBits(PH1B2);
- 882:	4398                	lw	a4,0(a5)
- 884:	08076713          	ori	a4,a4,128
- 888:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:46
-    GPIOA_SetBits(EN2A3);
- 88a:	4398                	lw	a4,0(a5)
- 88c:	8f55                	or	a4,a4,a3
- 88e:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:47
-    GPIOA_SetBits(PH2A3);
- 890:	4398                	lw	a4,0(a5)
- 892:	66a1                	lui	a3,0x8
- 894:	8f55                	or	a4,a4,a3
- 896:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:50
-
-    // Motor 4
-    GPIOA_SetBits(EN2B4);
- 898:	4398                	lw	a4,0(a5)
- 89a:	6685                	lui	a3,0x1
- 89c:	8f55                	or	a4,a4,a3
- 89e:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:51
-    GPIOA_SetBits(PH2B4);
- 8a0:	4398                	lw	a4,0(a5)
- 8a2:	6691                	lui	a3,0x4
- 8a4:	8f55                	or	a4,a4,a3
- 8a6:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/sandbox.c:53 (discriminator 1)
+    OLED_Init();
+ 852:	22ed                	jal	a3c <OLED_Init>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:9
+    OLED_ShowString(0,0, "ABCDEFGH");
+ 854:	00000617          	auipc	a2,0x0
+ 858:	3cc60613          	addi	a2,a2,972 # c20 <GPIOB_ModeCfg+0xa0>
+ 85c:	4581                	li	a1,0
+ 85e:	4501                	li	a0,0
+ 860:	24fd                	jal	b4e <OLED_ShowString>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:10
+    OLED_ShowString(0,1, "1234567890");
+ 862:	00000617          	auipc	a2,0x0
+ 866:	3ca60613          	addi	a2,a2,970 # c2c <GPIOB_ModeCfg+0xac>
+ 86a:	4585                	li	a1,1
+ 86c:	4501                	li	a0,0
+ 86e:	24c5                	jal	b4e <OLED_ShowString>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/Sandbox.c:12 (discriminator 1)
 
     while(1) {
- 8a8:	a001                	j	8a8 <main+0x66>
+ 870:	a001                	j	870 <main+0x2e>
 
-000008aa <GPIOA_ModeCfg>:
-GPIOA_ModeCfg():
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:27
+00000872 <I2C_Delay>:
+I2C_Delay():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:70
+};
+
+// --- Bit-Bang I2C Helpers ---
+
+// Tiny delay loop
+void I2C_Delay(void) {
+ 872:	1141                	addi	sp,sp,-16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:71
+    volatile uint8_t i = 10;
+ 874:	47a9                	li	a5,10
+ 876:	00f107a3          	sb	a5,15(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:72 (discriminator 1)
+    while(i--);
+ 87a:	00f14703          	lbu	a4,15(sp)
+ 87e:	fff70793          	addi	a5,a4,-1 # 7ffff <_data_lma+0x7f28b>
+ 882:	0ff7f793          	zext.b	a5,a5
+ 886:	00f107a3          	sb	a5,15(sp)
+ 88a:	fb65                	bnez	a4,87a <I2C_Delay+0x8>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:73
+}
+ 88c:	0141                	addi	sp,sp,16
+ 88e:	8082                	ret
+
+00000890 <I2C_Start>:
+I2C_Start():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:75
+
+void I2C_Start(void) {
+ 890:	1141                	addi	sp,sp,-16
+ 892:	c422                	sw	s0,8(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:76
+    GPIOB_SetBits(I2C_SDA_PIN);
+ 894:	40001437          	lui	s0,0x40001
+ 898:	0c840793          	addi	a5,s0,200 # 400010c8 <_eusrstack+0x1fffa8c8>
+ 89c:	4398                	lw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:75
+void I2C_Start(void) {
+ 89e:	c606                	sw	ra,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:79
+    GPIOB_SetBits(I2C_SCL_PIN);
+    I2C_Delay();
+    GPIOB_ResetBits(I2C_SDA_PIN);
+ 8a0:	0cc40413          	addi	s0,s0,204
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:76
+    GPIOB_SetBits(I2C_SDA_PIN);
+ 8a4:	01076713          	ori	a4,a4,16
+ 8a8:	c398                	sw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:77
+    GPIOB_SetBits(I2C_SCL_PIN);
+ 8aa:	4398                	lw	a4,0(a5)
+ 8ac:	08076713          	ori	a4,a4,128
+ 8b0:	c398                	sw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:78
+    I2C_Delay();
+ 8b2:	37c1                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:79
+    GPIOB_ResetBits(I2C_SDA_PIN);
+ 8b4:	401c                	lw	a5,0(s0)
+ 8b6:	0107e793          	ori	a5,a5,16
+ 8ba:	c01c                	sw	a5,0(s0)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:80
+    I2C_Delay();
+ 8bc:	3f5d                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:81
+    GPIOB_ResetBits(I2C_SCL_PIN);
+ 8be:	401c                	lw	a5,0(s0)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:82
+}
+ 8c0:	40b2                	lw	ra,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:81
+    GPIOB_ResetBits(I2C_SCL_PIN);
+ 8c2:	0807e793          	ori	a5,a5,128
+ 8c6:	c01c                	sw	a5,0(s0)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:82
+}
+ 8c8:	4422                	lw	s0,8(sp)
+ 8ca:	0141                	addi	sp,sp,16
+ 8cc:	8082                	ret
+
+000008ce <I2C_Stop>:
+I2C_Stop():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:84
+
+void I2C_Stop(void) {
+ 8ce:	1141                	addi	sp,sp,-16
+ 8d0:	c422                	sw	s0,8(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:85
+    GPIOB_ResetBits(I2C_SDA_PIN);
+ 8d2:	40001437          	lui	s0,0x40001
+ 8d6:	0cc40713          	addi	a4,s0,204 # 400010cc <_eusrstack+0x1fffa8cc>
+ 8da:	431c                	lw	a5,0(a4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:84
+void I2C_Stop(void) {
+ 8dc:	c606                	sw	ra,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:86
+    GPIOB_SetBits(I2C_SCL_PIN);
+ 8de:	0c840413          	addi	s0,s0,200
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:85
+    GPIOB_ResetBits(I2C_SDA_PIN);
+ 8e2:	0107e793          	ori	a5,a5,16
+ 8e6:	c31c                	sw	a5,0(a4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:86
+    GPIOB_SetBits(I2C_SCL_PIN);
+ 8e8:	401c                	lw	a5,0(s0)
+ 8ea:	0807e793          	ori	a5,a5,128
+ 8ee:	c01c                	sw	a5,0(s0)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:87
+    I2C_Delay();
+ 8f0:	3749                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:88
+    GPIOB_SetBits(I2C_SDA_PIN);
+ 8f2:	401c                	lw	a5,0(s0)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:90
+    I2C_Delay();
+}
+ 8f4:	40b2                	lw	ra,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:88
+    GPIOB_SetBits(I2C_SDA_PIN);
+ 8f6:	0107e793          	ori	a5,a5,16
+ 8fa:	c01c                	sw	a5,0(s0)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:90
+}
+ 8fc:	4422                	lw	s0,8(sp)
+ 8fe:	0141                	addi	sp,sp,16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:89
+    I2C_Delay();
+ 900:	bf8d                	j	872 <I2C_Delay>
+
+00000902 <I2C_SendByte>:
+I2C_SendByte():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:92
+
+void I2C_SendByte(uint8_t byte) {
+ 902:	1101                	addi	sp,sp,-32
+ 904:	cc22                	sw	s0,24(sp)
+ 906:	c84a                	sw	s2,16(sp)
+ 908:	c452                	sw	s4,8(sp)
+ 90a:	ce06                	sw	ra,28(sp)
+ 90c:	ca26                	sw	s1,20(sp)
+ 90e:	c64e                	sw	s3,12(sp)
+ 910:	842a                	mv	s0,a0
+ 912:	4921                	li	s2,8
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:96
+    uint8_t i;
+    for(i = 0; i < 8; i++) {
+        if(byte & 0x80) GPIOB_SetBits(I2C_SDA_PIN);
+        else            GPIOB_ResetBits(I2C_SDA_PIN);
+ 914:	40001a37          	lui	s4,0x40001
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:95
+        if(byte & 0x80) GPIOB_SetBits(I2C_SDA_PIN);
+ 918:	01841793          	slli	a5,s0,0x18
+ 91c:	87e1                	srai	a5,a5,0x18
+ 91e:	0c8a0713          	addi	a4,s4,200 # 400010c8 <_eusrstack+0x1fffa8c8>
+ 922:	0007c463          	bltz	a5,92a <I2C_SendByte+0x28>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:96
+        else            GPIOB_ResetBits(I2C_SDA_PIN);
+ 926:	0cca0713          	addi	a4,s4,204
+ 92a:	431c                	lw	a5,0(a4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:100
+        
+        byte <<= 1;
+        I2C_Delay();
+        GPIOB_SetBits(I2C_SCL_PIN);
+ 92c:	0c8a0493          	addi	s1,s4,200
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:94
+    for(i = 0; i < 8; i++) {
+ 930:	197d                	addi	s2,s2,-1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:96
+        else            GPIOB_ResetBits(I2C_SDA_PIN);
+ 932:	0107e793          	ori	a5,a5,16
+ 936:	c31c                	sw	a5,0(a4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:99
+        I2C_Delay();
+ 938:	3f2d                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:100
+        GPIOB_SetBits(I2C_SCL_PIN);
+ 93a:	409c                	lw	a5,0(s1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:98
+        byte <<= 1;
+ 93c:	0406                	slli	s0,s0,0x1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:94
+    for(i = 0; i < 8; i++) {
+ 93e:	0ff97913          	zext.b	s2,s2
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:100
+        GPIOB_SetBits(I2C_SCL_PIN);
+ 942:	0807e793          	ori	a5,a5,128
+ 946:	c09c                	sw	a5,0(s1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:101
+        I2C_Delay();
+ 948:	372d                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:102
+        GPIOB_ResetBits(I2C_SCL_PIN);
+ 94a:	0cca2783          	lw	a5,204(s4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:98
+        byte <<= 1;
+ 94e:	0ff47413          	zext.b	s0,s0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:102
+        GPIOB_ResetBits(I2C_SCL_PIN);
+ 952:	0807e793          	ori	a5,a5,128
+ 956:	0cfa2623          	sw	a5,204(s4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:94
+    for(i = 0; i < 8; i++) {
+ 95a:	fa091fe3          	bnez	s2,918 <I2C_SendByte+0x16>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:106
+    }
+    
+    // Ack cycle (we just ignore the ack bit)
+    GPIOB_SetBits(I2C_SDA_PIN); // Release line
+ 95e:	409c                	lw	a5,0(s1)
+ 960:	0107e793          	ori	a5,a5,16
+ 964:	c09c                	sw	a5,0(s1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:107
+    I2C_Delay();
+ 966:	3731                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:108
+    GPIOB_SetBits(I2C_SCL_PIN);
+ 968:	409c                	lw	a5,0(s1)
+ 96a:	0807e793          	ori	a5,a5,128
+ 96e:	c09c                	sw	a5,0(s1)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:109
+    I2C_Delay();
+ 970:	3709                	jal	872 <I2C_Delay>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:110
+    GPIOB_ResetBits(I2C_SCL_PIN);
+ 972:	0cca2783          	lw	a5,204(s4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:111
+}
+ 976:	40f2                	lw	ra,28(sp)
+ 978:	4462                	lw	s0,24(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:110
+    GPIOB_ResetBits(I2C_SCL_PIN);
+ 97a:	0807e793          	ori	a5,a5,128
+ 97e:	0cfa2623          	sw	a5,204(s4)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:111
+}
+ 982:	44d2                	lw	s1,20(sp)
+ 984:	4942                	lw	s2,16(sp)
+ 986:	49b2                	lw	s3,12(sp)
+ 988:	4a22                	lw	s4,8(sp)
+ 98a:	6105                	addi	sp,sp,32
+ 98c:	8082                	ret
+
+0000098e <OLED_WriteCmd>:
+OLED_WriteCmd():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:113
+
+void OLED_WriteCmd(uint8_t cmd) {
+ 98e:	1141                	addi	sp,sp,-16
+ 990:	c606                	sw	ra,12(sp)
+ 992:	c422                	sw	s0,8(sp)
+ 994:	842a                	mv	s0,a0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:114
+    I2C_Start();
+ 996:	3ded                	jal	890 <I2C_Start>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:115
+    I2C_SendByte(0x78); // Address
+ 998:	07800513          	li	a0,120
+ 99c:	379d                	jal	902 <I2C_SendByte>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:116
+    I2C_SendByte(0x00); // Command Mode
+ 99e:	4501                	li	a0,0
+ 9a0:	378d                	jal	902 <I2C_SendByte>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:117
+    I2C_SendByte(cmd);
+ 9a2:	8522                	mv	a0,s0
+ 9a4:	3fb9                	jal	902 <I2C_SendByte>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:119
+    I2C_Stop();
+}
+ 9a6:	4422                	lw	s0,8(sp)
+ 9a8:	40b2                	lw	ra,12(sp)
+ 9aa:	0141                	addi	sp,sp,16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:118
+    I2C_Stop();
+ 9ac:	b70d                	j	8ce <I2C_Stop>
+
+000009ae <OLED_WriteData>:
+OLED_WriteData():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:121
+
+void OLED_WriteData(uint8_t data) {
+ 9ae:	1141                	addi	sp,sp,-16
+ 9b0:	c606                	sw	ra,12(sp)
+ 9b2:	c422                	sw	s0,8(sp)
+ 9b4:	842a                	mv	s0,a0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:122
+    I2C_Start();
+ 9b6:	3de9                	jal	890 <I2C_Start>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:123
+    I2C_SendByte(0x78); // Address
+ 9b8:	07800513          	li	a0,120
+ 9bc:	3799                	jal	902 <I2C_SendByte>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:124
+    I2C_SendByte(0x40); // Data Mode
+ 9be:	04000513          	li	a0,64
+ 9c2:	3781                	jal	902 <I2C_SendByte>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:125
+    I2C_SendByte(data);
+ 9c4:	8522                	mv	a0,s0
+ 9c6:	3f35                	jal	902 <I2C_SendByte>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:127
+    I2C_Stop();
+}
+ 9c8:	4422                	lw	s0,8(sp)
+ 9ca:	40b2                	lw	ra,12(sp)
+ 9cc:	0141                	addi	sp,sp,16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:126
+    I2C_Stop();
+ 9ce:	b701                	j	8ce <I2C_Stop>
+
+000009d0 <OLED_SetCursor>:
+OLED_SetCursor():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:168
+    OLED_Clear();
+}
+
+// Sets cursor to a specific page (row 0-3) and column (0-127)
+void OLED_SetCursor(uint8_t page, uint8_t col) {
+    OLED_WriteCmd(0xB0 + page);
+ 9d0:	fb050513          	addi	a0,a0,-80
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:167
+void OLED_SetCursor(uint8_t page, uint8_t col) {
+ 9d4:	1141                	addi	sp,sp,-16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:168
+    OLED_WriteCmd(0xB0 + page);
+ 9d6:	0ff57513          	zext.b	a0,a0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:167
+void OLED_SetCursor(uint8_t page, uint8_t col) {
+ 9da:	c606                	sw	ra,12(sp)
+ 9dc:	c422                	sw	s0,8(sp)
+ 9de:	842e                	mv	s0,a1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:168
+    OLED_WriteCmd(0xB0 + page);
+ 9e0:	377d                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:169
+    OLED_WriteCmd(0x00 | (col & 0x0F));
+ 9e2:	00f47513          	andi	a0,s0,15
+ 9e6:	3765                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:170
+    OLED_WriteCmd(0x10 | ((col >> 4) & 0x0F));
+ 9e8:	00445513          	srli	a0,s0,0x4
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:171
+}
+ 9ec:	4422                	lw	s0,8(sp)
+ 9ee:	40b2                	lw	ra,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:170
+    OLED_WriteCmd(0x10 | ((col >> 4) & 0x0F));
+ 9f0:	01056513          	ori	a0,a0,16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:171
+}
+ 9f4:	0141                	addi	sp,sp,16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:170
+    OLED_WriteCmd(0x10 | ((col >> 4) & 0x0F));
+ 9f6:	bf61                	j	98e <OLED_WriteCmd>
+
+000009f8 <OLED_Clear>:
+OLED_Clear():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:173
+
+void OLED_Clear(void) {
+ 9f8:	1141                	addi	sp,sp,-16
+ 9fa:	c422                	sw	s0,8(sp)
+ 9fc:	c04a                	sw	s2,0(sp)
+ 9fe:	c606                	sw	ra,12(sp)
+ a00:	c226                	sw	s1,4(sp)
+ a02:	0b000413          	li	s0,176
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:175
+    uint8_t i, n;
+    for(i = 0; i < 4; i++) { // 4 Pages (32 rows / 8)
+ a06:	0b400913          	li	s2,180
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:176
+        OLED_WriteCmd(0xB0 + i); // Set Page
+ a0a:	8522                	mv	a0,s0
+ a0c:	3749                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:177
+        OLED_WriteCmd(0x00);     // Set Lower Column Start
+ a0e:	4501                	li	a0,0
+ a10:	3fbd                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:178
+        OLED_WriteCmd(0x10);     // Set Higher Column Start
+ a12:	4541                	li	a0,16
+ a14:	3fad                	jal	98e <OLED_WriteCmd>
+ a16:	08000493          	li	s1,128
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:179 (discriminator 3)
+        for(n = 0; n < 128; n++) {
+ a1a:	14fd                	addi	s1,s1,-1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:180 (discriminator 3)
+            OLED_WriteData(0x00);
+ a1c:	4501                	li	a0,0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:179 (discriminator 3)
+        for(n = 0; n < 128; n++) {
+ a1e:	0ff4f493          	zext.b	s1,s1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:180 (discriminator 3)
+            OLED_WriteData(0x00);
+ a22:	3771                	jal	9ae <OLED_WriteData>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:179 (discriminator 3)
+        for(n = 0; n < 128; n++) {
+ a24:	f8fd                	bnez	s1,a1a <OLED_Clear+0x22>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:175 (discriminator 2)
+    for(i = 0; i < 4; i++) { // 4 Pages (32 rows / 8)
+ a26:	0405                	addi	s0,s0,1
+ a28:	0ff47413          	zext.b	s0,s0
+ a2c:	fd241fe3          	bne	s0,s2,a0a <OLED_Clear+0x12>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:183
+        }
+    }
+}
+ a30:	40b2                	lw	ra,12(sp)
+ a32:	4422                	lw	s0,8(sp)
+ a34:	4492                	lw	s1,4(sp)
+ a36:	4902                	lw	s2,0(sp)
+ a38:	0141                	addi	sp,sp,16
+ a3a:	8082                	ret
+
+00000a3c <OLED_Init>:
+OLED_Init():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:131
+void OLED_Init(void) {
+ a3c:	1141                	addi	sp,sp,-16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:132
+    GPIOB_ModeCfg(I2C_SDA_PIN | I2C_SCL_PIN, GPIO_ModeOut_PP_5mA);
+ a3e:	458d                	li	a1,3
+ a40:	09000513          	li	a0,144
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:131
+void OLED_Init(void) {
+ a44:	c606                	sw	ra,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:132
+    GPIOB_ModeCfg(I2C_SDA_PIN | I2C_SCL_PIN, GPIO_ModeOut_PP_5mA);
+ a46:	2a2d                	jal	b80 <GPIOB_ModeCfg>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:133
+    GPIOB_SetBits(I2C_SDA_PIN | I2C_SCL_PIN); // Idle High
+ a48:	400017b7          	lui	a5,0x40001
+ a4c:	0c878793          	addi	a5,a5,200 # 400010c8 <_eusrstack+0x1fffa8c8>
+ a50:	4398                	lw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:136
+    OLED_WriteCmd(0xAE); // Display Off
+ a52:	0ae00513          	li	a0,174
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:133
+    GPIOB_SetBits(I2C_SDA_PIN | I2C_SCL_PIN); // Idle High
+ a56:	09076713          	ori	a4,a4,144
+ a5a:	c398                	sw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:136
+    OLED_WriteCmd(0xAE); // Display Off
+ a5c:	3f0d                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:137
+    OLED_WriteCmd(0x20); // Set Memory Addressing Mode
+ a5e:	02000513          	li	a0,32
+ a62:	3735                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:138
+    OLED_WriteCmd(0x00); // 00 = Horizontal Addressing Mode (Good for text)
+ a64:	4501                	li	a0,0
+ a66:	3725                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:139
+    OLED_WriteCmd(0xC8); // Set COM Output Scan Direction
+ a68:	0c800513          	li	a0,200
+ a6c:	370d                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:140
+    OLED_WriteCmd(0x00); // Set Low Column Address
+ a6e:	4501                	li	a0,0
+ a70:	3f39                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:141
+    OLED_WriteCmd(0x10); // Set High Column Address
+ a72:	4541                	li	a0,16
+ a74:	3f29                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:142
+    OLED_WriteCmd(0x40); // Set Start Line
+ a76:	04000513          	li	a0,64
+ a7a:	3f11                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:143
+    OLED_WriteCmd(0x81); // Contrast Control
+ a7c:	08100513          	li	a0,129
+ a80:	3739                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:144
+    OLED_WriteCmd(0xFF);
+ a82:	0ff00513          	li	a0,255
+ a86:	3721                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:145
+    OLED_WriteCmd(0xA1); // Set Segment Re-map
+ a88:	0a100513          	li	a0,161
+ a8c:	3709                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:146
+    OLED_WriteCmd(0xA6); // Normal Display
+ a8e:	0a600513          	li	a0,166
+ a92:	3df5                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:147
+    OLED_WriteCmd(0xA8); // Multiplex Ratio
+ a94:	0a800513          	li	a0,168
+ a98:	3ddd                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:148
+    OLED_WriteCmd(0x1F); // 32 rows -> 31
+ a9a:	457d                	li	a0,31
+ a9c:	3dcd                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:149
+    OLED_WriteCmd(0xD3); // Display Offset
+ a9e:	0d300513          	li	a0,211
+ aa2:	35f5                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:150
+    OLED_WriteCmd(0x00);
+ aa4:	4501                	li	a0,0
+ aa6:	35e5                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:151
+    OLED_WriteCmd(0xD5); // Display Clock Divide
+ aa8:	0d500513          	li	a0,213
+ aac:	35cd                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:152
+    OLED_WriteCmd(0xF0);
+ aae:	0f000513          	li	a0,240
+ ab2:	3df1                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:153
+    OLED_WriteCmd(0xD9); // Pre-charge Period
+ ab4:	0d900513          	li	a0,217
+ ab8:	3dd9                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:154
+    OLED_WriteCmd(0x22);
+ aba:	02200513          	li	a0,34
+ abe:	3dc1                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:155
+    OLED_WriteCmd(0xDA); // COM Pins Config
+ ac0:	0da00513          	li	a0,218
+ ac4:	35e9                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:156
+    OLED_WriteCmd(0x02);
+ ac6:	4509                	li	a0,2
+ ac8:	35d9                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:157
+    OLED_WriteCmd(0xDB); // VCOMH Deselect Level
+ aca:	0db00513          	li	a0,219
+ ace:	35c1                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:158
+    OLED_WriteCmd(0x20);
+ ad0:	02000513          	li	a0,32
+ ad4:	3d6d                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:159
+    OLED_WriteCmd(0x8D); // Charge Pump
+ ad6:	08d00513          	li	a0,141
+ ada:	3d55                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:160
+    OLED_WriteCmd(0x14); // Enable
+ adc:	4551                	li	a0,20
+ ade:	3d45                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:161
+    OLED_WriteCmd(0xAF); // Display ON
+ ae0:	0af00513          	li	a0,175
+ ae4:	356d                	jal	98e <OLED_WriteCmd>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:164
+}
+ ae6:	40b2                	lw	ra,12(sp)
+ ae8:	0141                	addi	sp,sp,16
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:163
+    OLED_Clear();
+ aea:	b739                	j	9f8 <OLED_Clear>
+
+00000aec <OLED_ShowChar>:
+OLED_ShowChar():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:186
+
+// Show a single character
+void OLED_ShowChar(uint8_t x, uint8_t y, char chr) {
+ aec:	1101                	addi	sp,sp,-32
+ aee:	cc22                	sw	s0,24(sp)
+ af0:	87aa                	mv	a5,a0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:189
+    uint8_t i;
+    // Offset for ASCII (Space is 32, our array starts at 0)
+    uint8_t char_index = chr - ' '; 
+ af2:	fe060413          	addi	s0,a2,-32
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:186
+void OLED_ShowChar(uint8_t x, uint8_t y, char chr) {
+ af6:	ce06                	sw	ra,28(sp)
+ af8:	ca26                	sw	s1,20(sp)
+ afa:	c84a                	sw	s2,16(sp)
+ afc:	c64e                	sw	s3,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:191
+    
+    if(x > 120) { x = 0; y++; } // Wrap if too wide
+ afe:	07800713          	li	a4,120
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:186
+void OLED_ShowChar(uint8_t x, uint8_t y, char chr) {
+ b02:	852e                	mv	a0,a1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:189
+    uint8_t char_index = chr - ' '; 
+ b04:	0ff47413          	zext.b	s0,s0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:191
+    if(x > 120) { x = 0; y++; } // Wrap if too wide
+ b08:	00f77763          	bgeu	a4,a5,b16 <OLED_ShowChar+0x2a>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:191 (discriminator 1)
+ b0c:	00158513          	addi	a0,a1,1
+ b10:	0ff57513          	zext.b	a0,a0
+ b14:	4781                	li	a5,0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:193
+
+    OLED_SetCursor(y, x);
+ b16:	85be                	mv	a1,a5
+ b18:	3d65                	jal	9d0 <OLED_SetCursor>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:195
+    
+    for(i = 0; i < 5; i++) {
+ b1a:	4795                	li	a5,5
+ b1c:	02f40433          	mul	s0,s0,a5
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:193
+    OLED_SetCursor(y, x);
+ b20:	4481                	li	s1,0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:196
+        OLED_WriteData(FONT5x7[char_index][i]);
+ b22:	00000997          	auipc	s3,0x0
+ b26:	11698993          	addi	s3,s3,278 # c38 <FONT5x7>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:195
+    for(i = 0; i < 5; i++) {
+ b2a:	4915                	li	s2,5
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:196 (discriminator 3)
+        OLED_WriteData(FONT5x7[char_index][i]);
+ b2c:	008487b3          	add	a5,s1,s0
+ b30:	97ce                	add	a5,a5,s3
+ b32:	0007c503          	lbu	a0,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:195 (discriminator 3)
+    for(i = 0; i < 5; i++) {
+ b36:	0485                	addi	s1,s1,1
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:196 (discriminator 3)
+        OLED_WriteData(FONT5x7[char_index][i]);
+ b38:	3d9d                	jal	9ae <OLED_WriteData>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:195 (discriminator 3)
+    for(i = 0; i < 5; i++) {
+ b3a:	ff2499e3          	bne	s1,s2,b2c <OLED_ShowChar+0x40>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:200
+    }
+    // Add 1 pixel spacing
+    OLED_WriteData(0x00);
+}
+ b3e:	4462                	lw	s0,24(sp)
+ b40:	40f2                	lw	ra,28(sp)
+ b42:	44d2                	lw	s1,20(sp)
+ b44:	4942                	lw	s2,16(sp)
+ b46:	49b2                	lw	s3,12(sp)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:199
+    OLED_WriteData(0x00);
+ b48:	4501                	li	a0,0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:200
+}
+ b4a:	6105                	addi	sp,sp,32
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:199
+    OLED_WriteData(0x00);
+ b4c:	b58d                	j	9ae <OLED_WriteData>
+
+00000b4e <OLED_ShowString>:
+OLED_ShowString():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:203
+
+// Show a string
+void OLED_ShowString(uint8_t x, uint8_t y, char *str) {
+ b4e:	1141                	addi	sp,sp,-16
+ b50:	c422                	sw	s0,8(sp)
+ b52:	c226                	sw	s1,4(sp)
+ b54:	c04a                	sw	s2,0(sp)
+ b56:	c606                	sw	ra,12(sp)
+ b58:	842a                	mv	s0,a0
+ b5a:	892e                	mv	s2,a1
+ b5c:	84b2                	mv	s1,a2
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:204
+    while(*str) {
+ b5e:	00048603          	lb	a2,0(s1)
+ b62:	e619                	bnez	a2,b70 <OLED_ShowString+0x22>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:209
+        OLED_ShowChar(x, y, *str);
+        x += 6; // 5 width + 1 space
+        str++;
+    }
+ b64:	40b2                	lw	ra,12(sp)
+ b66:	4422                	lw	s0,8(sp)
+ b68:	4492                	lw	s1,4(sp)
+ b6a:	4902                	lw	s2,0(sp)
+ b6c:	0141                	addi	sp,sp,16
+ b6e:	8082                	ret
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:205
+        OLED_ShowChar(x, y, *str);
+ b70:	8522                	mv	a0,s0
+ b72:	85ca                	mv	a1,s2
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:206
+        x += 6; // 5 width + 1 space
+ b74:	0419                	addi	s0,s0,6
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:205
+        OLED_ShowChar(x, y, *str);
+ b76:	3f9d                	jal	aec <OLED_ShowChar>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:206
+        x += 6; // 5 width + 1 space
+ b78:	0ff47413          	zext.b	s0,s0
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../User/oled_driver.c:207
+        str++;
+ b7c:	0485                	addi	s1,s1,1
+ b7e:	b7c5                	j	b5e <OLED_ShowString+0x10>
+
+00000b80 <GPIOB_ModeCfg>:
+GPIOB_ModeCfg():
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:74
  *
  * @return  none
  */
-void GPIOA_ModeCfg(uint32_t pin, GPIOModeTypeDef mode)
+void GPIOB_ModeCfg(uint32_t pin, GPIOModeTypeDef mode)
 {
     switch(mode)
- 8aa:	4791                	li	a5,4
- 8ac:	08b7ea63          	bltu	a5,a1,940 <GPIOA_ModeCfg+0x96>
- 8b0:	00000797          	auipc	a5,0x0
- 8b4:	09878793          	addi	a5,a5,152 # 948 <GPIOA_ModeCfg+0x9e>
- 8b8:	058a                	slli	a1,a1,0x2
- 8ba:	95be                	add	a1,a1,a5
- 8bc:	4198                	lw	a4,0(a1)
- 8be:	973e                	add	a4,a4,a5
- 8c0:	400017b7          	lui	a5,0x40001
- 8c4:	0b478793          	addi	a5,a5,180 # 400010b4 <_eusrstack+0x1fffa8b4>
- 8c8:	8702                	jr	a4
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:30
+ b80:	4791                	li	a5,4
+ b82:	08b7ea63          	bltu	a5,a1,c16 <GPIOB_ModeCfg+0x96>
+ b86:	00000797          	auipc	a5,0x0
+ b8a:	1da78793          	addi	a5,a5,474 # d60 <FONT5x7+0x128>
+ b8e:	058a                	slli	a1,a1,0x2
+ b90:	95be                	add	a1,a1,a5
+ b92:	4198                	lw	a4,0(a1)
+ b94:	973e                	add	a4,a4,a5
+ b96:	400017b7          	lui	a5,0x40001
+ b9a:	0d478793          	addi	a5,a5,212 # 400010d4 <_eusrstack+0x1fffa8d4>
+ b9e:	8702                	jr	a4
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:77
     {
         case GPIO_ModeIN_Floating:
-            R32_PA_PD_DRV &= ~pin;
- 8ca:	4394                	lw	a3,0(a5)
- 8cc:	fff54513          	not	a0,a0
- 8d0:	40001737          	lui	a4,0x40001
- 8d4:	8ee9                	and	a3,a3,a0
- 8d6:	c394                	sw	a3,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:31
-            R32_PA_PU &= ~pin;
- 8d8:	0b070693          	addi	a3,a4,176 # 400010b0 <_eusrstack+0x1fffa8b0>
- 8dc:	429c                	lw	a5,0(a3)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:43
-            R32_PA_DIR &= ~pin;
+            R32_PB_PD_DRV &= ~pin;
+ ba0:	4394                	lw	a3,0(a5)
+ ba2:	fff54513          	not	a0,a0
+ ba6:	40001737          	lui	a4,0x40001
+ baa:	8ee9                	and	a3,a3,a0
+ bac:	c394                	sw	a3,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:78
+            R32_PB_PU &= ~pin;
+ bae:	0d070693          	addi	a3,a4,208 # 400010d0 <_eusrstack+0x1fffa8d0>
+ bb2:	429c                	lw	a5,0(a3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:90
+            R32_PB_DIR &= ~pin;
             break;
 
         case GPIO_ModeIN_PD:
-            R32_PA_PD_DRV |= pin;
-            R32_PA_PU &= ~pin;
- 8de:	8fe9                	and	a5,a5,a0
- 8e0:	c29c                	sw	a5,0(a3)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:44
-            R32_PA_DIR &= ~pin;
- 8e2:	0a070793          	addi	a5,a4,160
- 8e6:	4398                	lw	a4,0(a5)
- 8e8:	8d79                	and	a0,a0,a4
- 8ea:	c388                	sw	a0,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:45
+            R32_PB_PD_DRV |= pin;
+            R32_PB_PU &= ~pin;
+ bb4:	8fe9                	and	a5,a5,a0
+ bb6:	c29c                	sw	a5,0(a3)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:91
+            R32_PB_DIR &= ~pin;
+ bb8:	0c070793          	addi	a5,a4,192
+ bbc:	4398                	lw	a4,0(a5)
+ bbe:	8d79                	and	a0,a0,a4
+ bc0:	c388                	sw	a0,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:92
             break;
- 8ec:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:36
-            R32_PA_PD_DRV &= ~pin;
- 8ee:	4390                	lw	a2,0(a5)
- 8f0:	fff54693          	not	a3,a0
- 8f4:	40001737          	lui	a4,0x40001
- 8f8:	8e75                	and	a2,a2,a3
- 8fa:	c390                	sw	a2,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:37
-            R32_PA_PU |= pin;
- 8fc:	0b070613          	addi	a2,a4,176 # 400010b0 <_eusrstack+0x1fffa8b0>
- 900:	421c                	lw	a5,0(a2)
- 902:	8fc9                	or	a5,a5,a0
- 904:	c21c                	sw	a5,0(a2)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:38
-            R32_PA_DIR &= ~pin;
- 906:	0a070793          	addi	a5,a4,160
- 90a:	4398                	lw	a4,0(a5)
- 90c:	8ef9                	and	a3,a3,a4
- 90e:	c394                	sw	a3,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:39
+ bc2:	8082                	ret
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:83
+            R32_PB_PD_DRV &= ~pin;
+ bc4:	4390                	lw	a2,0(a5)
+ bc6:	fff54693          	not	a3,a0
+ bca:	40001737          	lui	a4,0x40001
+ bce:	8e75                	and	a2,a2,a3
+ bd0:	c390                	sw	a2,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:84
+            R32_PB_PU |= pin;
+ bd2:	0d070613          	addi	a2,a4,208 # 400010d0 <_eusrstack+0x1fffa8d0>
+ bd6:	421c                	lw	a5,0(a2)
+ bd8:	8fc9                	or	a5,a5,a0
+ bda:	c21c                	sw	a5,0(a2)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:85
+            R32_PB_DIR &= ~pin;
+ bdc:	0c070793          	addi	a5,a4,192
+ be0:	4398                	lw	a4,0(a5)
+ be2:	8ef9                	and	a3,a3,a4
+ be4:	c394                	sw	a3,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:86
             break;
- 910:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:42
-            R32_PA_PD_DRV |= pin;
- 912:	4394                	lw	a3,0(a5)
- 914:	40001737          	lui	a4,0x40001
- 918:	8ec9                	or	a3,a3,a0
- 91a:	c394                	sw	a3,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:43
-            R32_PA_PU &= ~pin;
- 91c:	0b070693          	addi	a3,a4,176 # 400010b0 <_eusrstack+0x1fffa8b0>
- 920:	429c                	lw	a5,0(a3)
- 922:	fff54513          	not	a0,a0
- 926:	bf65                	j	8de <GPIOA_ModeCfg+0x34>
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:48
+ be6:	8082                	ret
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:89
+            R32_PB_PD_DRV |= pin;
+ be8:	4394                	lw	a3,0(a5)
+ bea:	40001737          	lui	a4,0x40001
+ bee:	8ec9                	or	a3,a3,a0
+ bf0:	c394                	sw	a3,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:90
+            R32_PB_PU &= ~pin;
+ bf2:	0d070693          	addi	a3,a4,208 # 400010d0 <_eusrstack+0x1fffa8d0>
+ bf6:	429c                	lw	a5,0(a3)
+ bf8:	fff54513          	not	a0,a0
+ bfc:	bf65                	j	bb4 <GPIOB_ModeCfg+0x34>
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:95
 
         case GPIO_ModeOut_PP_5mA:
-            R32_PA_PD_DRV &= ~pin;
- 928:	4394                	lw	a3,0(a5)
- 92a:	fff54713          	not	a4,a0
- 92e:	8f75                	and	a4,a4,a3
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:53
-            R32_PA_DIR |= pin;
+            R32_PB_PD_DRV &= ~pin;
+ bfe:	4394                	lw	a3,0(a5)
+ c00:	fff54713          	not	a4,a0
+ c04:	8f75                	and	a4,a4,a3
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:100
+            R32_PB_DIR |= pin;
             break;
 
         case GPIO_ModeOut_PP_20mA:
-            R32_PA_PD_DRV |= pin;
- 930:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:54
-            R32_PA_DIR |= pin;
- 932:	400017b7          	lui	a5,0x40001
- 936:	0a078793          	addi	a5,a5,160 # 400010a0 <_eusrstack+0x1fffa8a0>
- 93a:	4398                	lw	a4,0(a5)
- 93c:	8f49                	or	a4,a4,a0
- 93e:	c398                	sw	a4,0(a5)
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:60
+            R32_PB_PD_DRV |= pin;
+ c06:	c398                	sw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:101
+            R32_PB_DIR |= pin;
+ c08:	400017b7          	lui	a5,0x40001
+ c0c:	0c078793          	addi	a5,a5,192 # 400010c0 <_eusrstack+0x1fffa8c0>
+ c10:	4398                	lw	a4,0(a5)
+ c12:	8f49                	or	a4,a4,a0
+ c14:	c398                	sw	a4,0(a5)
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:107
             break;
 
         default:
             break;
     }
 }
- 940:	8082                	ret
-c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:53
-            R32_PA_PD_DRV |= pin;
- 942:	4398                	lw	a4,0(a5)
- 944:	8f49                	or	a4,a4,a0
- 946:	b7ed                	j	930 <GPIOA_ModeCfg+0x86>
- 948:	ff82                	.2byte	0xff82
- 94a:	ffff                	.2byte	0xffff
- 94c:	ffa6                	.2byte	0xffa6
- 94e:	ffff                	.2byte	0xffff
- 950:	ffca                	.2byte	0xffca
- 952:	ffff                	.2byte	0xffff
- 954:	ffe0                	.2byte	0xffe0
- 956:	ffff                	.2byte	0xffff
- 958:	fffa                	.2byte	0xfffa
- 95a:	ffff                	.2byte	0xffff
+ c16:	8082                	ret
+c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV\obj/../StdPeriphDriver/CH59x_gpio.c:100
+            R32_PB_PD_DRV |= pin;
+ c18:	4398                	lw	a4,0(a5)
+ c1a:	8f49                	or	a4,a4,a0
+ c1c:	b7ed                	j	c06 <GPIOB_ModeCfg+0x86>
+ c1e:	0000                	unimp
+ c20:	4241                	li	tp,16
+ c22:	46454443          	.4byte	0x46454443
+ c26:	00004847          	.4byte	0x4847
+ c2a:	0000                	unimp
+ c2c:	3231                	jal	538 <__stack_size+0x338>
+ c2e:	36353433          	.4byte	0x36353433
+ c32:	30393837          	lui	a6,0x30393
+	...
+
+00000c38 <FONT5x7>:
+ c38:	00000000 5f000000 07000000 14000700     ......._........
+ c48:	147f147f 2a7f2a24 08132312 49366264     ....$*.*.#..db6I
+ c58:	00502255 00000305 41221c00 22410000     U"P......."A..A"
+ c68:	0814001c 0814083e 08083e08 00305000     ....>....>...P0.
+ c78:	08080800 60000808 20000060 02040810     .......``.. ....
+ c88:	4549513e 7f42003e 61420040 21464951     >QIE>.B.@.BaQIF!
+ c98:	314b4541 7f121418 45452710 4a3c3945     AEK1.....'EEE9<J
+ ca8:	01304949 03050971 49494936 49490636     II0.q...6III6.II
+ cb8:	36001e29 00000036 00003656 41221408     )..66...V6...."A
+ cc8:	14141400 41001414 02081422 06095101     .......A"....Q..
+ cd8:	41794932 11117e3e 497f7e11 3e364949     2IyA>~...~.III6>
+ ce8:	22414141 2241417f 49497f1c 097f4149     AAA".AA"..IIIA..
+ cf8:	3e010909 7a494941 0808087f 7f41007f     ...>AIIz......A.
+ d08:	40200041 7f013f41 41221408 4040407f     A. @A?...."A.@@@
+ d18:	0c027f40 047f7f02 3e7f1008 3e414141     @..........>AAA>
+ d28:	0909097f 51413e06 097f5e21 46462919     .....>AQ!^...)FF
+ d38:	31494949 017f0101 40403f01 201f3f40     III1.....?@@@?. 
+ d48:	3f1f2040 3f403840 14081463 70080763     @ .?@8@?c...c..p
+ d58:	51610708 00434549 fffffe40 fffffe64     ..aQIEC.@...d...
+ d68:	fffffe88 fffffe9e fffffeb8              ............

@@ -30,3 +30,4 @@ SUBDIRS := \
 RVMSIS \
 Startup \
 StdPeriphDriver \
+User \

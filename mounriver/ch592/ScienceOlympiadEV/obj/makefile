@@ -8,6 +8,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include User/subdir.mk
 -include StdPeriphDriver/subdir.mk
 -include Startup/subdir.mk
 -include RVMSIS/subdir.mk
@@ -53,7 +54,7 @@ main-build: ScienceOlympiadEV.elf secondary-outputs
 
 # Tool invocations
 ScienceOlympiadEV.elf: $(OBJS) $(USER_OBJS_ESCAPE)
-	@	riscv-wch-elf-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized -g -T "c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/Ld/Link.ld" -nostartfiles -Xlinker --gc-sections -L"c:\Users\LRNA\Desktop\code\mounriver\ch592\ScienceOlympiadEV" -L"c:/Users/LRNA/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver" -Xlinker --print-memory-usage -Wl,-Map,"ScienceOlympiadEV.map" --specs=nano.specs --specs=nosys.specs -o "ScienceOlympiadEV.elf" $(OBJS) $(LIBS)
+	@	riscv-wch-elf-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized -g -T "c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/Ld/Link.ld" -nostartfiles -Xlinker --gc-sections -L"c:\Users\Noahs\Desktop\code\mounriver\ch592\ScienceOlympiadEV" -L"c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver" -Xlinker --print-memory-usage -Wl,-Map,"ScienceOlympiadEV.map" --specs=nano.specs --specs=nosys.specs -o "ScienceOlympiadEV.elf" $(OBJS) $(LIBS)
 ScienceOlympiadEV.hex: ScienceOlympiadEV.elf
 	@	riscv-wch-elf-objcopy -O ihex "ScienceOlympiadEV.elf" "ScienceOlympiadEV.hex"
 ScienceOlympiadEV.lst: ScienceOlympiadEV.elf

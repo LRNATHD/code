@@ -1,4 +1,4 @@
-StdPeriphDriver/CH59x_flash.o: ../StdPeriphDriver/CH59x_flash.c \
+User/oled_driver.o: ../User/oled_driver.c ../User/oled_driver.h \
  c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH59x_common.h \
  c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH592SFR.h \
  c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h \
@@ -16,6 +16,7 @@ StdPeriphDriver/CH59x_flash.o: ../StdPeriphDriver/CH59x_flash.c \
  c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH59x_usbdev.h \
  c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH59x_usbhost.h \
  c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/ISP592.h
+../User/oled_driver.h:
 c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH59x_common.h:
 c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/StdPeriphDriver/inc/CH592SFR.h:
 c:/Users/Noahs/Desktop/code/mounriver/ch592/ScienceOlympiadEV/RVMSIS/core_riscv.h:

@@ -1,83 +1,173 @@
 #include "CH59x_common.h"
-// pin def, driver, A/B, motor
-// Example: Enable pin on driver 1 driving the A line which is also motor 1
-#define EN1A1 GPIO_Pin_8
-#define PH1A1 GPIO_Pin_6
 
-#define EN1B2 GPIO_Pin_9
-#define PH1B2 GPIO_Pin_7
+#define Right_Enable GPIO_Pin_13 // right motor
+#define Right_Phase GPIO_Pin_15
+#define right_Correction 1 // easily switch motor direction, should remove later
 
-#define EN2A3 GPIO_Pin_13
-#define PH2A3 GPIO_Pin_15
+#define Left_Enable GPIO_Pin_12 // left motor
+#define Left_Phase GPIO_Pin_14 
+#define left_Correction 1 //easily be able to switch motor direction if code is off
 
-#define EN2B4 GPIO_Pin_12
-#define PH2B4 GPIO_Pin_14
+#define Left_Encoder_A  GPIO_Pin_6 // B Left motor
+#define Left_Encoder_B  GPIO_Pin_0 // B
+volatile int32_t count_left = 0;
 
-#define M1ENCA  GPIO_Pin_15 // B
-#define M1ENCB  GPIO_Pin_14 // B
-#define M2ENCA  GPIO_Pin_13 // B
-#define M2ENCB  GPIO_Pin_12 // B
+#define Right_Encoder_A  GPIO_Pin_4 //right motor
+#define Right_Encoder_B  GPIO_Pin_5 
+volatile int32_t count_right = 0;
 
-#define M3ENCA  GPIO_Pin_6 // B
-#define M3ENCB  GPIO_Pin_0 // B
-#define M4ENCA  GPIO_Pin_4 
-#define M4ENCB  GPIO_Pin_5 
-
+// connects to screen, also to the buttons for counting
 #define SDA GPIO_Pin_4 // B
 #define SCL GPIO_Pin_7 // B
+#define Boot_Button GPIO_Pin_22 // B
+//buttons all pulled to ground, pullup should be used. SDA/SCL also connect to the screen, so it can be funky
 
-volatile int32_t count_m3 = 0;
-volatile int32_t count_m4 = 0;
+// distances (meters)
+volatile int32_t targetdistance = 0;
+volatile int32_t currentdistance = 0;
+
+// time (seconds)
+volatile int32_t targettime = 0;
+volatile int32_t currenttime = 0;
+
+// max speed, gotten in calibration
+static int32_t leftmotormaxspeed = 0;
+static int32_t rightmotormaxspeed = 0;
+static int32_t combinedmaxspeed = 0;
+
+// speed (PWM)
+volatile int32_t leftmotorspeed = 0;
+volatile int32_t rightmotorspeed = 0;
+
+__INTERRUPT // this is a interupt 
+__HIGH_CODE // keep this in ram ready to go since its important
 
 __INTERRUPT
 __HIGH_CODE
-void GPIOB_IRQHandler(void)
+
+
+
+void TMR0_IRQHandler(void) 
+{
+    // Check if the interrupt was caused by the timer cycle ending
+    if(TMR0_GetITFlag(TMR0_3_IT_CYC_END))
+    {
+        TMR0_ClearITFlag(TMR0_3_IT_CYC_END); 
+        // do stuff
+    }
+}
+
+
+void calibrationIRQ(void) {
+if(GPIOB_ReadITFlagBit(M3ENCA)) 
+    {
+        uint8_t a = (GPIOB_ReadPortPin(M3ENCA) != 0); // figure out which encoder was edging
+        uint8_t b = (GPIOB_ReadPortPin(Lb) != 0);
+
+        if (a == b) cal_count++; //count up/down (up=clockwise)
+        else        cal_count--;
+
+        if (a) GPIOB_ITModeCfg(La, GPIO_ITMode_FallEdge); // go onto the next closest encoder reading
+        else   GPIOB_ITModeCfg(La, GPIO_ITMode_RiseEdge);
+
+        GPIOB_ClearITFlagBit(La); //clear interupt register
+    }
+
+    if(GPIOB_ReadITFlagBit(Ra)) 
+    {
+        uint8_t a = (GPIOB_ReadPortPin(Ra) != 0); // figure out which encoder got edged
+        uint8_t b = (GPIOB_ReadPortPin(Rb) != 0);
+
+        if (a == b) count_m4++; //count up motors spin
+        else        count_m4--;
+
+        if (a) GPIOB_ITModeCfg(Ra, GPIO_ITMode_FallEdge); // read for the closest step
+        else   GPIOB_ITModeCfg(Ra, GPIO_ITMode_RiseEdge);
+
+        GPIOB_ClearITFlagBit(Ra); // clear
+    }
+}
+
+void runIRQ(void)
 {
     if(GPIOB_ReadITFlagBit(M3ENCA)) 
     {
-        uint8_t a = (GPIOB_ReadPortPin(M3ENCA) != 0);
-        uint8_t b = (GPIOB_ReadPortPin(M3ENCB) != 0);
+        uint8_t a = (GPIOB_ReadPortPin(M3ENCA) != 0); // figure out which encoder was edging
+        uint8_t b = (GPIOB_ReadPortPin(Lb) != 0);
 
-        if (a == b) count_m3++; 
+        if (a == b) count_m3++; //count up/down (up=clockwise)
         else        count_m3--;
 
-        if (a) GPIOB_ITModeCfg(M3ENCA, GPIO_ITMode_FallEdge);
-        else   GPIOB_ITModeCfg(M3ENCA, GPIO_ITMode_RiseEdge);
+        if (a) GPIOB_ITModeCfg(La, GPIO_ITMode_FallEdge); // go onto the next closest encoder reading
+        else   GPIOB_ITModeCfg(La, GPIO_ITMode_RiseEdge);
 
-        GPIOB_ClearITFlagBit(M3ENCA);
+        GPIOB_ClearITFlagBit(La); //clear interupt register
     }
 
-    if(GPIOB_ReadITFlagBit(M4ENCA)) 
+    if(GPIOB_ReadITFlagBit(Ra)) 
     {
-        uint8_t a = (GPIOB_ReadPortPin(M4ENCA) != 0);
-        uint8_t b = (GPIOB_ReadPortPin(M4ENCB) != 0);
+        uint8_t a = (GPIOB_ReadPortPin(Ra) != 0); // figure out which encoder got edged
+        uint8_t b = (GPIOB_ReadPortPin(Rb) != 0);
 
-        if (a == b) count_m4++; 
+        if (a == b) count_m4++; //count up motors spin
         else        count_m4--;
 
-        if (a) GPIOB_ITModeCfg(M4ENCA, GPIO_ITMode_FallEdge);
-        else   GPIOB_ITModeCfg(M4ENCA, GPIO_ITMode_RiseEdge);
+        if (a) GPIOB_ITModeCfg(Ra, GPIO_ITMode_FallEdge); // read for the closest step
+        else   GPIOB_ITModeCfg(Ra, GPIO_ITMode_RiseEdge);
 
-        GPIOB_ClearITFlagBit(M4ENCA);
+        GPIOB_ClearITFlagBit(Ra); // clear
     }
 }
 
 int main() {
+    // Pre run
     SetSysClock(CLK_SOURCE_PLL_60MHz);
 
-    GPIOA_ModeCfg(EN1A1 | PH1A1 | EN1B2 | PH1B2, GPIO_ModeOut_PP_5mA);
-    GPIOA_ModeCfg(EN2A3 | PH2A3 | EN2B4 | PH2B4, GPIO_ModeOut_PP_5mA);
+    GPIOA_ModeCfg(Left_Enable | Left_Phase | Right_Enable | Right_Phase, GPIO_ModeOut_PP_5mA); // make the motors bits configured for output
+    GPIOB_ModeCfg(Left_Encoder_A | Left_Encoder_B | Right_Encoder_A | Right_Encoder_B, GPIO_ModeIN_PU); // make the encoders bits configured for input (pulled up)
 
-    GPIOB_ModeCfg(M3ENCA | M3ENCB | M4ENCA | M4ENCB, GPIO_ModeIN_PU);
+    //timer config
+    TMR0_ClearITFlag(TMR0_3_IT_CYC_END); 
+    TMR0_TimerInit(60000000);   // 60000000 = 1 second 
+    TMR0_ITCfg(ENABLE, TMR0_3_IT_CYC_END); 
+    PFIC_EnableIRQ(TMR0_IRQn);
 
-    GPIOB_ITModeCfg(M3ENCA, GPIO_ITMode_FallEdge);
-    GPIOB_ITModeCfg(M4ENCA, GPIO_ITMode_FallEdge);
-    PFIC_EnableIRQ(GPIO_B_IRQn);
+    GPIOB_ITModeCfg(Left_Encoder_A, GPIO_ITMode_FallEdge); // setup the interupts, start at falling edge 
+    GPIOA_ITModeCfg(Right_Encoder_A, GPIO_ITMode_FallEdge);
+    
 
-    GPIOA_SetBits(PH2A3); 
+
+
+
+
+
+    rightmotormaxspeed = 
+    combinedmaxspeed = min(leftmotormaxspeed, rightmotormaxspeed); 
+
+
+
+
+    // Run
+    PFIC_EnableIRQ(GPIO_B_IRQn); // turn on interupt
+    PFIC_EnableIRQ(GPIO_A_IRQn);
+
+
+
+
+    If targetdistance/targettime <= 
+
+    // slow down 
+    // Post Run
+
+    GPIOA_SetBits(PH2A3); // turn all phases on
     GPIOA_SetBits(PH2B4); 
-    GPIOA_SetBits(EN2A3); 
+    GPIOA_SetBits(EN2A3); // turn all motors on
     GPIOA_SetBits(EN2B4);
+
+    // --- PWM Setup ---
+    PWMX_CLKCfg(4); 
+    PWMX_CycleCfg(100000-1); // speeds of 0-100000
+    PWMX_16bit_ACTOUT(CH_PWM4, 100000, High_Level, ENABLE);
 
     while(1) {
         if (count_m3 > 5000) {
@@ -88,4 +178,9 @@ int main() {
         }
         DelayMs(10);
     }
+}
+
+int speedcalibration() {
+    // spin the motors for a little bit at like 1%, 5% 10%, 25%, 50%, 100%. calibrate speed for those stages
+    return 1;
 }

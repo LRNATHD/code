@@ -54,6 +54,7 @@
 					"${project}/StdPeriphDriver/CH59x_timer0.c",
 					"${project}/StdPeriphDriver/CH59x_spi0.c",
 					"${project}/StdPeriphDriver/CH59x_adc.c",
+					"${project}/User/Sandbox.c.c",
 					"${project}/User/Main.c"
 				],
 				"optimization": {

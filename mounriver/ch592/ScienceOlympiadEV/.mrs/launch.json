@@ -5,7 +5,7 @@
 			"type": "mrs-debugger",
 			"request": "launch",
 			"name": "ScienceOlympiadEV",
-			"cwd": "c:\\Users\\LRNA\\Desktop\\code\\mounriver\\ch592\\ScienceOlympiadEV",
+			"cwd": "c:\\Users\\Noahs\\Desktop\\code\\mounriver\\ch592\\ScienceOlympiadEV",
 			"openOCDCfg": {
 				"useLocalOpenOCD": true,
 				"executable": "c:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/openocd.exe",
@@ -22,7 +22,7 @@
 				"enableNoZeroWaitingAreaFlash": false
 			},
 			"gdbCfg": {
-				"executable": "c:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gdb.exe",
+				"executable": "c:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC12/bin/riscv-wch-elf-gdb.exe",
 				"commands": [
 					"set mem inaccessible-by-default off",
 					"set architecture riscv:rv32",
@@ -38,8 +38,8 @@
 					"additionalCommands": []
 				},
 				"loadedFiles": {
-					"executableFile": "c:\\Users\\LRNA\\Desktop\\code\\mounriver\\ch592\\ScienceOlympiadEV\\obj\\ScienceOlympiadEV.elf",
-					"symbolFile": "c:\\Users\\LRNA\\Desktop\\code\\mounriver\\ch592\\ScienceOlympiadEV\\obj\\ScienceOlympiadEV.elf",
+					"executableFile": "c:\\Users\\Noahs\\Desktop\\code\\mounriver\\ch592\\ScienceOlympiadEV\\obj\\ScienceOlympiadEV.elf",
+					"symbolFile": "c:\\Users\\Noahs\\Desktop\\code\\mounriver\\ch592\\ScienceOlympiadEV\\obj\\ScienceOlympiadEV.elf",
 					"executableFileOffset": 0,
 					"symbolFileOffset": 0
 				},
