@@ -1,0 +1,632 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 1
+
+
+   1              		.file	"CH59x_flash.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.FLASH_ROM_READ,"ax",@progbits
+   5              		.align	1
+   6              		.globl	FLASH_ROM_READ
+   8              	FLASH_ROM_READ:
+   9 0000 0D06     		addi	a2,a2,3
+  10 0002 719A     		andi	a2,a2,-4
+  11 0004 8147     		li	a5,0
+  12              	.L2:
+  13 0006 3307F500 		add	a4,a0,a5
+  14 000a 6393C700 		bne	a5,a2,.L3
+  15 000e 8280     		ret
+  16              	.L3:
+  17 0010 1443     		lw	a3,0(a4)
+  18 0012 3387F500 		add	a4,a1,a5
+  19 0016 9107     		addi	a5,a5,4
+  20 0018 14C3     		sw	a3,0(a4)
+  21 001a F5B7     		j	.L2
+  23              		.section	.text.UserOptionByteConfig,"ax",@progbits
+  24              		.align	1
+  25              		.globl	UserOptionByteConfig
+  27              	UserOptionByteConfig:
+  28 0000 7971     		addi	sp,sp,-48
+  29 0002 26D2     		sw	s1,36(sp)
+  30 0004 4AD0     		sw	s2,32(sp)
+  31 0006 4ECE     		sw	s3,28(sp)
+  32 0008 2E89     		mv	s2,a1
+  33 000a AA89     		mv	s3,a0
+  34 000c B284     		mv	s1,a2
+  35 000e 5145     		li	a0,20
+  36 0010 1146     		li	a2,4
+  37 0012 2C00     		addi	a1,sp,8
+  38 0014 22D4     		sw	s0,40(sp)
+  39 0016 06D6     		sw	ra,44(sp)
+  40 0018 3684     		mv	s0,a3
+  41 001a 97000000 		call	FLASH_ROM_READ
+  41      E7800000 
+  42 0022 2247     		lw	a4,8(sp)
+  43 0024 B7C7F9F5 		li	a5,-168181760
+  44 0028 938797DA 		addi	a5,a5,-599
+  45 002c 0545     		li	a0,1
+  46 002e 631DF708 		bne	a4,a5,.L5
+  47 0032 B7F50700 		li	a1,520192
+  48 0036 9146     		li	a3,4
+  49 0038 3000     		addi	a2,sp,8
+  50 003a F115     		addi	a1,a1,-4
+  51 003c 1945     		li	a0,6
+  52 003e 02C4     		sw	zero,8(sp)
+  53 0040 97000000 		call	FLASH_EEPROM_CMD
+  53      E7800000 
+  54 0048 2247     		lw	a4,8(sp)
+  55 004a 8547     		li	a5,1
+  56 004c 9376770F 		andi	a3,a4,247
+  57 0050 6396F900 		bne	s3,a5,.L7
+  58 0054 1377F70F 		andi	a4,a4,255
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 2
+
+
+  59 0058 93668700 		ori	a3,a4,8
+  60              	.L7:
+  61 005c 370700FF 		li	a4,-16777216
+  62 0060 93978601 		slli	a5,a3,24
+  63 0064 B98F     		xor	a5,a5,a4
+  64 0066 0547     		li	a4,1
+  65 0068 D58F     		or	a5,a5,a3
+  66 006a 6306E906 		beq	s2,a4,.L8
+  67              	.L13:
+  68 006e 3EC4     		sw	a5,8(sp)
+  69 0070 8547     		li	a5,1
+  70 0072 6396F400 		bne	s1,a5,.L10
+  71 0076 A247     		lw	a5,8(sp)
+  72 0078 93E70710 		ori	a5,a5,256
+  73 007c 3EC4     		sw	a5,8(sp)
+  74              	.L10:
+  75 007e A247     		lw	a5,8(sp)
+  76 0080 370700FF 		li	a4,-16777216
+  77 0084 1307F73F 		addi	a4,a4,1023
+  78 0088 F98F     		and	a5,a5,a4
+  79 008a 3707B000 		li	a4,11534336
+  80 008e 130707C0 		addi	a4,a4,-1024
+  81 0092 2A04     		slli	s0,s0,10
+  82 0094 798C     		and	s0,s0,a4
+  83 0096 C18F     		or	a5,a5,s0
+  84 0098 37075000 		li	a4,5242880
+  85 009c D98F     		or	a5,a5,a4
+  86 009e 9146     		li	a3,4
+  87 00a0 3000     		addi	a2,sp,8
+  88 00a2 D145     		li	a1,20
+  89 00a4 0945     		li	a0,2
+  90 00a6 3EC4     		sw	a5,8(sp)
+  91 00a8 97000000 		call	FLASH_EEPROM_CMD
+  91      E7800000 
+  92 00b0 5145     		li	a0,20
+  93 00b2 1146     		li	a2,4
+  94 00b4 6C00     		addi	a1,sp,12
+  95 00b6 97000000 		call	FLASH_ROM_READ
+  95      E7800000 
+  96 00be 2245     		lw	a0,8(sp)
+  97 00c0 B247     		lw	a5,12(sp)
+  98 00c2 1D8D     		sub	a0,a0,a5
+  99 00c4 3335A000 		snez	a0,a0
+ 100              	.L5:
+ 101 00c8 B250     		lw	ra,44(sp)
+ 102 00ca 2254     		lw	s0,40(sp)
+ 103 00cc 9254     		lw	s1,36(sp)
+ 104 00ce 0259     		lw	s2,32(sp)
+ 105 00d0 F249     		lw	s3,28(sp)
+ 106 00d2 4561     		addi	sp,sp,48
+ 107 00d4 8280     		jr	ra
+ 108              	.L8:
+ 109 00d6 93E70720 		ori	a5,a5,512
+ 110 00da 51BF     		j	.L13
+ 112              		.section	.text.UserOptionByteClose_SWD,"ax",@progbits
+ 113              		.align	1
+ 114              		.globl	UserOptionByteClose_SWD
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 3
+
+
+ 116              	UserOptionByteClose_SWD:
+ 117 0000 0111     		addi	sp,sp,-32
+ 118 0002 5145     		li	a0,20
+ 119 0004 1146     		li	a2,4
+ 120 0006 2C00     		addi	a1,sp,8
+ 121 0008 06CE     		sw	ra,28(sp)
+ 122 000a 97000000 		call	FLASH_ROM_READ
+ 122      E7800000 
+ 123 0012 2247     		lw	a4,8(sp)
+ 124 0014 B7C7F9F3 		li	a5,-201736192
+ 125 0018 938797DA 		addi	a5,a5,-599
+ 126 001c 0545     		li	a0,1
+ 127 001e 631DF704 		bne	a4,a5,.L15
+ 128 0022 B7F50700 		li	a1,520192
+ 129 0026 9146     		li	a3,4
+ 130 0028 3000     		addi	a2,sp,8
+ 131 002a F115     		addi	a1,a1,-4
+ 132 002c 1945     		li	a0,6
+ 133 002e 97000000 		call	FLASH_EEPROM_CMD
+ 133      E7800000 
+ 134 0036 A247     		lw	a5,8(sp)
+ 135 0038 37070001 		li	a4,16777216
+ 136 003c 1307F7F6 		addi	a4,a4,-145
+ 137 0040 7D8F     		and	a4,a5,a4
+ 138 0042 93178701 		slli	a5,a4,24
+ 139 0046 B70600FF 		li	a3,-16777216
+ 140 004a B58F     		xor	a5,a5,a3
+ 141 004c D98F     		or	a5,a5,a4
+ 142 004e 9146     		li	a3,4
+ 143 0050 3000     		addi	a2,sp,8
+ 144 0052 D145     		li	a1,20
+ 145 0054 0945     		li	a0,2
+ 146 0056 3EC4     		sw	a5,8(sp)
+ 147 0058 97000000 		call	FLASH_EEPROM_CMD
+ 147      E7800000 
+ 148 0060 5145     		li	a0,20
+ 149 0062 1146     		li	a2,4
+ 150 0064 6C00     		addi	a1,sp,12
+ 151 0066 97000000 		call	FLASH_ROM_READ
+ 151      E7800000 
+ 152 006e 2245     		lw	a0,8(sp)
+ 153 0070 B247     		lw	a5,12(sp)
+ 154 0072 1D8D     		sub	a0,a0,a5
+ 155 0074 3335A000 		snez	a0,a0
+ 156              	.L15:
+ 157 0078 F240     		lw	ra,28(sp)
+ 158 007a 0561     		addi	sp,sp,32
+ 159 007c 8280     		jr	ra
+ 161              		.section	.text.UserOptionByte_Active,"ax",@progbits
+ 162              		.align	1
+ 163              		.globl	UserOptionByte_Active
+ 165              	UserOptionByte_Active:
+ 166 0000 0111     		addi	sp,sp,-32
+ 167 0002 8146     		li	a3,0
+ 168 0004 0146     		li	a2,0
+ 169 0006 8145     		li	a1,0
+ 170 0008 1145     		li	a0,4
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 4
+
+
+ 171 000a 06CE     		sw	ra,28(sp)
+ 172 000c 97000000 		call	FLASH_EEPROM_CMD
+ 172      E7800000 
+ 173 0014 13078008 		li	a4,136
+ 174              	 #APP
+ 175              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT  *******************************
+   2              	 * File Name          : core_riscv.h
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.1.0
+   5              	 * Date               : 2023/04/10
+   6              	 * Description        : CH592 RISC-V Core Peripheral Access Layer Header File
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	#ifndef __CORE_RV3A_H__
+  13              	#define __CORE_RV3A_H__
+  14              	
+  15              	#ifdef __cplusplus
+  16              	extern "C" {
+  17              	#endif
+  18              	
+  19              	/* IO definitions */
+  20              	#ifdef __cplusplus
+  21              	  #define __I    volatile  /*!< defines 'read only' permissions      */
+  22              	#else
+  23              	  #define __I    volatile const /*!< defines 'read only' permissions     */
+  24              	#endif
+  25              	#define __O                 volatile  /*!< defines 'write only' permissions     */
+  26              	#define __IO                volatile  /*!< defines 'read / write' permissions   */
+  27              	#define RV_STATIC_INLINE    static inline
+  28              	
+  29              	//typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  30              	
+  31              	typedef enum
+  32              	{
+  33              	    DISABLE = 0,
+  34              	    ENABLE = !DISABLE
+  35              	} FunctionalState;
+  36              	typedef enum
+  37              	{
+  38              	    RESET = 0,
+  39              	    SET = !RESET
+  40              	} FlagStatus, ITStatus;
+  41              	
+  42              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  43              	typedef struct
+  44              	{
+  45              	    __I uint32_t  ISR[8];           // 0
+  46              	    __I uint32_t  IPR[8];           // 20H
+  47              	    __IO uint32_t ITHRESDR;         // 40H
+  48              	    uint8_t       RESERVED[4];      // 44H
+  49              	    __O uint32_t  CFGR;             // 48H
+  50              	    __I uint32_t  GISR;             // 4CH
+  51              	    __IO uint8_t  VTFIDR[4];        // 50H
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 5
+
+
+  52              	    uint8_t       RESERVED0[0x0C];  // 54H
+  53              	    __IO uint32_t VTFADDR[4];       // 60H
+  54              	    uint8_t       RESERVED1[0x90];  // 70H
+  55              	    __O uint32_t  IENR[8];          // 100H
+  56              	    uint8_t       RESERVED2[0x60];  // 120H
+  57              	    __O uint32_t  IRER[8];          // 180H
+  58              	    uint8_t       RESERVED3[0x60];  // 1A0H
+  59              	    __O uint32_t  IPSR[8];          // 200H
+  60              	    uint8_t       RESERVED4[0x60];  // 220H
+  61              	    __O uint32_t  IPRR[8];          // 280H
+  62              	    uint8_t       RESERVED5[0x60];  // 2A0H
+  63              	    __IO uint32_t IACTR[8];         // 300H
+  64              	    uint8_t       RESERVED6[0xE0];  // 320H
+  65              	    __IO uint8_t  IPRIOR[256];      // 400H
+  66              	    uint8_t       RESERVED7[0x810]; // 500H
+  67              	    __IO uint32_t SCTLR;            // D10H
+  68              	} PFIC_Type;
+  69              	
+  70              	/* memory mapped structure for SysTick */
+  71              	typedef struct
+  72              	{
+  73              	    __IO uint32_t CTLR;
+  74              	    __IO uint32_t SR;
+  75              	    __IO uint64_t CNT;
+  76              	    __IO uint64_t CMP;
+  77              	} SysTick_Type;
+  78              	
+  79              	#define PFIC                    ((PFIC_Type *)0xE000E000)
+  80              	#define SysTick                 ((SysTick_Type *)0xE000F000)
+  81              	
+  82              	#define PFIC_KEY1               ((uint32_t)0xFA050000)
+  83              	#define PFIC_KEY2               ((uint32_t)0xBCAF0000)
+  84              	#define PFIC_KEY3               ((uint32_t)0xBEEF0000)
+  85              	
+  86              	/* ##########################   define  #################################### */
+  87              	#define __nop()                 __asm__ volatile("nop")
+  88              	
+  89              	#define read_csr(reg)           ({unsigned long __tmp;                        \
+  90              	     __asm__ volatile ("csrr %0, " #reg : "=r"(__tmp));                 \
+  91              	         __tmp; })
+  92              	
+  93              	#define write_csr(reg, val)     ({                                      \
+  94              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)    \
+  95              	      __asm__ volatile ("csrw  " #reg ", %0" :: "i"(val));              \
+  96              	    else                                                            \
+  97              	      __asm__ volatile ("csrw  " #reg ", %0" :: "r"(val)); })
+  98              	
+  99              	#define PFIC_EnableAllIRQ()     {write_csr(0x800, 0x88);}
+ 100              	#define PFIC_DisableAllIRQ()    {write_csr(0x800, 0x80);asm volatile("fence.i");}
+ 101              	/* ##########################   PFIC functions  #################################### */
+ 102              	
+ 103              	/*********************************************************************
+ 104              	 * @fn      __risc_v_enable_irq
+ 105              	 *
+ 106              	 * @brief   recover Global Interrupt
+ 107              	 *
+ 108              	 * @return  mpie and mie bit in mstatus.
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 6
+
+
+ 109              	 */
+ 110              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_enable_irq(uint32_t mpie_mie)
+ 111              	{
+ 112              	  uint32_t result;
+ 113              	
+ 114              	  __asm volatile ("csrrs %0, 0x800, %1" : \
+ 115              	          "=r"(result): "r"(mpie_mie) : "memory");
+ 116              	  return result;
+ 117              	}
+ 118              	
+ 119              	/*********************************************************************
+ 120              	 * @fn      __disable_irq
+ 121              	 *
+ 122              	 * @brief   Disable Global Interrupt
+ 123              	 *
+ 124              	 * @return  mpie and mie bit in mstatus.
+ 125              	 */
+ 126              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_disable_irq(void)
+ 127              	{
+ 128              	  uint32_t result;
+ 129              	
+ 130 0018 F3370780 	  __asm volatile ("csrrc %0, 0x800, %1" : \
+ 131              	          "=r"(result): "r"(0x88) : "memory");
+ 176              		csrrc a5, 0x800, a4
+ 177              	# 0 "" 2
+ 178              	 #NO_APP
+ 179 001c 93F78708 		andi	a5,a5,136
+ 180 0020 3EC4     		sw	a5,8(sp)
+ 181              	 #APP
+ 182              	# 160 "../../sdk/ch592/StdPeriphDriver/CH59x_flash.c" 1
+   1              	/********************************** (C) COPYRIGHT *******************************
+   2              	 * File Name          : CH59x_flash.c
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.2
+   5              	 * Date               : 2021/11/17
+   6              	 * Description
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	
+  13              	#include "CH59x_common.h"
+  14              	
+  15              	/* RESET_EN */
+  16              	#define RESET_Enable           0x00000008
+  17              	#define RESET_Disable          0xFFFFFFF7
+  18              	
+  19              	/* LOCKUP_RST_EN */
+  20              	#define UART_NO_KEY_Enable     0x00000100
+  21              	#define UART_NO_KEY_Disable    0xFFFFFEFF
+  22              	
+  23              	/* BOOT_PIN */
+  24              	#define BOOT_PIN_PB22          0x00000200
+  25              	#define BOOT_PIN_PB11          0xFFFFFDFF
+  26              	
+  27              	/* FLASH_WRProt */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 7
+
+
+  28              	#define FLASH_WRProt           0xFFF003FF
+  29              	
+  30              	/*********************************************************************
+  31              	 * @fn      FLASH_ROM_READ
+  32              	 *
+  33              	 * @brief   Read Flash
+  34              	 *
+  35              	 * @param   StartAddr   - read address
+  36              	 * @param   Buffer      - read buffer
+  37              	 * @param   len         - read len
+  38              	 *
+  39              	 * @return  none
+  40              	 */
+  41              	void FLASH_ROM_READ(uint32_t StartAddr, void *Buffer, uint32_t len)
+  42              	{
+  43              	    uint32_t  i, Length = (len + 3) >> 2;
+  44              	    uint32_t *pCode = (uint32_t *)StartAddr;
+  45              	    uint32_t *pBuf = (uint32_t *)Buffer;
+  46              	
+  47              	    for(i = 0; i < Length; i++)
+  48              	    {
+  49              	        *pBuf++ = *pCode++;
+  50              	    }
+  51              	}
+  52              	
+  53              	/*********************************************************************
+  54              	 * @fn      UserOptionByteConfig
+  55              	 *
+  56              	 * @brief   Configure User Option Byte.ÐèÔÚµ÷ÓÃÓÃ»§ÅäÖÃ×ÖÉúÐ§º¯ÊýºóÉúÐ§,ÇÒÃ¿´ÎÉÕÂ¼ºóÖ»ÄÜÐÞ¸ÄÒ»´Î
+  57              	 *          (Ê¹ÓÃ¸Ãº¯Êý£¬±ØÐëÊ¹ÓÃ¹Ù·½Ìá¹©µÄ.SÎÄ¼þ£¬Í¬Ê±µ÷ÓÃ¸Ãº¯Êýºó£¬Á½´ÎÉÏµçºó£¬Á½Ïßµ÷ÊÔ½Ó¿ÚÄ¬ÈÏ¹Ø
+  58              	 *
+  59              	 * @param   RESET_EN        - Íâ²¿¸´Î»Òý½ÅÊ¹ÄÜ
+  60              	 * @param   BOOT_PIN        - ENABLE-Ê¹ÓÃÄ¬ÈÏboot½Å-PB22,DISABLE-Ê¹ÓÃboot½Å-PB11
+  61              	 * @param   UART_NO_KEY_EN  - ´®¿ÚÃâ°´¼üÏÂÔØÊ¹ÄÜ
+  62              	 * @param   FLASHProt_Size  - Ð´±£»¤´óÐ¡(µ¥Î»4K)
+  63              	 *
+  64              	 * @return  0-Success, 1-Err
+  65              	 */
+  66              	uint8_t UserOptionByteConfig(FunctionalState RESET_EN, FunctionalState BOOT_PIN, FunctionalState UA
+  67              	                           uint32_t FLASHProt_Size)
+  68              	{
+  69              	    uint32_t s, t;
+  70              	
+  71              	    FLASH_ROM_READ(0x14, &s, 4);
+  72              	
+  73              	    if(s == 0xF5F9BDA9)
+  74              	    {
+  75              	        s = 0;
+  76              	        FLASH_EEPROM_CMD(CMD_GET_ROM_INFO, 0x7EFFC, &s, 4);
+  77              	        s &= 0xFF;
+  78              	
+  79              	        if(RESET_EN == ENABLE)
+  80              	            s |= RESET_Enable;
+  81              	        else
+  82              	            s &= RESET_Disable;
+  83              	
+  84              	        /* bit[7:0]-bit[31-24] */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 8
+
+
+  85              	        s |= ((~(s << 24)) & 0xFF000000); //¸ß8Î» ÅäÖÃÐÅÏ¢È¡·´£»
+  86              	
+  87              	        if(BOOT_PIN == ENABLE)
+  88              	            s |= BOOT_PIN_PB22;
+  89              	        if(UART_NO_KEY_EN == ENABLE)
+  90              	            s |= UART_NO_KEY_Enable;
+  91              	
+  92              	        /* bit[23-10] */
+  93              	        s &= 0xFF0003FF;
+  94              	        s |= ((FLASHProt_Size << 10) | (5 << 20)) & 0x00FFFC00;
+  95              	
+  96              	        /*Write user option byte*/
+  97              	        FLASH_ROM_WRITE(0x14, &s, 4);
+  98              	
+  99              	        /* Verify user option byte */
+ 100              	        FLASH_ROM_READ(0x14, &t, 4);
+ 101              	
+ 102              	        if(s == t)
+ 103              	            return 0;
+ 104              	        else
+ 105              	            return 1;
+ 106              	    }
+ 107              	
+ 108              	    return 1;
+ 109              	}
+ 110              	
+ 111              	/*********************************************************************
+ 112              	 * @fn      UserOptionByteClose_SWD
+ 113              	 *
+ 114              	 * @brief   ¹ØÁ½Ïßµ÷ÊÔ½Ó¿Ú£¬ÆäÓàÅäÖÃÖµ±£³Ö²»±ä.ÐèÔÚµ÷ÓÃÓÃ»§ÅäÖÃ×ÖÉúÐ§º¯ÊýºóÉúÐ§,ÇÒÃ¿´ÎÉÕÂ¼ºóÖ»ÄÜÐÞ¸
+ 115              	 *          (Ê¹ÓÃ¸Ãº¯Êý£¬±ØÐëÊ¹ÓÃ¹Ù·½Ìá¹©µÄ.SÎÄ¼þ£¬Í¬Ê±µ÷ÓÃ¸Ãº¯Êýºó£¬Á½´ÎÉÏµçºó£¬Á½Ïßµ÷ÊÔ½Ó¿ÚÄ¬ÈÏ¹Ø
+ 116              	 *
+ 117              	 * @return  0-Success, 1-Err
+ 118              	 */
+ 119              	uint8_t UserOptionByteClose_SWD(void)
+ 120              	{
+ 121              	    uint32_t s, t;
+ 122              	
+ 123              	    FLASH_ROM_READ(0x14, &s, 4);
+ 124              	
+ 125              	    if(s == 0xF3F9BDA9)
+ 126              	    {
+ 127              	        FLASH_EEPROM_CMD(CMD_GET_ROM_INFO, 0x7EFFC, &s, 4);
+ 128              	
+ 129              	        s &= ~((1 << 4) | (1 << 7)); //½ûÓÃµ÷ÊÔ¹¦ÄÜ£¬ ½ûÓÃSPI¶ÁÐ´FLASH
+ 130              	
+ 131              	        /* bit[7:0]-bit[31-24] */
+ 132              	        s &= 0x00FFFFFF;
+ 133              	        s |= ((~(s << 24)) & 0xFF000000); //¸ß8Î» ÅäÖÃÐÅÏ¢È¡·´£»
+ 134              	
+ 135              	        /*Write user option byte*/
+ 136              	        FLASH_ROM_WRITE(0x14, &s, 4);
+ 137              	
+ 138              	        /* Verify user option byte */
+ 139              	        FLASH_ROM_READ(0x14, &t, 4);
+ 140              	
+ 141              	        if(s == t)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 9
+
+
+ 142              	            return 0;
+ 143              	        else
+ 144              	            return 1;
+ 145              	    }
+ 146              	
+ 147              	    return 1;
+ 148              	}
+ 149              	
+ 150              	/*********************************************************************
+ 151              	 * @fn      UserOptionByte_Active
+ 152              	 *
+ 153              	 * @brief   ÓÃ»§ÅäÖÃ×ÖÉúÐ§º¯Êý£¬Ö´ÐÐºó×Ô¶¯¸´Î»
+ 154              	 *
+ 155              	 * @return  0-Success, 1-Err
+ 156              	 */
+ 157              	void UserOptionByte_Active(void)
+ 158              	{
+ 159              	    FLASH_ROM_SW_RESET();
+ 160 0022 0F100000 	    sys_safe_access_enable();
+ 161              	    R16_INT32K_TUNE = 0xFFFF;
+ 183              		fence.i
+ 184              	# 0 "" 2
+ 185              	 #NO_APP
+ 186 0026 B7170040 		li	a5,1073745920
+ 187 002a 13067005 		li	a2,87
+ 188 002e 2380C704 		sb	a2,64(a5)
+ 189 0032 930680FA 		li	a3,-88
+ 190 0036 2380D704 		sb	a3,64(a5)
+ 191              	 #APP
+ 192              	# 160 "../../sdk/ch592/StdPeriphDriver/CH59x_flash.c" 1
+ 193              		fence.i
+ 194              	# 0 "" 2
+ 195              	 #NO_APP
+ 196 003e FD55     		li	a1,-1
+ 197 0040 2396B702 		sh	a1,44(a5)
+ 198 0044 23800704 		sb	zero,64(a5)
+ 199 0048 A245     		lw	a1,8(sp)
+ 200              	 #APP
+ 201              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 202              		csrrs a1, 0x800, a1
+ 203              	# 0 "" 2
+ 204              	# 162 "../../sdk/ch592/StdPeriphDriver/CH59x_flash.c" 1
+ 162 004e 0F100000 	    sys_safe_access_disable();
+ 163              	    sys_safe_access_enable();
+ 205              		fence.i
+ 206              	# 0 "" 2
+ 207              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 208              		csrrc a4, 0x800, a4
+ 209              	# 0 "" 2
+ 210              	 #NO_APP
+ 211 0056 13778708 		andi	a4,a4,136
+ 212 005a 3AC6     		sw	a4,12(sp)
+ 213              	 #APP
+ 214              	# 163 "../../sdk/ch592/StdPeriphDriver/CH59x_flash.c" 1
+ 164              	    R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+ 215              		fence.i
+ 216              	# 0 "" 2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 10
+
+
+ 217              	 #NO_APP
+ 218 0060 2380C704 		sb	a2,64(a5)
+ 219 0064 2380D704 		sb	a3,64(a5)
+ 220              	 #APP
+ 221              	# 163 "../../sdk/ch592/StdPeriphDriver/CH59x_flash.c" 1
+ 222              		fence.i
+ 223              	# 0 "" 2
+ 224              	 #NO_APP
+ 225 006c 03C76704 		lbu	a4,70(a5)
+ 226 0070 13671700 		ori	a4,a4,1
+ 227 0074 2383E704 		sb	a4,70(a5)
+ 228 0078 23800704 		sb	zero,64(a5)
+ 229 007c B247     		lw	a5,12(sp)
+ 230              	 #APP
+ 231              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 232              		csrrs a5, 0x800, a5
+ 233              	# 0 "" 2
+ 234              	# 165 "../../sdk/ch592/StdPeriphDriver/CH59x_flash.c" 1
+ 165 0082 0F100000 	    sys_safe_access_disable();
+ 166              	    while(1);
+ 235              		fence.i
+ 236              	# 0 "" 2
+ 237              	 #NO_APP
+ 238              	.L20:
+ 239 0086 01A0     		j	.L20
+ 241              		.section	.text.GET_UNIQUE_ID,"ax",@progbits
+ 242              		.align	1
+ 243              		.globl	GET_UNIQUE_ID
+ 245              	GET_UNIQUE_ID:
+ 246 0000 4111     		addi	sp,sp,-16
+ 247 0002 B7F50700 		li	a1,520192
+ 248 0006 22C4     		sw	s0,8(sp)
+ 249 0008 8146     		li	a3,0
+ 250 000a 2A84     		mv	s0,a0
+ 251 000c 2A86     		mv	a2,a0
+ 252 000e E105     		addi	a1,a1,24
+ 253 0010 1945     		li	a0,6
+ 254 0012 06C6     		sw	ra,12(sp)
+ 255 0014 97000000 		call	FLASH_EEPROM_CMD
+ 255      E7800000 
+ 256 001c 83471400 		lbu	a5,1(s0)
+ 257 0020 03470400 		lbu	a4,0(s0)
+ 258 0024 83462400 		lbu	a3,2(s0)
+ 259 0028 A207     		slli	a5,a5,8
+ 260 002a D98F     		or	a5,a5,a4
+ 261 002c 03473400 		lbu	a4,3(s0)
+ 262 0030 B240     		lw	ra,12(sp)
+ 263 0032 2207     		slli	a4,a4,8
+ 264 0034 558F     		or	a4,a4,a3
+ 265 0036 BA97     		add	a5,a5,a4
+ 266 0038 03475400 		lbu	a4,5(s0)
+ 267 003c 83464400 		lbu	a3,4(s0)
+ 268 0040 2207     		slli	a4,a4,8
+ 269 0042 558F     		or	a4,a4,a3
+ 270 0044 BA97     		add	a5,a5,a4
+ 271 0046 C207     		slli	a5,a5,16
+ 272 0048 C183     		srli	a5,a5,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 11
+
+
+ 273 004a 2303F400 		sb	a5,6(s0)
+ 274 004e A183     		srli	a5,a5,8
+ 275 0050 A303F400 		sb	a5,7(s0)
+ 276 0054 2244     		lw	s0,8(sp)
+ 277 0056 4101     		addi	sp,sp,16
+ 278 0058 8280     		jr	ra
+ 280              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_flash.c
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:8      .text.FLASH_ROM_READ:0000000000000000 FLASH_ROM_READ
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:27     .text.UserOptionByteConfig:0000000000000000 UserOptionByteConfig
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:116    .text.UserOptionByteClose_SWD:0000000000000000 UserOptionByteClose_SWD
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:165    .text.UserOptionByte_Active:0000000000000000 UserOptionByte_Active
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:245    .text.GET_UNIQUE_ID:0000000000000000 GET_UNIQUE_ID
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:16     .text.FLASH_ROM_READ:0000000000000010 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:12     .text.FLASH_ROM_READ:0000000000000006 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:100    .text.UserOptionByteConfig:00000000000000c8 .L5
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:60     .text.UserOptionByteConfig:000000000000005c .L7
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:108    .text.UserOptionByteConfig:00000000000000d6 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:74     .text.UserOptionByteConfig:000000000000007e .L10
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:67     .text.UserOptionByteConfig:000000000000006e .L13
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:156    .text.UserOptionByteClose_SWD:0000000000000078 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccmWAJec.s:238    .text.UserOptionByte_Active:0000000000000086 .L20
+
+UNDEFINED SYMBOLS
+FLASH_EEPROM_CMD

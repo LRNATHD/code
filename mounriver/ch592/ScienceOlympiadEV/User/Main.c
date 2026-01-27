@@ -39,14 +39,10 @@ static int32_t combinedmaxspeed = 0;
 volatile int32_t leftmotorspeed = 0;
 volatile int32_t rightmotorspeed = 0;
 
+
+
 __INTERRUPT // this is a interupt 
 __HIGH_CODE // keep this in ram ready to go since its important
-
-__INTERRUPT
-__HIGH_CODE
-
-
-
 void TMR0_IRQHandler(void) 
 {
     // Check if the interrupt was caused by the timer cycle ending
@@ -57,7 +53,8 @@ void TMR0_IRQHandler(void)
     }
 }
 
-
+__INTERRUPT // this is a interupt 
+__HIGH_CODE // keep this in ram ready to go since its important
 void calibrationIRQ(void) {
 if(GPIOB_ReadITFlagBit(M3ENCA)) 
     {
@@ -87,7 +84,8 @@ if(GPIOB_ReadITFlagBit(M3ENCA))
         GPIOB_ClearITFlagBit(Ra); // clear
     }
 }
-
+__INTERRUPT // this is a interupt 
+__HIGH_CODE // keep this in ram ready to go since its important
 void runIRQ(void)
 {
     if(GPIOB_ReadITFlagBit(M3ENCA)) 
@@ -125,12 +123,6 @@ int main() {
 
     GPIOA_ModeCfg(Left_Enable | Left_Phase | Right_Enable | Right_Phase, GPIO_ModeOut_PP_5mA); // make the motors bits configured for output
     GPIOB_ModeCfg(Left_Encoder_A | Left_Encoder_B | Right_Encoder_A | Right_Encoder_B, GPIO_ModeIN_PU); // make the encoders bits configured for input (pulled up)
-
-    //timer config
-    TMR0_ClearITFlag(TMR0_3_IT_CYC_END); 
-    TMR0_TimerInit(60000000);   // 60000000 = 1 second 
-    TMR0_ITCfg(ENABLE, TMR0_3_IT_CYC_END); 
-    PFIC_EnableIRQ(TMR0_IRQn);
 
     GPIOB_ITModeCfg(Left_Encoder_A, GPIO_ITMode_FallEdge); // setup the interupts, start at falling edge 
     GPIOA_ITModeCfg(Right_Encoder_A, GPIO_ITMode_FallEdge);

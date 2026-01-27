@@ -1,0 +1,66 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\cckwP8Gz.s 			page 1
+
+
+   1              		.file	"CH59x_timer0.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.TMR0_TimerInit,"ax",@progbits
+   5              		.align	1
+   6              		.globl	TMR0_TimerInit
+   8              	TMR0_TimerInit:
+   9 0000 B7270040 		li	a5,1073750016
+  10 0004 C8C7     		sw	a0,12(a5)
+  11 0006 0947     		li	a4,2
+  12 0008 2380E700 		sb	a4,0(a5)
+  13 000c 1147     		li	a4,4
+  14 000e 2380E700 		sb	a4,0(a5)
+  15 0012 8280     		ret
+  17              		.section	.text.TMR0_EXTSingleCounterInit,"ax",@progbits
+  18              		.align	1
+  19              		.globl	TMR0_EXTSingleCounterInit
+  21              	TMR0_EXTSingleCounterInit:
+  22 0000 1A05     		slli	a0,a0,6
+  23 0002 B7270040 		li	a5,1073750016
+  24 0006 0947     		li	a4,2
+  25 0008 13655501 		ori	a0,a0,21
+  26 000c 2380E700 		sb	a4,0(a5)
+  27 0010 1375F50F 		andi	a0,a0,0xff
+  28 0014 2380A700 		sb	a0,0(a5)
+  29 0018 8280     		ret
+  31              		.section	.text.TMR0_PWMInit,"ax",@progbits
+  32              		.align	1
+  33              		.globl	TMR0_PWMInit
+  35              	TMR0_PWMInit:
+  36 0000 1205     		slli	a0,a0,4
+  37 0002 9A05     		slli	a1,a1,6
+  38 0004 B7270040 		li	a5,1073750016
+  39 0008 0947     		li	a4,2
+  40 000a 4D8D     		or	a0,a0,a1
+  41 000c 2380E700 		sb	a4,0(a5)
+  42 0010 1375F50F 		andi	a0,a0,0xff
+  43 0014 2380A700 		sb	a0,0(a5)
+  44 0018 8280     		ret
+  46              		.section	.text.TMR0_CapInit,"ax",@progbits
+  47              		.align	1
+  48              		.globl	TMR0_CapInit
+  50              	TMR0_CapInit:
+  51 0000 1A05     		slli	a0,a0,6
+  52 0002 B7270040 		li	a5,1073750016
+  53 0006 0947     		li	a4,2
+  54 0008 13655500 		ori	a0,a0,5
+  55 000c 2380E700 		sb	a4,0(a5)
+  56 0010 1375F50F 		andi	a0,a0,0xff
+  57 0014 2380A700 		sb	a0,0(a5)
+  58 0018 8280     		ret
+  60              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\cckwP8Gz.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_timer0.c
+C:\Users\LRNA\AppData\Local\Temp\cckwP8Gz.s:8      .text.TMR0_TimerInit:0000000000000000 TMR0_TimerInit
+C:\Users\LRNA\AppData\Local\Temp\cckwP8Gz.s:21     .text.TMR0_EXTSingleCounterInit:0000000000000000 TMR0_EXTSingleCounterInit
+C:\Users\LRNA\AppData\Local\Temp\cckwP8Gz.s:35     .text.TMR0_PWMInit:0000000000000000 TMR0_PWMInit
+C:\Users\LRNA\AppData\Local\Temp\cckwP8Gz.s:50     .text.TMR0_CapInit:0000000000000000 TMR0_CapInit
+
+NO UNDEFINED SYMBOLS

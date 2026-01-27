@@ -1,0 +1,39 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccqr0bHB.s 			page 1
+
+
+   1              		.file	"CH59x_lcd.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.LCD_Init,"ax",@progbits
+   5              		.align	1
+   6              		.globl	LCD_Init
+   8              	LCD_Init:
+   9 0000 3707D2FF 		li	a4,-3014656
+  10 0004 B7170040 		li	a5,1073745920
+  11 0008 4117     		addi	a4,a4,-16
+  12 000a D8CF     		sw	a4,28(a5)
+  13 000c 03D78701 		lhu	a4,24(a5)
+  14 0010 8966     		li	a3,8192
+  15 0012 0E05     		slli	a0,a0,3
+  16 0014 558F     		or	a4,a4,a3
+  17 0016 239CE700 		sh	a4,24(a5)
+  18 001a 37070002 		li	a4,33554432
+  19 001e B7670040 		li	a5,1073766400
+  20 0022 130707F0 		addi	a4,a4,-256
+  21 0026 98C3     		sw	a4,0(a5)
+  22 0028 9843     		lw	a4,0(a5)
+  23 002a 8A05     		slli	a1,a1,2
+  24 002c 598D     		or	a0,a0,a4
+  25 002e 4D8D     		or	a0,a0,a1
+  26 0030 13653506 		ori	a0,a0,99
+  27 0034 88C3     		sw	a0,0(a5)
+  28 0036 8280     		ret
+  30              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccqr0bHB.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_lcd.c
+C:\Users\LRNA\AppData\Local\Temp\ccqr0bHB.s:8      .text.LCD_Init:0000000000000000 LCD_Init
+
+NO UNDEFINED SYMBOLS

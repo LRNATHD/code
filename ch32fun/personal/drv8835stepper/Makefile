@@ -1,12 +1,21 @@
-all : flash
+all: base head
 
-TARGET:=drv8835stepper
-TARGET_MCU:=CH572
-TARGET_MCU_PACKAGE:=CH572D
+base:
+	$(MAKE) -f Makefile.inc TARGET=stepper_base
 
-EXTRA_CFLAGS:=-I../../extralibs
+head:
+	$(MAKE) -f Makefile.inc TARGET=stepper_head
 
-include ../../ch32fun/ch32fun.mk
+base_clean:
+	$(MAKE) -f Makefile.inc TARGET=stepper_base clean
 
-flash : cv_flash
-clean : cv_clean
+head_clean:
+	$(MAKE) -f Makefile.inc TARGET=stepper_head clean
+
+clean: base_clean head_clean
+
+flash_base:
+	$(MAKE) -f Makefile.inc TARGET=stepper_base flash
+
+flash_head:
+	$(MAKE) -f Makefile.inc TARGET=stepper_head flash

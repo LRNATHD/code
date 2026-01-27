@@ -1,0 +1,2104 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 1
+
+
+   1              		.file	"CH59x_pwr.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.PWR_DCDCCfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	PWR_DCDCCfg
+   8              	PWR_DCDCCfg:
+   9 0000 7971     		addi	sp,sp,-48
+  10 0002 22D4     		sw	s0,40(sp)
+  11 0004 37140040 		li	s0,1073745920
+  12 0008 26D2     		sw	s1,36(sp)
+  13 000a 4AD0     		sw	s2,32(sp)
+  14 000c 03592402 		lhu	s2,34(s0)
+  15 0010 83540402 		lhu	s1,32(s0)
+  16 0014 06D6     		sw	ra,44(sp)
+  17 0016 4209     		slli	s2,s2,16
+  18 0018 C204     		slli	s1,s1,16
+  19 001a 4ECE     		sw	s3,28(sp)
+  20 001c 52CC     		sw	s4,24(sp)
+  21 001e 56CA     		sw	s5,20(sp)
+  22 0020 13590901 		srli	s2,s2,16
+  23 0024 C180     		srli	s1,s1,16
+  24 0026 2DE1     		bnez	a0,.L2
+  25 0028 1379F9F7 		andi	s2,s2,-129
+  26 002c 93F4F49F 		andi	s1,s1,-1537
+  27 0030 4209     		slli	s2,s2,16
+  28 0032 C204     		slli	s1,s1,16
+  29 0034 13590901 		srli	s2,s2,16
+  30 0038 C180     		srli	s1,s1,16
+  31 003a 93078008 		li	a5,136
+  32              	 #APP
+  33              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT  *******************************
+   2              	 * File Name          : core_riscv.h
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.1.0
+   5              	 * Date               : 2023/04/10
+   6              	 * Description        : CH592 RISC-V Core Peripheral Access Layer Header File
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	#ifndef __CORE_RV3A_H__
+  13              	#define __CORE_RV3A_H__
+  14              	
+  15              	#ifdef __cplusplus
+  16              	extern "C" {
+  17              	#endif
+  18              	
+  19              	/* IO definitions */
+  20              	#ifdef __cplusplus
+  21              	  #define __I    volatile  /*!< defines 'read only' permissions      */
+  22              	#else
+  23              	  #define __I    volatile const /*!< defines 'read only' permissions     */
+  24              	#endif
+  25              	#define __O                 volatile  /*!< defines 'write only' permissions     */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 2
+
+
+  26              	#define __IO                volatile  /*!< defines 'read / write' permissions   */
+  27              	#define RV_STATIC_INLINE    static inline
+  28              	
+  29              	//typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  30              	
+  31              	typedef enum
+  32              	{
+  33              	    DISABLE = 0,
+  34              	    ENABLE = !DISABLE
+  35              	} FunctionalState;
+  36              	typedef enum
+  37              	{
+  38              	    RESET = 0,
+  39              	    SET = !RESET
+  40              	} FlagStatus, ITStatus;
+  41              	
+  42              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  43              	typedef struct
+  44              	{
+  45              	    __I uint32_t  ISR[8];           // 0
+  46              	    __I uint32_t  IPR[8];           // 20H
+  47              	    __IO uint32_t ITHRESDR;         // 40H
+  48              	    uint8_t       RESERVED[4];      // 44H
+  49              	    __O uint32_t  CFGR;             // 48H
+  50              	    __I uint32_t  GISR;             // 4CH
+  51              	    __IO uint8_t  VTFIDR[4];        // 50H
+  52              	    uint8_t       RESERVED0[0x0C];  // 54H
+  53              	    __IO uint32_t VTFADDR[4];       // 60H
+  54              	    uint8_t       RESERVED1[0x90];  // 70H
+  55              	    __O uint32_t  IENR[8];          // 100H
+  56              	    uint8_t       RESERVED2[0x60];  // 120H
+  57              	    __O uint32_t  IRER[8];          // 180H
+  58              	    uint8_t       RESERVED3[0x60];  // 1A0H
+  59              	    __O uint32_t  IPSR[8];          // 200H
+  60              	    uint8_t       RESERVED4[0x60];  // 220H
+  61              	    __O uint32_t  IPRR[8];          // 280H
+  62              	    uint8_t       RESERVED5[0x60];  // 2A0H
+  63              	    __IO uint32_t IACTR[8];         // 300H
+  64              	    uint8_t       RESERVED6[0xE0];  // 320H
+  65              	    __IO uint8_t  IPRIOR[256];      // 400H
+  66              	    uint8_t       RESERVED7[0x810]; // 500H
+  67              	    __IO uint32_t SCTLR;            // D10H
+  68              	} PFIC_Type;
+  69              	
+  70              	/* memory mapped structure for SysTick */
+  71              	typedef struct
+  72              	{
+  73              	    __IO uint32_t CTLR;
+  74              	    __IO uint32_t SR;
+  75              	    __IO uint64_t CNT;
+  76              	    __IO uint64_t CMP;
+  77              	} SysTick_Type;
+  78              	
+  79              	#define PFIC                    ((PFIC_Type *)0xE000E000)
+  80              	#define SysTick                 ((SysTick_Type *)0xE000F000)
+  81              	
+  82              	#define PFIC_KEY1               ((uint32_t)0xFA050000)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 3
+
+
+  83              	#define PFIC_KEY2               ((uint32_t)0xBCAF0000)
+  84              	#define PFIC_KEY3               ((uint32_t)0xBEEF0000)
+  85              	
+  86              	/* ##########################   define  #################################### */
+  87              	#define __nop()                 __asm__ volatile("nop")
+  88              	
+  89              	#define read_csr(reg)           ({unsigned long __tmp;                        \
+  90              	     __asm__ volatile ("csrr %0, " #reg : "=r"(__tmp));                 \
+  91              	         __tmp; })
+  92              	
+  93              	#define write_csr(reg, val)     ({                                      \
+  94              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)    \
+  95              	      __asm__ volatile ("csrw  " #reg ", %0" :: "i"(val));              \
+  96              	    else                                                            \
+  97              	      __asm__ volatile ("csrw  " #reg ", %0" :: "r"(val)); })
+  98              	
+  99              	#define PFIC_EnableAllIRQ()     {write_csr(0x800, 0x88);}
+ 100              	#define PFIC_DisableAllIRQ()    {write_csr(0x800, 0x80);asm volatile("fence.i");}
+ 101              	/* ##########################   PFIC functions  #################################### */
+ 102              	
+ 103              	/*********************************************************************
+ 104              	 * @fn      __risc_v_enable_irq
+ 105              	 *
+ 106              	 * @brief   recover Global Interrupt
+ 107              	 *
+ 108              	 * @return  mpie and mie bit in mstatus.
+ 109              	 */
+ 110              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_enable_irq(uint32_t mpie_mie)
+ 111              	{
+ 112              	  uint32_t result;
+ 113              	
+ 114              	  __asm volatile ("csrrs %0, 0x800, %1" : \
+ 115              	          "=r"(result): "r"(mpie_mie) : "memory");
+ 116              	  return result;
+ 117              	}
+ 118              	
+ 119              	/*********************************************************************
+ 120              	 * @fn      __disable_irq
+ 121              	 *
+ 122              	 * @brief   Disable Global Interrupt
+ 123              	 *
+ 124              	 * @return  mpie and mie bit in mstatus.
+ 125              	 */
+ 126              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_disable_irq(void)
+ 127              	{
+ 128              	  uint32_t result;
+ 129              	
+ 130 003e F3B70780 	  __asm volatile ("csrrc %0, 0x800, %1" : \
+ 131              	          "=r"(result): "r"(0x88) : "memory");
+  34              		csrrc a5, 0x800, a5
+  35              	# 0 "" 2
+  36              	 #NO_APP
+  37 0042 93F78708 		andi	a5,a5,136
+  38 0046 3EC4     		sw	a5,8(sp)
+  39              	 #APP
+  40              	# 34 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+   1              	/********************************** (C) COPYRIGHT *******************************
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 4
+
+
+   2              	 * File Name          : CH59x_pwr.c
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.2
+   5              	 * Date               : 2021/11/17
+   6              	 * Description
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	
+  13              	#include "CH59x_common.h"
+  14              	
+  15              	/*********************************************************************
+  16              	 * @fn      PWR_DCDCCfg
+  17              	 *
+  18              	 * @brief   启用内部DC/DC电源，用于节约系统功耗
+  19              	 *
+  20              	 * @param   s       - 是否打开DCDC电源
+  21              	 *
+  22              	 * @return  none
+  23              	 */
+  24              	void PWR_DCDCCfg(FunctionalState s)
+  25              	{
+  26              	    uint16_t adj = R16_AUX_POWER_ADJ;
+  27              	    uint16_t plan = R16_POWER_PLAN;
+  28              	
+  29              	    if(s == DISABLE)
+  30              	    {
+  31              	        
+  32              	        adj &= ~RB_DCDC_CHARGE;
+  33              	        plan &= ~(RB_PWR_DCDC_EN | RB_PWR_DCDC_PRE); // 旁路 DC/DC
+  34 0048 0F100000 	        sys_safe_access_enable();
+  35              	        R16_AUX_POWER_ADJ = adj;
+  41              		fence.i
+  42              	# 0 "" 2
+  43              	 #NO_APP
+  44 004c 93077005 		li	a5,87
+  45 0050 2300F404 		sb	a5,64(s0)
+  46 0054 930780FA 		li	a5,-88
+  47 0058 2300F404 		sb	a5,64(s0)
+  48              	 #APP
+  49              	# 34 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+  50              		fence.i
+  51              	# 0 "" 2
+  52              	 #NO_APP
+  53 0060 23112403 		sh	s2,34(s0)
+  54 0064 23109402 		sh	s1,32(s0)
+  55 0068 23000404 		sb	zero,64(s0)
+  56 006c A247     		lw	a5,8(sp)
+  57              	.L6:
+  58              	 #APP
+  59              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+  60              		csrrs a5, 0x800, a5
+  61              	# 0 "" 2
+  62              	# 56 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+  36              	        R16_POWER_PLAN = plan;
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 5
+
+
+  37              	        sys_safe_access_disable();
+  38              	    }
+  39              	    else
+  40              	    {
+  41              	        uint32_t HW_Data[2];
+  42              	        FLASH_EEPROM_CMD(CMD_GET_ROM_INFO, ROM_CFG_ADR_HW, HW_Data, 0);
+  43              	        if((HW_Data[0]) & (1 << 13))
+  44              	        {
+  45              	            return;
+  46              	        }
+  47              	        adj |= RB_DCDC_CHARGE;
+  48              	        plan |= RB_PWR_DCDC_PRE;
+  49              	        sys_safe_access_enable();
+  50              	        R16_AUX_POWER_ADJ = adj;
+  51              	        R16_POWER_PLAN = plan;
+  52              	        sys_safe_access_disable();
+  53              	        DelayUs(10);
+  54              	        sys_safe_access_enable();
+  55              	        R16_POWER_PLAN |= RB_PWR_DCDC_EN;
+  56 0072 0F100000 	        sys_safe_access_disable();
+  57              	    }
+  63              		fence.i
+  64              	# 0 "" 2
+  65              	 #NO_APP
+  66              	.L1:
+  67 0076 B250     		lw	ra,44(sp)
+  68 0078 2254     		lw	s0,40(sp)
+  69 007a 9254     		lw	s1,36(sp)
+  70 007c 0259     		lw	s2,32(sp)
+  71 007e F249     		lw	s3,28(sp)
+  72 0080 624A     		lw	s4,24(sp)
+  73 0082 D24A     		lw	s5,20(sp)
+  74 0084 4561     		addi	sp,sp,48
+  75 0086 8280     		jr	ra
+  76              	.L2:
+  77 0088 B7F50700 		li	a1,520192
+  78 008c 8146     		li	a3,0
+  79 008e 3000     		addi	a2,sp,8
+  80 0090 B105     		addi	a1,a1,12
+  81 0092 1945     		li	a0,6
+  82 0094 97000000 		call	FLASH_EEPROM_CMD
+  82      E7800000 
+  83 009c A247     		lw	a5,8(sp)
+  84 009e 13972701 		slli	a4,a5,18
+  85 00a2 E34A07FC 		bltz	a4,.L1
+  86 00a6 13690908 		ori	s2,s2,128
+  87 00aa 93E40440 		ori	s1,s1,1024
+  88 00ae 93098008 		li	s3,136
+  89              	 #APP
+  90              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+  91              		csrrc a5, 0x800, s3
+  92              	# 0 "" 2
+  93              	 #NO_APP
+  94 00b6 93F78708 		andi	a5,a5,136
+  95 00ba 3EC0     		sw	a5,0(sp)
+  96              	 #APP
+  97              	# 49 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 6
+
+
+  98              		fence.i
+  99              	# 0 "" 2
+ 100              	 #NO_APP
+ 101 00c0 930A7005 		li	s5,87
+ 102 00c4 23005405 		sb	s5,64(s0)
+ 103 00c8 130A80FA 		li	s4,-88
+ 104 00cc 23004405 		sb	s4,64(s0)
+ 105              	 #APP
+ 106              	# 49 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 107              		fence.i
+ 108              	# 0 "" 2
+ 109              	 #NO_APP
+ 110 00d4 23112403 		sh	s2,34(s0)
+ 111 00d8 23109402 		sh	s1,32(s0)
+ 112 00dc 23000404 		sb	zero,64(s0)
+ 113 00e0 8247     		lw	a5,0(sp)
+ 114              	 #APP
+ 115              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 116              		csrrs a5, 0x800, a5
+ 117              	# 0 "" 2
+ 118              	# 52 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 119              		fence.i
+ 120              	# 0 "" 2
+ 121              	 #NO_APP
+ 122 00ea 2945     		li	a0,10
+ 123 00ec 97000000 		call	mDelayuS
+ 123      E7800000 
+ 124              	 #APP
+ 125              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 126              		csrrc s3, 0x800, s3
+ 127              	# 0 "" 2
+ 128              	 #NO_APP
+ 129 00f8 93F98908 		andi	s3,s3,136
+ 130 00fc 4EC2     		sw	s3,4(sp)
+ 131              	 #APP
+ 132              	# 54 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 133              		fence.i
+ 134              	# 0 "" 2
+ 135              	 #NO_APP
+ 136 0102 23005405 		sb	s5,64(s0)
+ 137 0106 23004405 		sb	s4,64(s0)
+ 138              	 #APP
+ 139              	# 54 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 140              		fence.i
+ 141              	# 0 "" 2
+ 142              	 #NO_APP
+ 143 010e 83570402 		lhu	a5,32(s0)
+ 144 0112 93E70720 		ori	a5,a5,512
+ 145 0116 2310F402 		sh	a5,32(s0)
+ 146 011a 23000404 		sb	zero,64(s0)
+ 147 011e 9247     		lw	a5,4(sp)
+ 148 0120 B9B7     		j	.L6
+ 150              		.section	.text.PWR_UnitModCfg,"ax",@progbits
+ 151              		.align	1
+ 152              		.globl	PWR_UnitModCfg
+ 154              	PWR_UnitModCfg:
+ 155 0000 B7170040 		li	a5,1073745920
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 7
+
+
+ 156 0004 83C7F702 		lbu	a5,47(a5)
+ 157 0008 8D89     		andi	a1,a1,3
+ 158 000a 4111     		addi	sp,sp,-16
+ 159 000c 93F7F70F 		andi	a5,a5,0xff
+ 160 0010 33E7F500 		or	a4,a1,a5
+ 161 0014 09E5     		bnez	a0,.L9
+ 162 0016 93C5F5FF 		not	a1,a1
+ 163 001a 33F7F500 		and	a4,a1,a5
+ 164              	.L9:
+ 165 001e 93078008 		li	a5,136
+ 166              	 #APP
+ 167              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 168              		csrrc a5, 0x800, a5
+ 169              	# 0 "" 2
+ 170              	 #NO_APP
+ 171 0026 93F78708 		andi	a5,a5,136
+ 172 002a 3EC6     		sw	a5,12(sp)
+ 173              	 #APP
+ 174              	# 83 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+  58              	}
+  59              	
+  60              	/*********************************************************************
+  61              	 * @fn      PWR_UnitModCfg
+  62              	 *
+  63              	 * @brief   可控单元模块的电源控制
+  64              	 *
+  65              	 * @param   s       - 是否打开电源
+  66              	 * @param   unit    - please refer to unit of controllable power supply
+  67              	 *
+  68              	 * @return  none
+  69              	 */
+  70              	void PWR_UnitModCfg(FunctionalState s, uint8_t unit)
+  71              	{
+  72              	    uint8_t ck32k_cfg = R8_CK32K_CONFIG;
+  73              	
+  74              	    if(s == DISABLE) //关闭
+  75              	    {
+  76              	        ck32k_cfg &= ~(unit & 0x03);
+  77              	    }
+  78              	    else //打开
+  79              	    {
+  80              	        ck32k_cfg |= (unit & 0x03);
+  81              	    }
+  82              	
+  83 002c 0F100000 	    sys_safe_access_enable();
+  84              	    R8_CK32K_CONFIG = ck32k_cfg;
+ 175              		fence.i
+ 176              	# 0 "" 2
+ 177              	 #NO_APP
+ 178 0030 B7170040 		li	a5,1073745920
+ 179 0034 93067005 		li	a3,87
+ 180 0038 2380D704 		sb	a3,64(a5)
+ 181 003c 930680FA 		li	a3,-88
+ 182 0040 2380D704 		sb	a3,64(a5)
+ 183              	 #APP
+ 184              	# 83 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 185              		fence.i
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 8
+
+
+ 186              	# 0 "" 2
+ 187              	 #NO_APP
+ 188 0048 A387E702 		sb	a4,47(a5)
+ 189 004c 23800704 		sb	zero,64(a5)
+ 190 0050 B247     		lw	a5,12(sp)
+ 191              	 #APP
+ 192              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 193              		csrrs a5, 0x800, a5
+ 194              	# 0 "" 2
+ 195              	# 85 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+  85 0056 0F100000 	    sys_safe_access_disable();
+  86              	}
+ 196              		fence.i
+ 197              	# 0 "" 2
+ 198              	 #NO_APP
+ 199 005a 4101     		addi	sp,sp,16
+ 200 005c 8280     		jr	ra
+ 202              		.section	.text.PWR_PeriphClkCfg,"ax",@progbits
+ 203              		.align	1
+ 204              		.globl	PWR_PeriphClkCfg
+ 206              	PWR_PeriphClkCfg:
+ 207 0000 B7170040 		li	a5,1073745920
+ 208 0004 DC47     		lw	a5,12(a5)
+ 209 0006 4111     		addi	sp,sp,-16
+ 210 0008 29E1     		bnez	a0,.L12
+ 211 000a CD8F     		or	a5,a1,a5
+ 212              	.L13:
+ 213 000c 13078008 		li	a4,136
+ 214              	 #APP
+ 215              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 216              		csrrc a4, 0x800, a4
+ 217              	# 0 "" 2
+ 218              	 #NO_APP
+ 219 0014 13778708 		andi	a4,a4,136
+ 220 0018 3AC6     		sw	a4,12(sp)
+ 221              	 #APP
+ 222              	# 111 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+  87              	
+  88              	/*********************************************************************
+  89              	 * @fn      PWR_PeriphClkCfg
+  90              	 *
+  91              	 * @brief   外设时钟控制位
+  92              	 *
+  93              	 * @param   s       - 是否打开对应外设时钟
+  94              	 * @param   perph   - please refer to Peripher CLK control bit define
+  95              	 *
+  96              	 * @return  none
+  97              	 */
+  98              	void PWR_PeriphClkCfg(FunctionalState s, uint16_t perph)
+  99              	{
+ 100              	    uint32_t sleep_ctrl = R32_SLEEP_CONTROL;
+ 101              	
+ 102              	    if(s == DISABLE)
+ 103              	    {
+ 104              	        sleep_ctrl |= perph;
+ 105              	    }
+ 106              	    else
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 9
+
+
+ 107              	    {
+ 108              	        sleep_ctrl &= ~perph;
+ 109              	    }
+ 110              	
+ 111 001a 0F100000 	    sys_safe_access_enable();
+ 112              	    R32_SLEEP_CONTROL = sleep_ctrl;
+ 223              		fence.i
+ 224              	# 0 "" 2
+ 225              	 #NO_APP
+ 226 001e 37170040 		li	a4,1073745920
+ 227 0022 93067005 		li	a3,87
+ 228 0026 2300D704 		sb	a3,64(a4)
+ 229 002a 930680FA 		li	a3,-88
+ 230 002e 2300D704 		sb	a3,64(a4)
+ 231              	 #APP
+ 232              	# 111 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 233              		fence.i
+ 234              	# 0 "" 2
+ 235              	 #NO_APP
+ 236 0036 5CC7     		sw	a5,12(a4)
+ 237 0038 23000704 		sb	zero,64(a4)
+ 238 003c B247     		lw	a5,12(sp)
+ 239              	 #APP
+ 240              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 241              		csrrs a5, 0x800, a5
+ 242              	# 0 "" 2
+ 243              	# 113 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 113 0042 0F100000 	    sys_safe_access_disable();
+ 114              	}
+ 244              		fence.i
+ 245              	# 0 "" 2
+ 246              	 #NO_APP
+ 247 0046 4101     		addi	sp,sp,16
+ 248 0048 8280     		jr	ra
+ 249              	.L12:
+ 250 004a 93C5F5FF 		not	a1,a1
+ 251 004e ED8F     		and	a5,a1,a5
+ 252 0050 75BF     		j	.L13
+ 254              		.section	.text.PWR_PeriphWakeUpCfg,"ax",@progbits
+ 255              		.align	1
+ 256              		.globl	PWR_PeriphWakeUpCfg
+ 258              	PWR_PeriphWakeUpCfg:
+ 259 0000 4111     		addi	sp,sp,-16
+ 260 0002 31E5     		bnez	a0,.L16
+ 261 0004 93078008 		li	a5,136
+ 262              	 #APP
+ 263              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 264              		csrrc a5, 0x800, a5
+ 265              	# 0 "" 2
+ 266              	 #NO_APP
+ 267 000c 93F78708 		andi	a5,a5,136
+ 268 0010 3EC0     		sw	a5,0(sp)
+ 269              	 #APP
+ 270              	# 137 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 115              	
+ 116              	/*********************************************************************
+ 117              	 * @fn      PWR_PeriphWakeUpCfg
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 10
+
+
+ 118              	 *
+ 119              	 * @brief   睡眠唤醒源配置
+ 120              	 *
+ 121              	 * @param   s       - 是否打开此外设睡眠唤醒功能
+ 122              	 * @param   perph   - 需要设置的唤醒源
+ 123              	 *                    RB_SLP_USB_WAKE   -  USB 为唤醒源
+ 124              	 *                    RB_SLP_RTC_WAKE   -  RTC 为唤醒源
+ 125              	 *                    RB_SLP_GPIO_WAKE  -  GPIO 为唤醒源
+ 126              	 *                    RB_SLP_BAT_WAKE   -  BAT 为唤醒源
+ 127              	 * @param   mode    - refer to WakeUP_ModeypeDef
+ 128              	 *
+ 129              	 * @return  none
+ 130              	 */
+ 131              	void PWR_PeriphWakeUpCfg(FunctionalState s, uint8_t perph, WakeUP_ModeypeDef mode)
+ 132              	{
+ 133              	    uint8_t m;
+ 134              	
+ 135              	    if(s == DISABLE)
+ 136              	    {
+ 137 0012 0F100000 	        sys_safe_access_enable();
+ 138              	        R8_SLP_WAKE_CTRL &= ~perph;
+ 271              		fence.i
+ 272              	# 0 "" 2
+ 273              	 #NO_APP
+ 274 0016 B7170040 		li	a5,1073745920
+ 275 001a 13077005 		li	a4,87
+ 276 001e 2380E704 		sb	a4,64(a5)
+ 277 0022 130780FA 		li	a4,-88
+ 278 0026 2380E704 		sb	a4,64(a5)
+ 279              	 #APP
+ 280              	# 137 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 281              		fence.i
+ 282              	# 0 "" 2
+ 283              	 #NO_APP
+ 284 002e 03C7E700 		lbu	a4,14(a5)
+ 285 0032 93C5F5FF 		not	a1,a1
+ 286 0036 F98D     		and	a1,a1,a4
+ 287 0038 2387B700 		sb	a1,14(a5)
+ 288 003c 23800704 		sb	zero,64(a5)
+ 289 0040 8247     		lw	a5,0(sp)
+ 290              	.L19:
+ 291              	 #APP
+ 292              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 293              		csrrs a5, 0x800, a5
+ 294              	# 0 "" 2
+ 295              	# 166 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 139              	        sys_safe_access_disable();
+ 140              	    }
+ 141              	    else
+ 142              	    {
+ 143              	        switch(mode)
+ 144              	        {
+ 145              	            case Short_Delay:
+ 146              	                m = 0x01;
+ 147              	                break;
+ 148              	
+ 149              	            case Long_Delay:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 11
+
+
+ 150              	                m = 0x00;
+ 151              	                break;
+ 152              	
+ 153              	            default:
+ 154              	                m = 0x01;
+ 155              	                break;
+ 156              	        }
+ 157              	
+ 158              	        sys_safe_access_enable();
+ 159              	        R8_SLP_WAKE_CTRL |= RB_WAKE_EV_MODE | perph;
+ 160              	        sys_safe_access_disable();
+ 161              	        sys_safe_access_enable();
+ 162              	        R8_SLP_POWER_CTRL &= ~(RB_WAKE_DLY_MOD);
+ 163              	        sys_safe_access_disable();
+ 164              	        sys_safe_access_enable();
+ 165              	        R8_SLP_POWER_CTRL |= m;
+ 166 0046 0F100000 	        sys_safe_access_disable();
+ 167              	    }
+ 296              		fence.i
+ 297              	# 0 "" 2
+ 298              	 #NO_APP
+ 299 004a 4101     		addi	sp,sp,16
+ 300 004c 8280     		jr	ra
+ 301              	.L16:
+ 302 004e 13078008 		li	a4,136
+ 303              	 #APP
+ 304              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 305              		csrrc a5, 0x800, a4
+ 306              	# 0 "" 2
+ 307              	 #NO_APP
+ 308 0056 93F78708 		andi	a5,a5,136
+ 309 005a 3EC2     		sw	a5,4(sp)
+ 310              	 #APP
+ 311              	# 158 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 312              		fence.i
+ 313              	# 0 "" 2
+ 314              	 #NO_APP
+ 315 0060 B7170040 		li	a5,1073745920
+ 316 0064 13057005 		li	a0,87
+ 317 0068 2380A704 		sb	a0,64(a5)
+ 318 006c 930680FA 		li	a3,-88
+ 319 0070 2380D704 		sb	a3,64(a5)
+ 320              	 #APP
+ 321              	# 158 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 322              		fence.i
+ 323              	# 0 "" 2
+ 324              	 #NO_APP
+ 325 0078 03C8E700 		lbu	a6,14(a5)
+ 326 007c B3E50501 		or	a1,a1,a6
+ 327 0080 93E50504 		ori	a1,a1,64
+ 328 0084 2387B700 		sb	a1,14(a5)
+ 329 0088 23800704 		sb	zero,64(a5)
+ 330 008c 9245     		lw	a1,4(sp)
+ 331              	 #APP
+ 332              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 333              		csrrs a1, 0x800, a1
+ 334              	# 0 "" 2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 12
+
+
+ 335              	# 160 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 336              		fence.i
+ 337              	# 0 "" 2
+ 338              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 339              		csrrc a1, 0x800, a4
+ 340              	# 0 "" 2
+ 341              	 #NO_APP
+ 342 009a 93F58508 		andi	a1,a1,136
+ 343 009e 2EC4     		sw	a1,8(sp)
+ 344              	 #APP
+ 345              	# 161 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 346              		fence.i
+ 347              	# 0 "" 2
+ 348              	 #NO_APP
+ 349 00a4 2380A704 		sb	a0,64(a5)
+ 350 00a8 2380D704 		sb	a3,64(a5)
+ 351              	 #APP
+ 352              	# 161 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 353              		fence.i
+ 354              	# 0 "" 2
+ 355              	 #NO_APP
+ 356 00b0 83C5F700 		lbu	a1,15(a5)
+ 357 00b4 93F5C50F 		andi	a1,a1,252
+ 358 00b8 A387B700 		sb	a1,15(a5)
+ 359 00bc 23800704 		sb	zero,64(a5)
+ 360 00c0 A245     		lw	a1,8(sp)
+ 361              	 #APP
+ 362              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 363              		csrrs a1, 0x800, a1
+ 364              	# 0 "" 2
+ 365              	# 163 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 366              		fence.i
+ 367              	# 0 "" 2
+ 368              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 369              		csrrc a4, 0x800, a4
+ 370              	# 0 "" 2
+ 371              	 #NO_APP
+ 372 00ce 13778708 		andi	a4,a4,136
+ 373 00d2 3AC6     		sw	a4,12(sp)
+ 374              	 #APP
+ 375              	# 164 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 376              		fence.i
+ 377              	# 0 "" 2
+ 378              	 #NO_APP
+ 379 00d8 2380A704 		sb	a0,64(a5)
+ 380 00dc 2380D704 		sb	a3,64(a5)
+ 381              	 #APP
+ 382              	# 164 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 383              		fence.i
+ 384              	# 0 "" 2
+ 385              	 #NO_APP
+ 386 00e4 03C7F700 		lbu	a4,15(a5)
+ 387 00e8 7D16     		addi	a2,a2,-1
+ 388 00ea 3336C000 		snez	a2,a2
+ 389 00ee 598E     		or	a2,a2,a4
+ 390 00f0 A387C700 		sb	a2,15(a5)
+ 391 00f4 23800704 		sb	zero,64(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 13
+
+
+ 392 00f8 B247     		lw	a5,12(sp)
+ 393 00fa A1B7     		j	.L19
+ 395              		.section	.text.PowerMonitor,"ax",@progbits
+ 396              		.align	1
+ 397              		.globl	PowerMonitor
+ 399              	PowerMonitor:
+ 400 0000 7971     		addi	sp,sp,-48
+ 401 0002 06D6     		sw	ra,44(sp)
+ 402 0004 22D4     		sw	s0,40(sp)
+ 403 0006 26D2     		sw	s1,36(sp)
+ 404 0008 4AD0     		sw	s2,32(sp)
+ 405 000a 4ECE     		sw	s3,28(sp)
+ 406 000c B7170040 		li	a5,1073745920
+ 407 0010 03C74702 		lbu	a4,36(a5)
+ 408 0014 03C75702 		lbu	a4,37(a5)
+ 409 0018 21E5     		bnez	a0,.L21
+ 410 001a 13078008 		li	a4,136
+ 411              	 #APP
+ 412              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 413              		csrrc a4, 0x800, a4
+ 414              	# 0 "" 2
+ 415              	 #NO_APP
+ 416 0022 13778708 		andi	a4,a4,136
+ 417 0026 3AC2     		sw	a4,4(sp)
+ 418              	 #APP
+ 419              	# 187 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 168              	}
+ 169              	
+ 170              	/*********************************************************************
+ 171              	 * @fn      PowerMonitor
+ 172              	 *
+ 173              	 * @brief   电源监控
+ 174              	 *
+ 175              	 * @param   s       - 是否打开此功能
+ 176              	 * @param   vl      - refer to VolM_LevelypeDef
+ 177              	 *
+ 178              	 * @return  none
+ 179              	 */
+ 180              	void PowerMonitor(FunctionalState s, VolM_LevelypeDef vl)
+ 181              	{
+ 182              	    uint8_t ctrl = R8_BAT_DET_CTRL;
+ 183              	    uint8_t cfg = R8_BAT_DET_CFG;
+ 184              	
+ 185              	    if(s == DISABLE)
+ 186              	    {
+ 187 0028 0F100000 	        sys_safe_access_enable();
+ 188              	        R8_BAT_DET_CTRL = 0;
+ 420              		fence.i
+ 421              	# 0 "" 2
+ 422              	 #NO_APP
+ 423 002c 13077005 		li	a4,87
+ 424 0030 2380E704 		sb	a4,64(a5)
+ 425 0034 130780FA 		li	a4,-88
+ 426 0038 2380E704 		sb	a4,64(a5)
+ 427              	 #APP
+ 428              	# 187 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 429              		fence.i
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 14
+
+
+ 430              	# 0 "" 2
+ 431              	 #NO_APP
+ 432 0040 23820702 		sb	zero,36(a5)
+ 433 0044 23800704 		sb	zero,64(a5)
+ 434 0048 9247     		lw	a5,4(sp)
+ 435              	.L27:
+ 436              	 #APP
+ 437              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 438              		csrrs a5, 0x800, a5
+ 439              	# 0 "" 2
+ 440              	# 212 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 189              	        sys_safe_access_disable();
+ 190              	    }
+ 191              	    else
+ 192              	    {
+ 193              	        if(vl & 0x80)
+ 194              	        {
+ 195              	            cfg = vl & 0x03;
+ 196              	            ctrl = RB_BAT_MON_EN | ((vl >> 2) & 1);
+ 197              	        }
+ 198              	        else
+ 199              	        {
+ 200              	            
+ 201              	            cfg = vl & 0x03;
+ 202              	            ctrl = RB_BAT_DET_EN;
+ 203              	        }
+ 204              	        sys_safe_access_enable();
+ 205              	        R8_BAT_DET_CTRL = ctrl;
+ 206              	        R8_BAT_DET_CFG = cfg;
+ 207              	        sys_safe_access_disable();
+ 208              	
+ 209              	        mDelayuS(1);
+ 210              	        sys_safe_access_enable();
+ 211              	        R8_BAT_DET_CTRL |= RB_BAT_LOW_IE | RB_BAT_LOWER_IE;
+ 212 004e 0F100000 	        sys_safe_access_disable();
+ 213              	    }
+ 441              		fence.i
+ 442              	# 0 "" 2
+ 443              	 #NO_APP
+ 444 0052 B250     		lw	ra,44(sp)
+ 445 0054 2254     		lw	s0,40(sp)
+ 446 0056 9254     		lw	s1,36(sp)
+ 447 0058 0259     		lw	s2,32(sp)
+ 448 005a F249     		lw	s3,28(sp)
+ 449 005c 4561     		addi	sp,sp,48
+ 450 005e 8280     		jr	ra
+ 451              	.L21:
+ 452 0060 93F70508 		andi	a5,a1,128
+ 453 0064 93F63500 		andi	a3,a1,3
+ 454 0068 0547     		li	a4,1
+ 455 006a 89C7     		beqz	a5,.L23
+ 456 006c 8981     		srli	a1,a1,2
+ 457 006e 8589     		andi	a1,a1,1
+ 458 0070 13E72500 		ori	a4,a1,2
+ 459              	.L23:
+ 460 0074 93048008 		li	s1,136
+ 461              	 #APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 15
+
+
+ 462              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 463              		csrrc a5, 0x800, s1
+ 464              	# 0 "" 2
+ 465              	 #NO_APP
+ 466 007c 93F78708 		andi	a5,a5,136
+ 467 0080 3EC4     		sw	a5,8(sp)
+ 468              	 #APP
+ 469              	# 204 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 470              		fence.i
+ 471              	# 0 "" 2
+ 472              	 #NO_APP
+ 473 0086 37140040 		li	s0,1073745920
+ 474 008a 93097005 		li	s3,87
+ 475 008e 23003405 		sb	s3,64(s0)
+ 476 0092 130980FA 		li	s2,-88
+ 477 0096 23002405 		sb	s2,64(s0)
+ 478              	 #APP
+ 479              	# 204 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 480              		fence.i
+ 481              	# 0 "" 2
+ 482              	 #NO_APP
+ 483 009e 2302E402 		sb	a4,36(s0)
+ 484 00a2 A302D402 		sb	a3,37(s0)
+ 485 00a6 23000404 		sb	zero,64(s0)
+ 486 00aa A247     		lw	a5,8(sp)
+ 487              	 #APP
+ 488              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 489              		csrrs a5, 0x800, a5
+ 490              	# 0 "" 2
+ 491              	# 207 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 492              		fence.i
+ 493              	# 0 "" 2
+ 494              	 #NO_APP
+ 495 00b4 0545     		li	a0,1
+ 496 00b6 97000000 		call	mDelayuS
+ 496      E7800000 
+ 497              	 #APP
+ 498              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 499              		csrrc s1, 0x800, s1
+ 500              	# 0 "" 2
+ 501              	 #NO_APP
+ 502 00c2 93F48408 		andi	s1,s1,136
+ 503 00c6 26C6     		sw	s1,12(sp)
+ 504              	 #APP
+ 505              	# 210 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 506              		fence.i
+ 507              	# 0 "" 2
+ 508              	 #NO_APP
+ 509 00cc 23003405 		sb	s3,64(s0)
+ 510 00d0 23002405 		sb	s2,64(s0)
+ 511              	 #APP
+ 512              	# 210 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 513              		fence.i
+ 514              	# 0 "" 2
+ 515              	 #NO_APP
+ 516 00d8 83474402 		lbu	a5,36(s0)
+ 517 00dc 93E7C700 		ori	a5,a5,12
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 16
+
+
+ 518 00e0 2302F402 		sb	a5,36(s0)
+ 519 00e4 23000404 		sb	zero,64(s0)
+ 520 00e8 B247     		lw	a5,12(sp)
+ 521 00ea 85B7     		j	.L27
+ 523              		.section	.highcode,"ax",@progbits
+ 524              		.align	1
+ 525              		.globl	LowPower_Idle
+ 527              	LowPower_Idle:
+ 528 0000 4111     		addi	sp,sp,-16
+ 529 0002 8146     		li	a3,0
+ 530 0004 0146     		li	a2,0
+ 531 0006 8145     		li	a1,0
+ 532 0008 1145     		li	a0,4
+ 533 000a 06C6     		sw	ra,12(sp)
+ 534 000c 97000000 		call	FLASH_EEPROM_CMD
+ 534      E7800000 
+ 535 0014 B7270040 		li	a5,1073750016
+ 536 0018 1147     		li	a4,4
+ 537 001a 2383E780 		sb	a4,-2042(a5)
+ 538 001e B7F700E0 		li	a5,-536809472
+ 539 0022 03A707D1 		lw	a4,-752(a5)
+ 540 0026 6D9B     		andi	a4,a4,-5
+ 541 0028 23A8E7D0 		sw	a4,-752(a5)
+ 542 002c 03A707D1 		lw	a4,-752(a5)
+ 543 0030 5D9B     		andi	a4,a4,-9
+ 544 0032 23A8E7D0 		sw	a4,-752(a5)
+ 545              	 #APP
+ 546              	# 318 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 132              	  return result & 0x88;
+ 133              	}
+ 134              	
+ 135              	/*******************************************************************************
+ 136              	 * @fn      PFIC_EnableIRQ
+ 137              	 *
+ 138              	 * @brief   Enable Interrupt
+ 139              	 *
+ 140              	 * @param   IRQn    - Interrupt Numbers
+ 141              	 */
+ 142              	__attribute__((always_inline)) RV_STATIC_INLINE void PFIC_EnableIRQ(IRQn_Type IRQn)
+ 143              	{
+ 144              	    PFIC->IENR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn)&0x1F));
+ 145              	}
+ 146              	
+ 147              	/*******************************************************************************
+ 148              	 * @fn      PFIC_DisableIRQ
+ 149              	 *
+ 150              	 * @brief   Disable Interrupt
+ 151              	 *
+ 152              	 * @param   IRQn    - Interrupt Numbers
+ 153              	 */
+ 154              	__attribute__((always_inline)) RV_STATIC_INLINE void PFIC_DisableIRQ(IRQn_Type IRQn)
+ 155              	{
+ 156              	    PFIC->IRER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn)&0x1F));
+ 157              	    asm volatile("fence.i");
+ 158              	}
+ 159              	
+ 160              	/*******************************************************************************
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 17
+
+
+ 161              	 * @fn      PFIC_GetStatusIRQ
+ 162              	 *
+ 163              	 * @brief   Get Interrupt Enable State
+ 164              	 *
+ 165              	 * @param   IRQn    - Interrupt Numbers
+ 166              	 *
+ 167              	 * @return  1: Interrupt Enable
+ 168              	 *          0: Interrupt Disable
+ 169              	 */
+ 170              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t PFIC_GetStatusIRQ(IRQn_Type IRQn)
+ 171              	{
+ 172              	    return ((uint32_t)((PFIC->ISR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn)&0x1F))) ? 1 : 0)
+ 173              	}
+ 174              	
+ 175              	/*******************************************************************************
+ 176              	 * @fn      PFIC_GetPendingIRQ
+ 177              	 *
+ 178              	 * @brief   Get Interrupt Pending State
+ 179              	 *
+ 180              	 * @param   IRQn    - Interrupt Numbers
+ 181              	 *
+ 182              	 * @return  1: Interrupt Pending Enable
+ 183              	 *          0: Interrupt Pending Disable
+ 184              	 */
+ 185              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t PFIC_GetPendingIRQ(IRQn_Type IRQn)
+ 186              	{
+ 187              	    return ((uint32_t)((PFIC->IPR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn)&0x1F))) ? 1 : 0)
+ 188              	}
+ 189              	
+ 190              	/*******************************************************************************
+ 191              	 * @fn      PFIC_SetPendingIRQ
+ 192              	 *
+ 193              	 * @brief   Set Interrupt Pending
+ 194              	 *
+ 195              	 * @param   IRQn    - Interrupt Numbers
+ 196              	 */
+ 197              	__attribute__((always_inline)) RV_STATIC_INLINE void PFIC_SetPendingIRQ(IRQn_Type IRQn)
+ 198              	{
+ 199              	    PFIC->IPSR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn)&0x1F));
+ 200              	}
+ 201              	
+ 202              	/*******************************************************************************
+ 203              	 * @fn      PFIC_ClearPendingIRQ
+ 204              	 *
+ 205              	 * @brief   Clear Interrupt Pending
+ 206              	 *
+ 207              	 * @param   IRQn    - Interrupt Numbers
+ 208              	 */
+ 209              	__attribute__((always_inline)) RV_STATIC_INLINE void PFIC_ClearPendingIRQ(IRQn_Type IRQn)
+ 210              	{
+ 211              	    PFIC->IPRR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn)&0x1F));
+ 212              	}
+ 213              	
+ 214              	/*******************************************************************************
+ 215              	 * @fn      PFIC_GetActive
+ 216              	 *
+ 217              	 * @brief   Get Interrupt Active State
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 18
+
+
+ 218              	 *
+ 219              	 * @param   IRQn    - Interrupt Numbers
+ 220              	 *
+ 221              	 * @return  1: Interrupt Active
+ 222              	 *          0: Interrupt No Active.
+ 223              	 */
+ 224              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t PFIC_GetActive(IRQn_Type IRQn)
+ 225              	{
+ 226              	    return ((uint32_t)((PFIC->IACTR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn)&0x1F))) ? 1 : 
+ 227              	}
+ 228              	
+ 229              	/*******************************************************************************
+ 230              	 * @fn      PFIC_SetPriority
+ 231              	 *
+ 232              	 * @brief   Set Interrupt Priority
+ 233              	 *
+ 234              	 * @param   IRQn        - Interrupt Numbers
+ 235              	 * @param   priority    - bit7-bit4:   priority
+ 236              	 */
+ 237              	__attribute__((always_inline)) RV_STATIC_INLINE void PFIC_SetPriority(IRQn_Type IRQn, uint8_t prior
+ 238              	{
+ 239              	    PFIC->IPRIOR[(uint32_t)(IRQn)] = priority;
+ 240              	}
+ 241              	
+ 242              	/*********************************************************************
+ 243              	 * @fn      SetVTFIRQ
+ 244              	 *
+ 245              	 * @brief   Set VTF Interrupt
+ 246              	 *
+ 247              	 * @param   addr - VTF interrupt service function base address.
+ 248              	 *                  IRQn - Interrupt Numbers
+ 249              	 *                  num - VTF Interrupt Numbers
+ 250              	 *                  NewState -  DISABLE or ENABLE
+ 251              	 *
+ 252              	 * @return  none
+ 253              	 */
+ 254              	__attribute__((always_inline)) RV_STATIC_INLINE void SetVTFIRQ(uint32_t addr, IRQn_Type IRQn, uint8
+ 255              	  if(num > 3)  return ;
+ 256              	
+ 257              	  if (NewState != DISABLE)
+ 258              	  {
+ 259              	      PFIC->VTFIDR[num] = IRQn;
+ 260              	      PFIC->VTFADDR[num] = ((addr&0xFFFFFFFE)|0x1);
+ 261              	  }
+ 262              	  else{
+ 263              	      PFIC->VTFIDR[num] = IRQn;
+ 264              	      PFIC->VTFADDR[num] = ((addr&0xFFFFFFFE)&(~0x1));
+ 265              	  }
+ 266              	}
+ 267              	
+ 268              	/*********************************************************************
+ 269              	 * @fn       _SEV
+ 270              	 *
+ 271              	 * @brief   Set Event
+ 272              	 *
+ 273              	 * @return  none
+ 274              	 */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 19
+
+
+ 275              	__attribute__( ( always_inline ) ) RV_STATIC_INLINE void _SEV(void)
+ 276              	{
+ 277              	
+ 278              	    PFIC->SCTLR |= (1<<3)|(1<<5);
+ 279              	
+ 280              	}
+ 281              	
+ 282              	/*********************************************************************
+ 283              	 * @fn       _WFE
+ 284              	 *
+ 285              	 * @brief   Wait for Events
+ 286              	 *
+ 287              	 * @return  none
+ 288              	 */
+ 289              	__attribute__( ( always_inline ) ) RV_STATIC_INLINE void _WFE(void)
+ 290              	{
+ 291              	    PFIC->SCTLR |= (1<<3);
+ 292              	    asm volatile ("wfi");
+ 293              	}
+ 294              	
+ 295              	
+ 296              	/*********************************************************************
+ 297              	 * @fn      __WFE
+ 298              	 *
+ 299              	 * @brief   Wait for Events
+ 300              	 *
+ 301              	 * @return  None
+ 302              	 */
+ 303              	__attribute__( ( always_inline ) ) RV_STATIC_INLINE void __WFE(void)
+ 304              	{
+ 305              	    _SEV();
+ 306              	    _WFE();
+ 307              	    _WFE();
+ 308              	}
+ 309              	
+ 310              	/*********************************************************************
+ 311              	 * @fn      __WFI
+ 312              	 *
+ 313              	 * @brief   Wait for Interrupt
+ 314              	 */
+ 315              	__attribute__((always_inline)) RV_STATIC_INLINE void __WFI(void)
+ 316              	{
+ 317              	    PFIC->SCTLR &= ~(1 << 3); // wfi
+ 318 0036 73005010 	    __asm__ volatile("wfi");
+ 319              	}
+ 547              		wfi
+ 548              	# 0 "" 2
+ 549              	# 233 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 214              	}
+ 215              	
+ 216              	/*********************************************************************
+ 217              	 * @fn      LowPower_Idle
+ 218              	 *
+ 219              	 * @brief   低功耗-Idle模式
+ 220              	 *
+ 221              	 * @param   none
+ 222              	 *
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 20
+
+
+ 223              	 * @return  none
+ 224              	 */
+ 225              	__HIGH_CODE
+ 226              	void LowPower_Idle(void)
+ 227              	{
+ 228              	    FLASH_ROM_SW_RESET();
+ 229              	    R8_FLASH_CTRL = 0x04; //flash关闭
+ 230              	
+ 231              	    PFIC->SCTLR &= ~(1 << 2); // sleep
+ 232              	    __WFI();
+ 233 003a 0100     	    __nop();
+ 234              	    __nop();
+ 550              		nop
+ 551              	# 0 "" 2
+ 552              	# 234 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 235              	}
+ 553              		nop
+ 554              	# 0 "" 2
+ 555              	 #NO_APP
+ 556 003e B240     		lw	ra,12(sp)
+ 557 0040 4101     		addi	sp,sp,16
+ 558 0042 8280     		jr	ra
+ 560              		.align	1
+ 561              		.globl	LowPower_Halt
+ 563              	LowPower_Halt:
+ 564 0044 0111     		addi	sp,sp,-32
+ 565 0046 8146     		li	a3,0
+ 566 0048 0146     		li	a2,0
+ 567 004a 8145     		li	a1,0
+ 568 004c 1145     		li	a0,4
+ 569 004e 06CE     		sw	ra,28(sp)
+ 570 0050 97000000 		call	FLASH_EEPROM_CMD
+ 570      E7800000 
+ 571 0058 B7270040 		li	a5,1073750016
+ 572 005c 1147     		li	a4,4
+ 573 005e 2383E780 		sb	a4,-2042(a5)
+ 574 0062 B7170040 		li	a5,1073745920
+ 575 0066 83C6E702 		lbu	a3,46(a5)
+ 576 006a 03C5E704 		lbu	a0,78(a5)
+ 577 006e 13078008 		li	a4,136
+ 578 0072 93F6C60F 		andi	a3,a3,252
+ 579 0076 13653500 		ori	a0,a0,3
+ 580 007a 93E61600 		ori	a3,a3,1
+ 581              	 #APP
+ 582              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 583              		csrrc a2, 0x800, a4
+ 584              	# 0 "" 2
+ 585              	 #NO_APP
+ 586 0082 13768608 		andi	a2,a2,136
+ 587 0086 32C0     		sw	a2,0(sp)
+ 588              	 #APP
+ 589              	# 258 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 236              	
+ 237              	/*********************************************************************
+ 238              	 * @fn      LowPower_Halt
+ 239              	 *
+ 240              	 * @brief   低功耗-Halt模式，此低功耗切到HSI/5时钟运行，唤醒后需要用户自己重新选择系统时钟源
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 21
+
+
+ 241              	 *
+ 242              	 * @param   none
+ 243              	 *
+ 244              	 * @return  none
+ 245              	 */
+ 246              	__HIGH_CODE
+ 247              	void LowPower_Halt(void)
+ 248              	{
+ 249              	    uint8_t x32Kpw, x32Mpw;
+ 250              	
+ 251              	    FLASH_ROM_SW_RESET();
+ 252              	    R8_FLASH_CTRL = 0x04; //flash关闭
+ 253              	    x32Kpw = R8_XT32K_TUNE;
+ 254              	    x32Mpw = R8_XT32M_TUNE;
+ 255              	    x32Mpw = (x32Mpw & 0xfc) | 0x03; // 150%额定电流
+ 256              	    x32Kpw = (x32Kpw & 0xfc) | 0x01; // LSE驱动电流降低到额定电流
+ 257              	
+ 258 0088 0F100000 	    sys_safe_access_enable();
+ 259              	    R8_BAT_DET_CTRL = 0; // 关闭电压监控
+ 590              		fence.i
+ 591              	# 0 "" 2
+ 592              	 #NO_APP
+ 593 008c 93057005 		li	a1,87
+ 594 0090 2380B704 		sb	a1,64(a5)
+ 595 0094 130680FA 		li	a2,-88
+ 596 0098 2380C704 		sb	a2,64(a5)
+ 597              	 #APP
+ 598              	# 258 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 599              		fence.i
+ 600              	# 0 "" 2
+ 601              	 #NO_APP
+ 602 00a0 23820702 		sb	zero,36(a5)
+ 603 00a4 23800704 		sb	zero,64(a5)
+ 604 00a8 0248     		lw	a6,0(sp)
+ 605              	 #APP
+ 606              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 607              		csrrs a6, 0x800, a6
+ 608              	# 0 "" 2
+ 609              	# 260 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 260 00ae 0F100000 	    sys_safe_access_disable();
+ 261              	    sys_safe_access_enable();
+ 610              		fence.i
+ 611              	# 0 "" 2
+ 612              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 613              		csrrc a6, 0x800, a4
+ 614              	# 0 "" 2
+ 615              	 #NO_APP
+ 616 00b6 13788808 		andi	a6,a6,136
+ 617 00ba 42C2     		sw	a6,4(sp)
+ 618              	 #APP
+ 619              	# 261 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 262              	    R8_XT32K_TUNE = x32Kpw;
+ 620              		fence.i
+ 621              	# 0 "" 2
+ 622              	 #NO_APP
+ 623 00c0 2380B704 		sb	a1,64(a5)
+ 624 00c4 2380C704 		sb	a2,64(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 22
+
+
+ 625              	 #APP
+ 626              	# 261 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 627              		fence.i
+ 628              	# 0 "" 2
+ 629              	 #NO_APP
+ 630 00cc 2387D702 		sb	a3,46(a5)
+ 631 00d0 2387A704 		sb	a0,78(a5)
+ 632 00d4 23800704 		sb	zero,64(a5)
+ 633 00d8 9246     		lw	a3,4(sp)
+ 634              	 #APP
+ 635              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 636              		csrrs a3, 0x800, a3
+ 637              	# 0 "" 2
+ 638              	# 264 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 263              	    R8_XT32M_TUNE = x32Mpw;
+ 264 00de 0F100000 	    sys_safe_access_disable();
+ 265              	    sys_safe_access_enable();
+ 639              		fence.i
+ 640              	# 0 "" 2
+ 641              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 642              		csrrc a3, 0x800, a4
+ 643              	# 0 "" 2
+ 644              	 #NO_APP
+ 645 00e6 93F68608 		andi	a3,a3,136
+ 646 00ea 36C4     		sw	a3,8(sp)
+ 647              	 #APP
+ 648              	# 265 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 266              	    R8_PLL_CONFIG |= (1 << 5);
+ 649              		fence.i
+ 650              	# 0 "" 2
+ 651              	 #NO_APP
+ 652 00f0 2380B704 		sb	a1,64(a5)
+ 653 00f4 2380C704 		sb	a2,64(a5)
+ 654              	 #APP
+ 655              	# 265 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 656              		fence.i
+ 657              	# 0 "" 2
+ 658              	 #NO_APP
+ 659 00fc 83C6B704 		lbu	a3,75(a5)
+ 660 0100 93E60602 		ori	a3,a3,32
+ 661 0104 A385D704 		sb	a3,75(a5)
+ 662 0108 23800704 		sb	zero,64(a5)
+ 663 010c A246     		lw	a3,8(sp)
+ 664              	 #APP
+ 665              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 666              		csrrs a3, 0x800, a3
+ 667              	# 0 "" 2
+ 668              	# 267 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 267 0112 0F100000 	    sys_safe_access_disable();
+ 268              	
+ 669              		fence.i
+ 670              	# 0 "" 2
+ 671              	 #NO_APP
+ 672 0116 B7F600E0 		li	a3,-536809472
+ 673 011a 03A506D1 		lw	a0,-752(a3)
+ 674 011e 13654500 		ori	a0,a0,4
+ 675 0122 23A8A6D0 		sw	a0,-752(a3)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 23
+
+
+ 676 0126 03A506D1 		lw	a0,-752(a3)
+ 677 012a 5D99     		andi	a0,a0,-9
+ 678 012c 23A8A6D0 		sw	a0,-752(a3)
+ 679              	 #APP
+ 680              	# 318 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 681              		wfi
+ 682              	# 0 "" 2
+ 683              	# 271 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 269              	    PFIC->SCTLR |= (1 << 2); //deep sleep
+ 270              	    __WFI();
+ 271 0134 0100     	    __nop();
+ 272              	    __nop();
+ 684              		nop
+ 685              	# 0 "" 2
+ 686              	# 272 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 273              	    sys_safe_access_enable();
+ 687              		nop
+ 688              	# 0 "" 2
+ 689              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 690              		csrrc a4, 0x800, a4
+ 691              	# 0 "" 2
+ 692              	 #NO_APP
+ 693 013c 13778708 		andi	a4,a4,136
+ 694 0140 3AC6     		sw	a4,12(sp)
+ 695              	 #APP
+ 696              	# 273 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 274              	    R8_PLL_CONFIG &= ~(1 << 5);
+ 697              		fence.i
+ 698              	# 0 "" 2
+ 699              	 #NO_APP
+ 700 0146 2380B704 		sb	a1,64(a5)
+ 701 014a 2380C704 		sb	a2,64(a5)
+ 702              	 #APP
+ 703              	# 273 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 704              		fence.i
+ 705              	# 0 "" 2
+ 706              	 #NO_APP
+ 707 0152 03C7B704 		lbu	a4,75(a5)
+ 708 0156 1377F70D 		andi	a4,a4,223
+ 709 015a A385E704 		sb	a4,75(a5)
+ 710 015e 23800704 		sb	zero,64(a5)
+ 711 0162 B247     		lw	a5,12(sp)
+ 712              	 #APP
+ 713              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 714              		csrrs a5, 0x800, a5
+ 715              	# 0 "" 2
+ 716              	# 275 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 275 0168 0F100000 	    sys_safe_access_disable();
+ 276              	}
+ 717              		fence.i
+ 718              	# 0 "" 2
+ 719              	 #NO_APP
+ 720 016c F240     		lw	ra,28(sp)
+ 721 016e 0561     		addi	sp,sp,32
+ 722 0170 8280     		jr	ra
+ 724              		.align	1
+ 725              		.globl	LowPower_Sleep
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 24
+
+
+ 727              	LowPower_Sleep:
+ 728 0172 3971     		addi	sp,sp,-64
+ 729 0174 B7F50700 		li	a1,520192
+ 730 0178 22DC     		sw	s0,56(sp)
+ 731 017a 8146     		li	a3,0
+ 732 017c 2A84     		mv	s0,a0
+ 733 017e 3010     		addi	a2,sp,40
+ 734 0180 E105     		addi	a1,a1,24
+ 735 0182 1945     		li	a0,6
+ 736 0184 06DE     		sw	ra,60(sp)
+ 737 0186 02D4     		sw	zero,40(sp)
+ 738 0188 23160102 		sh	zero,44(sp)
+ 739 018c 97000000 		call	FLASH_EEPROM_CMD
+ 739      E7800000 
+ 740 0194 B7170040 		li	a5,1073745920
+ 741 0198 83C6E704 		lbu	a3,78(a5)
+ 742 019c 13078008 		li	a4,136
+ 743 01a0 93E63600 		ori	a3,a3,3
+ 744              	 #APP
+ 745              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 746              		csrrc a2, 0x800, a4
+ 747              	# 0 "" 2
+ 748              	 #NO_APP
+ 749 01a8 13768608 		andi	a2,a2,136
+ 750 01ac 32C4     		sw	a2,8(sp)
+ 751              	 #APP
+ 752              	# 302 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 277              	
+ 278              	/*******************************************************************************
+ 279              	* Function Name  : LowPower_Sleep
+ 280              	* Description    : 低功耗-Sleep模式。
+ 281              	                   注意当主频为80M时，睡眠唤醒中断不可调用flash内代码，且退出此函数前需要加上30us延
+ 282              	* Input          : rm:
+ 283              	                    RB_PWR_RAM2K	-	2K retention SRAM 供电
+ 284              	                    RB_PWR_RAM24K	-	24K main SRAM 供电
+ 285              	                    RB_PWR_EXTEND	-	USB 和 BLE 单元保留区域供电
+ 286              	                    RB_PWR_XROM   - FlashROM 供电
+ 287              	                   NULL	-	以上单元都断电
+ 288              	* Return         : None
+ 289              	*******************************************************************************/
+ 290              	__HIGH_CODE
+ 291              	void LowPower_Sleep(uint16_t rm)
+ 292              	{
+ 293              	    __attribute__((aligned(4))) uint8_t MacAddr[6] = {0};
+ 294              	    uint8_t x32Mpw;
+ 295              	    uint16_t power_plan;
+ 296              	
+ 297              	    GetMACAddress(MacAddr);
+ 298              	
+ 299              	    x32Mpw = R8_XT32M_TUNE;
+ 300              	    x32Mpw = (x32Mpw & 0xfc) | 0x03; // 150%额定电流
+ 301              	
+ 302 01ae 0F100000 	    sys_safe_access_enable();
+ 303              	    R8_BAT_DET_CTRL = 0; // 关闭电压监控
+ 753              		fence.i
+ 754              	# 0 "" 2
+ 755              	 #NO_APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 25
+
+
+ 756 01b2 93057005 		li	a1,87
+ 757 01b6 2380B704 		sb	a1,64(a5)
+ 758 01ba 130680FA 		li	a2,-88
+ 759 01be 2380C704 		sb	a2,64(a5)
+ 760              	 #APP
+ 761              	# 302 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 762              		fence.i
+ 763              	# 0 "" 2
+ 764              	 #NO_APP
+ 765 01c6 23820702 		sb	zero,36(a5)
+ 766 01ca 23800704 		sb	zero,64(a5)
+ 767 01ce 2245     		lw	a0,8(sp)
+ 768              	 #APP
+ 769              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 770              		csrrs a0, 0x800, a0
+ 771              	# 0 "" 2
+ 772              	# 304 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 304 01d4 0F100000 	    sys_safe_access_disable();
+ 305              	    sys_safe_access_enable();
+ 773              		fence.i
+ 774              	# 0 "" 2
+ 775              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 776              		csrrc a0, 0x800, a4
+ 777              	# 0 "" 2
+ 778              	 #NO_APP
+ 779 01dc 13758508 		andi	a0,a0,136
+ 780 01e0 2AC6     		sw	a0,12(sp)
+ 781              	 #APP
+ 782              	# 305 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 306              	    R8_XT32M_TUNE = x32Mpw;
+ 783              		fence.i
+ 784              	# 0 "" 2
+ 785              	 #NO_APP
+ 786 01e6 2380B704 		sb	a1,64(a5)
+ 787 01ea 2380C704 		sb	a2,64(a5)
+ 788              	 #APP
+ 789              	# 305 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 790              		fence.i
+ 791              	# 0 "" 2
+ 792              	 #NO_APP
+ 793 01f2 2387D704 		sb	a3,78(a5)
+ 794 01f6 23800704 		sb	zero,64(a5)
+ 795 01fa B246     		lw	a3,12(sp)
+ 796              	 #APP
+ 797              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 798              		csrrs a3, 0x800, a3
+ 799              	# 0 "" 2
+ 800              	# 307 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 307 0200 0F100000 	    sys_safe_access_disable();
+ 308              	
+ 801              		fence.i
+ 802              	# 0 "" 2
+ 803              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 804              		csrrc a3, 0x800, a4
+ 805              	# 0 "" 2
+ 806              	 #NO_APP
+ 807 0208 93F68608 		andi	a3,a3,136
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 26
+
+
+ 808 020c 36C8     		sw	a3,16(sp)
+ 809              	 #APP
+ 810              	# 309 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 309 020e 0F100000 	    sys_safe_access_enable();
+ 310              	    R16_POWER_PLAN &= ~RB_XT_PRE_EN;
+ 811              		fence.i
+ 812              	# 0 "" 2
+ 813              	 #NO_APP
+ 814 0212 2380B704 		sb	a1,64(a5)
+ 815 0216 2380C704 		sb	a2,64(a5)
+ 816              	 #APP
+ 817              	# 309 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 818              		fence.i
+ 819              	# 0 "" 2
+ 820              	 #NO_APP
+ 821 021e 03D50702 		lhu	a0,32(a5)
+ 822 0222 F176     		li	a3,-16384
+ 823 0224 FD16     		addi	a3,a3,-1
+ 824 0226 E98E     		and	a3,a3,a0
+ 825 0228 2390D702 		sh	a3,32(a5)
+ 826 022c 23800704 		sb	zero,64(a5)
+ 827 0230 C246     		lw	a3,16(sp)
+ 828              	 #APP
+ 829              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 830              		csrrs a3, 0x800, a3
+ 831              	# 0 "" 2
+ 832              	# 311 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 311 0236 0F100000 	    sys_safe_access_disable();
+ 312              	
+ 833              		fence.i
+ 834              	# 0 "" 2
+ 835              	 #NO_APP
+ 836 023a 37F500E0 		li	a0,-536809472
+ 837 023e 832605D1 		lw	a3,-752(a0)
+ 838 0242 93E64600 		ori	a3,a3,4
+ 839 0246 2328D5D0 		sw	a3,-752(a0)
+ 840 024a 83D60702 		lhu	a3,32(a5)
+ 841 024e 6575     		li	a0,-28672
+ 842 0250 1105     		addi	a0,a0,4
+ 843 0252 93F60660 		andi	a3,a3,1536
+ 844 0256 C18E     		or	a3,s0,a3
+ 845 0258 C98E     		or	a3,a3,a0
+ 846 025a C206     		slli	a3,a3,16
+ 847 025c C182     		srli	a3,a3,16
+ 848              	 #APP
+ 849              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 850              		csrrc a0, 0x800, a4
+ 851              	# 0 "" 2
+ 852              	 #NO_APP
+ 853 0262 13758508 		andi	a0,a0,136
+ 854 0266 2ACA     		sw	a0,20(sp)
+ 855              	 #APP
+ 856              	# 318 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 313              	    PFIC->SCTLR |= (1 << 2); //deep sleep
+ 314              	
+ 315              	    power_plan = R16_POWER_PLAN & (RB_PWR_DCDC_EN | RB_PWR_DCDC_PRE);
+ 316              	    power_plan |= RB_PWR_PLAN_EN | RB_PWR_CORE | rm | (2<<11);
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 27
+
+
+ 317              	
+ 318 0268 0F100000 	    sys_safe_access_enable();
+ 319              	    R8_SLP_POWER_CTRL |= RB_RAM_RET_LV;
+ 857              		fence.i
+ 858              	# 0 "" 2
+ 859              	 #NO_APP
+ 860 026c 2380B704 		sb	a1,64(a5)
+ 861 0270 2380C704 		sb	a2,64(a5)
+ 862              	 #APP
+ 863              	# 318 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 864              		fence.i
+ 865              	# 0 "" 2
+ 866              	 #NO_APP
+ 867 0278 03C5F700 		lbu	a0,15(a5)
+ 868 027c 13650504 		ori	a0,a0,64
+ 869 0280 A387A700 		sb	a0,15(a5)
+ 870 0284 2390D702 		sh	a3,32(a5)
+ 871 0288 23800704 		sb	zero,64(a5)
+ 872 028c D246     		lw	a3,20(sp)
+ 873              	 #APP
+ 874              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 875              		csrrs a3, 0x800, a3
+ 876              	# 0 "" 2
+ 877              	# 321 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 320              	    R16_POWER_PLAN = power_plan;
+ 321 0292 0F100000 	    sys_safe_access_disable();
+ 322              	    if((rm & RB_XT_PRE_EN) == 0)
+ 878              		fence.i
+ 879              	# 0 "" 2
+ 880              	 #NO_APP
+ 881 0296 1165     		li	a0,16384
+ 882 0298 618D     		and	a0,s0,a0
+ 883 029a 1DE9     		bnez	a0,.L33
+ 884              	 #APP
+ 885              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 886              		csrrc a4, 0x800, a4
+ 887              	# 0 "" 2
+ 888              	 #NO_APP
+ 889 02a0 13778708 		andi	a4,a4,136
+ 890 02a4 3ACC     		sw	a4,24(sp)
+ 891              	 #APP
+ 892              	# 324 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 323              	    {
+ 324 02a6 0F100000 	        sys_safe_access_enable();
+ 325              	        R8_PLL_CONFIG |= (1 << 5);
+ 893              		fence.i
+ 894              	# 0 "" 2
+ 895              	 #NO_APP
+ 896 02aa 2380B704 		sb	a1,64(a5)
+ 897 02ae 2380C704 		sb	a2,64(a5)
+ 898              	 #APP
+ 899              	# 324 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 900              		fence.i
+ 901              	# 0 "" 2
+ 902              	 #NO_APP
+ 903 02b6 03C7B704 		lbu	a4,75(a5)
+ 904 02ba 13670702 		ori	a4,a4,32
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 28
+
+
+ 905 02be A385E704 		sb	a4,75(a5)
+ 906 02c2 23800704 		sb	zero,64(a5)
+ 907 02c6 E247     		lw	a5,24(sp)
+ 908              	 #APP
+ 909              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 910              		csrrs a5, 0x800, a5
+ 911              	# 0 "" 2
+ 912              	# 326 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 326 02cc 0F100000 	        sys_safe_access_disable();
+ 327              	    }
+ 913              		fence.i
+ 914              	# 0 "" 2
+ 915              	 #NO_APP
+ 916              	.L33:
+ 917 02d0 37F700E0 		li	a4,-536809472
+ 918 02d4 832707D1 		lw	a5,-752(a4)
+ 919 02d8 DD9B     		andi	a5,a5,-9
+ 920 02da 2328F7D0 		sw	a5,-752(a4)
+ 921              	 #APP
+ 922              	# 318 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 923              		wfi
+ 924              	# 0 "" 2
+ 925              	# 330 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 328              	
+ 329              	    __WFI();
+ 330 02e2 0100     	    __nop();
+ 331              	    __nop();
+ 926              		nop
+ 927              	# 0 "" 2
+ 928              	# 331 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 332              	
+ 929              		nop
+ 930              	# 0 "" 2
+ 931              	 #NO_APP
+ 932 02e6 13078008 		li	a4,136
+ 933              	 #APP
+ 934              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 935              		csrrc a5, 0x800, a4
+ 936              	# 0 "" 2
+ 937              	 #NO_APP
+ 938 02ee 93F78708 		andi	a5,a5,136
+ 939 02f2 3ECE     		sw	a5,28(sp)
+ 940              	 #APP
+ 941              	# 333 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 333 02f4 0F100000 	    sys_safe_access_enable();
+ 334              	    R16_POWER_PLAN &= ~RB_PWR_PLAN_EN;
+ 942              		fence.i
+ 943              	# 0 "" 2
+ 944              	 #NO_APP
+ 945 02f8 B7170040 		li	a5,1073745920
+ 946 02fc 93057005 		li	a1,87
+ 947 0300 2380B704 		sb	a1,64(a5)
+ 948 0304 130680FA 		li	a2,-88
+ 949 0308 2380C704 		sb	a2,64(a5)
+ 950              	 #APP
+ 951              	# 333 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 952              		fence.i
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 29
+
+
+ 953              	# 0 "" 2
+ 954              	 #NO_APP
+ 955 0310 83D60702 		lhu	a3,32(a5)
+ 956 0314 C606     		slli	a3,a3,17
+ 957 0316 C582     		srli	a3,a3,17
+ 958 0318 2390D702 		sh	a3,32(a5)
+ 959 031c 23800704 		sb	zero,64(a5)
+ 960 0320 F246     		lw	a3,28(sp)
+ 961              	 #APP
+ 962              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 963              		csrrs a3, 0x800, a3
+ 964              	# 0 "" 2
+ 965              	# 335 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 335 0326 0F100000 	    sys_safe_access_disable();
+ 336              	
+ 966              		fence.i
+ 967              	# 0 "" 2
+ 968              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 969              		csrrc a3, 0x800, a4
+ 970              	# 0 "" 2
+ 971              	 #NO_APP
+ 972 032e 93F68608 		andi	a3,a3,136
+ 973 0332 36D0     		sw	a3,32(sp)
+ 974              	 #APP
+ 975              	# 337 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 337 0334 0F100000 	    sys_safe_access_enable();
+ 338              	    R16_POWER_PLAN &= ~RB_XT_PRE_EN;
+ 976              		fence.i
+ 977              	# 0 "" 2
+ 978              	 #NO_APP
+ 979 0338 2380B704 		sb	a1,64(a5)
+ 980 033c 2380C704 		sb	a2,64(a5)
+ 981              	 #APP
+ 982              	# 337 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 983              		fence.i
+ 984              	# 0 "" 2
+ 985              	 #NO_APP
+ 986 0344 03D80702 		lhu	a6,32(a5)
+ 987 0348 F176     		li	a3,-16384
+ 988 034a FD16     		addi	a3,a3,-1
+ 989 034c B3F60601 		and	a3,a3,a6
+ 990 0350 2390D702 		sh	a3,32(a5)
+ 991 0354 23800704 		sb	zero,64(a5)
+ 992 0358 8256     		lw	a3,32(sp)
+ 993              	 #APP
+ 994              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 995              		csrrs a3, 0x800, a3
+ 996              	# 0 "" 2
+ 997              	# 339 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 339 035e 0F100000 	    sys_safe_access_disable();
+ 340              	
+ 998              		fence.i
+ 999              	# 0 "" 2
+ 1000              	 #NO_APP
+ 1001 0362 21E1     		bnez	a0,.L32
+ 1002              	 #APP
+ 1003              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 30
+
+
+ 1004              		csrrc a4, 0x800, a4
+ 1005              	# 0 "" 2
+ 1006              	 #NO_APP
+ 1007 0368 13778708 		andi	a4,a4,136
+ 1008 036c 3AD2     		sw	a4,36(sp)
+ 1009              	 #APP
+ 1010              	# 343 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 341              	    if((rm & RB_XT_PRE_EN) == 0)
+ 342              	    {
+ 343 036e 0F100000 	        sys_safe_access_enable();
+ 344              	        R8_PLL_CONFIG &= ~(1 << 5);
+ 1011              		fence.i
+ 1012              	# 0 "" 2
+ 1013              	 #NO_APP
+ 1014 0372 2380B704 		sb	a1,64(a5)
+ 1015 0376 2380C704 		sb	a2,64(a5)
+ 1016              	 #APP
+ 1017              	# 343 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 1018              		fence.i
+ 1019              	# 0 "" 2
+ 1020              	 #NO_APP
+ 1021 037e 03C7B704 		lbu	a4,75(a5)
+ 1022 0382 1377F70D 		andi	a4,a4,223
+ 1023 0386 A385E704 		sb	a4,75(a5)
+ 1024 038a 23800704 		sb	zero,64(a5)
+ 1025 038e 9257     		lw	a5,36(sp)
+ 1026              	 #APP
+ 1027              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1028              		csrrs a5, 0x800, a5
+ 1029              	# 0 "" 2
+ 1030              	# 345 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 345 0394 0F100000 	        sys_safe_access_disable();
+ 346              	        DelayUs(20);
+ 1031              		fence.i
+ 1032              	# 0 "" 2
+ 1033              	 #NO_APP
+ 1034 0398 5145     		li	a0,20
+ 1035 039a 97000000 		call	mDelayuS
+ 1035      E7800000 
+ 1036              	.L32:
+ 1037 03a2 F250     		lw	ra,60(sp)
+ 1038 03a4 6254     		lw	s0,56(sp)
+ 1039 03a6 2161     		addi	sp,sp,64
+ 1040 03a8 8280     		jr	ra
+ 1042              		.align	1
+ 1043              		.globl	LowPower_Shutdown
+ 1045              	LowPower_Shutdown:
+ 1046 03aa 3971     		addi	sp,sp,-64
+ 1047 03ac 52D4     		sw	s4,40(sp)
+ 1048 03ae 8146     		li	a3,0
+ 1049 03b0 2A8A     		mv	s4,a0
+ 1050 03b2 0146     		li	a2,0
+ 1051 03b4 8145     		li	a1,0
+ 1052 03b6 1145     		li	a0,4
+ 1053 03b8 22DC     		sw	s0,56(sp)
+ 1054 03ba 26DA     		sw	s1,52(sp)
+ 1055 03bc 06DE     		sw	ra,60(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 31
+
+
+ 1056 03be 4AD8     		sw	s2,48(sp)
+ 1057 03c0 4ED6     		sw	s3,44(sp)
+ 1058 03c2 37140040 		li	s0,1073745920
+ 1059 03c6 97000000 		call	FLASH_EEPROM_CMD
+ 1059      E7800000 
+ 1060 03ce 8347E402 		lbu	a5,46(s0)
+ 1061 03d2 0347E404 		lbu	a4,78(s0)
+ 1062 03d6 93048008 		li	s1,136
+ 1063 03da 93F7C70F 		andi	a5,a5,252
+ 1064 03de 13673700 		ori	a4,a4,3
+ 1065 03e2 93E71700 		ori	a5,a5,1
+ 1066              	 #APP
+ 1067              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1068              		csrrc a3, 0x800, s1
+ 1069              	# 0 "" 2
+ 1070              	 #NO_APP
+ 1071 03ea 93F68608 		andi	a3,a3,136
+ 1072 03ee 36C6     		sw	a3,12(sp)
+ 1073              	 #APP
+ 1074              	# 374 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 347              	    }
+ 348              	}
+ 349              	
+ 350              	/*********************************************************************
+ 351              	 * @fn      LowPower_Shutdown
+ 352              	 *
+ 353              	 * @brief   低功耗-Shutdown模式，此低功耗切到HSI/5时钟运行，唤醒后需要用户自己重新选择系统时钟源
+ 354              	 *          @note 注意调用此函数，DCDC功能强制关闭，唤醒后可以手动再次打开
+ 355              	 *
+ 356              	 * @param   rm      - 供电模块选择
+ 357              	 *                    RB_PWR_RAM2K  -   2K retention SRAM 供电
+ 358              	 *                    RB_PWR_RAM16K -   16K main SRAM 供电
+ 359              	 *                    NULL          -   以上单元都断电
+ 360              	 *
+ 361              	 * @return  none
+ 362              	 */
+ 363              	__HIGH_CODE
+ 364              	void LowPower_Shutdown(uint16_t rm)
+ 365              	{
+ 366              	    uint8_t x32Kpw, x32Mpw;
+ 367              	
+ 368              	    FLASH_ROM_SW_RESET();
+ 369              	    x32Kpw = R8_XT32K_TUNE;
+ 370              	    x32Mpw = R8_XT32M_TUNE;
+ 371              	    x32Mpw = (x32Mpw & 0xfc) | 0x03; // 150%额定电流
+ 372              	    x32Kpw = (x32Kpw & 0xfc) | 0x01; // LSE驱动电流降低到额定电流
+ 373              	
+ 374 03f0 0F100000 	    sys_safe_access_enable();
+ 375              	    R8_BAT_DET_CTRL = 0; // 关闭电压监控
+ 1075              		fence.i
+ 1076              	# 0 "" 2
+ 1077              	 #NO_APP
+ 1078 03f4 93097005 		li	s3,87
+ 1079 03f8 23003405 		sb	s3,64(s0)
+ 1080 03fc 130980FA 		li	s2,-88
+ 1081 0400 23002405 		sb	s2,64(s0)
+ 1082              	 #APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 32
+
+
+ 1083              	# 374 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 1084              		fence.i
+ 1085              	# 0 "" 2
+ 1086              	 #NO_APP
+ 1087 0408 23020402 		sb	zero,36(s0)
+ 1088 040c 23000404 		sb	zero,64(s0)
+ 1089 0410 B246     		lw	a3,12(sp)
+ 1090              	 #APP
+ 1091              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1092              		csrrs a3, 0x800, a3
+ 1093              	# 0 "" 2
+ 1094              	# 376 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 376 0416 0F100000 	    sys_safe_access_disable();
+ 377              	    sys_safe_access_enable();
+ 1095              		fence.i
+ 1096              	# 0 "" 2
+ 1097              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1098              		csrrc a3, 0x800, s1
+ 1099              	# 0 "" 2
+ 1100              	 #NO_APP
+ 1101 041e 93F68608 		andi	a3,a3,136
+ 1102 0422 36C8     		sw	a3,16(sp)
+ 1103              	 #APP
+ 1104              	# 377 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 378              	    R8_XT32K_TUNE = x32Kpw;
+ 1105              		fence.i
+ 1106              	# 0 "" 2
+ 1107              	 #NO_APP
+ 1108 0428 23003405 		sb	s3,64(s0)
+ 1109 042c 23002405 		sb	s2,64(s0)
+ 1110              	 #APP
+ 1111              	# 377 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 1112              		fence.i
+ 1113              	# 0 "" 2
+ 1114              	 #NO_APP
+ 1115 0434 2307F402 		sb	a5,46(s0)
+ 1116 0438 2307E404 		sb	a4,78(s0)
+ 1117 043c 23000404 		sb	zero,64(s0)
+ 1118 0440 C247     		lw	a5,16(sp)
+ 1119              	 #APP
+ 1120              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1121              		csrrs a5, 0x800, a5
+ 1122              	# 0 "" 2
+ 1123              	# 380 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 379              	    R8_XT32M_TUNE = x32Mpw;
+ 380 0446 0F100000 	    sys_safe_access_disable();
+ 381              	    SetSysClock(CLK_SOURCE_HSE_6_4MHz);
+ 1124              		fence.i
+ 1125              	# 0 "" 2
+ 1126              	 #NO_APP
+ 1127 044a 13055002 		li	a0,37
+ 1128 044e 97000000 		call	SetSysClock
+ 1128      E7800000 
+ 1129 0456 B7F700E0 		li	a5,-536809472
+ 1130 045a 03A707D1 		lw	a4,-752(a5)
+ 1131 045e 13674700 		ori	a4,a4,4
+ 1132 0462 23A8E7D0 		sw	a4,-752(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 33
+
+
+ 1133              	 #APP
+ 1134              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1135              		csrrc a4, 0x800, s1
+ 1136              	# 0 "" 2
+ 1137              	 #NO_APP
+ 1138 046a 13778708 		andi	a4,a4,136
+ 1139 046e 3ACA     		sw	a4,20(sp)
+ 1140              	 #APP
+ 1141              	# 385 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 382              	
+ 383              	    PFIC->SCTLR |= (1 << 2); //deep sleep
+ 384              	
+ 385 0470 0F100000 	    sys_safe_access_enable();
+ 386              	    R8_SLP_POWER_CTRL |= RB_RAM_RET_LV;
+ 1142              		fence.i
+ 1143              	# 0 "" 2
+ 1144              	 #NO_APP
+ 1145 0474 23003405 		sb	s3,64(s0)
+ 1146 0478 23002405 		sb	s2,64(s0)
+ 1147              	 #APP
+ 1148              	# 385 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 1149              		fence.i
+ 1150              	# 0 "" 2
+ 1151              	 #NO_APP
+ 1152 0480 0347F400 		lbu	a4,15(s0)
+ 1153 0484 13670704 		ori	a4,a4,64
+ 1154 0488 A307E400 		sb	a4,15(s0)
+ 1155 048c 23000404 		sb	zero,64(s0)
+ 1156 0490 5247     		lw	a4,20(sp)
+ 1157              	 #APP
+ 1158              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1159              		csrrs a4, 0x800, a4
+ 1160              	# 0 "" 2
+ 1161              	# 387 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 387 0496 0F100000 	    sys_safe_access_disable();
+ 388              	    sys_safe_access_enable();
+ 1162              		fence.i
+ 1163              	# 0 "" 2
+ 1164              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1165              		csrrc a4, 0x800, s1
+ 1166              	# 0 "" 2
+ 1167              	 #NO_APP
+ 1168 049e 13778708 		andi	a4,a4,136
+ 1169 04a2 3ACC     		sw	a4,24(sp)
+ 1170              	 #APP
+ 1171              	# 388 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 389              	    R16_POWER_PLAN = RB_PWR_PLAN_EN | rm;
+ 1172              		fence.i
+ 1173              	# 0 "" 2
+ 1174              	 #NO_APP
+ 1175 04a8 23003405 		sb	s3,64(s0)
+ 1176 04ac 23002405 		sb	s2,64(s0)
+ 1177              	 #APP
+ 1178              	# 388 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 1179              		fence.i
+ 1180              	# 0 "" 2
+ 1181              	 #NO_APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 34
+
+
+ 1182 04b4 2167     		li	a4,32768
+ 1183 04b6 336AEA00 		or	s4,s4,a4
+ 1184 04ba 23104403 		sh	s4,32(s0)
+ 1185 04be 23000404 		sb	zero,64(s0)
+ 1186 04c2 6247     		lw	a4,24(sp)
+ 1187              	 #APP
+ 1188              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1189              		csrrs a4, 0x800, a4
+ 1190              	# 0 "" 2
+ 1191              	# 390 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 390 04c8 0F100000 	    sys_safe_access_disable();
+ 391              	    __WFI();
+ 1192              		fence.i
+ 1193              	# 0 "" 2
+ 1194              	 #NO_APP
+ 1195 04cc 03A707D1 		lw	a4,-752(a5)
+ 1196 04d0 5D9B     		andi	a4,a4,-9
+ 1197 04d2 23A8E7D0 		sw	a4,-752(a5)
+ 1198              	 #APP
+ 1199              	# 318 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1200              		wfi
+ 1201              	# 0 "" 2
+ 1202              	# 392 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 392 04da 0100     	    __nop();
+ 393              	    __nop();
+ 1203              		nop
+ 1204              	# 0 "" 2
+ 1205              	# 393 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 394              	    FLASH_ROM_SW_RESET();
+ 1206              		nop
+ 1207              	# 0 "" 2
+ 1208              	 #NO_APP
+ 1209 04de 8146     		li	a3,0
+ 1210 04e0 0146     		li	a2,0
+ 1211 04e2 8145     		li	a1,0
+ 1212 04e4 1145     		li	a0,4
+ 1213 04e6 97000000 		call	FLASH_EEPROM_CMD
+ 1213      E7800000 
+ 1214              	 #APP
+ 1215              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1216              		csrrc s1, 0x800, s1
+ 1217              	# 0 "" 2
+ 1218              	 #NO_APP
+ 1219 04f2 93F48408 		andi	s1,s1,136
+ 1220 04f6 26CE     		sw	s1,28(sp)
+ 1221              	 #APP
+ 1222              	# 395 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 395 04f8 0F100000 	    sys_safe_access_enable();
+ 396              	    R16_INT32K_TUNE = 0xFFFF;
+ 1223              		fence.i
+ 1224              	# 0 "" 2
+ 1225              	 #NO_APP
+ 1226 04fc 23003405 		sb	s3,64(s0)
+ 1227 0500 23002405 		sb	s2,64(s0)
+ 1228              	 #APP
+ 1229              	# 395 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 1230              		fence.i
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 35
+
+
+ 1231              	# 0 "" 2
+ 1232              	 #NO_APP
+ 1233 0508 FD57     		li	a5,-1
+ 1234 050a 2316F402 		sh	a5,44(s0)
+ 1235 050e 83476404 		lbu	a5,70(s0)
+ 1236 0512 93E71700 		ori	a5,a5,1
+ 1237 0516 2303F404 		sb	a5,70(s0)
+ 1238 051a 23000404 		sb	zero,64(s0)
+ 1239 051e F247     		lw	a5,28(sp)
+ 1240              	 #APP
+ 1241              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1242              		csrrs a5, 0x800, a5
+ 1243              	# 0 "" 2
+ 1244              	# 398 "../../sdk/ch592/StdPeriphDriver/CH59x_pwr.c" 1
+ 397              	    R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+ 398 0524 0F100000 	    sys_safe_access_disable();
+ 399              	}
+ 1245              		fence.i
+ 1246              	# 0 "" 2
+ 1247              	 #NO_APP
+ 1248 0528 F250     		lw	ra,60(sp)
+ 1249 052a 6254     		lw	s0,56(sp)
+ 1250 052c D254     		lw	s1,52(sp)
+ 1251 052e 4259     		lw	s2,48(sp)
+ 1252 0530 B259     		lw	s3,44(sp)
+ 1253 0532 225A     		lw	s4,40(sp)
+ 1254 0534 2161     		addi	sp,sp,64
+ 1255 0536 8280     		jr	ra
+ 1257              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s 			page 36
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_pwr.c
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:8      .text.PWR_DCDCCfg:0000000000000000 PWR_DCDCCfg
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:154    .text.PWR_UnitModCfg:0000000000000000 PWR_UnitModCfg
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:206    .text.PWR_PeriphClkCfg:0000000000000000 PWR_PeriphClkCfg
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:258    .text.PWR_PeriphWakeUpCfg:0000000000000000 PWR_PeriphWakeUpCfg
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:399    .text.PowerMonitor:0000000000000000 PowerMonitor
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:527    .highcode:0000000000000000 LowPower_Idle
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:563    .highcode:0000000000000044 LowPower_Halt
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:727    .highcode:0000000000000172 LowPower_Sleep
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:1045   .highcode:00000000000003aa LowPower_Shutdown
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:76     .text.PWR_DCDCCfg:0000000000000088 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:66     .text.PWR_DCDCCfg:0000000000000076 .L1
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:57     .text.PWR_DCDCCfg:000000000000006e .L6
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:164    .text.PWR_UnitModCfg:000000000000001e .L9
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:249    .text.PWR_PeriphClkCfg:000000000000004a .L12
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:212    .text.PWR_PeriphClkCfg:000000000000000c .L13
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:301    .text.PWR_PeriphWakeUpCfg:000000000000004e .L16
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:290    .text.PWR_PeriphWakeUpCfg:0000000000000042 .L19
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:451    .text.PowerMonitor:0000000000000060 .L21
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:459    .text.PowerMonitor:0000000000000074 .L23
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:435    .text.PowerMonitor:000000000000004a .L27
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:916    .highcode:00000000000002d0 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccJrVLF1.s:1036   .highcode:00000000000003a2 .L32
+
+UNDEFINED SYMBOLS
+FLASH_EEPROM_CMD
+mDelayuS
+SetSysClock

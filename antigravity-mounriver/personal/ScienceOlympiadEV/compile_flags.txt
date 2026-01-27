@@ -1,0 +1,12 @@
+-xc
+-include CH59x_common.h
+-std=c99
+-D__INTERRUPT=
+-D__HIGH_CODE=
+-DDEBUG=1
+-DINT_SOFT=0
+-IUser
+-I../../sdk/ch592/StdPeriphDriver/inc
+-I../../sdk/ch592/RVMSIS
+-IStdPeriphDriver/inc
+-Iobj

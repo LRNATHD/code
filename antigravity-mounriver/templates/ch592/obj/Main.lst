@@ -1,0 +1,48 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccwxzRCr.s 			page 1
+
+
+   1              		.file	"Main.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.startup.main,"ax",@progbits
+   5              		.align	1
+   6              		.globl	main
+   8              	main:
+   9 0000 4111     		addi	sp,sp,-16
+  10 0002 13058004 		li	a0,72
+  11 0006 06C6     		sw	ra,12(sp)
+  12 0008 22C4     		sw	s0,8(sp)
+  13 000a 97000000 		call	SetSysClock
+  13      E7800000 
+  14 0012 8D45     		li	a1,3
+  15 0014 13050010 		li	a0,256
+  16 0018 97000000 		call	GPIOA_ModeCfg
+  16      E7800000 
+  17 0020 37140040 		li	s0,1073745920
+  18              	.L2:
+  19 0024 8327840A 		lw	a5,168(s0)
+  20 0028 1305401F 		li	a0,500
+  21 002c 93E70710 		ori	a5,a5,256
+  22 0030 2324F40A 		sw	a5,168(s0)
+  23 0034 97000000 		call	mDelaymS
+  23      E7800000 
+  24 003c 8327C40A 		lw	a5,172(s0)
+  25 0040 1305401F 		li	a0,500
+  26 0044 93E70710 		ori	a5,a5,256
+  27 0048 2326F40A 		sw	a5,172(s0)
+  28 004c 97000000 		call	mDelaymS
+  28      E7800000 
+  29 0054 C1BF     		j	.L2
+  31              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccwxzRCr.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Main.c
+C:\Users\LRNA\AppData\Local\Temp\ccwxzRCr.s:8      .text.startup.main:0000000000000000 main
+C:\Users\LRNA\AppData\Local\Temp\ccwxzRCr.s:18     .text.startup.main:0000000000000024 .L2
+
+UNDEFINED SYMBOLS
+SetSysClock
+GPIOA_ModeCfg
+mDelaymS

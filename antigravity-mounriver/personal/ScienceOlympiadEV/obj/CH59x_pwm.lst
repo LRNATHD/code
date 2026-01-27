@@ -1,0 +1,227 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s 			page 1
+
+
+   1              		.file	"CH59x_pwm.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.PWMX_CycleCfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	PWMX_CycleCfg
+   8              	PWMX_CycleCfg:
+   9 0000 9547     		li	a5,5
+  10 0002 63E3A702 		bgtu	a0,a5,.L1
+  11 0006 17070000 		lla	a4,.L4
+  11      13070700 
+  12 000e 0A05     		slli	a0,a0,2
+  13 0010 3A95     		add	a0,a0,a4
+  14 0012 1C41     		lw	a5,0(a0)
+  15 0014 BA97     		add	a5,a5,a4
+  16 0016 37570040 		li	a4,1073762304
+  17 001a 8287     		jr	a5
+  18              		.section	.rodata.PWMX_CycleCfg,"a",@progbits
+  19              		.align	2
+  20              		.align	2
+  21              	.L4:
+  22 0000 00000000 		.word	.L9-.L4
+  23 0004 00000000 		.word	.L8-.L4
+  24 0008 00000000 		.word	.L7-.L4
+  25 000c 00000000 		.word	.L6-.L4
+  26 0010 00000000 		.word	.L5-.L4
+  27 0014 00000000 		.word	.L3-.L4
+  28              		.section	.text.PWMX_CycleCfg
+  29              	.L9:
+  30 001c 83472700 		lbu	a5,2(a4)
+  31 0020 93F7070F 		andi	a5,a5,240
+  32              	.L10:
+  33 0024 2301F700 		sb	a5,2(a4)
+  34              	.L1:
+  35 0028 8280     		ret
+  36              	.L8:
+  37 002a 83472700 		lbu	a5,2(a4)
+  38 002e 93F7070F 		andi	a5,a5,240
+  39 0032 93E71700 		ori	a5,a5,1
+  40 0036 FDB7     		j	.L10
+  41              	.L7:
+  42 0038 83472700 		lbu	a5,2(a4)
+  43 003c 93F7070F 		andi	a5,a5,240
+  44 0040 93E74700 		ori	a5,a5,4
+  45 0044 C5B7     		j	.L10
+  46              	.L6:
+  47 0046 83472700 		lbu	a5,2(a4)
+  48 004a 93F7070F 		andi	a5,a5,240
+  49 004e 93E75700 		ori	a5,a5,5
+  50 0052 C9BF     		j	.L10
+  51              	.L5:
+  52 0054 83472700 		lbu	a5,2(a4)
+  53 0058 93F7070F 		andi	a5,a5,240
+  54 005c 93E78700 		ori	a5,a5,8
+  55 0060 D1B7     		j	.L10
+  56              	.L3:
+  57 0062 83472700 		lbu	a5,2(a4)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s 			page 2
+
+
+  58 0066 93F7070F 		andi	a5,a5,240
+  59 006a 93E79700 		ori	a5,a5,9
+  60 006e 5DBF     		j	.L10
+  62              		.section	.text.PWMX_16bit_CycleCfg,"ax",@progbits
+  63              		.align	1
+  64              		.globl	PWMX_16bit_CycleCfg
+  66              	PWMX_16bit_CycleCfg:
+  67 0000 37570040 		li	a4,1073762304
+  68 0004 83472700 		lbu	a5,2(a4)
+  69 0008 93F7070F 		andi	a5,a5,240
+  70 000c 93E7C700 		ori	a5,a5,12
+  71 0010 2301F700 		sb	a5,2(a4)
+  72 0014 48CB     		sw	a0,20(a4)
+  73 0016 8280     		ret
+  75              		.section	.text.PWMX_16bit_ACTOUT,"ax",@progbits
+  76              		.align	1
+  77              		.globl	PWMX_16bit_ACTOUT
+  79              	PWMX_16bit_ACTOUT:
+  80 0000 99EA     		bnez	a3,.L13
+  81 0002 B7570040 		li	a5,1073762304
+  82 0006 03C70700 		lbu	a4,0(a5)
+  83 000a 1345F5FF 		not	a0,a0
+  84 000e 798D     		and	a0,a0,a4
+  85              	.L26:
+  86 0010 2380A700 		sb	a0,0(a5)
+  87 0014 8280     		ret
+  88              	.L13:
+  89 0016 37570040 		li	a4,1073762304
+  90 001a 39C2     		beqz	a2,.L15
+  91 001c 83471700 		lbu	a5,1(a4)
+  92 0020 C98F     		or	a5,a0,a5
+  93              	.L24:
+  94 0022 A300F700 		sb	a5,1(a4)
+  95 0026 37570040 		li	a4,1073762304
+  96 002a 8147     		li	a5,0
+  97 002c 0D48     		li	a6,3
+  98 002e 93088700 		addi	a7,a4,8
+  99 0032 93064700 		addi	a3,a4,4
+ 100 0036 1946     		li	a2,6
+ 101              	.L16:
+ 102 0038 3357F540 		sra	a4,a0,a5
+ 103 003c 058B     		andi	a4,a4,1
+ 104 003e 01CB     		beqz	a4,.L18
+ 105 0040 13971700 		slli	a4,a5,1
+ 106 0044 6364F802 		bgtu	a5,a6,.L19
+ 107 0048 3697     		add	a4,a4,a3
+ 108              	.L25:
+ 109 004a 2310B700 		sh	a1,0(a4)
+ 110              	.L18:
+ 111 004e 8507     		addi	a5,a5,1
+ 112 0050 E394C7FE 		bne	a5,a2,.L16
+ 113 0054 B7570040 		li	a5,1073762304
+ 114 0058 03C70700 		lbu	a4,0(a5)
+ 115 005c 598D     		or	a0,a0,a4
+ 116 005e 4DBF     		j	.L26
+ 117              	.L15:
+ 118 0060 83461700 		lbu	a3,1(a4)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s 			page 3
+
+
+ 119 0064 9347F5FF 		not	a5,a0
+ 120 0068 F58F     		and	a5,a5,a3
+ 121 006a 65BF     		j	.L24
+ 122              	.L19:
+ 123 006c 4697     		add	a4,a4,a7
+ 124 006e F1BF     		j	.L25
+ 126              		.section	.text.PWMX_ACTOUT,"ax",@progbits
+ 127              		.align	1
+ 128              		.globl	PWMX_ACTOUT
+ 130              	PWMX_ACTOUT:
+ 131 0000 99EA     		bnez	a3,.L28
+ 132 0002 B7570040 		li	a5,1073762304
+ 133 0006 03C70700 		lbu	a4,0(a5)
+ 134 000a 1345F5FF 		not	a0,a0
+ 135 000e 798D     		and	a0,a0,a4
+ 136              	.L39:
+ 137 0010 2380A700 		sb	a0,0(a5)
+ 138 0014 8280     		ret
+ 139              	.L28:
+ 140 0016 37570040 		li	a4,1073762304
+ 141 001a 05CE     		beqz	a2,.L30
+ 142 001c 83471700 		lbu	a5,1(a4)
+ 143 0020 C98F     		or	a5,a0,a5
+ 144              	.L38:
+ 145 0022 A300F700 		sb	a5,1(a4)
+ 146 0026 37570040 		li	a4,1073762304
+ 147 002a 8147     		li	a5,0
+ 148 002c 1107     		addi	a4,a4,4
+ 149 002e 2146     		li	a2,8
+ 150              	.L31:
+ 151 0030 B356F540 		sra	a3,a0,a5
+ 152 0034 858A     		andi	a3,a3,1
+ 153 0036 89C6     		beqz	a3,.L33
+ 154 0038 B386E700 		add	a3,a5,a4
+ 155 003c 2380B600 		sb	a1,0(a3)
+ 156              	.L33:
+ 157 0040 8507     		addi	a5,a5,1
+ 158 0042 E397C7FE 		bne	a5,a2,.L31
+ 159 0046 B7570040 		li	a5,1073762304
+ 160 004a 03C70700 		lbu	a4,0(a5)
+ 161 004e 598D     		or	a0,a0,a4
+ 162 0050 C1B7     		j	.L39
+ 163              	.L30:
+ 164 0052 83461700 		lbu	a3,1(a4)
+ 165 0056 9347F5FF 		not	a5,a0
+ 166 005a F58F     		and	a5,a5,a3
+ 167 005c D9B7     		j	.L38
+ 169              		.section	.text.PWMX_AlterOutCfg,"ax",@progbits
+ 170              		.align	1
+ 171              		.globl	PWMX_AlterOutCfg
+ 173              	PWMX_AlterOutCfg:
+ 174 0000 B7570040 		li	a5,1073762304
+ 175 0004 03C72700 		lbu	a4,2(a5)
+ 176 0008 99E5     		bnez	a1,.L41
+ 177 000a 1345F5FF 		not	a0,a0
+ 178 000e 798D     		and	a0,a0,a4
+ 179              	.L43:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s 			page 4
+
+
+ 180 0010 2381A700 		sb	a0,2(a5)
+ 181 0014 8280     		ret
+ 182              	.L41:
+ 183 0016 598D     		or	a0,a0,a4
+ 184 0018 E5BF     		j	.L43
+ 186              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_pwm.c
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:8      .text.PWMX_CycleCfg:0000000000000000 PWMX_CycleCfg
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:66     .text.PWMX_16bit_CycleCfg:0000000000000000 PWMX_16bit_CycleCfg
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:79     .text.PWMX_16bit_ACTOUT:0000000000000000 PWMX_16bit_ACTOUT
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:130    .text.PWMX_ACTOUT:0000000000000000 PWMX_ACTOUT
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:173    .text.PWMX_AlterOutCfg:0000000000000000 PWMX_AlterOutCfg
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:21     .rodata.PWMX_CycleCfg:0000000000000000 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:11     .text.PWMX_CycleCfg:0000000000000006 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:34     .text.PWMX_CycleCfg:0000000000000028 .L1
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:32     .text.PWMX_CycleCfg:0000000000000024 .L10
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:29     .text.PWMX_CycleCfg:000000000000001c .L9
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:36     .text.PWMX_CycleCfg:000000000000002a .L8
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:41     .text.PWMX_CycleCfg:0000000000000038 .L7
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:46     .text.PWMX_CycleCfg:0000000000000046 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:51     .text.PWMX_CycleCfg:0000000000000054 .L5
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:56     .text.PWMX_CycleCfg:0000000000000062 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:88     .text.PWMX_16bit_ACTOUT:0000000000000016 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:117    .text.PWMX_16bit_ACTOUT:0000000000000060 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:110    .text.PWMX_16bit_ACTOUT:000000000000004e .L18
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:122    .text.PWMX_16bit_ACTOUT:000000000000006c .L19
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:101    .text.PWMX_16bit_ACTOUT:0000000000000038 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:85     .text.PWMX_16bit_ACTOUT:0000000000000010 .L26
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:93     .text.PWMX_16bit_ACTOUT:0000000000000022 .L24
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:108    .text.PWMX_16bit_ACTOUT:000000000000004a .L25
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:139    .text.PWMX_ACTOUT:0000000000000016 .L28
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:163    .text.PWMX_ACTOUT:0000000000000052 .L30
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:156    .text.PWMX_ACTOUT:0000000000000040 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:150    .text.PWMX_ACTOUT:0000000000000030 .L31
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:136    .text.PWMX_ACTOUT:0000000000000010 .L39
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:144    .text.PWMX_ACTOUT:0000000000000022 .L38
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:182    .text.PWMX_AlterOutCfg:0000000000000016 .L41
+C:\Users\LRNA\AppData\Local\Temp\ccbsVtmP.s:179    .text.PWMX_AlterOutCfg:0000000000000010 .L43
+
+NO UNDEFINED SYMBOLS

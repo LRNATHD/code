@@ -1,0 +1,1899 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 1
+
+
+   1              		.file	"Main.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.highcode,"ax",@progbits
+   5              		.align	1
+   6              		.globl	TMR0_IRQHandler
+   8              	TMR0_IRQHandler:
+   9 0000 37270040 		li	a4,1073750016
+  10 0004 83476700 		lbu	a5,6(a4)
+  11 0008 858B     		andi	a5,a5,1
+  12 000a 91CF     		beqz	a5,.L1
+  13 000c 8547     		li	a5,1
+  14 000e 2303F700 		sb	a5,6(a4)
+  15 0012 97070000 		lla	a5,.LANCHOR0
+  15      93870700 
+  16 001a 9C43     		lw	a5,0(a5)
+  17 001c 8507     		addi	a5,a5,1
+  18 001e 17070000 		sw	a5,.LANCHOR0,a4
+  18      2320F700 
+  19              	.L1:
+  20 0026 73002030 		mret
+  22              		.align	1
+  23              		.globl	GPIOB_IRQHandler
+  25              	GPIOB_IRQHandler:
+  26 002a 37170040 		li	a4,1073745920
+  27 002e 8357E709 		lhu	a5,158(a4)
+  28 0032 93F70704 		andi	a5,a5,64
+  29 0036 A9C7     		beqz	a5,.L6
+  30 0038 8327470C 		lw	a5,196(a4)
+  31 003c 0327470C 		lw	a4,196(a4)
+  32 0040 97060000 		lla	a3,.LANCHOR1
+  32      93860600 
+  33 0048 93F70704 		andi	a5,a5,64
+  34 004c 3336F000 		snez	a2,a5
+  35 0050 058B     		andi	a4,a4,1
+  36 0052 6319E602 		bne	a2,a4,.L8
+  37 0056 9842     		lw	a4,0(a3)
+  38 0058 0507     		addi	a4,a4,1
+  39              	.L15:
+  40 005a 97060000 		sw	a4,.LANCHOR1,a3
+  40      23A0E600 
+  41 0062 8945     		li	a1,2
+  42 0064 91E3     		bnez	a5,.L16
+  43 0066 8D45     		li	a1,3
+  44              	.L16:
+  45 0068 13050004 		li	a0,64
+  46 006c 97000000 		call	GPIOB_ITModeCfg
+  46      E7800000 
+  47 0074 B7170040 		li	a5,1073745920
+  48 0078 13070004 		li	a4,64
+  49 007c 239FE708 		sh	a4,158(a5)
+  50              	.L6:
+  51 0080 73002030 		mret
+  52              	.L8:
+  53 0084 9842     		lw	a4,0(a3)
+  54 0086 7D17     		addi	a4,a4,-1
+  55 0088 C9BF     		j	.L15
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 2
+
+
+  57              		.align	1
+  58              		.globl	GPIOA_IRQHandler
+  60              	GPIOA_IRQHandler:
+  61 008a B7170040 		li	a5,1073745920
+  62 008e 03D7C709 		lhu	a4,156(a5)
+  63 0092 418B     		andi	a4,a4,16
+  64 0094 39C3     		beqz	a4,.L17
+  65 0096 03A7470A 		lw	a4,164(a5)
+  66 009a 83A7470A 		lw	a5,164(a5)
+  67 009e 97060000 		lla	a3,.LANCHOR2
+  67      93860600 
+  68 00a6 418B     		andi	a4,a4,16
+  69 00a8 9583     		srli	a5,a5,5
+  70 00aa 3336E000 		snez	a2,a4
+  71 00ae 858B     		andi	a5,a5,1
+  72 00b0 6317F602 		bne	a2,a5,.L19
+  73 00b4 9C42     		lw	a5,0(a3)
+  74 00b6 8507     		addi	a5,a5,1
+  75              	.L26:
+  76 00b8 97060000 		sw	a5,.LANCHOR2,a3
+  76      23A0F600 
+  77 00c0 8945     		li	a1,2
+  78 00c2 11E3     		bnez	a4,.L27
+  79 00c4 8D45     		li	a1,3
+  80              	.L27:
+  81 00c6 4145     		li	a0,16
+  82 00c8 97000000 		call	GPIOA_ITModeCfg
+  82      E7800000 
+  83 00d0 B7170040 		li	a5,1073745920
+  84 00d4 4147     		li	a4,16
+  85 00d6 239EE708 		sh	a4,156(a5)
+  86              	.L17:
+  87 00da 73002030 		mret
+  88              	.L19:
+  89 00de 9C42     		lw	a5,0(a3)
+  90 00e0 FD17     		addi	a5,a5,-1
+  91 00e2 D9BF     		j	.L26
+  93              		.section	.text.Motor_Init,"ax",@progbits
+  94              		.align	1
+  95              		.globl	Motor_Init
+  97              	Motor_Init:
+  98 0000 4111     		addi	sp,sp,-16
+  99 0002 8D45     		li	a1,3
+ 100 0004 3D65     		li	a0,61440
+ 101 0006 06C6     		sw	ra,12(sp)
+ 102 0008 22C4     		sw	s0,8(sp)
+ 103 000a 97000000 		call	GPIOA_ModeCfg
+ 103      E7800000 
+ 104 0012 37140040 		li	s0,1073745920
+ 105 0016 8327C40A 		lw	a5,172(s0)
+ 106 001a 0D67     		li	a4,12288
+ 107 001c 8545     		li	a1,1
+ 108 001e D98F     		or	a5,a5,a4
+ 109 0020 2326F40A 		sw	a5,172(s0)
+ 110 0024 13051004 		li	a0,65
+ 111 0028 97000000 		call	GPIOB_ModeCfg
+ 111      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 3
+
+
+ 112 0030 8545     		li	a1,1
+ 113 0032 13050003 		li	a0,48
+ 114 0036 97000000 		call	GPIOA_ModeCfg
+ 114      E7800000 
+ 115 003e 8945     		li	a1,2
+ 116 0040 13050004 		li	a0,64
+ 117 0044 97000000 		call	GPIOB_ITModeCfg
+ 117      E7800000 
+ 118 004c 8945     		li	a1,2
+ 119 004e 4145     		li	a0,16
+ 120 0050 97000000 		call	GPIOA_ITModeCfg
+ 120      E7800000 
+ 121 0058 B7E700E0 		li	a5,-536813568
+ 122 005c 37070400 		li	a4,262144
+ 123 0060 23A0E710 		sw	a4,256(a5)
+ 124 0064 37070200 		li	a4,131072
+ 125 0068 23A0E710 		sw	a4,256(a5)
+ 126 006c 3D65     		li	a0,61440
+ 127 006e B7570040 		li	a5,1073762304
+ 128 0072 1147     		li	a4,4
+ 129 0074 A381E700 		sb	a4,3(a5)
+ 130 0078 130505A6 		addi	a0,a0,-1440
+ 131 007c 97000000 		call	PWMX_16bit_CycleCfg
+ 131      E7800000 
+ 132 0084 8146     		li	a3,0
+ 133 0086 0146     		li	a2,0
+ 134 0088 8145     		li	a1,0
+ 135 008a 0545     		li	a0,1
+ 136 008c 97000000 		call	PWMX_16bit_ACTOUT
+ 136      E7800000 
+ 137 0094 8146     		li	a3,0
+ 138 0096 0146     		li	a2,0
+ 139 0098 8145     		li	a1,0
+ 140 009a 0945     		li	a0,2
+ 141 009c 97000000 		call	PWMX_16bit_ACTOUT
+ 141      E7800000 
+ 142 00a4 8327840A 		lw	a5,168(s0)
+ 143 00a8 1167     		li	a4,16384
+ 144 00aa B240     		lw	ra,12(sp)
+ 145 00ac D98F     		or	a5,a5,a4
+ 146 00ae 2324F40A 		sw	a5,168(s0)
+ 147 00b2 8327840A 		lw	a5,168(s0)
+ 148 00b6 2167     		li	a4,32768
+ 149 00b8 D98F     		or	a5,a5,a4
+ 150 00ba 2324F40A 		sw	a5,168(s0)
+ 151 00be 2244     		lw	s0,8(sp)
+ 152 00c0 4101     		addi	sp,sp,16
+ 153 00c2 8280     		jr	ra
+ 155              		.globl	__gtsf2
+ 156              		.globl	__ltsf2
+ 157              		.globl	__mulsf3
+ 158              		.globl	__divsf3
+ 159              		.globl	__fixunssfsi
+ 160              		.section	.text.SetMotorSpeed,"ax",@progbits
+ 161              		.align	1
+ 162              		.globl	SetMotorSpeed
+ 164              	SetMotorSpeed:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 4
+
+
+ 165 0000 0111     		addi	sp,sp,-32
+ 166 0002 26CA     		sw	s1,20(sp)
+ 167 0004 97040000 		lla	s1,.LC0
+ 167      93840400 
+ 168 000c 4AC8     		sw	s2,16(sp)
+ 169 000e 03A90400 		lw	s2,0(s1)
+ 170 0012 22CC     		sw	s0,24(sp)
+ 171 0014 2E84     		mv	s0,a1
+ 172 0016 4EC6     		sw	s3,12(sp)
+ 173 0018 CA85     		mv	a1,s2
+ 174 001a AA89     		mv	s3,a0
+ 175 001c 2285     		mv	a0,s0
+ 176 001e 06CE     		sw	ra,28(sp)
+ 177 0020 97000000 		call	__gtsf2
+ 177      E7800000 
+ 178 0028 634CA008 		bgtz	a0,.L39
+ 179 002c 93050000 		mv	a1,zero
+ 180 0030 2285     		mv	a0,s0
+ 181 0032 97000000 		call	__ltsf2
+ 181      E7800000 
+ 182 003a 63540500 		bgez	a0,.L31
+ 183 003e 13040000 		mv	s0,zero
+ 184              	.L31:
+ 185 0042 97070000 		lla	a5,.LC1
+ 185      93870700 
+ 186 004a 8C43     		lw	a1,0(a5)
+ 187 004c 2285     		mv	a0,s0
+ 188 004e 97000000 		call	__mulsf3
+ 188      E7800000 
+ 189 0056 8C40     		lw	a1,0(s1)
+ 190 0058 97000000 		call	__divsf3
+ 190      E7800000 
+ 191 0060 97000000 		call	__fixunssfsi
+ 191      E7800000 
+ 192 0068 2A89     		mv	s2,a0
+ 193 006a 8146     		li	a3,0
+ 194 006c 0146     		li	a2,0
+ 195 006e 8145     		li	a1,0
+ 196 0070 639F0906 		bnez	s3,.L33
+ 197 0074 0945     		li	a0,2
+ 198 0076 97000000 		call	PWMX_16bit_ACTOUT
+ 198      E7800000 
+ 199 007e B7140040 		li	s1,1073745920
+ 200 0082 83A7C40A 		lw	a5,172(s1)
+ 201 0086 0967     		li	a4,8192
+ 202 0088 93050000 		mv	a1,zero
+ 203 008c D98F     		or	a5,a5,a4
+ 204 008e 23A6F40A 		sw	a5,172(s1)
+ 205 0092 2285     		mv	a0,s0
+ 206 0094 97000000 		call	__gtsf2
+ 206      E7800000 
+ 207 009c 6354A002 		blez	a0,.L43
+ 208 00a0 93150901 		slli	a1,s2,16
+ 209 00a4 8546     		li	a3,1
+ 210 00a6 0146     		li	a2,0
+ 211 00a8 C181     		srli	a1,a1,16
+ 212 00aa 0545     		li	a0,1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 5
+
+
+ 213              	.L47:
+ 214 00ac 6244     		lw	s0,24(sp)
+ 215 00ae F240     		lw	ra,28(sp)
+ 216 00b0 D244     		lw	s1,20(sp)
+ 217 00b2 4249     		lw	s2,16(sp)
+ 218 00b4 B249     		lw	s3,12(sp)
+ 219 00b6 0561     		addi	sp,sp,32
+ 220 00b8 17030000 		tail	PWMX_16bit_ACTOUT
+ 220      67000300 
+ 221              	.L39:
+ 222 00c0 4A84     		mv	s0,s2
+ 223 00c2 41B7     		j	.L31
+ 224              	.L43:
+ 225 00c4 8146     		li	a3,0
+ 226 00c6 0146     		li	a2,0
+ 227 00c8 8145     		li	a1,0
+ 228 00ca 0545     		li	a0,1
+ 229 00cc 97000000 		call	PWMX_16bit_ACTOUT
+ 229      E7800000 
+ 230 00d4 83A7C40A 		lw	a5,172(s1)
+ 231 00d8 0567     		li	a4,4096
+ 232              	.L46:
+ 233 00da F240     		lw	ra,28(sp)
+ 234 00dc 6244     		lw	s0,24(sp)
+ 235 00de D98F     		or	a5,a5,a4
+ 236 00e0 23A6F40A 		sw	a5,172(s1)
+ 237 00e4 4249     		lw	s2,16(sp)
+ 238 00e6 D244     		lw	s1,20(sp)
+ 239 00e8 B249     		lw	s3,12(sp)
+ 240 00ea 0561     		addi	sp,sp,32
+ 241 00ec 8280     		jr	ra
+ 242              	.L33:
+ 243 00ee 0545     		li	a0,1
+ 244 00f0 97000000 		call	PWMX_16bit_ACTOUT
+ 244      E7800000 
+ 245 00f8 B7140040 		li	s1,1073745920
+ 246 00fc 83A7C40A 		lw	a5,172(s1)
+ 247 0100 0567     		li	a4,4096
+ 248 0102 93050000 		mv	a1,zero
+ 249 0106 D98F     		or	a5,a5,a4
+ 250 0108 23A6F40A 		sw	a5,172(s1)
+ 251 010c 2285     		mv	a0,s0
+ 252 010e 97000000 		call	__gtsf2
+ 252      E7800000 
+ 253 0116 6359A000 		blez	a0,.L44
+ 254 011a 93150901 		slli	a1,s2,16
+ 255 011e 8546     		li	a3,1
+ 256 0120 0146     		li	a2,0
+ 257 0122 C181     		srli	a1,a1,16
+ 258 0124 0945     		li	a0,2
+ 259 0126 59B7     		j	.L47
+ 260              	.L44:
+ 261 0128 8146     		li	a3,0
+ 262 012a 0146     		li	a2,0
+ 263 012c 8145     		li	a1,0
+ 264 012e 0945     		li	a0,2
+ 265 0130 97000000 		call	PWMX_16bit_ACTOUT
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 6
+
+
+ 265      E7800000 
+ 266 0138 83A7C40A 		lw	a5,172(s1)
+ 267 013c 0967     		li	a4,8192
+ 268 013e 71BF     		j	.L46
+ 270              		.globl	__fixsfsi
+ 271              		.globl	__floatsisf
+ 272              		.section	.text.CalibrateMotors,"ax",@progbits
+ 273              		.align	1
+ 274              		.globl	CalibrateMotors
+ 276              	CalibrateMotors:
+ 277 0000 5971     		addi	sp,sp,-112
+ 278 0002 86D6     		sw	ra,108(sp)
+ 279 0004 A2D4     		sw	s0,104(sp)
+ 280 0006 CAD0     		sw	s2,96(sp)
+ 281 0008 D6CA     		sw	s5,84(sp)
+ 282 000a DEC6     		sw	s7,76(sp)
+ 283 000c E2C4     		sw	s8,72(sp)
+ 284 000e E6C2     		sw	s9,68(sp)
+ 285 0010 EAC0     		sw	s10,64(sp)
+ 286 0012 6EDE     		sw	s11,60(sp)
+ 287 0014 A6D2     		sw	s1,100(sp)
+ 288 0016 CECE     		sw	s3,92(sp)
+ 289 0018 D2CC     		sw	s4,88(sp)
+ 290 001a DAC8     		sw	s6,80(sp)
+ 291 001c 97000000 		call	OLED_Clear
+ 291      E7800000 
+ 292 0024 17060000 		lla	a2,.LC2
+ 292      13060600 
+ 293 002c 8145     		li	a1,0
+ 294 002e 0145     		li	a0,0
+ 295 0030 97000000 		call	OLED_ShowString
+ 295      E7800000 
+ 296 0038 97070000 		lla	a5,.LC3
+ 296      93870700 
+ 297 0040 83AB0700 		lw	s7,0(a5)
+ 298 0044 17090000 		lla	s2,cal_results
+ 298      13090900 
+ 299 004c 0144     		li	s0,0
+ 300 004e CA8A     		mv	s5,s2
+ 301 0050 970D0000 		lla	s11,.LC9
+ 301      938D0D00 
+ 302 0058 170C0000 		lla	s8,.LC4
+ 302      130C0C00 
+ 303 0060 970C0000 		lla	s9,.LANCHOR2
+ 303      938C0C00 
+ 304 0068 170D0000 		lla	s10,.LANCHOR1
+ 304      130D0D00 
+ 305              	.L49:
+ 306 0070 6E8A     		mv	s4,s11
+ 307 0072 09E4     		bnez	s0,.L62
+ 308 0074 170A0000 		lla	s4,.LC8
+ 308      130A0A00 
+ 309              	.L62:
+ 310 007c 97040000 		lla	s1,.LANCHOR3
+ 310      93840400 
+ 311 0084 170B0000 		lla	s6,.LANCHOR3+24
+ 311      130B0B00 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 7
+
+
+ 312 008c CA89     		mv	s3,s2
+ 313              	.L59:
+ 314 008e 9C40     		lw	a5,0(s1)
+ 315 0090 DE85     		mv	a1,s7
+ 316 0092 3E85     		mv	a0,a5
+ 317 0094 3EC6     		sw	a5,12(sp)
+ 318 0096 97000000 		call	__ltsf2
+ 318      E7800000 
+ 319 009e B247     		lw	a5,12(sp)
+ 320 00a0 6359050C 		bgez	a0,.L66
+ 321 00a4 83250C00 		lw	a1,0(s8)
+ 322 00a8 3E85     		mv	a0,a5
+ 323 00aa 97000000 		call	__mulsf3
+ 323      E7800000 
+ 324 00b2 97000000 		call	__fixsfsi
+ 324      E7800000 
+ 325 00ba AA86     		mv	a3,a0
+ 326 00bc 5286     		mv	a2,s4
+ 327 00be 97050000 		lla	a1,.LC5
+ 327      93850500 
+ 328              	.L68:
+ 329 00c6 2808     		addi	a0,sp,24
+ 330 00c8 97000000 		call	sprintf
+ 330      E7800000 
+ 331 00d0 3008     		addi	a2,sp,24
+ 332 00d2 8545     		li	a1,1
+ 333 00d4 0145     		li	a0,0
+ 334 00d6 97000000 		call	OLED_ShowString
+ 334      E7800000 
+ 335 00de 8C40     		lw	a1,0(s1)
+ 336 00e0 2285     		mv	a0,s0
+ 337 00e2 97000000 		call	SetMotorSpeed
+ 337      E7800000 
+ 338 00ea 1305401F 		li	a0,500
+ 339 00ee 97000000 		call	mDelaymS
+ 339      E7800000 
+ 340 00f6 51E8     		bnez	s0,.L53
+ 341 00f8 97070000 		sw	zero,.LANCHOR1,a5
+ 341      23A00700 
+ 342              	.L54:
+ 343 0100 97070000 		sw	zero,.LANCHOR0,a5
+ 343      23A00700 
+ 344              	.L69:
+ 345 0108 17070000 		lla	a4,.LANCHOR0
+ 345      13070700 
+ 346 0110 1843     		lw	a4,0(a4)
+ 347 0112 93073006 		li	a5,99
+ 348 0116 63FFE706 		bleu	a4,a5,.L56
+ 349 011a 59E0     		bnez	s0,.L57
+ 350 011c 83270D00 		lw	a5,0(s10)
+ 351              	.L58:
+ 352 0120 13D5F741 		srai	a0,a5,31
+ 353 0124 A98F     		xor	a5,a0,a5
+ 354 0126 3385A740 		sub	a0,a5,a0
+ 355 012a 97000000 		call	__floatsisf
+ 355      E7800000 
+ 356 0132 97070000 		lla	a5,.LC7
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 8
+
+
+ 356      93870700 
+ 357 013a 8C43     		lw	a1,0(a5)
+ 358 013c 9104     		addi	s1,s1,4
+ 359 013e 9109     		addi	s3,s3,4
+ 360 0140 97000000 		call	__divsf3
+ 360      E7800000 
+ 361 0148 23AEA9FE 		sw	a0,-4(s3)
+ 362 014c 93050000 		mv	a1,zero
+ 363 0150 2285     		mv	a0,s0
+ 364 0152 97000000 		call	SetMotorSpeed
+ 364      E7800000 
+ 365 015a 1305800C 		li	a0,200
+ 366 015e 97000000 		call	mDelaymS
+ 366      E7800000 
+ 367 0166 E3149BF2 		bne	s6,s1,.L59
+ 368 016a 6109     		addi	s2,s2,24
+ 369 016c 0DEC     		bnez	s0,.L60
+ 370 016e 0544     		li	s0,1
+ 371 0170 01B7     		j	.L49
+ 372              	.L66:
+ 373 0172 3E85     		mv	a0,a5
+ 374 0174 97000000 		call	__fixsfsi
+ 374      E7800000 
+ 375 017c AA86     		mv	a3,a0
+ 376 017e 5286     		mv	a2,s4
+ 377 0180 97050000 		lla	a1,.LC6
+ 377      93850500 
+ 378 0188 3DBF     		j	.L68
+ 379              	.L53:
+ 380 018a 97070000 		sw	zero,.LANCHOR2,a5
+ 380      23A00700 
+ 381 0192 BDB7     		j	.L54
+ 382              	.L56:
+ 383 0194 0545     		li	a0,1
+ 384 0196 97000000 		call	mDelaymS
+ 384      E7800000 
+ 385 019e ADB7     		j	.L69
+ 386              	.L57:
+ 387 01a0 83A70C00 		lw	a5,0(s9)
+ 388 01a4 B5BF     		j	.L58
+ 389              	.L60:
+ 390 01a6 93050000 		mv	a1,zero
+ 391 01aa 0145     		li	a0,0
+ 392 01ac 97000000 		call	SetMotorSpeed
+ 392      E7800000 
+ 393 01b4 93050000 		mv	a1,zero
+ 394 01b8 0545     		li	a0,1
+ 395 01ba 97000000 		call	SetMotorSpeed
+ 395      E7800000 
+ 396 01c2 03A44A01 		lw	s0,20(s5)
+ 397 01c6 83A4CA02 		lw	s1,44(s5)
+ 398 01ca 97070000 		lla	a5,.LANCHOR4
+ 398      93870700 
+ 399 01d2 80C3     		sw	s0,0(a5)
+ 400 01d4 97070000 		lla	a5,.LANCHOR5
+ 400      93870700 
+ 401 01dc 84C3     		sw	s1,0(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 9
+
+
+ 402 01de A685     		mv	a1,s1
+ 403 01e0 2285     		mv	a0,s0
+ 404 01e2 97000000 		call	__ltsf2
+ 404      E7800000 
+ 405 01ea 63430500 		bltz	a0,.L63
+ 406 01ee 2684     		mv	s0,s1
+ 407              	.L63:
+ 408 01f0 97070000 		lla	a5,.LANCHOR6
+ 408      93870700 
+ 409 01f8 80C3     		sw	s0,0(a5)
+ 410 01fa B650     		lw	ra,108(sp)
+ 411 01fc 2654     		lw	s0,104(sp)
+ 412 01fe 9654     		lw	s1,100(sp)
+ 413 0200 0659     		lw	s2,96(sp)
+ 414 0202 F649     		lw	s3,92(sp)
+ 415 0204 664A     		lw	s4,88(sp)
+ 416 0206 D64A     		lw	s5,84(sp)
+ 417 0208 464B     		lw	s6,80(sp)
+ 418 020a B64B     		lw	s7,76(sp)
+ 419 020c 264C     		lw	s8,72(sp)
+ 420 020e 964C     		lw	s9,68(sp)
+ 421 0210 064D     		lw	s10,64(sp)
+ 422 0212 F25D     		lw	s11,60(sp)
+ 423 0214 6561     		addi	sp,sp,112
+ 424 0216 8280     		jr	ra
+ 426              		.globl	__extendsfdf2
+ 427              		.section	.text.ShowCalibrationResults,"ax",@progbits
+ 428              		.align	1
+ 429              		.globl	ShowCalibrationResults
+ 431              	ShowCalibrationResults:
+ 432 0000 5971     		addi	sp,sp,-112
+ 433 0002 86D6     		sw	ra,108(sp)
+ 434 0004 A2D4     		sw	s0,104(sp)
+ 435 0006 A6D2     		sw	s1,100(sp)
+ 436 0008 CAD0     		sw	s2,96(sp)
+ 437 000a CECE     		sw	s3,92(sp)
+ 438 000c D2CC     		sw	s4,88(sp)
+ 439 000e D6CA     		sw	s5,84(sp)
+ 440 0010 DAC8     		sw	s6,80(sp)
+ 441 0012 DEC6     		sw	s7,76(sp)
+ 442 0014 E2C4     		sw	s8,72(sp)
+ 443 0016 E6C2     		sw	s9,68(sp)
+ 444 0018 EAC0     		sw	s10,64(sp)
+ 445 001a 6EDE     		sw	s11,60(sp)
+ 446 001c 97000000 		call	OLED_Clear
+ 446      E7800000 
+ 447 0024 17060000 		lla	a2,.LC10
+ 447      13060600 
+ 448 002c 8145     		li	a1,0
+ 449 002e 0145     		li	a0,0
+ 450 0030 97090000 		lla	s3,.LC3
+ 450      93890900 
+ 451 0038 97000000 		call	OLED_ShowString
+ 451      E7800000 
+ 452 0040 83AB0900 		lw	s7,0(s3)
+ 453 0044 17090000 		lla	s2,.LANCHOR3
+ 453      13090900 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 10
+
+
+ 454 004c 97040000 		lla	s1,cal_results
+ 454      93840400 
+ 455 0054 268A     		mv	s4,s1
+ 456 0056 CA8A     		mv	s5,s2
+ 457 0058 0544     		li	s0,1
+ 458 005a 170C0000 		lla	s8,.LC12
+ 458      130C0C00 
+ 459 0062 970C0000 		lla	s9,.LC4
+ 459      938C0C00 
+ 460 006a 170D0000 		lla	s10,.LC11
+ 460      130D0D00 
+ 461 0072 114B     		li	s6,4
+ 462              	.L74:
+ 463 0074 03250A00 		lw	a0,0(s4)
+ 464 0078 83AD0A00 		lw	s11,0(s5)
+ 465 007c 97000000 		call	__extendsfdf2
+ 465      E7800000 
+ 466 0084 2AC4     		sw	a0,8(sp)
+ 467 0086 2EC6     		sw	a1,12(sp)
+ 468 0088 6E85     		mv	a0,s11
+ 469 008a DE85     		mv	a1,s7
+ 470 008c 97000000 		call	__ltsf2
+ 470      E7800000 
+ 471 0094 2247     		lw	a4,8(sp)
+ 472 0096 B247     		lw	a5,12(sp)
+ 473 0098 63500524 		bgez	a0,.L87
+ 474 009c 83A50C00 		lw	a1,0(s9)
+ 475 00a0 6E85     		mv	a0,s11
+ 476 00a2 97000000 		call	__mulsf3
+ 476      E7800000 
+ 477 00aa 97000000 		call	__fixsfsi
+ 477      E7800000 
+ 478 00b2 2247     		lw	a4,8(sp)
+ 479 00b4 B247     		lw	a5,12(sp)
+ 480 00b6 2A86     		mv	a2,a0
+ 481 00b8 EA85     		mv	a1,s10
+ 482              	.L90:
+ 483 00ba 2808     		addi	a0,sp,24
+ 484 00bc 97000000 		call	sprintf
+ 484      E7800000 
+ 485 00c4 9375F40F 		andi	a1,s0,0xff
+ 486 00c8 3008     		addi	a2,sp,24
+ 487 00ca 0145     		li	a0,0
+ 488 00cc 0504     		addi	s0,s0,1
+ 489 00ce 97000000 		call	OLED_ShowString
+ 489      E7800000 
+ 490 00d6 910A     		addi	s5,s5,4
+ 491 00d8 110A     		addi	s4,s4,4
+ 492 00da E31D64F9 		bne	s0,s6,.L74
+ 493 00de 0565     		li	a0,4096
+ 494 00e0 130585BB 		addi	a0,a0,-1096
+ 495 00e4 97000000 		call	mDelaymS
+ 495      E7800000 
+ 496 00ec 97000000 		call	OLED_Clear
+ 496      E7800000 
+ 497 00f4 17060000 		lla	a2,.LC13
+ 497      13060600 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 11
+
+
+ 498 00fc 8145     		li	a1,0
+ 499 00fe 0145     		li	a0,0
+ 500 0100 97000000 		call	OLED_ShowString
+ 500      E7800000 
+ 501 0108 170A0000 		lla	s4,cal_results
+ 501      130A0A00 
+ 502 0110 970A0000 		lla	s5,.LANCHOR3
+ 502      938A0A00 
+ 503 0118 0544     		li	s0,1
+ 504 011a 970B0000 		lla	s7,.LC12
+ 504      938B0B00 
+ 505 0122 114B     		li	s6,4
+ 506              	.L75:
+ 507 0124 0325CA00 		lw	a0,12(s4)
+ 508 0128 910A     		addi	s5,s5,4
+ 509 012a 110A     		addi	s4,s4,4
+ 510 012c 97000000 		call	__extendsfdf2
+ 510      E7800000 
+ 511 0134 2AC4     		sw	a0,8(sp)
+ 512 0136 03A58A00 		lw	a0,8(s5)
+ 513 013a 2EC6     		sw	a1,12(sp)
+ 514 013c 97000000 		call	__fixsfsi
+ 514      E7800000 
+ 515 0144 2247     		lw	a4,8(sp)
+ 516 0146 B247     		lw	a5,12(sp)
+ 517 0148 2A86     		mv	a2,a0
+ 518 014a DE85     		mv	a1,s7
+ 519 014c 2808     		addi	a0,sp,24
+ 520 014e 97000000 		call	sprintf
+ 520      E7800000 
+ 521 0156 A285     		mv	a1,s0
+ 522 0158 0504     		addi	s0,s0,1
+ 523 015a 3008     		addi	a2,sp,24
+ 524 015c 0145     		li	a0,0
+ 525 015e 1374F40F 		andi	s0,s0,0xff
+ 526 0162 97000000 		call	OLED_ShowString
+ 526      E7800000 
+ 527 016a E31D64FB 		bne	s0,s6,.L75
+ 528 016e 0565     		li	a0,4096
+ 529 0170 130585BB 		addi	a0,a0,-1096
+ 530 0174 97000000 		call	mDelaymS
+ 530      E7800000 
+ 531 017c 97000000 		call	OLED_Clear
+ 531      E7800000 
+ 532 0184 17060000 		lla	a2,.LC14
+ 532      13060600 
+ 533 018c 8145     		li	a1,0
+ 534 018e 0145     		li	a0,0
+ 535 0190 97000000 		call	OLED_ShowString
+ 535      E7800000 
+ 536 0198 03AC0900 		lw	s8,0(s3)
+ 537 019c 170A0000 		lla	s4,cal_results
+ 537      130A0A00 
+ 538 01a4 970A0000 		lla	s5,.LANCHOR3
+ 538      938A0A00 
+ 539 01ac 0544     		li	s0,1
+ 540 01ae 970C0000 		lla	s9,.LC12
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 12
+
+
+ 540      938C0C00 
+ 541 01b6 170D0000 		lla	s10,.LC4
+ 541      130D0D00 
+ 542 01be 970D0000 		lla	s11,.LC11
+ 542      938D0D00 
+ 543              	.L79:
+ 544 01c6 03258A01 		lw	a0,24(s4)
+ 545 01ca 83A90A00 		lw	s3,0(s5)
+ 546 01ce 97000000 		call	__extendsfdf2
+ 546      E7800000 
+ 547 01d6 2A8B     		mv	s6,a0
+ 548 01d8 AE8B     		mv	s7,a1
+ 549 01da 4E85     		mv	a0,s3
+ 550 01dc E285     		mv	a1,s8
+ 551 01de 97000000 		call	__ltsf2
+ 551      E7800000 
+ 552 01e6 63550510 		bgez	a0,.L88
+ 553 01ea 83250D00 		lw	a1,0(s10)
+ 554 01ee 4E85     		mv	a0,s3
+ 555 01f0 97000000 		call	__mulsf3
+ 555      E7800000 
+ 556 01f8 97000000 		call	__fixsfsi
+ 556      E7800000 
+ 557 0200 5A87     		mv	a4,s6
+ 558 0202 DE87     		mv	a5,s7
+ 559 0204 2A86     		mv	a2,a0
+ 560 0206 EE85     		mv	a1,s11
+ 561              	.L91:
+ 562 0208 2808     		addi	a0,sp,24
+ 563 020a 97000000 		call	sprintf
+ 563      E7800000 
+ 564 0212 9375F40F 		andi	a1,s0,0xff
+ 565 0216 3008     		addi	a2,sp,24
+ 566 0218 0145     		li	a0,0
+ 567 021a 97000000 		call	OLED_ShowString
+ 567      E7800000 
+ 568 0222 0504     		addi	s0,s0,1
+ 569 0224 9147     		li	a5,4
+ 570 0226 910A     		addi	s5,s5,4
+ 571 0228 110A     		addi	s4,s4,4
+ 572 022a E31EF4F8 		bne	s0,a5,.L79
+ 573 022e 0565     		li	a0,4096
+ 574 0230 130585BB 		addi	a0,a0,-1096
+ 575 0234 97000000 		call	mDelaymS
+ 575      E7800000 
+ 576 023c 97000000 		call	OLED_Clear
+ 576      E7800000 
+ 577 0244 17060000 		lla	a2,.LC15
+ 577      13060600 
+ 578 024c 8145     		li	a1,0
+ 579 024e 0145     		li	a0,0
+ 580 0250 97000000 		call	OLED_ShowString
+ 580      E7800000 
+ 581 0258 0544     		li	s0,1
+ 582 025a 170A0000 		lla	s4,.LC12
+ 582      130A0A00 
+ 583 0262 9149     		li	s3,4
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 13
+
+
+ 584              	.L80:
+ 585 0264 C850     		lw	a0,36(s1)
+ 586 0266 1109     		addi	s2,s2,4
+ 587 0268 9104     		addi	s1,s1,4
+ 588 026a 97000000 		call	__extendsfdf2
+ 588      E7800000 
+ 589 0272 2AC4     		sw	a0,8(sp)
+ 590 0274 03258900 		lw	a0,8(s2)
+ 591 0278 2EC6     		sw	a1,12(sp)
+ 592 027a 97000000 		call	__fixsfsi
+ 592      E7800000 
+ 593 0282 2247     		lw	a4,8(sp)
+ 594 0284 B247     		lw	a5,12(sp)
+ 595 0286 2A86     		mv	a2,a0
+ 596 0288 D285     		mv	a1,s4
+ 597 028a 2808     		addi	a0,sp,24
+ 598 028c 97000000 		call	sprintf
+ 598      E7800000 
+ 599 0294 A285     		mv	a1,s0
+ 600 0296 0504     		addi	s0,s0,1
+ 601 0298 3008     		addi	a2,sp,24
+ 602 029a 0145     		li	a0,0
+ 603 029c 1374F40F 		andi	s0,s0,0xff
+ 604 02a0 97000000 		call	OLED_ShowString
+ 604      E7800000 
+ 605 02a8 E31E34FB 		bne	s0,s3,.L80
+ 606 02ac 0565     		li	a0,4096
+ 607 02ae 130585BB 		addi	a0,a0,-1096
+ 608 02b2 97000000 		call	mDelaymS
+ 608      E7800000 
+ 609 02ba B650     		lw	ra,108(sp)
+ 610 02bc 2654     		lw	s0,104(sp)
+ 611 02be 9654     		lw	s1,100(sp)
+ 612 02c0 0659     		lw	s2,96(sp)
+ 613 02c2 F649     		lw	s3,92(sp)
+ 614 02c4 664A     		lw	s4,88(sp)
+ 615 02c6 D64A     		lw	s5,84(sp)
+ 616 02c8 464B     		lw	s6,80(sp)
+ 617 02ca B64B     		lw	s7,76(sp)
+ 618 02cc 264C     		lw	s8,72(sp)
+ 619 02ce 964C     		lw	s9,68(sp)
+ 620 02d0 064D     		lw	s10,64(sp)
+ 621 02d2 F25D     		lw	s11,60(sp)
+ 622 02d4 6561     		addi	sp,sp,112
+ 623 02d6 8280     		jr	ra
+ 624              	.L87:
+ 625 02d8 6E85     		mv	a0,s11
+ 626 02da 3AC4     		sw	a4,8(sp)
+ 627 02dc 3EC6     		sw	a5,12(sp)
+ 628 02de 97000000 		call	__fixsfsi
+ 628      E7800000 
+ 629 02e6 2247     		lw	a4,8(sp)
+ 630 02e8 B247     		lw	a5,12(sp)
+ 631 02ea 2A86     		mv	a2,a0
+ 632 02ec E285     		mv	a1,s8
+ 633 02ee F1B3     		j	.L90
+ 634              	.L88:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 14
+
+
+ 635 02f0 4E85     		mv	a0,s3
+ 636 02f2 97000000 		call	__fixsfsi
+ 636      E7800000 
+ 637 02fa 5A87     		mv	a4,s6
+ 638 02fc DE87     		mv	a5,s7
+ 639 02fe 2A86     		mv	a2,a0
+ 640 0300 E685     		mv	a1,s9
+ 641 0302 19B7     		j	.L91
+ 643              		.section	.text.SetBothMotors,"ax",@progbits
+ 644              		.align	1
+ 645              		.globl	SetBothMotors
+ 647              	SetBothMotors:
+ 648 0000 4111     		addi	sp,sp,-16
+ 649 0002 22C4     		sw	s0,8(sp)
+ 650 0004 17040000 		lla	s0,.LC0
+ 650      13040400 
+ 651 000c 4AC0     		sw	s2,0(sp)
+ 652 000e 03290400 		lw	s2,0(s0)
+ 653 0012 26C2     		sw	s1,4(sp)
+ 654 0014 06C6     		sw	ra,12(sp)
+ 655 0016 CA85     		mv	a1,s2
+ 656 0018 AA84     		mv	s1,a0
+ 657 001a 97000000 		call	__gtsf2
+ 657      E7800000 
+ 658 0022 6342A006 		bgtz	a0,.L96
+ 659 0026 93050000 		mv	a1,zero
+ 660 002a 2685     		mv	a0,s1
+ 661 002c 97000000 		call	__ltsf2
+ 661      E7800000 
+ 662 0034 634B0500 		bltz	a0,.L94
+ 663 0038 93050000 		mv	a1,zero
+ 664 003c 2685     		mv	a0,s1
+ 665 003e 97000000 		call	__gtsf2
+ 665      E7800000 
+ 666 0046 6341A004 		bgtz	a0,.L93
+ 667              	.L94:
+ 668 004a 8146     		li	a3,0
+ 669 004c 0146     		li	a2,0
+ 670 004e 8145     		li	a1,0
+ 671 0050 0545     		li	a0,1
+ 672 0052 97000000 		call	PWMX_16bit_ACTOUT
+ 672      E7800000 
+ 673 005a 8146     		li	a3,0
+ 674 005c 0146     		li	a2,0
+ 675 005e 8145     		li	a1,0
+ 676 0060 0945     		li	a0,2
+ 677 0062 97000000 		call	PWMX_16bit_ACTOUT
+ 677      E7800000 
+ 678 006a 37170040 		li	a4,1073745920
+ 679 006e 8327C70A 		lw	a5,172(a4)
+ 680 0072 B240     		lw	ra,12(sp)
+ 681 0074 2244     		lw	s0,8(sp)
+ 682 0076 8D66     		li	a3,12288
+ 683 0078 D58F     		or	a5,a5,a3
+ 684 007a 2326F70A 		sw	a5,172(a4)
+ 685 007e 9244     		lw	s1,4(sp)
+ 686 0080 0249     		lw	s2,0(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 15
+
+
+ 687 0082 4101     		addi	sp,sp,16
+ 688 0084 8280     		jr	ra
+ 689              	.L96:
+ 690 0086 CA84     		mv	s1,s2
+ 691              	.L93:
+ 692 0088 97070000 		lla	a5,.LC1
+ 692      93870700 
+ 693 0090 8C43     		lw	a1,0(a5)
+ 694 0092 2685     		mv	a0,s1
+ 695 0094 97000000 		call	__mulsf3
+ 695      E7800000 
+ 696 009c 0C40     		lw	a1,0(s0)
+ 697 009e 97000000 		call	__divsf3
+ 697      E7800000 
+ 698 00a6 97000000 		call	__fixunssfsi
+ 698      E7800000 
+ 699 00ae 13140501 		slli	s0,a0,16
+ 700 00b2 4180     		srli	s0,s0,16
+ 701 00b4 A285     		mv	a1,s0
+ 702 00b6 8546     		li	a3,1
+ 703 00b8 0146     		li	a2,0
+ 704 00ba 0545     		li	a0,1
+ 705 00bc 97000000 		call	PWMX_16bit_ACTOUT
+ 705      E7800000 
+ 706 00c4 A285     		mv	a1,s0
+ 707 00c6 2244     		lw	s0,8(sp)
+ 708 00c8 B240     		lw	ra,12(sp)
+ 709 00ca 9244     		lw	s1,4(sp)
+ 710 00cc 0249     		lw	s2,0(sp)
+ 711 00ce 8546     		li	a3,1
+ 712 00d0 0146     		li	a2,0
+ 713 00d2 0945     		li	a0,2
+ 714 00d4 4101     		addi	sp,sp,16
+ 715 00d6 17030000 		tail	PWMX_16bit_ACTOUT
+ 715      67000300 
+ 717              		.globl	__lesf2
+ 718              		.globl	__gesf2
+ 719              		.globl	__subsf3
+ 720              		.globl	__addsf3
+ 721              		.section	.text.SpeedToPercent,"ax",@progbits
+ 722              		.align	1
+ 723              		.globl	SpeedToPercent
+ 725              	SpeedToPercent:
+ 726 0000 7971     		addi	sp,sp,-48
+ 727 0002 93050000 		mv	a1,zero
+ 728 0006 4AD0     		sw	s2,32(sp)
+ 729 0008 06D6     		sw	ra,44(sp)
+ 730 000a 22D4     		sw	s0,40(sp)
+ 731 000c 26D2     		sw	s1,36(sp)
+ 732 000e 4ECE     		sw	s3,28(sp)
+ 733 0010 52CC     		sw	s4,24(sp)
+ 734 0012 56CA     		sw	s5,20(sp)
+ 735 0014 5AC8     		sw	s6,16(sp)
+ 736 0016 5EC6     		sw	s7,12(sp)
+ 737 0018 62C4     		sw	s8,8(sp)
+ 738 001a 2A89     		mv	s2,a0
+ 739 001c 97000000 		call	__lesf2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 16
+
+
+ 739      E7800000 
+ 740 0024 635AA012 		blez	a0,.L106
+ 741 0028 97070000 		lla	a5,.LANCHOR6
+ 741      93870700 
+ 742 0030 8843     		lw	a0,0(a5)
+ 743 0032 CA85     		mv	a1,s2
+ 744 0034 97000000 		call	__lesf2
+ 744      E7800000 
+ 745 003c 6351A012 		blez	a0,.L113
+ 746 0040 97070000 		lla	a5,.LANCHOR5
+ 746      93870700 
+ 747 0048 8C43     		lw	a1,0(a5)
+ 748 004a 97070000 		lla	a5,.LANCHOR4
+ 748      93870700 
+ 749 0052 8843     		lw	a0,0(a5)
+ 750 0054 6144     		li	s0,24
+ 751 0056 8144     		li	s1,0
+ 752 0058 97000000 		call	__lesf2
+ 752      E7800000 
+ 753 0060 332AA000 		sgt	s4,a0,zero
+ 754 0064 33048A02 		mul	s0,s4,s0
+ 755 0068 97070000 		lla	a5,cal_results
+ 755      93870700 
+ 756 0070 BE89     		mv	s3,a5
+ 757 0072 154C     		li	s8,5
+ 758 0074 3E94     		add	s0,s0,a5
+ 759              	.L104:
+ 760 0076 032B0400 		lw	s6,0(s0)
+ 761 007a 4A85     		mv	a0,s2
+ 762 007c 938A1400 		addi	s5,s1,1
+ 763 0080 DA85     		mv	a1,s6
+ 764 0082 97000000 		call	__gesf2
+ 764      E7800000 
+ 765 008a 63460508 		bltz	a0,.L101
+ 766 008e 832B4400 		lw	s7,4(s0)
+ 767 0092 4A85     		mv	a0,s2
+ 768 0094 DE85     		mv	a1,s7
+ 769 0096 97000000 		call	__lesf2
+ 769      E7800000 
+ 770 009e 634CA006 		bgtz	a0,.L101
+ 771 00a2 DA85     		mv	a1,s6
+ 772 00a4 4A85     		mv	a0,s2
+ 773 00a6 97000000 		call	__subsf3
+ 773      E7800000 
+ 774 00ae 2A89     		mv	s2,a0
+ 775 00b0 DA85     		mv	a1,s6
+ 776 00b2 5E85     		mv	a0,s7
+ 777 00b4 97000000 		call	__subsf3
+ 777      E7800000 
+ 778 00bc 17040000 		lla	s0,.LANCHOR3
+ 778      13040400 
+ 779 00c4 8A04     		slli	s1,s1,2
+ 780 00c6 AA85     		mv	a1,a0
+ 781 00c8 A294     		add	s1,s0,s1
+ 782 00ca 4A85     		mv	a0,s2
+ 783 00cc 8A0A     		slli	s5,s5,2
+ 784 00ce 97000000 		call	__divsf3
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 17
+
+
+ 784      E7800000 
+ 785 00d6 8440     		lw	s1,0(s1)
+ 786 00d8 5694     		add	s0,s0,s5
+ 787 00da 2A89     		mv	s2,a0
+ 788 00dc 0840     		lw	a0,0(s0)
+ 789 00de A685     		mv	a1,s1
+ 790 00e0 97000000 		call	__subsf3
+ 790      E7800000 
+ 791 00e8 AA85     		mv	a1,a0
+ 792 00ea 4A85     		mv	a0,s2
+ 793 00ec 97000000 		call	__mulsf3
+ 793      E7800000 
+ 794 00f4 A685     		mv	a1,s1
+ 795 00f6 97000000 		call	__addsf3
+ 795      E7800000 
+ 796              	.L98:
+ 797 00fe B250     		lw	ra,44(sp)
+ 798 0100 2254     		lw	s0,40(sp)
+ 799 0102 9254     		lw	s1,36(sp)
+ 800 0104 0259     		lw	s2,32(sp)
+ 801 0106 F249     		lw	s3,28(sp)
+ 802 0108 624A     		lw	s4,24(sp)
+ 803 010a D24A     		lw	s5,20(sp)
+ 804 010c 424B     		lw	s6,16(sp)
+ 805 010e B24B     		lw	s7,12(sp)
+ 806 0110 224C     		lw	s8,8(sp)
+ 807 0112 4561     		addi	sp,sp,48
+ 808 0114 8280     		jr	ra
+ 809              	.L101:
+ 810 0116 1104     		addi	s0,s0,4
+ 811 0118 D684     		mv	s1,s5
+ 812 011a E39E8AF5 		bne	s5,s8,.L104
+ 813 011e E147     		li	a5,24
+ 814 0120 B307FA02 		mul	a5,s4,a5
+ 815 0124 4A85     		mv	a0,s2
+ 816 0126 CE97     		add	a5,s3,a5
+ 817 0128 8043     		lw	s0,0(a5)
+ 818 012a A285     		mv	a1,s0
+ 819 012c 97000000 		call	__ltsf2
+ 819      E7800000 
+ 820 0134 63550502 		bgez	a0,.L113
+ 821 0138 A285     		mv	a1,s0
+ 822 013a 4A85     		mv	a0,s2
+ 823 013c 97000000 		call	__divsf3
+ 823      E7800000 
+ 824 0144 97070000 		lla	a5,.LANCHOR3
+ 824      93870700 
+ 825 014c 8C43     		lw	a1,0(a5)
+ 826 014e 97000000 		call	__mulsf3
+ 826      E7800000 
+ 827 0156 65B7     		j	.L98
+ 828              	.L106:
+ 829 0158 13050000 		mv	a0,zero
+ 830 015c 4DB7     		j	.L98
+ 831              	.L113:
+ 832 015e 97070000 		lla	a5,.LC16
+ 832      93870700 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 18
+
+
+ 833 0166 8843     		lw	a0,0(a5)
+ 834 0168 59BF     		j	.L98
+ 836              		.section	.text.GetCurrentDistance,"ax",@progbits
+ 837              		.align	1
+ 838              		.globl	GetCurrentDistance
+ 840              	GetCurrentDistance:
+ 841 0000 97070000 		lla	a5,.LANCHOR1
+ 841      93870700 
+ 842 0008 17070000 		lla	a4,.LANCHOR2
+ 842      13070700 
+ 843 0010 9C43     		lw	a5,0(a5)
+ 844 0012 1843     		lw	a4,0(a4)
+ 845 0014 4111     		addi	sp,sp,-16
+ 846 0016 0945     		li	a0,2
+ 847 0018 BA97     		add	a5,a5,a4
+ 848 001a 06C6     		sw	ra,12(sp)
+ 849 001c 7D57     		li	a4,-1
+ 850 001e 33C5A702 		div	a0,a5,a0
+ 851 0022 63D4E700 		bge	a5,a4,.L116
+ 852 0026 3305A040 		neg	a0,a0
+ 853              	.L116:
+ 854 002a 97000000 		call	__floatsisf
+ 854      E7800000 
+ 855 0032 97070000 		lla	a5,.LC7
+ 855      93870700 
+ 856 003a 8C43     		lw	a1,0(a5)
+ 857 003c 97000000 		call	__divsf3
+ 857      E7800000 
+ 858 0044 B240     		lw	ra,12(sp)
+ 859 0046 4101     		addi	sp,sp,16
+ 860 0048 8280     		jr	ra
+ 862              		.globl	__floatunsisf
+ 863              		.section	.text.RunToTarget,"ax",@progbits
+ 864              		.align	1
+ 865              		.globl	RunToTarget
+ 867              	RunToTarget:
+ 868 0000 97070000 		sw	zero,.LANCHOR1,a5
+ 868      23A00700 
+ 869 0008 5971     		addi	sp,sp,-112
+ 870 000a 97070000 		sw	zero,.LANCHOR2,a5
+ 870      23A00700 
+ 871 0012 CAD0     		sw	s2,96(sp)
+ 872 0014 97070000 		sw	zero,.LANCHOR0,a5
+ 872      23A00700 
+ 873 001c 17090000 		lla	s2,.LANCHOR6
+ 873      13090900 
+ 874 0024 86D6     		sw	ra,108(sp)
+ 875 0026 A2D4     		sw	s0,104(sp)
+ 876 0028 A6D2     		sw	s1,100(sp)
+ 877 002a CECE     		sw	s3,92(sp)
+ 878 002c 2EC0     		sw	a1,0(sp)
+ 879 002e D2CC     		sw	s4,88(sp)
+ 880 0030 D6CA     		sw	s5,84(sp)
+ 881 0032 DAC8     		sw	s6,80(sp)
+ 882 0034 DEC6     		sw	s7,76(sp)
+ 883 0036 E2C4     		sw	s8,72(sp)
+ 884 0038 E6C2     		sw	s9,68(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 19
+
+
+ 885 003a EAC0     		sw	s10,64(sp)
+ 886 003c 6EDE     		sw	s11,60(sp)
+ 887 003e AA84     		mv	s1,a0
+ 888 0040 97000000 		call	__divsf3
+ 888      E7800000 
+ 889 0048 03240900 		lw	s0,0(s2)
+ 890 004c AA85     		mv	a1,a0
+ 891 004e AA89     		mv	s3,a0
+ 892 0050 2285     		mv	a0,s0
+ 893 0052 97000000 		call	__ltsf2
+ 893      E7800000 
+ 894 005a 4AC2     		sw	s2,4(sp)
+ 895 005c 63530500 		bgez	a0,.L119
+ 896 0060 A289     		mv	s3,s0
+ 897              	.L119:
+ 898 0062 97070000 		lla	a5,.LC17
+ 898      93870700 
+ 899 006a 8C43     		lw	a1,0(a5)
+ 900 006c 2685     		mv	a0,s1
+ 901 006e 170B0000 		lla	s6,.LANCHOR0
+ 901      130B0B00 
+ 902 0076 97000000 		call	__mulsf3
+ 902      E7800000 
+ 903 007e 97070000 		lla	a5,cal_results
+ 903      93870700 
+ 904 0086 2A8A     		mv	s4,a0
+ 905 0088 83AA0700 		lw	s5,0(a5)
+ 906 008c 97000000 		call	OLED_Clear
+ 906      E7800000 
+ 907 0094 17060000 		lla	a2,.LC18
+ 907      13060600 
+ 908 009c 8145     		li	a1,0
+ 909 009e 0145     		li	a0,0
+ 910 00a0 97000000 		call	OLED_ShowString
+ 910      E7800000 
+ 911 00a8 970B0000 		lla	s7,.LC0
+ 911      938B0B00 
+ 912 00b0 930C2003 		li	s9,50
+ 913 00b4 170D0000 		lla	s10,.LC26
+ 913      130D0D00 
+ 914              	.L130:
+ 915 00bc 97000000 		call	GetCurrentDistance
+ 915      E7800000 
+ 916 00c4 2A89     		mv	s2,a0
+ 917 00c6 03250B00 		lw	a0,0(s6)
+ 918 00ca 97000000 		call	__floatunsisf
+ 918      E7800000 
+ 919 00d2 83A50B00 		lw	a1,0(s7)
+ 920 00d6 97000000 		call	__divsf3
+ 920      E7800000 
+ 921 00de CA85     		mv	a1,s2
+ 922 00e0 2A8C     		mv	s8,a0
+ 923 00e2 2685     		mv	a0,s1
+ 924 00e4 97000000 		call	__subsf3
+ 924      E7800000 
+ 925 00ec 97070000 		lla	a5,.LC19
+ 925      93870700 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 20
+
+
+ 926 00f4 8C43     		lw	a1,0(a5)
+ 927 00f6 AA8D     		mv	s11,a0
+ 928 00f8 97000000 		call	__lesf2
+ 928      E7800000 
+ 929 0100 6349A010 		bgtz	a0,.L137
+ 930 0104 13050000 		mv	a0,zero
+ 931 0108 97000000 		call	SetBothMotors
+ 931      E7800000 
+ 932 0110 97000000 		call	GetCurrentDistance
+ 932      E7800000 
+ 933 0118 2A84     		mv	s0,a0
+ 934 011a 03290B00 		lw	s2,0(s6)
+ 935 011e 97000000 		call	OLED_Clear
+ 935      E7800000 
+ 936 0126 17060000 		lla	a2,.LC20
+ 936      13060600 
+ 937 012e 8145     		li	a1,0
+ 938 0130 0145     		li	a0,0
+ 939 0132 97000000 		call	OLED_ShowString
+ 939      E7800000 
+ 940 013a 2285     		mv	a0,s0
+ 941 013c 97000000 		call	__extendsfdf2
+ 941      E7800000 
+ 942 0144 AE86     		mv	a3,a1
+ 943 0146 2A86     		mv	a2,a0
+ 944 0148 97050000 		lla	a1,.LC21
+ 944      93850500 
+ 945 0150 2808     		addi	a0,sp,24
+ 946 0152 97000000 		call	sprintf
+ 946      E7800000 
+ 947 015a 3008     		addi	a2,sp,24
+ 948 015c 8545     		li	a1,1
+ 949 015e 0145     		li	a0,0
+ 950 0160 97000000 		call	OLED_ShowString
+ 950      E7800000 
+ 951 0168 4A85     		mv	a0,s2
+ 952 016a 97000000 		call	__floatunsisf
+ 952      E7800000 
+ 953 0172 83A50B00 		lw	a1,0(s7)
+ 954 0176 97000000 		call	__divsf3
+ 954      E7800000 
+ 955 017e 97000000 		call	__extendsfdf2
+ 955      E7800000 
+ 956 0186 AE86     		mv	a3,a1
+ 957 0188 2A86     		mv	a2,a0
+ 958 018a 97050000 		lla	a1,.LC22
+ 958      93850500 
+ 959 0192 2808     		addi	a0,sp,24
+ 960 0194 97000000 		call	sprintf
+ 960      E7800000 
+ 961 019c 3008     		addi	a2,sp,24
+ 962 019e 8945     		li	a1,2
+ 963 01a0 0145     		li	a0,0
+ 964 01a2 97000000 		call	OLED_ShowString
+ 964      E7800000 
+ 965 01aa A685     		mv	a1,s1
+ 966 01ac 2285     		mv	a0,s0
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 21
+
+
+ 967 01ae 97000000 		call	__subsf3
+ 967      E7800000 
+ 968 01b6 97070000 		lla	a5,.LC23
+ 968      93870700 
+ 969 01be 8C43     		lw	a1,0(a5)
+ 970 01c0 97000000 		call	__mulsf3
+ 970      E7800000 
+ 971 01c8 97000000 		call	__extendsfdf2
+ 971      E7800000 
+ 972 01d0 2A86     		mv	a2,a0
+ 973 01d2 AE86     		mv	a3,a1
+ 974 01d4 2808     		addi	a0,sp,24
+ 975 01d6 97050000 		lla	a1,.LC24
+ 975      93850500 
+ 976 01de 97000000 		call	sprintf
+ 976      E7800000 
+ 977 01e6 3008     		addi	a2,sp,24
+ 978 01e8 8D45     		li	a1,3
+ 979 01ea 0145     		li	a0,0
+ 980 01ec 97000000 		call	OLED_ShowString
+ 980      E7800000 
+ 981 01f4 B650     		lw	ra,108(sp)
+ 982 01f6 2654     		lw	s0,104(sp)
+ 983 01f8 9654     		lw	s1,100(sp)
+ 984 01fa 0659     		lw	s2,96(sp)
+ 985 01fc F649     		lw	s3,92(sp)
+ 986 01fe 664A     		lw	s4,88(sp)
+ 987 0200 D64A     		lw	s5,84(sp)
+ 988 0202 464B     		lw	s6,80(sp)
+ 989 0204 B64B     		lw	s7,76(sp)
+ 990 0206 264C     		lw	s8,72(sp)
+ 991 0208 964C     		lw	s9,68(sp)
+ 992 020a 064D     		lw	s10,64(sp)
+ 993 020c F25D     		lw	s11,60(sp)
+ 994 020e 6561     		addi	sp,sp,112
+ 995 0210 8280     		jr	ra
+ 996              	.L137:
+ 997 0212 CA85     		mv	a1,s2
+ 998 0214 5285     		mv	a0,s4
+ 999 0216 97000000 		call	__gtsf2
+ 999      E7800000 
+ 1000 021e 6357A004 		blez	a0,.L139
+ 1001 0222 0245     		lw	a0,0(sp)
+ 1002 0224 E285     		mv	a1,s8
+ 1003 0226 97000000 		call	__subsf3
+ 1003      E7800000 
+ 1004 022e 9247     		lw	a5,4(sp)
+ 1005 0230 2AC4     		sw	a0,8(sp)
+ 1006 0232 8043     		lw	s0,0(a5)
+ 1007 0234 97070000 		lla	a5,.LC25
+ 1007      93870700 
+ 1008 023c 8C43     		lw	a1,0(a5)
+ 1009 023e 97000000 		call	__gtsf2
+ 1009      E7800000 
+ 1010 0246 635DA008 		blez	a0,.L125
+ 1011 024a A247     		lw	a5,8(sp)
+ 1012 024c 6E85     		mv	a0,s11
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 22
+
+
+ 1013 024e BE85     		mv	a1,a5
+ 1014 0250 97000000 		call	__divsf3
+ 1014      E7800000 
+ 1015 0258 A285     		mv	a1,s0
+ 1016 025a AA8D     		mv	s11,a0
+ 1017 025c 97000000 		call	__gtsf2
+ 1017      E7800000 
+ 1018 0264 634EA006 		bgtz	a0,.L125
+ 1019 0268 6E84     		mv	s0,s11
+ 1020 026a 9DA8     		j	.L125
+ 1021              	.L139:
+ 1022 026c D285     		mv	a1,s4
+ 1023 026e 4A85     		mv	a0,s2
+ 1024 0270 97000000 		call	__subsf3
+ 1024      E7800000 
+ 1025 0278 2A84     		mv	s0,a0
+ 1026 027a D285     		mv	a1,s4
+ 1027 027c 2685     		mv	a0,s1
+ 1028 027e 97000000 		call	__subsf3
+ 1028      E7800000 
+ 1029 0286 AA85     		mv	a1,a0
+ 1030 0288 2285     		mv	a0,s0
+ 1031 028a 97000000 		call	__divsf3
+ 1031      E7800000 
+ 1032 0292 97070000 		lla	a5,.LC3
+ 1032      93870700 
+ 1033 029a 2A84     		mv	s0,a0
+ 1034 029c AA85     		mv	a1,a0
+ 1035 029e 8843     		lw	a0,0(a5)
+ 1036 02a0 97000000 		call	__subsf3
+ 1036      E7800000 
+ 1037 02a8 CE85     		mv	a1,s3
+ 1038 02aa 97000000 		call	__mulsf3
+ 1038      E7800000 
+ 1039 02b2 A285     		mv	a1,s0
+ 1040 02b4 AA8D     		mv	s11,a0
+ 1041 02b6 5685     		mv	a0,s5
+ 1042 02b8 97000000 		call	__mulsf3
+ 1042      E7800000 
+ 1043 02c0 AA85     		mv	a1,a0
+ 1044 02c2 6E85     		mv	a0,s11
+ 1045 02c4 97000000 		call	__addsf3
+ 1045      E7800000 
+ 1046 02cc 2A84     		mv	s0,a0
+ 1047 02ce AA85     		mv	a1,a0
+ 1048 02d0 5685     		mv	a0,s5
+ 1049 02d2 97000000 		call	__gtsf2
+ 1049      E7800000 
+ 1050 02da 6353A000 		blez	a0,.L125
+ 1051 02de 5684     		mv	s0,s5
+ 1052              	.L125:
+ 1053 02e0 2285     		mv	a0,s0
+ 1054 02e2 97000000 		call	SpeedToPercent
+ 1054      E7800000 
+ 1055 02ea 2A84     		mv	s0,a0
+ 1056 02ec 97000000 		call	SetBothMotors
+ 1056      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 23
+
+
+ 1057 02f4 83270B00 		lw	a5,0(s6)
+ 1058 02f8 B3F79703 		remu	a5,a5,s9
+ 1059 02fc ADE7     		bnez	a5,.L129
+ 1060 02fe 6285     		mv	a0,s8
+ 1061 0300 97000000 		call	__extendsfdf2
+ 1061      E7800000 
+ 1062 0308 2AC4     		sw	a0,8(sp)
+ 1063 030a 4A85     		mv	a0,s2
+ 1064 030c 2EC6     		sw	a1,12(sp)
+ 1065 030e 97000000 		call	__extendsfdf2
+ 1065      E7800000 
+ 1066 0316 2247     		lw	a4,8(sp)
+ 1067 0318 B247     		lw	a5,12(sp)
+ 1068 031a AE86     		mv	a3,a1
+ 1069 031c 2A86     		mv	a2,a0
+ 1070 031e EA85     		mv	a1,s10
+ 1071 0320 2808     		addi	a0,sp,24
+ 1072 0322 97000000 		call	sprintf
+ 1072      E7800000 
+ 1073 032a 3008     		addi	a2,sp,24
+ 1074 032c 8545     		li	a1,1
+ 1075 032e 0145     		li	a0,0
+ 1076 0330 97000000 		call	OLED_ShowString
+ 1076      E7800000 
+ 1077 0338 2285     		mv	a0,s0
+ 1078 033a 97000000 		call	__extendsfdf2
+ 1078      E7800000 
+ 1079 0342 2A86     		mv	a2,a0
+ 1080 0344 AE86     		mv	a3,a1
+ 1081 0346 2808     		addi	a0,sp,24
+ 1082 0348 97050000 		lla	a1,.LC27
+ 1082      93850500 
+ 1083 0350 97000000 		call	sprintf
+ 1083      E7800000 
+ 1084 0358 3008     		addi	a2,sp,24
+ 1085 035a 8945     		li	a1,2
+ 1086 035c 0145     		li	a0,0
+ 1087 035e 97000000 		call	OLED_ShowString
+ 1087      E7800000 
+ 1088              	.L129:
+ 1089 0366 2945     		li	a0,10
+ 1090 0368 97000000 		call	mDelaymS
+ 1090      E7800000 
+ 1091 0370 B1B3     		j	.L130
+ 1093              		.section	.text.startup.main,"ax",@progbits
+ 1094              		.align	1
+ 1095              		.globl	main
+ 1097              	main:
+ 1098 0000 0111     		addi	sp,sp,-32
+ 1099 0002 13058004 		li	a0,72
+ 1100 0006 06CE     		sw	ra,28(sp)
+ 1101 0008 22CC     		sw	s0,24(sp)
+ 1102 000a 97000000 		call	SetSysClock
+ 1102      E7800000 
+ 1103 0012 37250900 		li	a0,598016
+ 1104 0016 1305057C 		addi	a0,a0,1984
+ 1105 001a 97000000 		call	TMR0_TimerInit
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 24
+
+
+ 1105      E7800000 
+ 1106 0022 B7270040 		li	a5,1073750016
+ 1107 0026 0547     		li	a4,1
+ 1108 0028 2383E700 		sb	a4,6(a5)
+ 1109 002c 03C72700 		lbu	a4,2(a5)
+ 1110 0030 13671700 		ori	a4,a4,1
+ 1111 0034 2381E700 		sb	a4,2(a5)
+ 1112 0038 4167     		li	a4,65536
+ 1113 003a B7E700E0 		li	a5,-536813568
+ 1114 003e 23A0E710 		sw	a4,256(a5)
+ 1115 0042 97000000 		call	OLED_Init
+ 1115      E7800000 
+ 1116 004a 97000000 		call	Motor_Init
+ 1116      E7800000 
+ 1117 0052 97000000 		call	CalibrateMotors
+ 1117      E7800000 
+ 1118 005a 97000000 		call	OLED_Clear
+ 1118      E7800000 
+ 1119 0062 17060000 		lla	a2,.LC28
+ 1119      13060600 
+ 1120 006a 8145     		li	a1,0
+ 1121 006c 0145     		li	a0,0
+ 1122 006e 97000000 		call	OLED_ShowString
+ 1122      E7800000 
+ 1123 0076 8545     		li	a1,1
+ 1124 0078 17060000 		lla	a2,.LC29
+ 1124      13060600 
+ 1125 0080 0145     		li	a0,0
+ 1126 0082 97000000 		call	OLED_ShowString
+ 1126      E7800000 
+ 1127 008a 1305007D 		li	a0,2000
+ 1128 008e 97000000 		call	mDelaymS
+ 1128      E7800000 
+ 1129 0096 97070000 		sw	zero,.LANCHOR0,a5
+ 1129      23A00700 
+ 1130 009e 9547     		li	a5,5
+ 1131 00a0 17070000 		sw	a5,.LANCHOR7,a4
+ 1131      2320F700 
+ 1132 00a8 A947     		li	a5,10
+ 1133 00aa 17070000 		sw	a5,.LANCHOR8,a4
+ 1133      2320F700 
+ 1134 00b2 97070000 		lla	a5,.LANCHOR7
+ 1134      93870700 
+ 1135 00ba 8043     		lw	s0,0(a5)
+ 1136 00bc 97070000 		lla	a5,.LANCHOR8
+ 1136      93870700 
+ 1137 00c4 8843     		lw	a0,0(a5)
+ 1138 00c6 97000000 		call	__floatsisf
+ 1138      E7800000 
+ 1139 00ce 2AC6     		sw	a0,12(sp)
+ 1140 00d0 2285     		mv	a0,s0
+ 1141 00d2 97000000 		call	__floatsisf
+ 1141      E7800000 
+ 1142 00da B245     		lw	a1,12(sp)
+ 1143 00dc 97000000 		call	RunToTarget
+ 1143      E7800000 
+ 1144              	.L143:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 25
+
+
+ 1145 00e4 1305803E 		li	a0,1000
+ 1146 00e8 97000000 		call	mDelaymS
+ 1146      E7800000 
+ 1147 00f0 D5BF     		j	.L143
+ 1149              		.globl	currenttime
+ 1150              		.globl	targettime
+ 1151              		.globl	currentdistance
+ 1152              		.globl	targetdistance
+ 1153              		.globl	timer_ticks
+ 1154              		.globl	count_right
+ 1155              		.globl	count_left
+ 1156              		.comm	cal_results,48,4
+ 1157              		.globl	duty_percents
+ 1158              		.section	.data.duty_percents,"aw"
+ 1159              		.align	2
+ 1160              		.set	.LANCHOR3,. + 0
+ 1163              	duty_percents:
+ 1164 0000 CDCCCC3D 		.word	1036831949
+ 1165 0004 0000803F 		.word	1065353216
+ 1166 0008 0000A040 		.word	1084227584
+ 1167 000c 00002041 		.word	1092616192
+ 1168 0010 00004842 		.word	1112014848
+ 1169 0014 0000B442 		.word	1119092736
+ 1170              		.section	.rodata.CalibrateMotors.cst4,"aM",@progbits,4
+ 1171              		.align	2
+ 1172              	.LC3:
+ 1173 0000 0000803F 		.word	1065353216
+ 1174              	.LC4:
+ 1175 0004 00002041 		.word	1092616192
+ 1176              	.LC7:
+ 1177 0008 E6BB9A44 		.word	1150991334
+ 1178              		.section	.rodata.CalibrateMotors.str1.4,"aMS",@progbits,1
+ 1179              		.align	2
+ 1180              	.LC2:
+ 1181 0000 43616C69 		.string	"Calibrating..."
+ 1181      62726174 
+ 1181      696E672E 
+ 1181      2E2E00
+ 1182 000f 00       		.zero	1
+ 1183              	.LC5:
+ 1184 0010 25732030 		.string	"%s 0.%d%%"
+ 1184      2E256425 
+ 1184      2500
+ 1185 001a 0000     		.zero	2
+ 1186              	.LC6:
+ 1187 001c 25732025 		.string	"%s %d%%"
+ 1187      64252500 
+ 1188              	.LC8:
+ 1189 0024 4C00     		.string	"L"
+ 1190 0026 0000     		.zero	2
+ 1191              	.LC9:
+ 1192 0028 5200     		.string	"R"
+ 1193              		.section	.rodata.RunToTarget.cst4,"aM",@progbits,4
+ 1194              		.align	2
+ 1195              	.LC17:
+ 1196 0000 3333733F 		.word	1064514355
+ 1197              	.LC19:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 26
+
+
+ 1198 0004 6F12833A 		.word	981668463
+ 1199              	.LC23:
+ 1200 0008 00007A44 		.word	1148846080
+ 1201              	.LC25:
+ 1202 000c CDCCCC3D 		.word	1036831949
+ 1203              		.section	.rodata.RunToTarget.str1.4,"aMS",@progbits,1
+ 1204              		.align	2
+ 1205              	.LC18:
+ 1206 0000 52756E6E 		.string	"Running..."
+ 1206      696E672E 
+ 1206      2E2E00
+ 1207 000b 00       		.zero	1
+ 1208              	.LC20:
+ 1209 000c 46494E49 		.string	"FINISHED!"
+ 1209      53484544 
+ 1209      2100
+ 1210 0016 0000     		.zero	2
+ 1211              	.LC21:
+ 1212 0018 44697374 		.string	"Dist: %.3fm"
+ 1212      3A20252E 
+ 1212      33666D00 
+ 1213              	.LC22:
+ 1214 0024 54696D65 		.string	"Time: %.2fs"
+ 1214      3A20252E 
+ 1214      32667300 
+ 1215              	.LC24:
+ 1216 0030 4572723A 		.string	"Err: %.1fmm"
+ 1216      20252E31 
+ 1216      666D6D00 
+ 1217              	.LC26:
+ 1218 003c 443A252E 		.string	"D:%.2fm T:%.1fs"
+ 1218      32666D20 
+ 1218      543A252E 
+ 1218      31667300 
+ 1219              	.LC27:
+ 1220 004c 5370643A 		.string	"Spd:%.2f%%"
+ 1220      252E3266 
+ 1220      252500
+ 1221              		.section	.rodata.SetMotorSpeed.cst4,"aM",@progbits,4
+ 1222              		.align	2
+ 1223              	.LC0:
+ 1224 0000 0000C842 		.word	1120403456
+ 1225              	.LC1:
+ 1226 0004 00606A47 		.word	1198153728
+ 1227              		.section	.rodata.ShowCalibrationResults.str1.4,"aMS",@progbits,1
+ 1228              		.align	2
+ 1229              	.LC10:
+ 1230 0000 4C656674 		.string	"Left Motor:"
+ 1230      204D6F74 
+ 1230      6F723A00 
+ 1231              	.LC11:
+ 1232 000c 302E2564 		.string	"0.%d%%: %.3fm/s"
+ 1232      25253A20 
+ 1232      252E3366 
+ 1232      6D2F7300 
+ 1233              	.LC12:
+ 1234 001c 25642525 		.string	"%d%%: %.3fm/s"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 27
+
+
+ 1234      3A20252E 
+ 1234      33666D2F 
+ 1234      7300
+ 1235 002a 0000     		.zero	2
+ 1236              	.LC13:
+ 1237 002c 4C656674 		.string	"Left (cont):"
+ 1237      2028636F 
+ 1237      6E74293A 
+ 1237      00
+ 1238 0039 000000   		.zero	3
+ 1239              	.LC14:
+ 1240 003c 52696768 		.string	"Right Motor:"
+ 1240      74204D6F 
+ 1240      746F723A 
+ 1240      00
+ 1241 0049 000000   		.zero	3
+ 1242              	.LC15:
+ 1243 004c 52696768 		.string	"Right (cont):"
+ 1243      74202863 
+ 1243      6F6E7429 
+ 1243      3A00
+ 1244              		.section	.rodata.SpeedToPercent.cst4,"aM",@progbits,4
+ 1245              		.align	2
+ 1246              	.LC16:
+ 1247 0000 0000B442 		.word	1119092736
+ 1248              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+ 1249              		.align	2
+ 1250              	.LC28:
+ 1251 0000 43616C20 		.string	"Cal Complete!"
+ 1251      436F6D70 
+ 1251      6C657465 
+ 1251      2100
+ 1252 000e 0000     		.zero	2
+ 1253              	.LC29:
+ 1254 0010 53746172 		.string	"Starting run..."
+ 1254      74696E67 
+ 1254      2072756E 
+ 1254      2E2E2E00 
+ 1255              		.section	.sbss.combinedmaxspeed,"aw",@nobits
+ 1256              		.align	2
+ 1257              		.set	.LANCHOR6,. + 0
+ 1260              	combinedmaxspeed:
+ 1261 0000 00000000 		.zero	4
+ 1262              		.section	.sbss.count_left,"aw",@nobits
+ 1263              		.align	2
+ 1264              		.set	.LANCHOR1,. + 0
+ 1267              	count_left:
+ 1268 0000 00000000 		.zero	4
+ 1269              		.section	.sbss.count_right,"aw",@nobits
+ 1270              		.align	2
+ 1271              		.set	.LANCHOR2,. + 0
+ 1274              	count_right:
+ 1275 0000 00000000 		.zero	4
+ 1276              		.section	.sbss.currentdistance,"aw",@nobits
+ 1277              		.align	2
+ 1280              	currentdistance:
+ 1281 0000 00000000 		.zero	4
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 28
+
+
+ 1282              		.section	.sbss.currenttime,"aw",@nobits
+ 1283              		.align	2
+ 1286              	currenttime:
+ 1287 0000 00000000 		.zero	4
+ 1288              		.section	.sbss.leftmotormaxspeed,"aw",@nobits
+ 1289              		.align	2
+ 1290              		.set	.LANCHOR4,. + 0
+ 1293              	leftmotormaxspeed:
+ 1294 0000 00000000 		.zero	4
+ 1295              		.section	.sbss.rightmotormaxspeed,"aw",@nobits
+ 1296              		.align	2
+ 1297              		.set	.LANCHOR5,. + 0
+ 1300              	rightmotormaxspeed:
+ 1301 0000 00000000 		.zero	4
+ 1302              		.section	.sbss.targetdistance,"aw",@nobits
+ 1303              		.align	2
+ 1304              		.set	.LANCHOR7,. + 0
+ 1307              	targetdistance:
+ 1308 0000 00000000 		.zero	4
+ 1309              		.section	.sbss.targettime,"aw",@nobits
+ 1310              		.align	2
+ 1311              		.set	.LANCHOR8,. + 0
+ 1314              	targettime:
+ 1315 0000 00000000 		.zero	4
+ 1316              		.section	.sbss.timer_ticks,"aw",@nobits
+ 1317              		.align	2
+ 1318              		.set	.LANCHOR0,. + 0
+ 1321              	timer_ticks:
+ 1322 0000 00000000 		.zero	4
+ 1323              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Main.c
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:8      .highcode:0000000000000000 TMR0_IRQHandler
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:25     .highcode:000000000000002a GPIOB_IRQHandler
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:60     .highcode:000000000000008a GPIOA_IRQHandler
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:97     .text.Motor_Init:0000000000000000 Motor_Init
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:164    .text.SetMotorSpeed:0000000000000000 SetMotorSpeed
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:276    .text.CalibrateMotors:0000000000000000 CalibrateMotors
+                            *COM*:0000000000000030 cal_results
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:431    .text.ShowCalibrationResults:0000000000000000 ShowCalibrationResults
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:647    .text.SetBothMotors:0000000000000000 SetBothMotors
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:725    .text.SpeedToPercent:0000000000000000 SpeedToPercent
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:840    .text.GetCurrentDistance:0000000000000000 GetCurrentDistance
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:867    .text.RunToTarget:0000000000000000 RunToTarget
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1097   .text.startup.main:0000000000000000 main
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1286   .sbss.currenttime:0000000000000000 currenttime
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1314   .sbss.targettime:0000000000000000 targettime
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1280   .sbss.currentdistance:0000000000000000 currentdistance
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1307   .sbss.targetdistance:0000000000000000 targetdistance
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1321   .sbss.timer_ticks:0000000000000000 timer_ticks
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1274   .sbss.count_right:0000000000000000 count_right
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1267   .sbss.count_left:0000000000000000 count_left
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1163   .data.duty_percents:0000000000000000 duty_percents
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1160   .data.duty_percents:0000000000000000 .LANCHOR3
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1257   .sbss.combinedmaxspeed:0000000000000000 .LANCHOR6
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1260   .sbss.combinedmaxspeed:0000000000000000 combinedmaxspeed
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1264   .sbss.count_left:0000000000000000 .LANCHOR1
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1271   .sbss.count_right:0000000000000000 .LANCHOR2
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1290   .sbss.leftmotormaxspeed:0000000000000000 .LANCHOR4
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1293   .sbss.leftmotormaxspeed:0000000000000000 leftmotormaxspeed
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1297   .sbss.rightmotormaxspeed:0000000000000000 .LANCHOR5
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1300   .sbss.rightmotormaxspeed:0000000000000000 rightmotormaxspeed
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1304   .sbss.targetdistance:0000000000000000 .LANCHOR7
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1311   .sbss.targettime:0000000000000000 .LANCHOR8
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1318   .sbss.timer_ticks:0000000000000000 .LANCHOR0
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:15     .highcode:0000000000000012 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:18     .highcode:000000000000001e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:32     .highcode:0000000000000040 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:40     .highcode:000000000000005a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:67     .highcode:000000000000009e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:76     .highcode:00000000000000b8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:19     .highcode:0000000000000026 .L1
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:50     .highcode:0000000000000080 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:52     .highcode:0000000000000084 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:44     .highcode:0000000000000068 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:39     .highcode:000000000000005a .L15
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:86     .highcode:00000000000000da .L17
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:88     .highcode:00000000000000de .L19
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:80     .highcode:00000000000000c6 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:75     .highcode:00000000000000b8 .L26
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1223   .rodata.SetMotorSpeed.cst4:0000000000000000 .LC0
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:167    .text.SetMotorSpeed:0000000000000004 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1225   .rodata.SetMotorSpeed.cst4:0000000000000004 .LC1
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:185    .text.SetMotorSpeed:0000000000000042 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:221    .text.SetMotorSpeed:00000000000000c0 .L39
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:184    .text.SetMotorSpeed:0000000000000042 .L31
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:242    .text.SetMotorSpeed:00000000000000ee .L33
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 30
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:224    .text.SetMotorSpeed:00000000000000c4 .L43
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:260    .text.SetMotorSpeed:0000000000000128 .L44
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:213    .text.SetMotorSpeed:00000000000000ac .L47
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:232    .text.SetMotorSpeed:00000000000000da .L46
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1180   .rodata.CalibrateMotors.str1.4:0000000000000000 .LC2
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:292    .text.CalibrateMotors:0000000000000024 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1172   .rodata.CalibrateMotors.cst4:0000000000000000 .LC3
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:296    .text.CalibrateMotors:0000000000000038 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:298    .text.CalibrateMotors:0000000000000044 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1191   .rodata.CalibrateMotors.str1.4:0000000000000028 .LC9
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:301    .text.CalibrateMotors:0000000000000050 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1174   .rodata.CalibrateMotors.cst4:0000000000000004 .LC4
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:302    .text.CalibrateMotors:0000000000000058 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:303    .text.CalibrateMotors:0000000000000060 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:304    .text.CalibrateMotors:0000000000000068 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1188   .rodata.CalibrateMotors.str1.4:0000000000000024 .LC8
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:308    .text.CalibrateMotors:0000000000000074 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:310    .text.CalibrateMotors:000000000000007c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:311    .text.CalibrateMotors:0000000000000084 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1183   .rodata.CalibrateMotors.str1.4:0000000000000010 .LC5
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:327    .text.CalibrateMotors:00000000000000be .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:341    .text.CalibrateMotors:00000000000000f8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:343    .text.CalibrateMotors:0000000000000100 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:345    .text.CalibrateMotors:0000000000000108 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1176   .rodata.CalibrateMotors.cst4:0000000000000008 .LC7
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:356    .text.CalibrateMotors:0000000000000132 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1186   .rodata.CalibrateMotors.str1.4:000000000000001c .LC6
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:377    .text.CalibrateMotors:0000000000000180 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:380    .text.CalibrateMotors:000000000000018a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:398    .text.CalibrateMotors:00000000000001ca .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:400    .text.CalibrateMotors:00000000000001d4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:408    .text.CalibrateMotors:00000000000001f0 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:309    .text.CalibrateMotors:000000000000007c .L62
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:372    .text.CalibrateMotors:0000000000000172 .L66
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:379    .text.CalibrateMotors:000000000000018a .L53
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:382    .text.CalibrateMotors:0000000000000194 .L56
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:386    .text.CalibrateMotors:00000000000001a0 .L57
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:313    .text.CalibrateMotors:000000000000008e .L59
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:389    .text.CalibrateMotors:00000000000001a6 .L60
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:305    .text.CalibrateMotors:0000000000000070 .L49
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:328    .text.CalibrateMotors:00000000000000c6 .L68
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:342    .text.CalibrateMotors:0000000000000100 .L54
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:344    .text.CalibrateMotors:0000000000000108 .L69
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:351    .text.CalibrateMotors:0000000000000120 .L58
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:407    .text.CalibrateMotors:00000000000001f0 .L63
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1229   .rodata.ShowCalibrationResults.str1.4:0000000000000000 .LC10
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:447    .text.ShowCalibrationResults:0000000000000024 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:450    .text.ShowCalibrationResults:0000000000000030 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:453    .text.ShowCalibrationResults:0000000000000044 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:454    .text.ShowCalibrationResults:000000000000004c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1233   .rodata.ShowCalibrationResults.str1.4:000000000000001c .LC12
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:458    .text.ShowCalibrationResults:000000000000005a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:459    .text.ShowCalibrationResults:0000000000000062 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1231   .rodata.ShowCalibrationResults.str1.4:000000000000000c .LC11
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:460    .text.ShowCalibrationResults:000000000000006a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1236   .rodata.ShowCalibrationResults.str1.4:000000000000002c .LC13
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:497    .text.ShowCalibrationResults:00000000000000f4 .L0 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 31
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:501    .text.ShowCalibrationResults:0000000000000108 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:502    .text.ShowCalibrationResults:0000000000000110 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:504    .text.ShowCalibrationResults:000000000000011a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1239   .rodata.ShowCalibrationResults.str1.4:000000000000003c .LC14
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:532    .text.ShowCalibrationResults:0000000000000184 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:537    .text.ShowCalibrationResults:000000000000019c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:538    .text.ShowCalibrationResults:00000000000001a4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:540    .text.ShowCalibrationResults:00000000000001ae .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:541    .text.ShowCalibrationResults:00000000000001b6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:542    .text.ShowCalibrationResults:00000000000001be .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1242   .rodata.ShowCalibrationResults.str1.4:000000000000004c .LC15
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:577    .text.ShowCalibrationResults:0000000000000244 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:582    .text.ShowCalibrationResults:000000000000025a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:624    .text.ShowCalibrationResults:00000000000002d8 .L87
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:462    .text.ShowCalibrationResults:0000000000000074 .L74
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:506    .text.ShowCalibrationResults:0000000000000124 .L75
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:634    .text.ShowCalibrationResults:00000000000002f0 .L88
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:543    .text.ShowCalibrationResults:00000000000001c6 .L79
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:584    .text.ShowCalibrationResults:0000000000000264 .L80
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:482    .text.ShowCalibrationResults:00000000000000ba .L90
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:561    .text.ShowCalibrationResults:0000000000000208 .L91
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:650    .text.SetBothMotors:0000000000000004 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:692    .text.SetBothMotors:0000000000000088 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:689    .text.SetBothMotors:0000000000000086 .L96
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:667    .text.SetBothMotors:000000000000004a .L94
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:691    .text.SetBothMotors:0000000000000088 .L93
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:741    .text.SpeedToPercent:0000000000000028 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:746    .text.SpeedToPercent:0000000000000040 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:748    .text.SpeedToPercent:000000000000004a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:755    .text.SpeedToPercent:0000000000000068 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:778    .text.SpeedToPercent:00000000000000bc .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:824    .text.SpeedToPercent:0000000000000144 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1246   .rodata.SpeedToPercent.cst4:0000000000000000 .LC16
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:832    .text.SpeedToPercent:000000000000015e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:828    .text.SpeedToPercent:0000000000000158 .L106
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:831    .text.SpeedToPercent:000000000000015e .L113
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:809    .text.SpeedToPercent:0000000000000116 .L101
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:759    .text.SpeedToPercent:0000000000000076 .L104
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:796    .text.SpeedToPercent:00000000000000fe .L98
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:841    .text.GetCurrentDistance:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:842    .text.GetCurrentDistance:0000000000000008 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:855    .text.GetCurrentDistance:0000000000000032 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:853    .text.GetCurrentDistance:000000000000002a .L116
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:868    .text.RunToTarget:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:870    .text.RunToTarget:000000000000000a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:872    .text.RunToTarget:0000000000000014 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:873    .text.RunToTarget:000000000000001c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1195   .rodata.RunToTarget.cst4:0000000000000000 .LC17
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:898    .text.RunToTarget:0000000000000062 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:901    .text.RunToTarget:000000000000006e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:903    .text.RunToTarget:000000000000007e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1205   .rodata.RunToTarget.str1.4:0000000000000000 .LC18
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:907    .text.RunToTarget:0000000000000094 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:911    .text.RunToTarget:00000000000000a8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1217   .rodata.RunToTarget.str1.4:000000000000003c .LC26
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:913    .text.RunToTarget:00000000000000b4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1197   .rodata.RunToTarget.cst4:0000000000000004 .LC19
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 32
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:925    .text.RunToTarget:00000000000000ec .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1208   .rodata.RunToTarget.str1.4:000000000000000c .LC20
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:936    .text.RunToTarget:0000000000000126 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1211   .rodata.RunToTarget.str1.4:0000000000000018 .LC21
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:944    .text.RunToTarget:0000000000000148 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1213   .rodata.RunToTarget.str1.4:0000000000000024 .LC22
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:958    .text.RunToTarget:000000000000018a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1199   .rodata.RunToTarget.cst4:0000000000000008 .LC23
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:968    .text.RunToTarget:00000000000001b6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1215   .rodata.RunToTarget.str1.4:0000000000000030 .LC24
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:975    .text.RunToTarget:00000000000001d6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1201   .rodata.RunToTarget.cst4:000000000000000c .LC25
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1007   .text.RunToTarget:0000000000000234 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1032   .text.RunToTarget:0000000000000292 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1219   .rodata.RunToTarget.str1.4:000000000000004c .LC27
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1082   .text.RunToTarget:0000000000000348 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:897    .text.RunToTarget:0000000000000062 .L119
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:996    .text.RunToTarget:0000000000000212 .L137
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1021   .text.RunToTarget:000000000000026c .L139
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1052   .text.RunToTarget:00000000000002e0 .L125
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1088   .text.RunToTarget:0000000000000366 .L129
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:914    .text.RunToTarget:00000000000000bc .L130
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1250   .rodata.main.str1.4:0000000000000000 .LC28
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1119   .text.startup.main:0000000000000062 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1253   .rodata.main.str1.4:0000000000000010 .LC29
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1124   .text.startup.main:0000000000000078 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1129   .text.startup.main:0000000000000096 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1131   .text.startup.main:00000000000000a0 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1133   .text.startup.main:00000000000000aa .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1134   .text.startup.main:00000000000000b2 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1136   .text.startup.main:00000000000000bc .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s:1144   .text.startup.main:00000000000000e4 .L143
+
+UNDEFINED SYMBOLS
+GPIOB_ITModeCfg
+GPIOA_ITModeCfg
+GPIOA_ModeCfg
+GPIOB_ModeCfg
+PWMX_16bit_CycleCfg
+PWMX_16bit_ACTOUT
+__gtsf2
+__ltsf2
+__mulsf3
+__divsf3
+__fixunssfsi
+__fixsfsi
+__floatsisf
+OLED_Clear
+OLED_ShowString
+sprintf
+mDelaymS
+__extendsfdf2
+__lesf2
+__gesf2
+__subsf3
+__addsf3
+__floatunsisf
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccEWKWp1.s 			page 33
+
+
+SetSysClock
+TMR0_TimerInit
+OLED_Init

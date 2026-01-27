@@ -1,0 +1,116 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s 			page 1
+
+
+   1              		.file	"CH59x_usbdev.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.USB_DeviceInit,"ax",@progbits
+   5              		.align	1
+   6              		.globl	USB_DeviceInit
+   8              	USB_DeviceInit:
+   9 0000 B7870040 		li	a5,1073774592
+  10 0004 23800700 		sb	zero,0(a5)
+  11 0008 1307C0FC 		li	a4,-52
+  12 000c 2386E700 		sb	a4,12(a5)
+  13 0010 A386E700 		sb	a4,13(a5)
+  14 0014 17070000 		lhu	a4,pEP0_RAM_Addr
+  14      03570700 
+  15 001c 2398E700 		sh	a4,16(a5)
+  16 0020 17070000 		lhu	a4,pEP1_RAM_Addr
+  16      03570700 
+  17 0028 239AE700 		sh	a4,20(a5)
+  18 002c 17070000 		lhu	a4,pEP2_RAM_Addr
+  18      03570700 
+  19 0034 239CE700 		sh	a4,24(a5)
+  20 0038 17070000 		lhu	a4,pEP3_RAM_Addr
+  20      03570700 
+  21 0040 239EE700 		sh	a4,28(a5)
+  22 0044 8946     		li	a3,2
+  23 0046 2381D702 		sb	a3,34(a5)
+  24 004a 4947     		li	a4,18
+  25 004c 2383E702 		sb	a4,38(a5)
+  26 0050 2385E702 		sb	a4,42(a5)
+  27 0054 2387E702 		sb	a4,46(a5)
+  28 0058 2389D702 		sb	a3,50(a5)
+  29 005c A3810700 		sb	zero,3(a5)
+  30 0060 13079002 		li	a4,41
+  31 0064 2380E700 		sb	a4,0(a5)
+  32 0068 B7160040 		li	a3,1073745920
+  33 006c 03D7A601 		lhu	a4,26(a3)
+  34 0070 1367070C 		ori	a4,a4,192
+  35 0074 239DE600 		sh	a4,26(a3)
+  36 0078 7D57     		li	a4,-1
+  37 007a 2383E700 		sb	a4,6(a5)
+  38 007e 130710F8 		li	a4,-127
+  39 0082 A380E700 		sb	a4,1(a5)
+  40 0086 1D47     		li	a4,7
+  41 0088 2381E700 		sb	a4,2(a5)
+  42 008c 8280     		ret
+  44              		.section	.text.DevEP1_IN_Deal,"ax",@progbits
+  45              		.align	1
+  46              		.globl	DevEP1_IN_Deal
+  48              	DevEP1_IN_Deal:
+  49 0000 B7870040 		li	a5,1073774592
+  50 0004 2382A702 		sb	a0,36(a5)
+  51 0008 03C76702 		lbu	a4,38(a5)
+  52 000c 1377C70F 		andi	a4,a4,252
+  53 0010 2383E702 		sb	a4,38(a5)
+  54 0014 8280     		ret
+  56              		.section	.text.DevEP2_IN_Deal,"ax",@progbits
+  57              		.align	1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s 			page 2
+
+
+  58              		.globl	DevEP2_IN_Deal
+  60              	DevEP2_IN_Deal:
+  61 0000 B7870040 		li	a5,1073774592
+  62 0004 2384A702 		sb	a0,40(a5)
+  63 0008 03C7A702 		lbu	a4,42(a5)
+  64 000c 1377C70F 		andi	a4,a4,252
+  65 0010 2385E702 		sb	a4,42(a5)
+  66 0014 8280     		ret
+  68              		.section	.text.DevEP3_IN_Deal,"ax",@progbits
+  69              		.align	1
+  70              		.globl	DevEP3_IN_Deal
+  72              	DevEP3_IN_Deal:
+  73 0000 B7870040 		li	a5,1073774592
+  74 0004 2386A702 		sb	a0,44(a5)
+  75 0008 03C7E702 		lbu	a4,46(a5)
+  76 000c 1377C70F 		andi	a4,a4,252
+  77 0010 2387E702 		sb	a4,46(a5)
+  78 0014 8280     		ret
+  80              		.section	.text.DevEP4_IN_Deal,"ax",@progbits
+  81              		.align	1
+  82              		.globl	DevEP4_IN_Deal
+  84              	DevEP4_IN_Deal:
+  85 0000 B7870040 		li	a5,1073774592
+  86 0004 2388A702 		sb	a0,48(a5)
+  87 0008 03C72703 		lbu	a4,50(a5)
+  88 000c 1377C70F 		andi	a4,a4,252
+  89 0010 2389E702 		sb	a4,50(a5)
+  90 0014 8280     		ret
+  92              		.comm	pEP3_RAM_Addr,4,4
+  93              		.comm	pEP2_RAM_Addr,4,4
+  94              		.comm	pEP1_RAM_Addr,4,4
+  95              		.comm	pEP0_RAM_Addr,4,4
+  96              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_usbdev.c
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:8      .text.USB_DeviceInit:0000000000000000 USB_DeviceInit
+                            *COM*:0000000000000004 pEP0_RAM_Addr
+                            *COM*:0000000000000004 pEP1_RAM_Addr
+                            *COM*:0000000000000004 pEP2_RAM_Addr
+                            *COM*:0000000000000004 pEP3_RAM_Addr
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:48     .text.DevEP1_IN_Deal:0000000000000000 DevEP1_IN_Deal
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:60     .text.DevEP2_IN_Deal:0000000000000000 DevEP2_IN_Deal
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:72     .text.DevEP3_IN_Deal:0000000000000000 DevEP3_IN_Deal
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:84     .text.DevEP4_IN_Deal:0000000000000000 DevEP4_IN_Deal
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:14     .text.USB_DeviceInit:0000000000000014 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:16     .text.USB_DeviceInit:0000000000000020 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:18     .text.USB_DeviceInit:000000000000002c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccH1hBPN.s:20     .text.USB_DeviceInit:0000000000000038 .L0 
+
+NO UNDEFINED SYMBOLS

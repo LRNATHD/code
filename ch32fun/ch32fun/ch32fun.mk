@@ -417,11 +417,9 @@ ch32fun.o : $(SYSTEM_C)
 	$(PREFIX)-gcc -c -o $@ $(SYSTEM_C) $(CFLAGS)
 
 cv_flash : $(TARGET).bin
-	make -C $(MINICHLINK) all
 	$(FLASH_COMMAND)
 
 cv_flash_ext : $(TARGET)_ext.bin
-	make -C $(MINICHLINK) all
 	$(FLASH_EXT_COMMAND)
 
 cv_clean :

@@ -65,40 +65,57 @@ int main() {
 
   USBFSSetup();
 
-  // Distinct startup pattern: 10 fast blinks (20ms)
-  // If you see this repeatedly, the board is resetting.
-  blink(10, 20);
+  // Startup indicator: 5 blinks
+  blink(5, 50);
 
-  while (1) {
-    if (gs_usb_data_buf[0]) {
-      blink(1, 100); // Shorter blink to minimize delay
-      // Send data back to PC.
-      while (USBFSCTX.USBFS_Endp_Busy[USB_EP_TX] & 1)
-        ;
-      USBFS_SendEndpointNEW(
-          USB_EP_TX, (uint8_t *)&gs_usb_data_buf[1], gs_usb_data_buf[0],
-          /*copy=*/1); // USBFS needs a copy      // RF Transmission Logic
 #define ACCESS_ADDRESS 0x12345678
 
-      // Packet: [Magic1, Magic2, Speed, Dir, Enable]
-      // USB Data expected: [Speed, Dir, Enable] at buf[1], buf[2], buf[3]
-      uint8_t rf_packet[5];
-      rf_packet[0] = 0xCA;               // Magic 1
-      rf_packet[1] = 0xFE;               // Magic 2
-      rf_packet[2] = gs_usb_data_buf[1]; // Speed
-      rf_packet[3] = gs_usb_data_buf[2]; // Direction
-      rf_packet[4] = gs_usb_data_buf[3]; // Enable
+  while (1) {
+    // Only process and send RF when USB data arrives
+    if (gs_usb_data_buf[0]) {
+      // Toggle LED on each USB packet received
+      static int led_state = 0;
+      led_state = !led_state;
+      funDigitalWrite(LED, led_state ? FUN_LOW : FUN_HIGH);
 
-      // Disable Whitening
-      BB->CTRL_CFG |= (1 << 6);
+      // Send ACK back to PC
+      while (USBFSCTX.USBFS_Endp_Busy[USB_EP_TX] & 1)
+        ;
+      USBFS_SendEndpointNEW(USB_EP_TX, (uint8_t *)&gs_usb_data_buf[1],
+                            gs_usb_data_buf[0], 1);
 
-      // Burst send 3 packets (reduced from 5)
-      for (int i = 0; i < 3; i++) {
+      // Parse USB data (Expect 6 bytes: S1, D1, E1, S2, D2, E2)
+      uint8_t s1 = 0, d1 = 0, e1 = 0;
+      uint8_t s2 = 0, d2 = 0, e2 = 0;
+
+      if (gs_usb_data_buf[0] >= 6) {
+        s1 = gs_usb_data_buf[1];
+        d1 = gs_usb_data_buf[2];
+        e1 = gs_usb_data_buf[3];
+        s2 = gs_usb_data_buf[4];
+        d2 = gs_usb_data_buf[5];
+        e2 = gs_usb_data_buf[6];
+      }
+      gs_usb_data_buf[0] = 0;
+
+      // Build RF packet
+      uint8_t rf_packet[10];
+      rf_packet[0] = 0x00; // Header/PDU type
+      rf_packet[1] = 8;    // Payload length: 8 bytes
+      rf_packet[2] = 0xCA; // Magic 1
+      rf_packet[3] = 0xFE; // Magic 2
+      rf_packet[4] = s1;   // Speed 1
+      rf_packet[5] = d1;   // Direction 1
+      rf_packet[6] = e1;   // Enable 1
+      rf_packet[7] = s2;   // Speed 2
+      rf_packet[8] = d2;   // Direction 2
+      rf_packet[9] = e2;   // Enable 2
+
+      // Send 5 copies for reliability
+      for (int i = 0; i < 5; i++) {
         Frame_TX(ACCESS_ADDRESS, rf_packet, sizeof(rf_packet), 37, PHY_1M);
         Delay_Ms(5);
       }
-
-      gs_usb_data_buf[0] = 0;
     }
   }
 }

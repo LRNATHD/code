@@ -1,0 +1,2890 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 1
+
+
+   1              		.file	"CH59x_clk.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.LClk32K_Cfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	LClk32K_Cfg
+   8              	LClk32K_Cfg:
+   9 0000 B7170040 		li	a5,1073745920
+  10 0004 83C7F702 		lbu	a5,47(a5)
+  11 0008 4111     		addi	sp,sp,-16
+  12 000a 93F7F70F 		andi	a5,a5,0xff
+  13 000e 31E5     		bnez	a0,.L2
+  14 0010 13E72700 		ori	a4,a5,2
+  15 0014 99E1     		bnez	a1,.L4
+  16 0016 13F7D70F 		andi	a4,a5,253
+  17              	.L4:
+  18 001a 93078008 		li	a5,136
+  19              	 #APP
+  20              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT  *******************************
+   2              	 * File Name          : core_riscv.h
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.1.0
+   5              	 * Date               : 2023/04/10
+   6              	 * Description        : CH592 RISC-V Core Peripheral Access Layer Header File
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	#ifndef __CORE_RV3A_H__
+  13              	#define __CORE_RV3A_H__
+  14              	
+  15              	#ifdef __cplusplus
+  16              	extern "C" {
+  17              	#endif
+  18              	
+  19              	/* IO definitions */
+  20              	#ifdef __cplusplus
+  21              	  #define __I    volatile  /*!< defines 'read only' permissions      */
+  22              	#else
+  23              	  #define __I    volatile const /*!< defines 'read only' permissions     */
+  24              	#endif
+  25              	#define __O                 volatile  /*!< defines 'write only' permissions     */
+  26              	#define __IO                volatile  /*!< defines 'read / write' permissions   */
+  27              	#define RV_STATIC_INLINE    static inline
+  28              	
+  29              	//typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  30              	
+  31              	typedef enum
+  32              	{
+  33              	    DISABLE = 0,
+  34              	    ENABLE = !DISABLE
+  35              	} FunctionalState;
+  36              	typedef enum
+  37              	{
+  38              	    RESET = 0,
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 2
+
+
+  39              	    SET = !RESET
+  40              	} FlagStatus, ITStatus;
+  41              	
+  42              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  43              	typedef struct
+  44              	{
+  45              	    __I uint32_t  ISR[8];           // 0
+  46              	    __I uint32_t  IPR[8];           // 20H
+  47              	    __IO uint32_t ITHRESDR;         // 40H
+  48              	    uint8_t       RESERVED[4];      // 44H
+  49              	    __O uint32_t  CFGR;             // 48H
+  50              	    __I uint32_t  GISR;             // 4CH
+  51              	    __IO uint8_t  VTFIDR[4];        // 50H
+  52              	    uint8_t       RESERVED0[0x0C];  // 54H
+  53              	    __IO uint32_t VTFADDR[4];       // 60H
+  54              	    uint8_t       RESERVED1[0x90];  // 70H
+  55              	    __O uint32_t  IENR[8];          // 100H
+  56              	    uint8_t       RESERVED2[0x60];  // 120H
+  57              	    __O uint32_t  IRER[8];          // 180H
+  58              	    uint8_t       RESERVED3[0x60];  // 1A0H
+  59              	    __O uint32_t  IPSR[8];          // 200H
+  60              	    uint8_t       RESERVED4[0x60];  // 220H
+  61              	    __O uint32_t  IPRR[8];          // 280H
+  62              	    uint8_t       RESERVED5[0x60];  // 2A0H
+  63              	    __IO uint32_t IACTR[8];         // 300H
+  64              	    uint8_t       RESERVED6[0xE0];  // 320H
+  65              	    __IO uint8_t  IPRIOR[256];      // 400H
+  66              	    uint8_t       RESERVED7[0x810]; // 500H
+  67              	    __IO uint32_t SCTLR;            // D10H
+  68              	} PFIC_Type;
+  69              	
+  70              	/* memory mapped structure for SysTick */
+  71              	typedef struct
+  72              	{
+  73              	    __IO uint32_t CTLR;
+  74              	    __IO uint32_t SR;
+  75              	    __IO uint64_t CNT;
+  76              	    __IO uint64_t CMP;
+  77              	} SysTick_Type;
+  78              	
+  79              	#define PFIC                    ((PFIC_Type *)0xE000E000)
+  80              	#define SysTick                 ((SysTick_Type *)0xE000F000)
+  81              	
+  82              	#define PFIC_KEY1               ((uint32_t)0xFA050000)
+  83              	#define PFIC_KEY2               ((uint32_t)0xBCAF0000)
+  84              	#define PFIC_KEY3               ((uint32_t)0xBEEF0000)
+  85              	
+  86              	/* ##########################   define  #################################### */
+  87              	#define __nop()                 __asm__ volatile("nop")
+  88              	
+  89              	#define read_csr(reg)           ({unsigned long __tmp;                        \
+  90              	     __asm__ volatile ("csrr %0, " #reg : "=r"(__tmp));                 \
+  91              	         __tmp; })
+  92              	
+  93              	#define write_csr(reg, val)     ({                                      \
+  94              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)    \
+  95              	      __asm__ volatile ("csrw  " #reg ", %0" :: "i"(val));              \
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 3
+
+
+  96              	    else                                                            \
+  97              	      __asm__ volatile ("csrw  " #reg ", %0" :: "r"(val)); })
+  98              	
+  99              	#define PFIC_EnableAllIRQ()     {write_csr(0x800, 0x88);}
+ 100              	#define PFIC_DisableAllIRQ()    {write_csr(0x800, 0x80);asm volatile("fence.i");}
+ 101              	/* ##########################   PFIC functions  #################################### */
+ 102              	
+ 103              	/*********************************************************************
+ 104              	 * @fn      __risc_v_enable_irq
+ 105              	 *
+ 106              	 * @brief   recover Global Interrupt
+ 107              	 *
+ 108              	 * @return  mpie and mie bit in mstatus.
+ 109              	 */
+ 110              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_enable_irq(uint32_t mpie_mie)
+ 111              	{
+ 112              	  uint32_t result;
+ 113              	
+ 114              	  __asm volatile ("csrrs %0, 0x800, %1" : \
+ 115              	          "=r"(result): "r"(mpie_mie) : "memory");
+ 116              	  return result;
+ 117              	}
+ 118              	
+ 119              	/*********************************************************************
+ 120              	 * @fn      __disable_irq
+ 121              	 *
+ 122              	 * @brief   Disable Global Interrupt
+ 123              	 *
+ 124              	 * @return  mpie and mie bit in mstatus.
+ 125              	 */
+ 126              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t __risc_v_disable_irq(void)
+ 127              	{
+ 128              	  uint32_t result;
+ 129              	
+ 130 001e F3B70780 	  __asm volatile ("csrrc %0, 0x800, %1" : \
+ 131              	          "=r"(result): "r"(0x88) : "memory");
+  21              		csrrc a5, 0x800, a5
+  22              	# 0 "" 2
+  23              	 #NO_APP
+  24 0022 93F78708 		andi	a5,a5,136
+  25 0026 3EC6     		sw	a5,12(sp)
+  26              	 #APP
+  27              	# 80 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+   1              	/********************************** (C) COPYRIGHT *******************************
+   2              	 * File Name          : CH59x_clk.c
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.2
+   5              	 * Date               : 2021/11/17
+   6              	 * Description
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	
+  13              	#include "CH59x_common.h"
+  14              	
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 4
+
+
+  15              	/*********************************************************************
+  16              	 * @fn      LClk32K_Select
+  17              	 *
+  18              	 * @brief   32K 低频时钟来源
+  19              	 *
+  20              	 * @param   hc  - 选择32K使用内部还是外部
+  21              	 *
+  22              	 * @return  none
+  23              	 */
+  24              	void LClk32K_Select(LClk32KTypeDef hc)
+  25              	{
+  26              	    uint8_t cfg = R8_CK32K_CONFIG;
+  27              	
+  28              	    if(hc == Clk32K_LSI)
+  29              	    {
+  30              	        cfg &= ~RB_CLK_OSC32K_XT;
+  31              	        LSECFG_Current(LSE_RCur_100);
+  32              	    }
+  33              	    else
+  34              	    {
+  35              	        cfg |= RB_CLK_OSC32K_XT;
+  36              	    }
+  37              	
+  38              	    sys_safe_access_enable();
+  39              	    R8_CK32K_CONFIG = cfg;
+  40              	    sys_safe_access_disable();
+  41              	}
+  42              	
+  43              	/*********************************************************************
+  44              	 * @fn      LClk32K_Cfg
+  45              	 *
+  46              	 * @brief   32K 低频时钟电源配置
+  47              	 *
+  48              	 * @param   hc  - 选择内部32K还是外部32K
+  49              	 * @param   s   - 是否打开电源
+  50              	 *
+  51              	 * @return  none
+  52              	 */
+  53              	void LClk32K_Cfg(LClk32KTypeDef hc, FunctionalState s)
+  54              	{
+  55              	    uint8_t cfg = R8_CK32K_CONFIG;
+  56              	
+  57              	    if(hc == Clk32K_LSI)
+  58              	    {
+  59              	        if(s == DISABLE)
+  60              	        {
+  61              	            cfg &= ~RB_CLK_INT32K_PON;
+  62              	        }
+  63              	        else
+  64              	        {
+  65              	            cfg |= RB_CLK_INT32K_PON;
+  66              	        }
+  67              	    }
+  68              	    else
+  69              	    {
+  70              	        if(s == DISABLE)
+  71              	        {
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 5
+
+
+  72              	            cfg &= ~RB_CLK_XT32K_PON;
+  73              	        }
+  74              	        else
+  75              	        {
+  76              	            cfg |= RB_CLK_XT32K_PON;
+  77              	        }
+  78              	    }
+  79              	
+  80 0028 0F100000 	    sys_safe_access_enable();
+  81              	    R8_CK32K_CONFIG = cfg;
+  28              		fence.i
+  29              	# 0 "" 2
+  30              	 #NO_APP
+  31 002c B7170040 		li	a5,1073745920
+  32 0030 93067005 		li	a3,87
+  33 0034 2380D704 		sb	a3,64(a5)
+  34 0038 930680FA 		li	a3,-88
+  35 003c 2380D704 		sb	a3,64(a5)
+  36              	 #APP
+  37              	# 80 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+  38              		fence.i
+  39              	# 0 "" 2
+  40              	 #NO_APP
+  41 0044 A387E702 		sb	a4,47(a5)
+  42 0048 23800704 		sb	zero,64(a5)
+  43 004c B247     		lw	a5,12(sp)
+  44              	 #APP
+  45              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+  46              		csrrs a5, 0x800, a5
+  47              	# 0 "" 2
+  48              	# 82 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+  82 0052 0F100000 	    sys_safe_access_disable();
+  83              	}
+  49              		fence.i
+  50              	# 0 "" 2
+  51              	 #NO_APP
+  52 0056 4101     		addi	sp,sp,16
+  53 0058 8280     		jr	ra
+  54              	.L2:
+  55 005a 13E71700 		ori	a4,a5,1
+  56 005e D5FD     		bnez	a1,.L4
+  57 0060 13F7E70F 		andi	a4,a5,254
+  58 0064 5DBF     		j	.L4
+  60              		.section	.text.HSECFG_Current,"ax",@progbits
+  61              		.align	1
+  62              		.globl	HSECFG_Current
+  64              	HSECFG_Current:
+  65 0000 B7170040 		li	a5,1073745920
+  66 0004 03C7E704 		lbu	a4,78(a5)
+  67 0008 0D89     		andi	a0,a0,3
+  68 000a 4111     		addi	sp,sp,-16
+  69 000c 1377C70F 		andi	a4,a4,252
+  70 0010 498F     		or	a4,a4,a0
+  71 0012 93068008 		li	a3,136
+  72              	 #APP
+  73              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+  74              		csrrc a3, 0x800, a3
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 6
+
+
+  75              	# 0 "" 2
+  76              	 #NO_APP
+  77 001a 93F68608 		andi	a3,a3,136
+  78 001e 36C6     		sw	a3,12(sp)
+  79              	 #APP
+  80              	# 101 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+  84              	
+  85              	/*********************************************************************
+  86              	 * @fn      HSECFG_Current
+  87              	 *
+  88              	 * @brief   HSE晶体 偏置电流配置
+  89              	 *
+  90              	 * @param   c   - 75%,100%,125%,150%
+  91              	 *
+  92              	 * @return  none
+  93              	 */
+  94              	void HSECFG_Current(HSECurrentTypeDef c)
+  95              	{
+  96              	    uint8_t x32M_c;
+  97              	
+  98              	    x32M_c = R8_XT32M_TUNE;
+  99              	    x32M_c = (x32M_c & 0xfc) | (c & 0x03);
+ 100              	
+ 101 0020 0F100000 	    sys_safe_access_enable();
+ 102              	    R8_XT32M_TUNE = x32M_c;
+  81              		fence.i
+  82              	# 0 "" 2
+  83              	 #NO_APP
+  84 0024 93067005 		li	a3,87
+  85 0028 2380D704 		sb	a3,64(a5)
+  86 002c 930680FA 		li	a3,-88
+  87 0030 2380D704 		sb	a3,64(a5)
+  88              	 #APP
+  89              	# 101 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+  90              		fence.i
+  91              	# 0 "" 2
+  92              	 #NO_APP
+  93 0038 2387E704 		sb	a4,78(a5)
+  94 003c 23800704 		sb	zero,64(a5)
+  95 0040 B247     		lw	a5,12(sp)
+  96              	 #APP
+  97              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+  98              		csrrs a5, 0x800, a5
+  99              	# 0 "" 2
+ 100              	# 103 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 103 0046 0F100000 	    sys_safe_access_disable();
+ 104              	}
+ 101              		fence.i
+ 102              	# 0 "" 2
+ 103              	 #NO_APP
+ 104 004a 4101     		addi	sp,sp,16
+ 105 004c 8280     		jr	ra
+ 107              		.section	.text.HSECFG_Capacitance,"ax",@progbits
+ 108              		.align	1
+ 109              		.globl	HSECFG_Capacitance
+ 111              	HSECFG_Capacitance:
+ 112 0000 37170040 		li	a4,1073745920
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 7
+
+
+ 113 0004 8347E704 		lbu	a5,78(a4)
+ 114 0008 1205     		slli	a0,a0,4
+ 115 000a 4111     		addi	sp,sp,-16
+ 116 000c 93F7F708 		andi	a5,a5,143
+ 117 0010 C98F     		or	a5,a5,a0
+ 118 0012 93F7F70F 		andi	a5,a5,0xff
+ 119 0016 93068008 		li	a3,136
+ 120              	 #APP
+ 121              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 122              		csrrc a3, 0x800, a3
+ 123              	# 0 "" 2
+ 124              	 #NO_APP
+ 125 001e 93F68608 		andi	a3,a3,136
+ 126 0022 36C6     		sw	a3,12(sp)
+ 127              	 #APP
+ 128              	# 122 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 105              	
+ 106              	/*********************************************************************
+ 107              	 * @fn      HSECFG_Capacitance
+ 108              	 *
+ 109              	 * @brief   HSE晶体 负载电容配置
+ 110              	 *
+ 111              	 * @param   c   - refer to HSECapTypeDef
+ 112              	 *
+ 113              	 * @return  none
+ 114              	 */
+ 115              	void HSECFG_Capacitance(HSECapTypeDef c)
+ 116              	{
+ 117              	    uint8_t x32M_c;
+ 118              	
+ 119              	    x32M_c = R8_XT32M_TUNE;
+ 120              	    x32M_c = (x32M_c & 0x8f) | (c << 4);
+ 121              	
+ 122 0024 0F100000 	    sys_safe_access_enable();
+ 123              	    R8_XT32M_TUNE = x32M_c;
+ 129              		fence.i
+ 130              	# 0 "" 2
+ 131              	 #NO_APP
+ 132 0028 93067005 		li	a3,87
+ 133 002c 2300D704 		sb	a3,64(a4)
+ 134 0030 930680FA 		li	a3,-88
+ 135 0034 2300D704 		sb	a3,64(a4)
+ 136              	 #APP
+ 137              	# 122 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 138              		fence.i
+ 139              	# 0 "" 2
+ 140              	 #NO_APP
+ 141 003c 2307F704 		sb	a5,78(a4)
+ 142 0040 23000704 		sb	zero,64(a4)
+ 143 0044 B247     		lw	a5,12(sp)
+ 144              	 #APP
+ 145              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 146              		csrrs a5, 0x800, a5
+ 147              	# 0 "" 2
+ 148              	# 124 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 124 004a 0F100000 	    sys_safe_access_disable();
+ 125              	}
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 8
+
+
+ 149              		fence.i
+ 150              	# 0 "" 2
+ 151              	 #NO_APP
+ 152 004e 4101     		addi	sp,sp,16
+ 153 0050 8280     		jr	ra
+ 155              		.section	.text.LSECFG_Current,"ax",@progbits
+ 156              		.align	1
+ 157              		.globl	LSECFG_Current
+ 159              	LSECFG_Current:
+ 160 0000 B7170040 		li	a5,1073745920
+ 161 0004 03C7E702 		lbu	a4,46(a5)
+ 162 0008 0D89     		andi	a0,a0,3
+ 163 000a 4111     		addi	sp,sp,-16
+ 164 000c 1377C70F 		andi	a4,a4,252
+ 165 0010 498F     		or	a4,a4,a0
+ 166 0012 93068008 		li	a3,136
+ 167              	 #APP
+ 168              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 169              		csrrc a3, 0x800, a3
+ 170              	# 0 "" 2
+ 171              	 #NO_APP
+ 172 001a 93F68608 		andi	a3,a3,136
+ 173 001e 36C6     		sw	a3,12(sp)
+ 174              	 #APP
+ 175              	# 143 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 126              	
+ 127              	/*********************************************************************
+ 128              	 * @fn      LSECFG_Current
+ 129              	 *
+ 130              	 * @brief   LSE晶体 偏置电流配置
+ 131              	 *
+ 132              	 * @param   c   - 70%,100%,140%,200%
+ 133              	 *
+ 134              	 * @return  none
+ 135              	 */
+ 136              	void LSECFG_Current(LSECurrentTypeDef c)
+ 137              	{
+ 138              	    uint8_t x32K_c;
+ 139              	
+ 140              	    x32K_c = R8_XT32K_TUNE;
+ 141              	    x32K_c = (x32K_c & 0xfc) | (c & 0x03);
+ 142              	
+ 143 0020 0F100000 	    sys_safe_access_enable();
+ 144              	    R8_XT32K_TUNE = x32K_c;
+ 176              		fence.i
+ 177              	# 0 "" 2
+ 178              	 #NO_APP
+ 179 0024 93067005 		li	a3,87
+ 180 0028 2380D704 		sb	a3,64(a5)
+ 181 002c 930680FA 		li	a3,-88
+ 182 0030 2380D704 		sb	a3,64(a5)
+ 183              	 #APP
+ 184              	# 143 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 185              		fence.i
+ 186              	# 0 "" 2
+ 187              	 #NO_APP
+ 188 0038 2387E702 		sb	a4,46(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 9
+
+
+ 189 003c 23800704 		sb	zero,64(a5)
+ 190 0040 B247     		lw	a5,12(sp)
+ 191              	 #APP
+ 192              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 193              		csrrs a5, 0x800, a5
+ 194              	# 0 "" 2
+ 195              	# 145 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 145 0046 0F100000 	    sys_safe_access_disable();
+ 146              	}
+ 196              		fence.i
+ 197              	# 0 "" 2
+ 198              	 #NO_APP
+ 199 004a 4101     		addi	sp,sp,16
+ 200 004c 8280     		jr	ra
+ 202              		.section	.text.LClk32K_Select,"ax",@progbits
+ 203              		.align	1
+ 204              		.globl	LClk32K_Select
+ 206              	LClk32K_Select:
+ 207 0000 0111     		addi	sp,sp,-32
+ 208 0002 22CC     		sw	s0,24(sp)
+ 209 0004 06CE     		sw	ra,28(sp)
+ 210 0006 B7170040 		li	a5,1073745920
+ 211 000a 83C7F702 		lbu	a5,47(a5)
+ 212 000e 93F7F70F 		andi	a5,a5,0xff
+ 213 0012 13E44700 		ori	s0,a5,4
+ 214 0016 01E9     		bnez	a0,.L15
+ 215 0018 0545     		li	a0,1
+ 216 001a 13F4B70F 		andi	s0,a5,251
+ 217 001e 97000000 		call	LSECFG_Current
+ 217      E7800000 
+ 218              	.L15:
+ 219 0026 93078008 		li	a5,136
+ 220              	 #APP
+ 221              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 222              		csrrc a5, 0x800, a5
+ 223              	# 0 "" 2
+ 224              	 #NO_APP
+ 225 002e 93F78708 		andi	a5,a5,136
+ 226 0032 3EC6     		sw	a5,12(sp)
+ 227              	 #APP
+ 228              	# 38 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 229              		fence.i
+ 230              	# 0 "" 2
+ 231              	 #NO_APP
+ 232 0038 B7170040 		li	a5,1073745920
+ 233 003c 13077005 		li	a4,87
+ 234 0040 2380E704 		sb	a4,64(a5)
+ 235 0044 130780FA 		li	a4,-88
+ 236 0048 2380E704 		sb	a4,64(a5)
+ 237              	 #APP
+ 238              	# 38 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 239              		fence.i
+ 240              	# 0 "" 2
+ 241              	 #NO_APP
+ 242 0050 A3878702 		sb	s0,47(a5)
+ 243 0054 23800704 		sb	zero,64(a5)
+ 244 0058 B247     		lw	a5,12(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 10
+
+
+ 245              	 #APP
+ 246              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 247              		csrrs a5, 0x800, a5
+ 248              	# 0 "" 2
+ 249              	# 40 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 250              		fence.i
+ 251              	# 0 "" 2
+ 252              	 #NO_APP
+ 253 0062 F240     		lw	ra,28(sp)
+ 254 0064 6244     		lw	s0,24(sp)
+ 255 0066 0561     		addi	sp,sp,32
+ 256 0068 8280     		jr	ra
+ 258              		.section	.text.LSECFG_Capacitance,"ax",@progbits
+ 259              		.align	1
+ 260              		.globl	LSECFG_Capacitance
+ 262              	LSECFG_Capacitance:
+ 263 0000 37170040 		li	a4,1073745920
+ 264 0004 8347E702 		lbu	a5,46(a4)
+ 265 0008 1205     		slli	a0,a0,4
+ 266 000a 4111     		addi	sp,sp,-16
+ 267 000c BD8B     		andi	a5,a5,15
+ 268 000e C98F     		or	a5,a5,a0
+ 269 0010 93F7F70F 		andi	a5,a5,0xff
+ 270 0014 93068008 		li	a3,136
+ 271              	 #APP
+ 272              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 273              		csrrc a3, 0x800, a3
+ 274              	# 0 "" 2
+ 275              	 #NO_APP
+ 276 001c 93F68608 		andi	a3,a3,136
+ 277 0020 36C6     		sw	a3,12(sp)
+ 278              	 #APP
+ 279              	# 164 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 147              	
+ 148              	/*********************************************************************
+ 149              	 * @fn      LSECFG_Capacitance
+ 150              	 *
+ 151              	 * @brief   LSE晶体 负载电容配置
+ 152              	 *
+ 153              	 * @param   c   - refer to LSECapTypeDef
+ 154              	 *
+ 155              	 * @return  none
+ 156              	 */
+ 157              	void LSECFG_Capacitance(LSECapTypeDef c)
+ 158              	{
+ 159              	    uint8_t x32K_c;
+ 160              	
+ 161              	    x32K_c = R8_XT32K_TUNE;
+ 162              	    x32K_c = (x32K_c & 0x0f) | (c << 4);
+ 163              	
+ 164 0022 0F100000 	    sys_safe_access_enable();
+ 165              	    R8_XT32K_TUNE = x32K_c;
+ 280              		fence.i
+ 281              	# 0 "" 2
+ 282              	 #NO_APP
+ 283 0026 93067005 		li	a3,87
+ 284 002a 2300D704 		sb	a3,64(a4)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 11
+
+
+ 285 002e 930680FA 		li	a3,-88
+ 286 0032 2300D704 		sb	a3,64(a4)
+ 287              	 #APP
+ 288              	# 164 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 289              		fence.i
+ 290              	# 0 "" 2
+ 291              	 #NO_APP
+ 292 003a 2307F702 		sb	a5,46(a4)
+ 293 003e 23000704 		sb	zero,64(a4)
+ 294 0042 B247     		lw	a5,12(sp)
+ 295              	 #APP
+ 296              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 297              		csrrs a5, 0x800, a5
+ 298              	# 0 "" 2
+ 299              	# 166 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 166 0048 0F100000 	    sys_safe_access_disable();
+ 167              	}
+ 300              		fence.i
+ 301              	# 0 "" 2
+ 302              	 #NO_APP
+ 303 004c 4101     		addi	sp,sp,16
+ 304 004e 8280     		jr	ra
+ 306              		.section	.text.RTC_InitTime,"ax",@progbits
+ 307              		.align	1
+ 308              		.globl	RTC_InitTime
+ 310              	RTC_InitTime:
+ 311 0000 4111     		addi	sp,sp,-16
+ 312 0002 2A83     		mv	t1,a0
+ 313 0004 014E     		li	t3,0
+ 314 0006 930E407E 		li	t4,2020
+ 315 000a 130F0019 		li	t5,400
+ 316 000e 930F4006 		li	t6,100
+ 317              	.L21:
+ 318 0012 63E56E12 		bgtu	t1,t4,.L23
+ 319 0016 93080019 		li	a7,400
+ 320 001a 13034006 		li	t1,100
+ 321 001e B3781503 		remu	a7,a0,a7
+ 322 0022 854E     		li	t4,1
+ 323 0024 0D4F     		li	t5,3
+ 324 0026 A14F     		li	t6,8
+ 325 0028 33736502 		remu	t1,a0,t1
+ 326 002c 0D89     		andi	a0,a0,3
+ 327 002e 13351500 		seqz	a0,a0
+ 328              	.L24:
+ 329 0032 63EFBE12 		bgtu	a1,t4,.L29
+ 330 0036 1308F6FF 		addi	a6,a2,-1
+ 331 003a 7946     		li	a2,30
+ 332 003c 7298     		add	a6,t3,a6
+ 333 003e 4208     		slli	a6,a6,16
+ 334 0040 13580801 		srli	a6,a6,16
+ 335 0044 3307C702 		mul	a4,a4,a2
+ 336 0048 13D61700 		srli	a2,a5,1
+ 337 004c BE07     		slli	a5,a5,15
+ 338 004e 3297     		add	a4,a4,a2
+ 339 0050 6146     		li	a2,24
+ 340 0052 B3F6C602 		remu	a3,a3,a2
+ 341 0056 13068070 		li	a2,1800
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 12
+
+
+ 342 005a B386C602 		mul	a3,a3,a2
+ 343 005e 3697     		add	a4,a4,a3
+ 344 0060 A166     		li	a3,32768
+ 345 0062 F58F     		and	a5,a5,a3
+ 346 0064 4207     		slli	a4,a4,16
+ 347 0066 5D8F     		or	a4,a5,a4
+ 348 0068 B7160040 		li	a3,1073745920
+ 349              	.L30:
+ 350 006c 83C7F602 		lbu	a5,47(a3)
+ 351 0070 93F70708 		andi	a5,a5,128
+ 352 0074 A303F100 		sb	a5,7(sp)
+ 353 0078 03467100 		lbu	a2,7(sp)
+ 354 007c 83C7F602 		lbu	a5,47(a3)
+ 355 0080 93F70708 		andi	a5,a5,128
+ 356 0084 E394C7FE 		bne	a5,a2,.L30
+ 357 0088 83477100 		lbu	a5,7(sp)
+ 358 008c B7160040 		li	a3,1073745920
+ 359 0090 93F7F70F 		andi	a5,a5,0xff
+ 360 0094 63880712 		beqz	a5,.L31
+ 361              	.L34:
+ 362 0098 93078008 		li	a5,136
+ 363              	 #APP
+ 364              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 365              		csrrc a5, 0x800, a5
+ 366              	# 0 "" 2
+ 367              	 #NO_APP
+ 368 00a0 93F78708 		andi	a5,a5,136
+ 369 00a4 3EC4     		sw	a5,8(sp)
+ 370              	 #APP
+ 371              	# 409 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 168              	
+ 169              	/*********************************************************************
+ 170              	 * @fn      Calibration_LSI
+ 171              	 *
+ 172              	 * @brief   校准内部32K时钟
+ 173              	 *
+ 174              	 * @param   cali_Lv - 校准等级选择    Level_32 ：2.4ms   1000ppm (32M 主频)  1100ppm (60M 主频)
+ 175              	 *                                   Level_64 ：4.4ms   800ppm  (32M 主频)  1000ppm (60M 主频)
+ 176              	 *                                   Level_128 ：8.4ms  600ppm  (32M 主频)  800ppm  (60M 主频)     
+ 177              	 *
+ 178              	 * @return  none
+ 179              	 */
+ 180              	void Calibration_LSI(Cali_LevelTypeDef cali_Lv)
+ 181              	{
+ 182              	    UINT64 i;
+ 183              	    long long cnt_offset;
+ 184              	    UINT8  retry = 0;
+ 185              	    UINT8  retry_all = 0;
+ 186              	    INT32  freq_sys;
+ 187              	    UINT32 cnt_32k = 0;
+ 188              	    UINT32 irqv = 0;
+ 189              	
+ 190              	    freq_sys = GetSysClock();
+ 191              	
+ 192              	    sys_safe_access_enable();
+ 193              	    R8_CK32K_CONFIG &= ~RB_CLK_OSC32K_FILT;
+ 194              	    R8_CK32K_CONFIG |= RB_CLK_OSC32K_FILT;
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 13
+
+
+ 195              	    sys_safe_access_disable();
+ 196              	    LSECFG_Current(LSE_RCur_100);
+ 197              	
+ 198              	    while(1)
+ 199              	    {
+ 200              	        // 粗调
+ 201              	        sys_safe_access_enable();
+ 202              	        R8_OSC_CAL_CTRL &= ~RB_OSC_CNT_TOTAL;
+ 203              	        R8_OSC_CAL_CTRL |= 1;
+ 204              	        sys_safe_access_disable();
+ 205              	
+ 206              	        while(1)
+ 207              	        {
+ 208              	            sys_safe_access_enable();
+ 209              	            R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 210              	            R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR;
+ 211              	            R16_OSC_CAL_CNT |= RB_OSC_CAL_IF;
+ 212              	            sys_safe_access_disable();
+ 213              	            while( (R8_OSC_CAL_CTRL & RB_OSC_CNT_EN) == 0 )
+ 214              	            {
+ 215              	                sys_safe_access_enable();
+ 216              	                R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 217              	                sys_safe_access_disable();
+ 218              	            }
+ 219              	
+ 220              	            while(!(R8_OSC_CAL_CTRL & RB_OSC_CNT_HALT)); // 用于丢弃
+ 221              	
+ 222              	            SYS_DisableAllIrq(&irqv);
+ 223              	            sys_safe_access_enable();
+ 224              	            R8_OSC_CAL_CTRL &= ~RB_OSC_CNT_EN;
+ 225              	            R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 226              	            R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR;
+ 227              	            R16_OSC_CAL_CNT |= RB_OSC_CAL_IF;
+ 228              	            sys_safe_access_disable();
+ 229              	            while( (R8_OSC_CAL_CTRL & RB_OSC_CNT_EN) == 0 )
+ 230              	            {
+ 231              	                sys_safe_access_enable();
+ 232              	                R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 233              	                sys_safe_access_disable();
+ 234              	            }
+ 235              	
+ 236              	            while(R8_OSC_CAL_CTRL & RB_OSC_CNT_HALT);
+ 237              	            cnt_32k = RTC_GetCycle32k();
+ 238              	            while(RTC_GetCycle32k() == cnt_32k);
+ 239              	            R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR;
+ 240              	            SYS_RecoverIrq(irqv);
+ 241              	            while(!(R8_OSC_CAL_CTRL & RB_OSC_CNT_HALT));
+ 242              	            i = R16_OSC_CAL_CNT; // 实时校准后采样值
+ 243              	            cnt_offset = (i & 0x3FFF) + R8_OSC_CAL_OV_CNT * 0x3FFF - 2000 * (freq_sys / 1000) / CAB
+ 244              	            if(((cnt_offset > -37 * (freq_sys / 1000) / 60000) && (cnt_offset < 37 * (freq_sys / 10
+ 245              	            {
+ 246              	                if(retry)
+ 247              	                    break;
+ 248              	            }
+ 249              	            retry++;
+ 250              	            cnt_offset = (cnt_offset > 0) ? (((cnt_offset * 2) / (74 * (freq_sys/1000) / 60000)) + 
+ 251              	            sys_safe_access_enable();
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 14
+
+
+ 252              	            R16_INT32K_TUNE += cnt_offset;
+ 253              	            sys_safe_access_disable();
+ 254              	        }
+ 255              	
+ 256              	        // 细调
+ 257              	        // 配置细调参数后，丢弃2次捕获值（软件行为）上判断已有一次，这里只留一次
+ 258              	        sys_safe_access_enable();
+ 259              	        R8_OSC_CAL_CTRL &= ~RB_OSC_CNT_TOTAL;
+ 260              	        R8_OSC_CAL_CTRL |= cali_Lv;
+ 261              	        sys_safe_access_disable();
+ 262              	        while( (R8_OSC_CAL_CTRL & RB_OSC_CNT_TOTAL) != cali_Lv )
+ 263              	        {
+ 264              	            sys_safe_access_enable();
+ 265              	            R8_OSC_CAL_CTRL |= cali_Lv;
+ 266              	            sys_safe_access_disable();
+ 267              	        }
+ 268              	
+ 269              	        sys_safe_access_enable();
+ 270              	        R8_OSC_CAL_CTRL &= ~RB_OSC_CNT_EN;
+ 271              	        R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 272              	        R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR;
+ 273              	        R16_OSC_CAL_CNT |= RB_OSC_CAL_IF;
+ 274              	        sys_safe_access_disable();
+ 275              	        while( (R8_OSC_CAL_CTRL & RB_OSC_CNT_EN) == 0 )
+ 276              	        {
+ 277              	            sys_safe_access_enable();
+ 278              	            R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 279              	            sys_safe_access_disable();
+ 280              	        }
+ 281              	
+ 282              	        while(!(R8_OSC_CAL_CTRL & RB_OSC_CNT_HALT)); // 用于丢弃
+ 283              	
+ 284              	        SYS_DisableAllIrq(&irqv);
+ 285              	        sys_safe_access_enable();
+ 286              	        R8_OSC_CAL_CTRL &= ~RB_OSC_CNT_EN;
+ 287              	        R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 288              	        R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR;
+ 289              	        R16_OSC_CAL_CNT |= RB_OSC_CAL_IF;
+ 290              	        sys_safe_access_disable();
+ 291              	        while( (R8_OSC_CAL_CTRL & RB_OSC_CNT_EN) == 0 )
+ 292              	        {
+ 293              	            sys_safe_access_enable();
+ 294              	            R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 295              	            sys_safe_access_disable();
+ 296              	        }
+ 297              	
+ 298              	        while(R8_OSC_CAL_CTRL & RB_OSC_CNT_HALT);
+ 299              	        cnt_32k = RTC_GetCycle32k();
+ 300              	        while(RTC_GetCycle32k() == cnt_32k);
+ 301              	        R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR;
+ 302              	        SYS_RecoverIrq(irqv);
+ 303              	        while(!(R8_OSC_CAL_CTRL & RB_OSC_CNT_HALT));
+ 304              	        sys_safe_access_enable();
+ 305              	        R8_OSC_CAL_CTRL &= ~RB_OSC_CNT_EN;
+ 306              	        sys_safe_access_disable();
+ 307              	        i = R16_OSC_CAL_CNT; // 实时校准后采样值
+ 308              	        cnt_offset = (i & 0x3FFF) + R8_OSC_CAL_OV_CNT * 0x3FFF -  4000 * (1 << cali_Lv) * (freq_sys
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 15
+
+
+ 309              	        cnt_offset = (cnt_offset > 0) ? ((((cnt_offset * 2*(100 )) / (1366 * ((1 << cali_Lv)/8) * (
+ 310              	        if((cnt_offset > 0)&&(((R16_INT32K_TUNE>>5)+cnt_offset)>0xFF))
+ 311              	        {
+ 312              	            if(retry_all>2)
+ 313              	            {
+ 314              	                sys_safe_access_enable();
+ 315              	                R16_INT32K_TUNE |= (0xFF<<5);
+ 316              	                sys_safe_access_disable();
+ 317              	                return;
+ 318              	            }
+ 319              	            else
+ 320              	            {
+ 321              	                sys_safe_access_enable();
+ 322              	                R16_INT32K_TUNE = (R16_INT32K_TUNE&0x1F)|(0x7F<<5);
+ 323              	                sys_safe_access_disable();
+ 324              	            }
+ 325              	        }
+ 326              	        else if((cnt_offset < 0)&&((R16_INT32K_TUNE>>5)<(-cnt_offset)))
+ 327              	        {
+ 328              	            if(retry_all>2)
+ 329              	            {
+ 330              	                sys_safe_access_enable();
+ 331              	                R16_INT32K_TUNE &= 0x1F;
+ 332              	                sys_safe_access_disable();
+ 333              	                return;
+ 334              	            }
+ 335              	            else
+ 336              	            {
+ 337              	                sys_safe_access_enable();
+ 338              	                R16_INT32K_TUNE = (R16_INT32K_TUNE&0x1F)|(0x7F<<5);
+ 339              	                sys_safe_access_disable();
+ 340              	            }
+ 341              	        }
+ 342              	        else
+ 343              	        {
+ 344              	            sys_safe_access_enable();
+ 345              	            R16_INT32K_TUNE += (cnt_offset<<5);
+ 346              	            sys_safe_access_disable();
+ 347              	            return;
+ 348              	        }
+ 349              	        retry_all++;
+ 350              	
+ 351              	    }
+ 352              	}
+ 353              	
+ 354              	/*********************************************************************
+ 355              	 * @fn      RTCInitTime
+ 356              	 *
+ 357              	 * @brief   RTC时钟初始化当前时间
+ 358              	 *
+ 359              	 * @param   y       - 配置年，MAX_Y = BEGYEAR + 44
+ 360              	 * @param   mon     - 配置月，MAX_MON = 12
+ 361              	 * @param   d       - 配置日，MAX_D = 31
+ 362              	 * @param   h       - 配置小时，MAX_H = 23
+ 363              	 * @param   m       - 配置分钟，MAX_M = 59
+ 364              	 * @param   s       - 配置秒，MAX_S = 59
+ 365              	 *
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 16
+
+
+ 366              	 * @return  none
+ 367              	 */
+ 368              	void RTC_InitTime(uint16_t y, uint16_t mon, uint16_t d, uint16_t h, uint16_t m, uint16_t s)
+ 369              	{
+ 370              	    uint32_t         t;
+ 371              	    uint16_t         year, month, day, sec2, t32k;
+ 372              	    volatile uint8_t clk_pin;
+ 373              	
+ 374              	    year = y;
+ 375              	    month = mon;
+ 376              	    day = 0;
+ 377              	    while(year > BEGYEAR)
+ 378              	    {
+ 379              	        day += YearLength(year - 1);
+ 380              	        year--;
+ 381              	    }
+ 382              	    while(month > 1)
+ 383              	    {
+ 384              	        day += monthLength(IsLeapYear(y), month - 2);
+ 385              	        month--;
+ 386              	    }
+ 387              	
+ 388              	    day += d - 1;
+ 389              	    sec2 = (h % 24) * 1800 + m * 30 + s / 2;
+ 390              	    t32k = (s & 1) ? (0x8000) : (0);
+ 391              	    t = sec2;
+ 392              	    t = t << 16 | t32k;
+ 393              	
+ 394              	    do
+ 395              	    {
+ 396              	        clk_pin = (R8_CK32K_CONFIG & RB_32K_CLK_PIN);
+ 397              	    } while(clk_pin != (R8_CK32K_CONFIG & RB_32K_CLK_PIN));
+ 398              	    if(!clk_pin)
+ 399              	    {
+ 400              	        while(!clk_pin)
+ 401              	        {
+ 402              	            do
+ 403              	            {
+ 404              	                clk_pin = (R8_CK32K_CONFIG & RB_32K_CLK_PIN);
+ 405              	            } while(clk_pin != (R8_CK32K_CONFIG & RB_32K_CLK_PIN));
+ 406              	        }
+ 407              	    }
+ 408              	
+ 409 00a6 0F100000 	    sys_safe_access_enable();
+ 410              	    R32_RTC_TRIG = day;
+ 372              		fence.i
+ 373              	# 0 "" 2
+ 374              	 #NO_APP
+ 375 00aa B7170040 		li	a5,1073745920
+ 376 00ae 93067005 		li	a3,87
+ 377 00b2 2380D704 		sb	a3,64(a5)
+ 378 00b6 930680FA 		li	a3,-88
+ 379 00ba 2380D704 		sb	a3,64(a5)
+ 380              	 #APP
+ 381              	# 409 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 382              		fence.i
+ 383              	# 0 "" 2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 17
+
+
+ 384              	 #NO_APP
+ 385 00c2 23AA0703 		sw	a6,52(a5)
+ 386 00c6 83C61703 		lbu	a3,49(a5)
+ 387 00ca 93E60608 		ori	a3,a3,128
+ 388 00ce A388D702 		sb	a3,49(a5)
+ 389 00d2 23800704 		sb	zero,64(a5)
+ 390 00d6 A247     		lw	a5,8(sp)
+ 391              	 #APP
+ 392              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 393              		csrrs a5, 0x800, a5
+ 394              	# 0 "" 2
+ 395              	# 412 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 411              	    R8_RTC_MODE_CTRL |= RB_RTC_LOAD_HI;
+ 412 00dc 0F100000 	    sys_safe_access_disable();
+ 413              	    while((R32_RTC_TRIG & 0x3FFF) != (R32_RTC_CNT_DAY & 0x3FFF));
+ 396              		fence.i
+ 397              	# 0 "" 2
+ 398              	 #NO_APP
+ 399 00e0 1166     		li	a2,16384
+ 400 00e2 B7170040 		li	a5,1073745920
+ 401 00e6 7D16     		addi	a2,a2,-1
+ 402              	.L32:
+ 403 00e8 D45B     		lw	a3,52(a5)
+ 404 00ea C85F     		lw	a0,60(a5)
+ 405 00ec 93854703 		addi	a1,a5,52
+ 406 00f0 A98E     		xor	a3,a3,a0
+ 407 00f2 F18E     		and	a3,a3,a2
+ 408 00f4 F5FA     		bnez	a3,.L32
+ 409 00f6 93068008 		li	a3,136
+ 410              	 #APP
+ 411              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 412              		csrrc a3, 0x800, a3
+ 413              	# 0 "" 2
+ 414              	 #NO_APP
+ 415 00fe 93F68608 		andi	a3,a3,136
+ 416 0102 36C6     		sw	a3,12(sp)
+ 417              	 #APP
+ 418              	# 414 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 414 0104 0F100000 	    sys_safe_access_enable();
+ 415              	    R32_RTC_TRIG = t;
+ 419              		fence.i
+ 420              	# 0 "" 2
+ 421              	 #NO_APP
+ 422 0108 93067005 		li	a3,87
+ 423 010c 2380D704 		sb	a3,64(a5)
+ 424 0110 930680FA 		li	a3,-88
+ 425 0114 2380D704 		sb	a3,64(a5)
+ 426              	 #APP
+ 427              	# 414 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 428              		fence.i
+ 429              	# 0 "" 2
+ 430              	 #NO_APP
+ 431 011c 98C1     		sw	a4,0(a1)
+ 432 011e 03C71703 		lbu	a4,49(a5)
+ 433 0122 13670704 		ori	a4,a4,64
+ 434 0126 A388E702 		sb	a4,49(a5)
+ 435 012a 23800704 		sb	zero,64(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 18
+
+
+ 436 012e B247     		lw	a5,12(sp)
+ 437              	 #APP
+ 438              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 439              		csrrs a5, 0x800, a5
+ 440              	# 0 "" 2
+ 441              	# 417 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 416              	    R8_RTC_MODE_CTRL |= RB_RTC_LOAD_LO;
+ 417 0134 0F100000 	    sys_safe_access_disable();
+ 418              	}
+ 442              		fence.i
+ 443              	# 0 "" 2
+ 444              	 #NO_APP
+ 445 0138 4101     		addi	sp,sp,16
+ 446 013a 8280     		jr	ra
+ 447              	.L23:
+ 448 013c 7D13     		addi	t1,t1,-1
+ 449 013e 3368E303 		rem	a6,t1,t5
+ 450 0142 9308E016 		li	a7,366
+ 451 0146 630E0800 		beqz	a6,.L22
+ 452 014a 3368F303 		rem	a6,t1,t6
+ 453 014e 9308D016 		li	a7,365
+ 454 0152 63080800 		beqz	a6,.L22
+ 455 0156 93783300 		andi	a7,t1,3
+ 456 015a 93B81800 		seqz	a7,a7
+ 457 015e 9388D816 		addi	a7,a7,365
+ 458              	.L22:
+ 459 0162 33081E01 		add	a6,t3,a7
+ 460 0166 131E0801 		slli	t3,a6,16
+ 461 016a 135E0E01 		srli	t3,t3,16
+ 462 016e 55B5     		j	.L21
+ 463              	.L29:
+ 464 0170 6393E503 		bne	a1,t5,.L25
+ 465 0174 0548     		li	a6,1
+ 466 0176 63860800 		beqz	a7,.L26
+ 467 017a 0148     		li	a6,0
+ 468 017c 63030300 		beqz	t1,.L26
+ 469 0180 2A88     		mv	a6,a0
+ 470              	.L26:
+ 471 0182 7108     		addi	a6,a6,28
+ 472              	.L27:
+ 473 0184 7298     		add	a6,t3,a6
+ 474 0186 FD15     		addi	a1,a1,-1
+ 475 0188 131E0801 		slli	t3,a6,16
+ 476 018c C205     		slli	a1,a1,16
+ 477 018e 135E0E01 		srli	t3,t3,16
+ 478 0192 C181     		srli	a1,a1,16
+ 479 0194 79BD     		j	.L24
+ 480              	.L25:
+ 481 0196 13F81500 		andi	a6,a1,1
+ 482 019a 63F4BF00 		bleu	a1,t6,.L28
+ 483              	.L52:
+ 484 019e 7908     		addi	a6,a6,30
+ 485 01a0 D5B7     		j	.L27
+ 486              	.L28:
+ 487 01a2 13381800 		seqz	a6,a6
+ 488 01a6 E5BF     		j	.L52
+ 489              	.L33:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 19
+
+
+ 490 01a8 83C7F602 		lbu	a5,47(a3)
+ 491 01ac 93F70708 		andi	a5,a5,128
+ 492 01b0 A303F100 		sb	a5,7(sp)
+ 493 01b4 03467100 		lbu	a2,7(sp)
+ 494 01b8 83C7F602 		lbu	a5,47(a3)
+ 495 01bc 93F70708 		andi	a5,a5,128
+ 496 01c0 E394C7FE 		bne	a5,a2,.L33
+ 497              	.L31:
+ 498 01c4 83477100 		lbu	a5,7(sp)
+ 499 01c8 93F7F70F 		andi	a5,a5,0xff
+ 500 01cc F1DF     		beqz	a5,.L33
+ 501 01ce E9B5     		j	.L34
+ 503              		.section	.text.RTC_GetTime,"ax",@progbits
+ 504              		.align	1
+ 505              		.globl	RTC_GetTime
+ 507              	RTC_GetTime:
+ 508 0000 B7180040 		li	a7,1073745920
+ 509 0004 03A8C803 		lw	a6,60(a7)
+ 510 0008 03D3A803 		lhu	t1,58(a7)
+ 511 000c 83D88803 		lhu	a7,56(a7)
+ 512 0010 4111     		addi	sp,sp,-16
+ 513 0012 0603     		slli	t1,t1,1
+ 514 0014 93D8F800 		srli	a7,a7,15
+ 515 0018 4A08     		slli	a6,a6,18
+ 516 001a B30E1301 		add	t4,t1,a7
+ 517 001e 9308407E 		li	a7,2020
+ 518 0022 22C6     		sw	s0,12(sp)
+ 519 0024 26C4     		sw	s1,8(sp)
+ 520 0026 4AC2     		sw	s2,4(sp)
+ 521 0028 13582801 		srli	a6,a6,18
+ 522 002c 23101501 		sh	a7,0(a0)
+ 523 0030 930F0019 		li	t6,400
+ 524 0034 9302D016 		li	t0,365
+ 525 0038 93034006 		li	t2,100
+ 526 003c 130FC016 		li	t5,364
+ 527              	.L54:
+ 528 0040 03530500 		lhu	t1,0(a0)
+ 529 0044 B378F303 		remu	a7,t1,t6
+ 530 0048 63800810 		beqz	a7,.L56
+ 531 004c B3787302 		remu	a7,t1,t2
+ 532 0050 63810810 		beqz	a7,.L57
+ 533 0054 93783300 		andi	a7,t1,3
+ 534 0058 13BE1800 		seqz	t3,a7
+ 535 005c 130EDE16 		addi	t3,t3,365
+ 536 0060 6350C809 		bge	a6,t3,.L74
+ 537              	.L72:
+ 538 0064 23900500 		sh	zero,0(a1)
+ 539 0068 0544     		li	s0,1
+ 540 006a 9944     		li	s1,6
+ 541 006c F94F     		li	t6,30
+ 542 006e F542     		li	t0,29
+ 543 0070 13090019 		li	s2,400
+ 544 0074 93034006 		li	t2,100
+ 545              	.L59:
+ 546 0078 83D80500 		lhu	a7,0(a1)
+ 547 007c 138F1800 		addi	t5,a7,1
+ 548 0080 6394880A 		bne	a7,s0,.L61
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 20
+
+
+ 549 0084 03530500 		lhu	t1,0(a0)
+ 550 0088 337E2303 		remu	t3,t1,s2
+ 551 008c 630C0E08 		beqz	t3,.L64
+ 552 0090 B3787302 		remu	a7,t1,t2
+ 553 0094 63860800 		beqz	a7,.L88
+ 554 0098 93783300 		andi	a7,t1,3
+ 555 009c 63840808 		beqz	a7,.L64
+ 556              	.L88:
+ 557 00a0 F148     		li	a7,28
+ 558              	.L65:
+ 559 00a2 635C1805 		bge	a6,a7,.L63
+ 560              	.L66:
+ 561 00a6 2390E501 		sh	t5,0(a1)
+ 562 00aa 0508     		addi	a6,a6,1
+ 563 00ac 23100601 		sh	a6,0(a2)
+ 564 00b0 0566     		li	a2,4096
+ 565 00b2 130606E1 		addi	a2,a2,-496
+ 566 00b6 B3D5CE02 		divu	a1,t4,a2
+ 567 00ba 3244     		lw	s0,12(sp)
+ 568 00bc A244     		lw	s1,8(sp)
+ 569 00be 1249     		lw	s2,4(sp)
+ 570 00c0 33F6CE02 		remu	a2,t4,a2
+ 571 00c4 2390B600 		sh	a1,0(a3)
+ 572 00c8 9306C003 		li	a3,60
+ 573 00cc 3356D602 		divu	a2,a2,a3
+ 574 00d0 B3F6DE02 		remu	a3,t4,a3
+ 575 00d4 2310C700 		sh	a2,0(a4)
+ 576 00d8 2390D700 		sh	a3,0(a5)
+ 577 00dc 4101     		addi	sp,sp,16
+ 578 00de 8280     		jr	ra
+ 579              	.L74:
+ 580 00e0 93B81800 		seqz	a7,a7
+ 581 00e4 9388D816 		addi	a7,a7,365
+ 582              	.L55:
+ 583 00e8 33081841 		sub	a6,a6,a7
+ 584 00ec 4208     		slli	a6,a6,16
+ 585 00ee 0503     		addi	t1,t1,1
+ 586 00f0 13580801 		srli	a6,a6,16
+ 587 00f4 23106500 		sh	t1,0(a0)
+ 588 00f8 A1B7     		j	.L54
+ 589              	.L63:
+ 590 00fa 8548     		li	a7,1
+ 591 00fc 630B0E00 		beqz	t3,.L60
+ 592 0100 337E7302 		remu	t3,t1,t2
+ 593 0104 8148     		li	a7,0
+ 594 0106 63060E00 		beqz	t3,.L60
+ 595 010a 93783300 		andi	a7,t1,3
+ 596 010e 93B81800 		seqz	a7,a7
+ 597              	.L60:
+ 598 0112 F108     		addi	a7,a7,28
+ 599              	.L73:
+ 600 0114 33081841 		sub	a6,a6,a7
+ 601 0118 4208     		slli	a6,a6,16
+ 602 011a 13580801 		srli	a6,a6,16
+ 603 011e 2390E501 		sh	t5,0(a1)
+ 604 0122 99BF     		j	.L59
+ 605              	.L64:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 21
+
+
+ 606 0124 F548     		li	a7,29
+ 607 0126 B5BF     		j	.L65
+ 608              	.L61:
+ 609 0128 13F31800 		andi	t1,a7,1
+ 610 012c 63F81401 		bleu	a7,s1,.L67
+ 611 0130 63180300 		bnez	t1,.L95
+ 612              	.L70:
+ 613 0134 E3D902F7 		ble	a6,t0,.L66
+ 614 0138 F948     		li	a7,30
+ 615 013a E9BF     		j	.L73
+ 616              	.L67:
+ 617 013c E31C03FE 		bnez	t1,.L70
+ 618              	.L95:
+ 619 0140 E3D30FF7 		ble	a6,t6,.L66
+ 620 0144 FD48     		li	a7,31
+ 621 0146 F9B7     		j	.L73
+ 622              	.L56:
+ 623 0148 E3DE02F1 		ble	a6,t0,.L72
+ 624 014c 9308E016 		li	a7,366
+ 625 0150 61BF     		j	.L55
+ 626              	.L57:
+ 627 0152 E3590FF1 		ble	a6,t5,.L72
+ 628 0156 9308D016 		li	a7,365
+ 629 015a 79B7     		j	.L55
+ 631              		.section	.text.RTC_SetCycle32k,"ax",@progbits
+ 632              		.align	1
+ 633              		.globl	RTC_SetCycle32k
+ 635              	RTC_SetCycle32k:
+ 636 0000 4111     		addi	sp,sp,-16
+ 637 0002 B7170040 		li	a5,1073745920
+ 638              	.L101:
+ 639 0006 03C7F702 		lbu	a4,47(a5)
+ 640 000a 13770708 		andi	a4,a4,128
+ 641 000e A305E100 		sb	a4,11(sp)
+ 642 0012 8346B100 		lbu	a3,11(sp)
+ 643 0016 03C7F702 		lbu	a4,47(a5)
+ 644 001a 13770708 		andi	a4,a4,128
+ 645 001e E314D7FE 		bne	a4,a3,.L101
+ 646 0022 0347B100 		lbu	a4,11(sp)
+ 647 0026 1377F70F 		andi	a4,a4,0xff
+ 648 002a 71DF     		beqz	a4,.L101
+ 649 002c 13078008 		li	a4,136
+ 650              	 #APP
+ 651              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 652              		csrrc a4, 0x800, a4
+ 653              	# 0 "" 2
+ 654              	 #NO_APP
+ 655 0034 13778708 		andi	a4,a4,136
+ 656 0038 3AC6     		sw	a4,12(sp)
+ 657              	 #APP
+ 658              	# 483 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 419              	
+ 420              	/*********************************************************************
+ 421              	 * @fn      RTC_GetTime
+ 422              	 *
+ 423              	 * @brief   获取当前时间
+ 424              	 *
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 22
+
+
+ 425              	 * @param   py      - 获取到的年，MAX_Y = BEGYEAR + 44
+ 426              	 * @param   pmon    - 获取到的月，MAX_MON = 12
+ 427              	 * @param   pd      - 获取到的日，MAX_D = 31
+ 428              	 * @param   ph      - 获取到的小时，MAX_H = 23
+ 429              	 * @param   pm      - 获取到的分钟，MAX_M = 59
+ 430              	 * @param   ps      - 获取到的秒，MAX_S = 59
+ 431              	 *
+ 432              	 * @return  none
+ 433              	 */
+ 434              	void RTC_GetTime(uint16_t *py, uint16_t *pmon, uint16_t *pd, uint16_t *ph, uint16_t *pm, uint16_t *
+ 435              	{
+ 436              	    uint32_t t;
+ 437              	    uint16_t day, sec2, t32k;
+ 438              	
+ 439              	    day = R32_RTC_CNT_DAY & 0x3FFF;
+ 440              	    sec2 = R16_RTC_CNT_2S;
+ 441              	    t32k = R16_RTC_CNT_32K;
+ 442              	
+ 443              	    t = sec2 * 2 + ((t32k < 0x8000) ? 0 : 1);
+ 444              	
+ 445              	    *py = BEGYEAR;
+ 446              	    while(day >= YearLength(*py))
+ 447              	    {
+ 448              	        day -= YearLength(*py);
+ 449              	        (*py)++;
+ 450              	    }
+ 451              	
+ 452              	    *pmon = 0;
+ 453              	    while(day >= monthLength(IsLeapYear(*py), *pmon))
+ 454              	    {
+ 455              	        day -= monthLength(IsLeapYear(*py), *pmon);
+ 456              	        (*pmon)++;
+ 457              	    }
+ 458              	    (*pmon)++;
+ 459              	    *pd = day + 1;
+ 460              	    *ph = t / 3600;
+ 461              	    *pm = t % 3600 / 60;
+ 462              	    *ps = t % 60;
+ 463              	}
+ 464              	
+ 465              	/*********************************************************************
+ 466              	 * @fn      RTC_SetCycle32k
+ 467              	 *
+ 468              	 * @brief   基于LSE/LSI时钟，配置当前RTC 周期数
+ 469              	 *
+ 470              	 * @param   cyc     - 配置周期计数初值，MAX_CYC = 0xA8BFFFFF = 2831155199
+ 471              	 *
+ 472              	 * @return  none
+ 473              	 */
+ 474              	void RTC_SetCycle32k(uint32_t cyc)
+ 475              	{
+ 476              	    volatile uint8_t clk_pin;
+ 477              	
+ 478              	    do
+ 479              	    {
+ 480              	        clk_pin = (R8_CK32K_CONFIG & RB_32K_CLK_PIN);
+ 481              	    } while((clk_pin != (R8_CK32K_CONFIG & RB_32K_CLK_PIN)) || (!clk_pin));
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 23
+
+
+ 482              	
+ 483 003a 0F100000 	    sys_safe_access_enable();
+ 484              	    R32_RTC_TRIG = cyc;
+ 659              		fence.i
+ 660              	# 0 "" 2
+ 661              	 #NO_APP
+ 662 003e 13077005 		li	a4,87
+ 663 0042 2380E704 		sb	a4,64(a5)
+ 664 0046 130780FA 		li	a4,-88
+ 665 004a 2380E704 		sb	a4,64(a5)
+ 666              	 #APP
+ 667              	# 483 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 668              		fence.i
+ 669              	# 0 "" 2
+ 670              	 #NO_APP
+ 671 0052 C8DB     		sw	a0,52(a5)
+ 672 0054 03C71703 		lbu	a4,49(a5)
+ 673 0058 13670704 		ori	a4,a4,64
+ 674 005c A388E702 		sb	a4,49(a5)
+ 675 0060 23800704 		sb	zero,64(a5)
+ 676 0064 B247     		lw	a5,12(sp)
+ 677              	 #APP
+ 678              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 679              		csrrs a5, 0x800, a5
+ 680              	# 0 "" 2
+ 681              	# 486 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 485              	    R8_RTC_MODE_CTRL |= RB_RTC_LOAD_LO;
+ 486 006a 0F100000 	    sys_safe_access_disable();
+ 487              	}
+ 682              		fence.i
+ 683              	# 0 "" 2
+ 684              	 #NO_APP
+ 685 006e 4101     		addi	sp,sp,16
+ 686 0070 8280     		jr	ra
+ 688              		.section	.highcode,"ax",@progbits
+ 689              		.align	1
+ 690              		.globl	RTC_GetCycle32k
+ 692              	RTC_GetCycle32k:
+ 693 0000 4111     		addi	sp,sp,-16
+ 694 0002 B7170040 		li	a5,1073745920
+ 695              	.L105:
+ 696 0006 985F     		lw	a4,56(a5)
+ 697 0008 3AC6     		sw	a4,12(sp)
+ 698 000a 945F     		lw	a3,56(a5)
+ 699 000c 3247     		lw	a4,12(sp)
+ 700 000e E39CE6FE 		bne	a3,a4,.L105
+ 701 0012 3245     		lw	a0,12(sp)
+ 702 0014 4101     		addi	sp,sp,16
+ 703 0016 8280     		jr	ra
+ 705              		.globl	__divdi3
+ 706              		.section	.text.Calibration_LSI,"ax",@progbits
+ 707              		.align	1
+ 708              		.globl	Calibration_LSI
+ 710              	Calibration_LSI:
+ 711 0000 3171     		addi	sp,sp,-192
+ 712 0002 4AD9     		sw	s2,176(sp)
+ 713 0004 66CB     		sw	s9,148(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 24
+
+
+ 714 0006 06DF     		sw	ra,188(sp)
+ 715 0008 22DD     		sw	s0,184(sp)
+ 716 000a 26DB     		sw	s1,180(sp)
+ 717 000c 4ED7     		sw	s3,172(sp)
+ 718 000e 52D5     		sw	s4,168(sp)
+ 719 0010 56D3     		sw	s5,164(sp)
+ 720 0012 5AD1     		sw	s6,160(sp)
+ 721 0014 5ECF     		sw	s7,156(sp)
+ 722 0016 62CD     		sw	s8,152(sp)
+ 723 0018 6AC9     		sw	s10,144(sp)
+ 724 001a 6EC7     		sw	s11,140(sp)
+ 725 001c AA8C     		mv	s9,a0
+ 726 001e 02D8     		sw	zero,48(sp)
+ 727 0020 97000000 		call	GetSysClock
+ 727      E7800000 
+ 728 0028 2A89     		mv	s2,a0
+ 729 002a 93078008 		li	a5,136
+ 730              	 #APP
+ 731              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 732              		csrrc a5, 0x800, a5
+ 733              	# 0 "" 2
+ 734              	 #NO_APP
+ 735 0032 93F78708 		andi	a5,a5,136
+ 736 0036 3EDA     		sw	a5,52(sp)
+ 737              	 #APP
+ 738              	# 192 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 739              		fence.i
+ 740              	# 0 "" 2
+ 741              	 #NO_APP
+ 742 003c B7170040 		li	a5,1073745920
+ 743 0040 13077005 		li	a4,87
+ 744 0044 2380E704 		sb	a4,64(a5)
+ 745 0048 130780FA 		li	a4,-88
+ 746 004c 2380E704 		sb	a4,64(a5)
+ 747              	 #APP
+ 748              	# 192 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 749              		fence.i
+ 750              	# 0 "" 2
+ 751              	 #NO_APP
+ 752 0054 03C7F702 		lbu	a4,47(a5)
+ 753 0058 1377770F 		andi	a4,a4,247
+ 754 005c A387E702 		sb	a4,47(a5)
+ 755 0060 03C7F702 		lbu	a4,47(a5)
+ 756 0064 13678700 		ori	a4,a4,8
+ 757 0068 A387E702 		sb	a4,47(a5)
+ 758 006c 23800704 		sb	zero,64(a5)
+ 759 0070 D257     		lw	a5,52(sp)
+ 760              	 #APP
+ 761              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 762              		csrrs a5, 0x800, a5
+ 763              	# 0 "" 2
+ 764              	# 195 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 765              		fence.i
+ 766              	# 0 "" 2
+ 767              	 #NO_APP
+ 768 007a 0545     		li	a0,1
+ 769 007c 97000000 		call	LSECFG_Current
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 25
+
+
+ 769      E7800000 
+ 770 0084 130780C1 		li	a4,-1000
+ 771 0088 3347E902 		div	a4,s2,a4
+ 772 008c 116A     		li	s4,16384
+ 773 008e 93070AE8 		addi	a5,s4,-384
+ 774 0092 93065002 		li	a3,37
+ 775 0096 BD69     		li	s3,61440
+ 776 0098 930BA004 		li	s7,74
+ 777 009c 814A     		li	s5,0
+ 778 009e 014B     		li	s6,0
+ 779 00a0 13048008 		li	s0,136
+ 780 00a4 93047005 		li	s1,87
+ 781 00a8 7D1A     		addi	s4,s4,-1
+ 782 00aa B347F902 		div	a5,s2,a5
+ 783 00ae 3307D702 		mul	a4,a4,a3
+ 784 00b2 3EC0     		sw	a5,0(sp)
+ 785 00b4 FD87     		srai	a5,a5,31
+ 786 00b6 3ECC     		sw	a5,24(sp)
+ 787 00b8 938709A6 		addi	a5,s3,-1440
+ 788 00bc 9309803E 		li	s3,1000
+ 789 00c0 3347F702 		div	a4,a4,a5
+ 790 00c4 3AC2     		sw	a4,4(sp)
+ 791 00c6 7D87     		srai	a4,a4,31
+ 792 00c8 3AC4     		sw	a4,8(sp)
+ 793 00ca 33473903 		div	a4,s2,s3
+ 794 00ce 8549     		li	s3,1
+ 795 00d0 B3999901 		sll	s3,s3,s9
+ 796 00d4 93D93940 		srai	s3,s3,3
+ 797 00d8 B306D702 		mul	a3,a4,a3
+ 798 00dc B30B7703 		mul	s7,a4,s7
+ 799 00e0 B3C6F602 		div	a3,a3,a5
+ 800 00e4 B3CBFB02 		div	s7,s7,a5
+ 801 00e8 36C6     		sw	a3,12(sp)
+ 802 00ea FD86     		srai	a3,a3,31
+ 803 00ec 36C8     		sw	a3,16(sp)
+ 804 00ee 93D6FB41 		srai	a3,s7,31
+ 805 00f2 36CE     		sw	a3,28(sp)
+ 806 00f4 B7460F00 		li	a3,999424
+ 807 00f8 93860624 		addi	a3,a3,576
+ 808 00fc 3349D902 		div	s2,s2,a3
+ 809 0100 8566     		li	a3,4096
+ 810 0102 938606FA 		addi	a3,a3,-96
+ 811 0106 B3969601 		sll	a3,a3,s9
+ 812 010a B389E902 		mul	s3,s3,a4
+ 813 010e 13076055 		li	a4,1366
+ 814 0112 3309D902 		mul	s2,s2,a3
+ 815 0116 93060010 		li	a3,256
+ 816 011a B389E902 		mul	s3,s3,a4
+ 817 011e 3349D902 		div	s2,s2,a3
+ 818 0122 B3C9F902 		div	s3,s3,a5
+ 819 0126 93163900 		slli	a3,s2,3
+ 820 012a 36CA     		sw	a3,20(sp)
+ 821 012c 37190040 		li	s2,1073745920
+ 822 0130 FD86     		srai	a3,a3,31
+ 823 0132 36D0     		sw	a3,32(sp)
+ 824 0134 930D0904 		addi	s11,s2,64
+ 825 0138 93D7F941 		srai	a5,s3,31
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 26
+
+
+ 826 013c 3ED2     		sw	a5,36(sp)
+ 827              	.L150:
+ 828              	 #APP
+ 829              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 830              		csrrc a3, 0x800, s0
+ 831              	# 0 "" 2
+ 832              	 #NO_APP
+ 833 0142 93F68608 		andi	a3,a3,136
+ 834 0146 36DC     		sw	a3,56(sp)
+ 835              	 #APP
+ 836              	# 201 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 837              		fence.i
+ 838              	# 0 "" 2
+ 839              	 #NO_APP
+ 840 014c 93077005 		li	a5,87
+ 841 0150 2380FD00 		sb	a5,0(s11)
+ 842 0154 930680FA 		li	a3,-88
+ 843 0158 2380DD00 		sb	a3,0(s11)
+ 844              	 #APP
+ 845              	# 201 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 846              		fence.i
+ 847              	# 0 "" 2
+ 848              	 #NO_APP
+ 849 0160 83463905 		lbu	a3,83(s2)
+ 850 0164 93F6860F 		andi	a3,a3,248
+ 851 0168 A309D904 		sb	a3,83(s2)
+ 852 016c 83463905 		lbu	a3,83(s2)
+ 853 0170 93E61600 		ori	a3,a3,1
+ 854 0174 A309D904 		sb	a3,83(s2)
+ 855 0178 23800D00 		sb	zero,0(s11)
+ 856 017c E256     		lw	a3,56(sp)
+ 857              	 #APP
+ 858              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 859              		csrrs a3, 0x800, a3
+ 860              	# 0 "" 2
+ 861              	# 204 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 862              		fence.i
+ 863              	# 0 "" 2
+ 864              	 #NO_APP
+ 865 0186 130C80FA 		li	s8,-88
+ 866 018a 116D     		li	s10,16384
+ 867              	.L126:
+ 868              	 #APP
+ 869              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 870              		csrrc a3, 0x800, s0
+ 871              	# 0 "" 2
+ 872              	 #NO_APP
+ 873 0190 93F68608 		andi	a3,a3,136
+ 874 0194 36DE     		sw	a3,60(sp)
+ 875              	 #APP
+ 876              	# 208 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 877              		fence.i
+ 878              	# 0 "" 2
+ 879              	 #NO_APP
+ 880 019a 93077005 		li	a5,87
+ 881 019e 2380FD00 		sb	a5,0(s11)
+ 882 01a2 23808D01 		sb	s8,0(s11)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 27
+
+
+ 883              	 #APP
+ 884              	# 208 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 885              		fence.i
+ 886              	# 0 "" 2
+ 887              	 #NO_APP
+ 888 01aa 83463905 		lbu	a3,83(s2)
+ 889 01ae 2166     		li	a2,32768
+ 890 01b0 93E60602 		ori	a3,a3,32
+ 891 01b4 A309D904 		sb	a3,83(s2)
+ 892 01b8 83560905 		lhu	a3,80(s2)
+ 893 01bc B3E6A601 		or	a3,a3,s10
+ 894 01c0 2318D904 		sh	a3,80(s2)
+ 895 01c4 83560905 		lhu	a3,80(s2)
+ 896 01c8 D18E     		or	a3,a3,a2
+ 897 01ca 2318D904 		sh	a3,80(s2)
+ 898 01ce 23800D00 		sb	zero,0(s11)
+ 899 01d2 F256     		lw	a3,60(sp)
+ 900              	.L173:
+ 901              	 #APP
+ 902              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 903              		csrrs a3, 0x800, a3
+ 904              	# 0 "" 2
+ 905              	# 217 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 906              		fence.i
+ 907              	# 0 "" 2
+ 908              	 #NO_APP
+ 909 01dc 83463905 		lbu	a3,83(s2)
+ 910 01e0 93F60602 		andi	a3,a3,32
+ 911 01e4 6381061A 		beqz	a3,.L110
+ 912              	.L111:
+ 913 01e8 03463905 		lbu	a2,83(s2)
+ 914 01ec 218A     		andi	a2,a2,8
+ 915 01ee 6DDE     		beqz	a2,.L111
+ 916 01f0 0818     		addi	a0,sp,48
+ 917 01f2 97000000 		call	SYS_DisableAllIrq
+ 917      E7800000 
+ 918              	 #APP
+ 919              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 920              		csrrc a2, 0x800, s0
+ 921              	# 0 "" 2
+ 922              	 #NO_APP
+ 923 01fe 13768608 		andi	a2,a2,136
+ 924 0202 B2C2     		sw	a2,68(sp)
+ 925              	 #APP
+ 926              	# 223 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 927              		fence.i
+ 928              	# 0 "" 2
+ 929              	 #NO_APP
+ 930 0208 23809D00 		sb	s1,0(s11)
+ 931 020c 23808D01 		sb	s8,0(s11)
+ 932              	 #APP
+ 933              	# 223 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 934              		fence.i
+ 935              	# 0 "" 2
+ 936              	 #NO_APP
+ 937 0214 B7170040 		li	a5,1073745920
+ 938 0218 03C63705 		lbu	a2,83(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 28
+
+
+ 939 021c 1376F60D 		andi	a2,a2,223
+ 940 0220 A389C704 		sb	a2,83(a5)
+ 941 0224 03C63705 		lbu	a2,83(a5)
+ 942 0228 13660602 		ori	a2,a2,32
+ 943 022c A389C704 		sb	a2,83(a5)
+ 944 0230 83560905 		lhu	a3,80(s2)
+ 945 0234 2166     		li	a2,32768
+ 946 0236 B3E6A601 		or	a3,a3,s10
+ 947 023a 2318D904 		sh	a3,80(s2)
+ 948 023e 83560905 		lhu	a3,80(s2)
+ 949 0242 D18E     		or	a3,a3,a2
+ 950 0244 2318D904 		sh	a3,80(s2)
+ 951 0248 23800D00 		sb	zero,0(s11)
+ 952 024c 9646     		lw	a3,68(sp)
+ 953              	.L174:
+ 954              	 #APP
+ 955              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 956              		csrrs a3, 0x800, a3
+ 957              	# 0 "" 2
+ 958              	# 233 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 959              		fence.i
+ 960              	# 0 "" 2
+ 961              	 #NO_APP
+ 962 0256 83463905 		lbu	a3,83(s2)
+ 963 025a 93F60602 		andi	a3,a3,32
+ 964 025e 638B0614 		beqz	a3,.L113
+ 965              	.L114:
+ 966 0262 83463905 		lbu	a3,83(s2)
+ 967 0266 A18A     		andi	a3,a3,8
+ 968 0268 EDFE     		bnez	a3,.L114
+ 969 026a 97000000 		call	RTC_GetCycle32k
+ 969      E7800000 
+ 970 0272 AA86     		mv	a3,a0
+ 971              	.L115:
+ 972 0274 36D4     		sw	a3,40(sp)
+ 973 0276 97000000 		call	RTC_GetCycle32k
+ 973      E7800000 
+ 974 027e A256     		lw	a3,40(sp)
+ 975 0280 E30AD5FE 		beq	a0,a3,.L115
+ 976 0284 83560905 		lhu	a3,80(s2)
+ 977 0288 4255     		lw	a0,48(sp)
+ 978 028a B3E6A601 		or	a3,a3,s10
+ 979 028e 2318D904 		sh	a3,80(s2)
+ 980 0292 97000000 		call	SYS_RecoverIrq
+ 980      E7800000 
+ 981              	.L116:
+ 982 029a 83463905 		lbu	a3,83(s2)
+ 983 029e A18A     		andi	a3,a3,8
+ 984 02a0 EDDE     		beqz	a3,.L116
+ 985 02a2 03560905 		lhu	a2,80(s2)
+ 986 02a6 83462905 		lbu	a3,82(s2)
+ 987 02aa 8247     		lw	a5,0(sp)
+ 988 02ac 3376CA00 		and	a2,s4,a2
+ 989 02b0 B306DA02 		mul	a3,s4,a3
+ 990 02b4 93D5F641 		srai	a1,a3,31
+ 991 02b8 B296     		add	a3,a2,a3
+ 992 02ba B388F640 		sub	a7,a3,a5
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 29
+
+
+ 993 02be E247     		lw	a5,24(sp)
+ 994 02c0 33B8C600 		sltu	a6,a3,a2
+ 995 02c4 2E98     		add	a6,a6,a1
+ 996 02c6 3308F840 		sub	a6,a6,a5
+ 997 02ca A247     		lw	a5,8(sp)
+ 998 02cc B3B61601 		sgtu	a3,a7,a3
+ 999 02d0 3308D840 		sub	a6,a6,a3
+ 1000 02d4 63C70701 		bgt	a6,a5,.L151
+ 1001 02d8 631DF800 		bne	a6,a5,.L117
+ 1002 02dc 9247     		lw	a5,4(sp)
+ 1003 02de 63FA1701 		bleu	a7,a5,.L117
+ 1004              	.L151:
+ 1005 02e2 C247     		lw	a5,16(sp)
+ 1006 02e4 634FF80E 		bgt	a5,a6,.L119
+ 1007 02e8 63950701 		bne	a5,a6,.L117
+ 1008 02ec B247     		lw	a5,12(sp)
+ 1009 02ee 63EAF80E 		bgtu	a5,a7,.L119
+ 1010              	.L117:
+ 1011 02f2 8946     		li	a3,2
+ 1012 02f4 63E9660F 		bgtu	s6,a3,.L121
+ 1013              	.L122:
+ 1014 02f8 F246     		lw	a3,28(sp)
+ 1015 02fa 93151800 		slli	a1,a6,1
+ 1016 02fe 13D3F801 		srli	t1,a7,31
+ 1017 0302 5E86     		mv	a2,s7
+ 1018 0304 13951800 		slli	a0,a7,1
+ 1019 0308 B365B300 		or	a1,t1,a1
+ 1020 030c 42D6     		sw	a6,44(sp)
+ 1021 030e 46D4     		sw	a7,40(sp)
+ 1022 0310 97000000 		call	__divdi3
+ 1022      E7800000 
+ 1023 0318 3258     		lw	a6,44(sp)
+ 1024 031a 050B     		addi	s6,s6,1
+ 1025 031c 137BFB0F 		andi	s6,s6,0xff
+ 1026 0320 63470001 		bgtz	a6,.L152
+ 1027 0324 631A0838 		bnez	a6,.L123
+ 1028 0328 A258     		lw	a7,40(sp)
+ 1029 032a 63870838 		beqz	a7,.L123
+ 1030              	.L152:
+ 1031 032e 13081500 		addi	a6,a0,1
+ 1032 0332 B336A800 		sltu	a3,a6,a0
+ 1033 0336 B695     		add	a1,a3,a1
+ 1034 0338 13D6F501 		srli	a2,a1,31
+ 1035 033c 3298     		add	a6,a2,a6
+ 1036 033e B336C800 		sltu	a3,a6,a2
+ 1037 0342 AE96     		add	a3,a3,a1
+ 1038              	.L175:
+ 1039 0344 13581800 		srli	a6,a6,1
+ 1040 0348 FE06     		slli	a3,a3,31
+ 1041 034a B3E60601 		or	a3,a3,a6
+ 1042              	 #APP
+ 1043              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1044              		csrrc a2, 0x800, s0
+ 1045              	# 0 "" 2
+ 1046              	 #NO_APP
+ 1047 0352 13768608 		andi	a2,a2,136
+ 1048 0356 B2C6     		sw	a2,76(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 30
+
+
+ 1049              	 #APP
+ 1050              	# 251 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1051              		fence.i
+ 1052              	# 0 "" 2
+ 1053              	 #NO_APP
+ 1054 035c 23809D00 		sb	s1,0(s11)
+ 1055 0360 23808D01 		sb	s8,0(s11)
+ 1056              	 #APP
+ 1057              	# 251 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1058              		fence.i
+ 1059              	# 0 "" 2
+ 1060              	 #NO_APP
+ 1061 0368 0356C902 		lhu	a2,44(s2)
+ 1062 036c B296     		add	a3,a3,a2
+ 1063 036e C206     		slli	a3,a3,16
+ 1064 0370 C182     		srli	a3,a3,16
+ 1065 0372 2316D902 		sh	a3,44(s2)
+ 1066 0376 23800D00 		sb	zero,0(s11)
+ 1067 037a B646     		lw	a3,76(sp)
+ 1068              	 #APP
+ 1069              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1070              		csrrs a3, 0x800, a3
+ 1071              	# 0 "" 2
+ 1072              	# 253 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1073              		fence.i
+ 1074              	# 0 "" 2
+ 1075              	 #NO_APP
+ 1076 0384 21B5     		j	.L126
+ 1077              	.L110:
+ 1078              	 #APP
+ 1079              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1080              		csrrc a3, 0x800, s0
+ 1081              	# 0 "" 2
+ 1082              	 #NO_APP
+ 1083 038a 93F68608 		andi	a3,a3,136
+ 1084 038e B6C0     		sw	a3,64(sp)
+ 1085              	 #APP
+ 1086              	# 215 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1087              		fence.i
+ 1088              	# 0 "" 2
+ 1089              	 #NO_APP
+ 1090 0394 23809D00 		sb	s1,0(s11)
+ 1091 0398 23808D01 		sb	s8,0(s11)
+ 1092              	 #APP
+ 1093              	# 215 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1094              		fence.i
+ 1095              	# 0 "" 2
+ 1096              	 #NO_APP
+ 1097 03a0 83463905 		lbu	a3,83(s2)
+ 1098 03a4 93E60602 		ori	a3,a3,32
+ 1099 03a8 A309D904 		sb	a3,83(s2)
+ 1100 03ac 23800D00 		sb	zero,0(s11)
+ 1101 03b0 8646     		lw	a3,64(sp)
+ 1102 03b2 0DB5     		j	.L173
+ 1103              	.L113:
+ 1104              	 #APP
+ 1105              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 31
+
+
+ 1106              		csrrc a3, 0x800, s0
+ 1107              	# 0 "" 2
+ 1108              	 #NO_APP
+ 1109 03b8 93F68608 		andi	a3,a3,136
+ 1110 03bc B6C4     		sw	a3,72(sp)
+ 1111              	 #APP
+ 1112              	# 231 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1113              		fence.i
+ 1114              	# 0 "" 2
+ 1115              	 #NO_APP
+ 1116 03c2 23809D00 		sb	s1,0(s11)
+ 1117 03c6 23808D01 		sb	s8,0(s11)
+ 1118              	 #APP
+ 1119              	# 231 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1120              		fence.i
+ 1121              	# 0 "" 2
+ 1122              	 #NO_APP
+ 1123 03ce 83463905 		lbu	a3,83(s2)
+ 1124 03d2 93E60602 		ori	a3,a3,32
+ 1125 03d6 A309D904 		sb	a3,83(s2)
+ 1126 03da 23800D00 		sb	zero,0(s11)
+ 1127 03de A646     		lw	a3,72(sp)
+ 1128 03e0 BDB5     		j	.L174
+ 1129              	.L119:
+ 1130 03e2 E30B0BF0 		beqz	s6,.L122
+ 1131              	.L121:
+ 1132              	 #APP
+ 1133              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1134              		csrrc a3, 0x800, s0
+ 1135              	# 0 "" 2
+ 1136              	 #NO_APP
+ 1137 03ea 93F68608 		andi	a3,a3,136
+ 1138 03ee B6C8     		sw	a3,80(sp)
+ 1139              	 #APP
+ 1140              	# 258 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1141              		fence.i
+ 1142              	# 0 "" 2
+ 1143              	 #NO_APP
+ 1144 03f4 930680FA 		li	a3,-88
+ 1145 03f8 23809D00 		sb	s1,0(s11)
+ 1146 03fc 2380DD00 		sb	a3,0(s11)
+ 1147              	 #APP
+ 1148              	# 258 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1149              		fence.i
+ 1150              	# 0 "" 2
+ 1151              	 #NO_APP
+ 1152 0404 83463905 		lbu	a3,83(s2)
+ 1153 0408 93F5FC0F 		andi	a1,s9,0xff
+ 1154 040c 93F6860F 		andi	a3,a3,248
+ 1155 0410 A309D904 		sb	a3,83(s2)
+ 1156 0414 83463905 		lbu	a3,83(s2)
+ 1157 0418 CD8E     		or	a3,a1,a3
+ 1158 041a A309D904 		sb	a3,83(s2)
+ 1159 041e 23800D00 		sb	zero,0(s11)
+ 1160 0422 C646     		lw	a3,80(sp)
+ 1161              	 #APP
+ 1162              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 32
+
+
+ 1163              		csrrs a3, 0x800, a3
+ 1164              	# 0 "" 2
+ 1165              	# 261 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1166              		fence.i
+ 1167              	# 0 "" 2
+ 1168              	 #NO_APP
+ 1169 042c 130580FA 		li	a0,-88
+ 1170              	.L127:
+ 1171 0430 03463905 		lbu	a2,83(s2)
+ 1172 0434 93063905 		addi	a3,s2,83
+ 1173 0438 1D8A     		andi	a2,a2,7
+ 1174 043a 631C9629 		bne	a2,s9,.L128
+ 1175              	 #APP
+ 1176              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1177              		csrrc a2, 0x800, s0
+ 1178              	# 0 "" 2
+ 1179              	 #NO_APP
+ 1180 0442 13768608 		andi	a2,a2,136
+ 1181 0446 B2CC     		sw	a2,88(sp)
+ 1182              	 #APP
+ 1183              	# 269 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1184              		fence.i
+ 1185              	# 0 "" 2
+ 1186              	 #NO_APP
+ 1187 044c 130680FA 		li	a2,-88
+ 1188 0450 23809D00 		sb	s1,0(s11)
+ 1189 0454 2380CD00 		sb	a2,0(s11)
+ 1190              	 #APP
+ 1191              	# 269 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1192              		fence.i
+ 1193              	# 0 "" 2
+ 1194              	 #NO_APP
+ 1195 045c 03C60600 		lbu	a2,0(a3)
+ 1196 0460 1376F60D 		andi	a2,a2,223
+ 1197 0464 2380C600 		sb	a2,0(a3)
+ 1198 0468 03C60600 		lbu	a2,0(a3)
+ 1199 046c 13660602 		ori	a2,a2,32
+ 1200 0470 2380C600 		sb	a2,0(a3)
+ 1201 0474 83560905 		lhu	a3,80(s2)
+ 1202 0478 1166     		li	a2,16384
+ 1203 047a D18E     		or	a3,a3,a2
+ 1204 047c 2318D904 		sh	a3,80(s2)
+ 1205 0480 83560905 		lhu	a3,80(s2)
+ 1206 0484 2166     		li	a2,32768
+ 1207 0486 D18E     		or	a3,a3,a2
+ 1208 0488 2318D904 		sh	a3,80(s2)
+ 1209 048c 23800D00 		sb	zero,0(s11)
+ 1210 0490 E646     		lw	a3,88(sp)
+ 1211              	 #APP
+ 1212              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1213              		csrrs a3, 0x800, a3
+ 1214              	# 0 "" 2
+ 1215              	# 274 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1216              		fence.i
+ 1217              	# 0 "" 2
+ 1218              	 #NO_APP
+ 1219 049a 130680FA 		li	a2,-88
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 33
+
+
+ 1220              	.L129:
+ 1221 049e 83463905 		lbu	a3,83(s2)
+ 1222 04a2 93F60602 		andi	a3,a3,32
+ 1223 04a6 63800626 		beqz	a3,.L130
+ 1224              	.L131:
+ 1225 04aa 83463905 		lbu	a3,83(s2)
+ 1226 04ae 130C3905 		addi	s8,s2,83
+ 1227 04b2 A18A     		andi	a3,a3,8
+ 1228 04b4 FDDA     		beqz	a3,.L131
+ 1229 04b6 0818     		addi	a0,sp,48
+ 1230 04b8 97000000 		call	SYS_DisableAllIrq
+ 1230      E7800000 
+ 1231              	 #APP
+ 1232              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1233              		csrrc a3, 0x800, s0
+ 1234              	# 0 "" 2
+ 1235              	 #NO_APP
+ 1236 04c4 93F68608 		andi	a3,a3,136
+ 1237 04c8 B6D0     		sw	a3,96(sp)
+ 1238              	 #APP
+ 1239              	# 285 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1240              		fence.i
+ 1241              	# 0 "" 2
+ 1242              	 #NO_APP
+ 1243 04ce 930680FA 		li	a3,-88
+ 1244 04d2 23809D00 		sb	s1,0(s11)
+ 1245 04d6 2380DD00 		sb	a3,0(s11)
+ 1246              	 #APP
+ 1247              	# 285 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1248              		fence.i
+ 1249              	# 0 "" 2
+ 1250              	 #NO_APP
+ 1251 04de 83460C00 		lbu	a3,0(s8)
+ 1252 04e2 1166     		li	a2,16384
+ 1253 04e4 93F6F60D 		andi	a3,a3,223
+ 1254 04e8 2300DC00 		sb	a3,0(s8)
+ 1255 04ec 83460C00 		lbu	a3,0(s8)
+ 1256 04f0 93E60602 		ori	a3,a3,32
+ 1257 04f4 2300DC00 		sb	a3,0(s8)
+ 1258 04f8 83560905 		lhu	a3,80(s2)
+ 1259 04fc D18E     		or	a3,a3,a2
+ 1260 04fe 2318D904 		sh	a3,80(s2)
+ 1261 0502 83560905 		lhu	a3,80(s2)
+ 1262 0506 2166     		li	a2,32768
+ 1263 0508 D18E     		or	a3,a3,a2
+ 1264 050a 2318D904 		sh	a3,80(s2)
+ 1265 050e 23800D00 		sb	zero,0(s11)
+ 1266 0512 8656     		lw	a3,96(sp)
+ 1267              	 #APP
+ 1268              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1269              		csrrs a3, 0x800, a3
+ 1270              	# 0 "" 2
+ 1271              	# 290 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1272              		fence.i
+ 1273              	# 0 "" 2
+ 1274              	 #NO_APP
+ 1275 051c 130680FA 		li	a2,-88
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 34
+
+
+ 1276              	.L132:
+ 1277 0520 83463905 		lbu	a3,83(s2)
+ 1278 0524 93F60602 		andi	a3,a3,32
+ 1279 0528 638A0620 		beqz	a3,.L133
+ 1280              	.L134:
+ 1281 052c 83463905 		lbu	a3,83(s2)
+ 1282 0530 A18A     		andi	a3,a3,8
+ 1283 0532 EDFE     		bnez	a3,.L134
+ 1284 0534 97000000 		call	RTC_GetCycle32k
+ 1284      E7800000 
+ 1285 053c 2A8C     		mv	s8,a0
+ 1286              	.L135:
+ 1287 053e 97000000 		call	RTC_GetCycle32k
+ 1287      E7800000 
+ 1288 0546 E30C85FF 		beq	a0,s8,.L135
+ 1289 054a 83560905 		lhu	a3,80(s2)
+ 1290 054e 1166     		li	a2,16384
+ 1291 0550 4255     		lw	a0,48(sp)
+ 1292 0552 D18E     		or	a3,a3,a2
+ 1293 0554 2318D904 		sh	a3,80(s2)
+ 1294 0558 97000000 		call	SYS_RecoverIrq
+ 1294      E7800000 
+ 1295              	.L136:
+ 1296 0560 83463905 		lbu	a3,83(s2)
+ 1297 0564 13063905 		addi	a2,s2,83
+ 1298 0568 A18A     		andi	a3,a3,8
+ 1299 056a FDDA     		beqz	a3,.L136
+ 1300              	 #APP
+ 1301              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1302              		csrrc a3, 0x800, s0
+ 1303              	# 0 "" 2
+ 1304              	 #NO_APP
+ 1305 0570 93F68608 		andi	a3,a3,136
+ 1306 0574 B6D4     		sw	a3,104(sp)
+ 1307              	 #APP
+ 1308              	# 304 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1309              		fence.i
+ 1310              	# 0 "" 2
+ 1311              	 #NO_APP
+ 1312 057a 930680FA 		li	a3,-88
+ 1313 057e 23809D00 		sb	s1,0(s11)
+ 1314 0582 2380DD00 		sb	a3,0(s11)
+ 1315              	 #APP
+ 1316              	# 304 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1317              		fence.i
+ 1318              	# 0 "" 2
+ 1319              	 #NO_APP
+ 1320 058a 83460600 		lbu	a3,0(a2)
+ 1321 058e 93F6F60D 		andi	a3,a3,223
+ 1322 0592 2300D600 		sb	a3,0(a2)
+ 1323 0596 23800D00 		sb	zero,0(s11)
+ 1324 059a A656     		lw	a3,104(sp)
+ 1325              	 #APP
+ 1326              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1327              		csrrs a3, 0x800, a3
+ 1328              	# 0 "" 2
+ 1329              	# 306 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 35
+
+
+ 1330              		fence.i
+ 1331              	# 0 "" 2
+ 1332              	 #NO_APP
+ 1333 05a4 83560905 		lhu	a3,80(s2)
+ 1334 05a8 03462905 		lbu	a2,82(s2)
+ 1335 05ac D247     		lw	a5,20(sp)
+ 1336 05ae B376DA00 		and	a3,s4,a3
+ 1337 05b2 3306CA02 		mul	a2,s4,a2
+ 1338 05b6 1305800C 		li	a0,200
+ 1339 05ba 9355F641 		srai	a1,a2,31
+ 1340 05be 3696     		add	a2,a3,a2
+ 1341 05c0 330DF640 		sub	s10,a2,a5
+ 1342 05c4 8257     		lw	a5,32(sp)
+ 1343 05c6 333CD600 		sltu	s8,a2,a3
+ 1344 05ca 2E9C     		add	s8,s8,a1
+ 1345 05cc 3336A601 		sgtu	a2,s10,a2
+ 1346 05d0 330CFC40 		sub	s8,s8,a5
+ 1347 05d4 330CCC40 		sub	s8,s8,a2
+ 1348 05d8 33088503 		mul	a6,a0,s8
+ 1349 05dc 9256     		lw	a3,36(sp)
+ 1350 05de 4E86     		mv	a2,s3
+ 1351 05e0 B335A503 		mulhu	a1,a0,s10
+ 1352 05e4 3305A503 		mul	a0,a0,s10
+ 1353 05e8 C295     		add	a1,a6,a1
+ 1354 05ea 97000000 		call	__divdi3
+ 1354      E7800000 
+ 1355 05f2 63468001 		bgtz	s8,.L153
+ 1356 05f6 631E0C16 		bnez	s8,.L137
+ 1357 05fa 630C0D16 		beqz	s10,.L137
+ 1358              	.L153:
+ 1359 05fe 13061500 		addi	a2,a0,1
+ 1360 0602 3335A600 		sltu	a0,a2,a0
+ 1361 0606 2E95     		add	a0,a0,a1
+ 1362 0608 9356F501 		srli	a3,a0,31
+ 1363 060c 3696     		add	a2,a3,a2
+ 1364 060e B335D600 		sltu	a1,a2,a3
+ 1365 0612 AA95     		add	a1,a1,a0
+ 1366 0614 9396F501 		slli	a3,a1,31
+ 1367 0618 0582     		srli	a2,a2,1
+ 1368              	.L176:
+ 1369 061a 8585     		srai	a1,a1,1
+ 1370 061c D18E     		or	a3,a2,a3
+ 1371 061e 6346B000 		bgtz	a1,.L154
+ 1372 0622 639D051A 		bnez	a1,.L140
+ 1373 0626 638B061A 		beqz	a3,.L140
+ 1374              	.L154:
+ 1375 062a 0356C902 		lhu	a2,44(s2)
+ 1376 062e 1582     		srli	a2,a2,5
+ 1377 0630 3305D600 		add	a0,a2,a3
+ 1378 0634 3336C500 		sltu	a2,a0,a2
+ 1379 0638 B295     		add	a1,a2,a1
+ 1380 063a 6348B000 		bgtz	a1,.L155
+ 1381 063e 63910524 		bnez	a1,.L142
+ 1382 0642 1306F00F 		li	a2,255
+ 1383 0646 637DA622 		bleu	a0,a2,.L142
+ 1384              	.L155:
+ 1385 064a 8946     		li	a3,2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 36
+
+
+ 1386 064c 63F35615 		bleu	s5,a3,.L144
+ 1387 0650 93078008 		li	a5,136
+ 1388              	 #APP
+ 1389              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1390              		csrrc a5, 0x800, a5
+ 1391              	# 0 "" 2
+ 1392              	 #NO_APP
+ 1393 0658 93F78708 		andi	a5,a5,136
+ 1394 065c BED6     		sw	a5,108(sp)
+ 1395              	 #APP
+ 1396              	# 314 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1397              		fence.i
+ 1398              	# 0 "" 2
+ 1399              	 #NO_APP
+ 1400 0662 37170040 		li	a4,1073745920
+ 1401 0666 93077005 		li	a5,87
+ 1402 066a 2300F704 		sb	a5,64(a4)
+ 1403 066e 930780FA 		li	a5,-88
+ 1404 0672 2300F704 		sb	a5,64(a4)
+ 1405              	 #APP
+ 1406              	# 314 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1407              		fence.i
+ 1408              	# 0 "" 2
+ 1409              	 #NO_APP
+ 1410 067a 8356C702 		lhu	a3,44(a4)
+ 1411 067e 8967     		li	a5,8192
+ 1412 0680 8117     		addi	a5,a5,-32
+ 1413 0682 D58F     		or	a5,a5,a3
+ 1414 0684 C207     		slli	a5,a5,16
+ 1415 0686 C183     		srli	a5,a5,16
+ 1416 0688 2316F702 		sh	a5,44(a4)
+ 1417 068c 23000704 		sb	zero,64(a4)
+ 1418 0690 B657     		lw	a5,108(sp)
+ 1419              	.L178:
+ 1420              	 #APP
+ 1421              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1422              		csrrs a5, 0x800, a5
+ 1423              	# 0 "" 2
+ 1424              	# 346 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1425              		fence.i
+ 1426              	# 0 "" 2
+ 1427              	 #NO_APP
+ 1428 069a FA50     		lw	ra,188(sp)
+ 1429 069c 6A54     		lw	s0,184(sp)
+ 1430 069e DA54     		lw	s1,180(sp)
+ 1431 06a0 4A59     		lw	s2,176(sp)
+ 1432 06a2 BA59     		lw	s3,172(sp)
+ 1433 06a4 2A5A     		lw	s4,168(sp)
+ 1434 06a6 9A5A     		lw	s5,164(sp)
+ 1435 06a8 0A5B     		lw	s6,160(sp)
+ 1436 06aa FA4B     		lw	s7,156(sp)
+ 1437 06ac 6A4C     		lw	s8,152(sp)
+ 1438 06ae DA4C     		lw	s9,148(sp)
+ 1439 06b0 4A4D     		lw	s10,144(sp)
+ 1440 06b2 BA4D     		lw	s11,140(sp)
+ 1441 06b4 2961     		addi	sp,sp,192
+ 1442 06b6 8280     		jr	ra
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 37
+
+
+ 1443              	.L123:
+ 1444 06b8 1308F5FF 		addi	a6,a0,-1
+ 1445 06bc 3335A800 		sltu	a0,a6,a0
+ 1446 06c0 FD15     		addi	a1,a1,-1
+ 1447 06c2 2E95     		add	a0,a0,a1
+ 1448 06c4 1356F501 		srli	a2,a0,31
+ 1449 06c8 3298     		add	a6,a2,a6
+ 1450 06ca B336C800 		sltu	a3,a6,a2
+ 1451 06ce AA96     		add	a3,a3,a0
+ 1452 06d0 95B9     		j	.L175
+ 1453              	.L128:
+ 1454              	 #APP
+ 1455              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1456              		csrrc a3, 0x800, s0
+ 1457              	# 0 "" 2
+ 1458              	 #NO_APP
+ 1459 06d6 93F68608 		andi	a3,a3,136
+ 1460 06da B6CA     		sw	a3,84(sp)
+ 1461              	 #APP
+ 1462              	# 264 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1463              		fence.i
+ 1464              	# 0 "" 2
+ 1465              	 #NO_APP
+ 1466 06e0 23809D00 		sb	s1,0(s11)
+ 1467 06e4 2380AD00 		sb	a0,0(s11)
+ 1468              	 #APP
+ 1469              	# 264 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1470              		fence.i
+ 1471              	# 0 "" 2
+ 1472              	 #NO_APP
+ 1473 06ec 83463905 		lbu	a3,83(s2)
+ 1474 06f0 CD8E     		or	a3,a1,a3
+ 1475 06f2 A309D904 		sb	a3,83(s2)
+ 1476 06f6 23800D00 		sb	zero,0(s11)
+ 1477 06fa D646     		lw	a3,84(sp)
+ 1478              	 #APP
+ 1479              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1480              		csrrs a3, 0x800, a3
+ 1481              	# 0 "" 2
+ 1482              	# 266 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1483              		fence.i
+ 1484              	# 0 "" 2
+ 1485              	 #NO_APP
+ 1486 0704 35B3     		j	.L127
+ 1487              	.L130:
+ 1488              	 #APP
+ 1489              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1490              		csrrc a3, 0x800, s0
+ 1491              	# 0 "" 2
+ 1492              	 #NO_APP
+ 1493 070a 93F68608 		andi	a3,a3,136
+ 1494 070e B6CE     		sw	a3,92(sp)
+ 1495              	 #APP
+ 1496              	# 277 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1497              		fence.i
+ 1498              	# 0 "" 2
+ 1499              	 #NO_APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 38
+
+
+ 1500 0714 23809D00 		sb	s1,0(s11)
+ 1501 0718 2380CD00 		sb	a2,0(s11)
+ 1502              	 #APP
+ 1503              	# 277 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1504              		fence.i
+ 1505              	# 0 "" 2
+ 1506              	 #NO_APP
+ 1507 0720 83463905 		lbu	a3,83(s2)
+ 1508 0724 93E60602 		ori	a3,a3,32
+ 1509 0728 A309D904 		sb	a3,83(s2)
+ 1510 072c 23800D00 		sb	zero,0(s11)
+ 1511 0730 F646     		lw	a3,92(sp)
+ 1512              	 #APP
+ 1513              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1514              		csrrs a3, 0x800, a3
+ 1515              	# 0 "" 2
+ 1516              	# 279 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1517              		fence.i
+ 1518              	# 0 "" 2
+ 1519              	 #NO_APP
+ 1520 073a 95B3     		j	.L129
+ 1521              	.L133:
+ 1522              	 #APP
+ 1523              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1524              		csrrc a3, 0x800, s0
+ 1525              	# 0 "" 2
+ 1526              	 #NO_APP
+ 1527 0740 93F68608 		andi	a3,a3,136
+ 1528 0744 B6D2     		sw	a3,100(sp)
+ 1529              	 #APP
+ 1530              	# 293 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1531              		fence.i
+ 1532              	# 0 "" 2
+ 1533              	 #NO_APP
+ 1534 074a 23809D00 		sb	s1,0(s11)
+ 1535 074e 2380CD00 		sb	a2,0(s11)
+ 1536              	 #APP
+ 1537              	# 293 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1538              		fence.i
+ 1539              	# 0 "" 2
+ 1540              	 #NO_APP
+ 1541 0756 83463905 		lbu	a3,83(s2)
+ 1542 075a 93E60602 		ori	a3,a3,32
+ 1543 075e A309D904 		sb	a3,83(s2)
+ 1544 0762 23800D00 		sb	zero,0(s11)
+ 1545 0766 9656     		lw	a3,100(sp)
+ 1546              	 #APP
+ 1547              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1548              		csrrs a3, 0x800, a3
+ 1549              	# 0 "" 2
+ 1550              	# 295 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1551              		fence.i
+ 1552              	# 0 "" 2
+ 1553              	 #NO_APP
+ 1554 0770 45BB     		j	.L132
+ 1555              	.L137:
+ 1556 0772 9306F5FF 		addi	a3,a0,-1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 39
+
+
+ 1557 0776 33B5A600 		sltu	a0,a3,a0
+ 1558 077a FD15     		addi	a1,a1,-1
+ 1559 077c 2E95     		add	a0,a0,a1
+ 1560 077e 9355F501 		srli	a1,a0,31
+ 1561 0782 AE96     		add	a3,a1,a3
+ 1562 0784 B3B5B600 		sltu	a1,a3,a1
+ 1563 0788 AA95     		add	a1,a1,a0
+ 1564 078a 1396F501 		slli	a2,a1,31
+ 1565 078e 8582     		srli	a3,a3,1
+ 1566 0790 69B5     		j	.L176
+ 1567              	.L144:
+ 1568              	 #APP
+ 1569              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1570              		csrrc a3, 0x800, s0
+ 1571              	# 0 "" 2
+ 1572              	 #NO_APP
+ 1573 0796 93F68608 		andi	a3,a3,136
+ 1574 079a B6D8     		sw	a3,112(sp)
+ 1575              	 #APP
+ 1576              	# 321 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1577              		fence.i
+ 1578              	# 0 "" 2
+ 1579              	 #NO_APP
+ 1580 07a0 930680FA 		li	a3,-88
+ 1581 07a4 23809D00 		sb	s1,0(s11)
+ 1582 07a8 2380DD00 		sb	a3,0(s11)
+ 1583              	 #APP
+ 1584              	# 321 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1585              		fence.i
+ 1586              	# 0 "" 2
+ 1587              	 #NO_APP
+ 1588 07b0 8356C902 		lhu	a3,44(s2)
+ 1589 07b4 0566     		li	a2,4096
+ 1590 07b6 0116     		addi	a2,a2,-32
+ 1591 07b8 93F6F60F 		andi	a3,a3,0xff
+ 1592 07bc D18E     		or	a3,a3,a2
+ 1593 07be C206     		slli	a3,a3,16
+ 1594 07c0 C182     		srli	a3,a3,16
+ 1595 07c2 2316D902 		sh	a3,44(s2)
+ 1596 07c6 23800D00 		sb	zero,0(s11)
+ 1597 07ca C656     		lw	a3,112(sp)
+ 1598              	.L177:
+ 1599              	 #APP
+ 1600              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1601              		csrrs a3, 0x800, a3
+ 1602              	# 0 "" 2
+ 1603              	# 339 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1604              		fence.i
+ 1605              	# 0 "" 2
+ 1606              	 #NO_APP
+ 1607 07d4 850A     		addi	s5,s5,1
+ 1608 07d6 93FAFA0F 		andi	s5,s5,0xff
+ 1609 07da 95B2     		j	.L150
+ 1610              	.L140:
+ 1611 07dc 33E6B600 		or	a2,a3,a1
+ 1612 07e0 45C2     		beqz	a2,.L142
+ 1613 07e2 0356C902 		lhu	a2,44(s2)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 40
+
+
+ 1614 07e6 3305D040 		neg	a0,a3
+ 1615 07ea 3338A000 		snez	a6,a0
+ 1616 07ee B305B040 		neg	a1,a1
+ 1617 07f2 B3850541 		sub	a1,a1,a6
+ 1618 07f6 1582     		srli	a2,a2,5
+ 1619 07f8 6345B000 		bgtz	a1,.L156
+ 1620 07fc D1E1     		bnez	a1,.L142
+ 1621 07fe 6371A608 		bleu	a0,a2,.L142
+ 1622              	.L156:
+ 1623 0802 8946     		li	a3,2
+ 1624 0804 63F05605 		bleu	s5,a3,.L149
+ 1625 0808 93078008 		li	a5,136
+ 1626              	 #APP
+ 1627              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1628              		csrrc a5, 0x800, a5
+ 1629              	# 0 "" 2
+ 1630              	 #NO_APP
+ 1631 0810 93F78708 		andi	a5,a5,136
+ 1632 0814 BEDA     		sw	a5,116(sp)
+ 1633              	 #APP
+ 1634              	# 330 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1635              		fence.i
+ 1636              	# 0 "" 2
+ 1637              	 #NO_APP
+ 1638 081a B7170040 		li	a5,1073745920
+ 1639 081e 13077005 		li	a4,87
+ 1640 0822 2380E704 		sb	a4,64(a5)
+ 1641 0826 130780FA 		li	a4,-88
+ 1642 082a 2380E704 		sb	a4,64(a5)
+ 1643              	 #APP
+ 1644              	# 330 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1645              		fence.i
+ 1646              	# 0 "" 2
+ 1647              	 #NO_APP
+ 1648 0832 03D7C702 		lhu	a4,44(a5)
+ 1649 0836 7D8B     		andi	a4,a4,31
+ 1650 0838 2396E702 		sh	a4,44(a5)
+ 1651 083c 23800704 		sb	zero,64(a5)
+ 1652 0840 D657     		lw	a5,116(sp)
+ 1653 0842 81BD     		j	.L178
+ 1654              	.L149:
+ 1655              	 #APP
+ 1656              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1657              		csrrc a3, 0x800, s0
+ 1658              	# 0 "" 2
+ 1659              	 #NO_APP
+ 1660 0848 93F68608 		andi	a3,a3,136
+ 1661 084c B6DC     		sw	a3,120(sp)
+ 1662              	 #APP
+ 1663              	# 337 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1664              		fence.i
+ 1665              	# 0 "" 2
+ 1666              	 #NO_APP
+ 1667 0852 930680FA 		li	a3,-88
+ 1668 0856 23809D00 		sb	s1,0(s11)
+ 1669 085a 2380DD00 		sb	a3,0(s11)
+ 1670              	 #APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 41
+
+
+ 1671              	# 337 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1672              		fence.i
+ 1673              	# 0 "" 2
+ 1674              	 #NO_APP
+ 1675 0862 8356C902 		lhu	a3,44(s2)
+ 1676 0866 0566     		li	a2,4096
+ 1677 0868 0116     		addi	a2,a2,-32
+ 1678 086a 93F6F60F 		andi	a3,a3,0xff
+ 1679 086e D18E     		or	a3,a3,a2
+ 1680 0870 C206     		slli	a3,a3,16
+ 1681 0872 C182     		srli	a3,a3,16
+ 1682 0874 2316D902 		sh	a3,44(s2)
+ 1683 0878 23800D00 		sb	zero,0(s11)
+ 1684 087c E656     		lw	a3,120(sp)
+ 1685 087e B9B7     		j	.L177
+ 1686              	.L142:
+ 1687 0880 93078008 		li	a5,136
+ 1688              	 #APP
+ 1689              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1690              		csrrc a5, 0x800, a5
+ 1691              	# 0 "" 2
+ 1692              	 #NO_APP
+ 1693 0888 93F78708 		andi	a5,a5,136
+ 1694 088c BEDE     		sw	a5,124(sp)
+ 1695              	 #APP
+ 1696              	# 344 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1697              		fence.i
+ 1698              	# 0 "" 2
+ 1699              	 #NO_APP
+ 1700 0892 37170040 		li	a4,1073745920
+ 1701 0896 93077005 		li	a5,87
+ 1702 089a 2300F704 		sb	a5,64(a4)
+ 1703 089e 930780FA 		li	a5,-88
+ 1704 08a2 2300F704 		sb	a5,64(a4)
+ 1705              	 #APP
+ 1706              	# 344 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1707              		fence.i
+ 1708              	# 0 "" 2
+ 1709              	 #NO_APP
+ 1710 08aa 0356C702 		lhu	a2,44(a4)
+ 1711 08ae 93975600 		slli	a5,a3,5
+ 1712 08b2 B297     		add	a5,a5,a2
+ 1713 08b4 C207     		slli	a5,a5,16
+ 1714 08b6 C183     		srli	a5,a5,16
+ 1715 08b8 2316F702 		sh	a5,44(a4)
+ 1716 08bc 23000704 		sb	zero,64(a4)
+ 1717 08c0 F657     		lw	a5,124(sp)
+ 1718 08c2 C1BB     		j	.L178
+ 1720              		.section	.text.RTC_TMRFunCfg,"ax",@progbits
+ 1721              		.align	1
+ 1722              		.globl	RTC_TMRFunCfg
+ 1724              	RTC_TMRFunCfg:
+ 1725 0000 4111     		addi	sp,sp,-16
+ 1726 0002 13078008 		li	a4,136
+ 1727              	 #APP
+ 1728              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1729              		csrrc a5, 0x800, a4
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 42
+
+
+ 1730              	# 0 "" 2
+ 1731              	 #NO_APP
+ 1732 000a 93F78708 		andi	a5,a5,136
+ 1733 000e 3EC4     		sw	a5,8(sp)
+ 1734              	 #APP
+ 1735              	# 521 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 488              	
+ 489              	/*********************************************************************
+ 490              	 * @fn      RTC_GetCycle32k
+ 491              	 *
+ 492              	 * @brief   基于LSE/LSI时钟，获取当前RTC 周期数
+ 493              	 *
+ 494              	 * @param   none
+ 495              	 *
+ 496              	 * @return  当前周期数，MAX_CYC = 0xA8BFFFFF = 2831155199
+ 497              	 */
+ 498              	__HIGH_CODE
+ 499              	uint32_t RTC_GetCycle32k(void)
+ 500              	{
+ 501              	    volatile uint32_t i;
+ 502              	
+ 503              	    do
+ 504              	    {
+ 505              	        i = R32_RTC_CNT_32K;
+ 506              	    } while(i != R32_RTC_CNT_32K);
+ 507              	
+ 508              	    return (i);
+ 509              	}
+ 510              	/*********************************************************************
+ 511              	 * @fn      RTC_TMRFunCfg
+ 512              	 *
+ 513              	 * @brief   RTC定时模式配置（注意定时基准固定为32768Hz）
+ 514              	 *
+ 515              	 * @param   t   - refer to RTC_TMRCycTypeDef
+ 516              	 *
+ 517              	 * @return  none
+ 518              	 */
+ 519              	void RTC_TMRFunCfg(RTC_TMRCycTypeDef t)
+ 520              	{
+ 521 0010 0F100000 	    sys_safe_access_enable();
+ 522              	    R8_RTC_MODE_CTRL &= ~(RB_RTC_TMR_EN | RB_RTC_TMR_MODE);
+ 1736              		fence.i
+ 1737              	# 0 "" 2
+ 1738              	 #NO_APP
+ 1739 0014 B7170040 		li	a5,1073745920
+ 1740 0018 93057005 		li	a1,87
+ 1741 001c 2380B704 		sb	a1,64(a5)
+ 1742 0020 130680FA 		li	a2,-88
+ 1743 0024 2380C704 		sb	a2,64(a5)
+ 1744              	 #APP
+ 1745              	# 521 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1746              		fence.i
+ 1747              	# 0 "" 2
+ 1748              	 #NO_APP
+ 1749 002c 83C61703 		lbu	a3,49(a5)
+ 1750 0030 93F6860E 		andi	a3,a3,232
+ 1751 0034 A388D702 		sb	a3,49(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 43
+
+
+ 1752 0038 23800704 		sb	zero,64(a5)
+ 1753 003c A246     		lw	a3,8(sp)
+ 1754              	 #APP
+ 1755              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1756              		csrrs a3, 0x800, a3
+ 1757              	# 0 "" 2
+ 1758              	# 523 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 523 0042 0F100000 	    sys_safe_access_disable();
+ 524              	    sys_safe_access_enable();
+ 1759              		fence.i
+ 1760              	# 0 "" 2
+ 1761              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1762              		csrrc a4, 0x800, a4
+ 1763              	# 0 "" 2
+ 1764              	 #NO_APP
+ 1765 004a 13778708 		andi	a4,a4,136
+ 1766 004e 3AC6     		sw	a4,12(sp)
+ 1767              	 #APP
+ 1768              	# 524 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 525              	    R8_RTC_MODE_CTRL |= RB_RTC_TMR_EN | (t);
+ 1769              		fence.i
+ 1770              	# 0 "" 2
+ 1771              	 #NO_APP
+ 1772 0054 2380B704 		sb	a1,64(a5)
+ 1773 0058 2380C704 		sb	a2,64(a5)
+ 1774              	 #APP
+ 1775              	# 524 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1776              		fence.i
+ 1777              	# 0 "" 2
+ 1778              	 #NO_APP
+ 1779 0060 03C71703 		lbu	a4,49(a5)
+ 1780 0064 598D     		or	a0,a0,a4
+ 1781 0066 13650501 		ori	a0,a0,16
+ 1782 006a 1375F50F 		andi	a0,a0,0xff
+ 1783 006e A388A702 		sb	a0,49(a5)
+ 1784 0072 23800704 		sb	zero,64(a5)
+ 1785 0076 B247     		lw	a5,12(sp)
+ 1786              	 #APP
+ 1787              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1788              		csrrs a5, 0x800, a5
+ 1789              	# 0 "" 2
+ 1790              	# 526 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 526 007c 0F100000 	    sys_safe_access_disable();
+ 527              	}
+ 1791              		fence.i
+ 1792              	# 0 "" 2
+ 1793              	 #NO_APP
+ 1794 0080 4101     		addi	sp,sp,16
+ 1795 0082 8280     		jr	ra
+ 1797              		.section	.text.RTC_TRIGFunCfg,"ax",@progbits
+ 1798              		.align	1
+ 1799              		.globl	RTC_TRIGFunCfg
+ 1801              	RTC_TRIGFunCfg:
+ 1802 0000 0111     		addi	sp,sp,-32
+ 1803 0002 22CC     		sw	s0,24(sp)
+ 1804 0004 06CE     		sw	ra,28(sp)
+ 1805 0006 2A84     		mv	s0,a0
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 44
+
+
+ 1806 0008 97000000 		call	RTC_GetCycle32k
+ 1806      E7800000 
+ 1807 0010 2295     		add	a0,a0,s0
+ 1808 0012 B707C0A8 		li	a5,-1463812096
+ 1809 0016 63F5A700 		bleu	a0,a5,.L182
+ 1810 001a B7074057 		li	a5,1463812096
+ 1811 001e 3E95     		add	a0,a0,a5
+ 1812              	.L182:
+ 1813 0020 93078008 		li	a5,136
+ 1814              	 #APP
+ 1815              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1816              		csrrc a5, 0x800, a5
+ 1817              	# 0 "" 2
+ 1818              	 #NO_APP
+ 1819 0028 93F78708 		andi	a5,a5,136
+ 1820 002c 3EC6     		sw	a5,12(sp)
+ 1821              	 #APP
+ 1822              	# 548 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 528              	
+ 529              	/*********************************************************************
+ 530              	 * @fn      RTC_TRIGFunCfg
+ 531              	 *
+ 532              	 * @brief   RTC时间触发模式配置
+ 533              	 *
+ 534              	 * @param   cyc - 相对当前时间的触发间隔时间，基于LSE/LSI时钟周期数
+ 535              	 *
+ 536              	 * @return  none
+ 537              	 */
+ 538              	void RTC_TRIGFunCfg(uint32_t cyc)
+ 539              	{
+ 540              	    uint32_t t;
+ 541              	
+ 542              	    t = RTC_GetCycle32k() + cyc;
+ 543              	    if(t > RTC_MAX_COUNT)
+ 544              	    {
+ 545              	        t -= RTC_MAX_COUNT;
+ 546              	    }
+ 547              	
+ 548 002e 0F100000 	    sys_safe_access_enable();
+ 549              	    R32_RTC_TRIG = t;
+ 1823              		fence.i
+ 1824              	# 0 "" 2
+ 1825              	 #NO_APP
+ 1826 0032 B7170040 		li	a5,1073745920
+ 1827 0036 13077005 		li	a4,87
+ 1828 003a 2380E704 		sb	a4,64(a5)
+ 1829 003e 130780FA 		li	a4,-88
+ 1830 0042 2380E704 		sb	a4,64(a5)
+ 1831              	 #APP
+ 1832              	# 548 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1833              		fence.i
+ 1834              	# 0 "" 2
+ 1835              	 #NO_APP
+ 1836 004a C8DB     		sw	a0,52(a5)
+ 1837 004c 03C71703 		lbu	a4,49(a5)
+ 1838 0050 13670702 		ori	a4,a4,32
+ 1839 0054 A388E702 		sb	a4,49(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 45
+
+
+ 1840 0058 23800704 		sb	zero,64(a5)
+ 1841 005c B247     		lw	a5,12(sp)
+ 1842              	 #APP
+ 1843              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1844              		csrrs a5, 0x800, a5
+ 1845              	# 0 "" 2
+ 1846              	# 551 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 550              	    R8_RTC_MODE_CTRL |= RB_RTC_TRIG_EN;
+ 551 0062 0F100000 	    sys_safe_access_disable();
+ 552              	}
+ 1847              		fence.i
+ 1848              	# 0 "" 2
+ 1849              	 #NO_APP
+ 1850 0066 F240     		lw	ra,28(sp)
+ 1851 0068 6244     		lw	s0,24(sp)
+ 1852 006a 0561     		addi	sp,sp,32
+ 1853 006c 8280     		jr	ra
+ 1855              		.section	.text.RTC_ModeFunDisable,"ax",@progbits
+ 1856              		.align	1
+ 1857              		.globl	RTC_ModeFunDisable
+ 1859              	RTC_ModeFunDisable:
+ 1860 0000 4111     		addi	sp,sp,-16
+ 1861 0002 93070002 		li	a5,32
+ 1862 0006 11C5     		beqz	a0,.L185
+ 1863 0008 0547     		li	a4,1
+ 1864 000a 8147     		li	a5,0
+ 1865 000c 6313E500 		bne	a0,a4,.L185
+ 1866 0010 C147     		li	a5,16
+ 1867              	.L185:
+ 1868 0012 13078008 		li	a4,136
+ 1869              	 #APP
+ 1870              	# 130 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1871              		csrrc a4, 0x800, a4
+ 1872              	# 0 "" 2
+ 1873              	 #NO_APP
+ 1874 001a 13778708 		andi	a4,a4,136
+ 1875 001e 3AC6     		sw	a4,12(sp)
+ 1876              	 #APP
+ 1877              	# 576 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 553              	
+ 554              	/*********************************************************************
+ 555              	 * @fn      RTC_ModeFunDisable
+ 556              	 *
+ 557              	 * @brief   RTC 模式功能关闭
+ 558              	 *
+ 559              	 * @param   m   - 需要关闭的当前模式
+ 560              	 *
+ 561              	 * @return  none
+ 562              	 */
+ 563              	void RTC_ModeFunDisable(RTC_MODETypeDef m)
+ 564              	{
+ 565              	    uint8_t i = 0;
+ 566              	
+ 567              	    if(m == RTC_TRIG_MODE)
+ 568              	    {
+ 569              	        i |= RB_RTC_TRIG_EN;
+ 570              	    }
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 46
+
+
+ 571              	    else if(m == RTC_TMR_MODE)
+ 572              	    {
+ 573              	        i |= RB_RTC_TMR_EN;
+ 574              	    }
+ 575              	
+ 576 0020 0F100000 	    sys_safe_access_enable();
+ 577              	    R8_RTC_MODE_CTRL &= ~(i);
+ 1878              		fence.i
+ 1879              	# 0 "" 2
+ 1880              	 #NO_APP
+ 1881 0024 37170040 		li	a4,1073745920
+ 1882 0028 93067005 		li	a3,87
+ 1883 002c 2300D704 		sb	a3,64(a4)
+ 1884 0030 930680FA 		li	a3,-88
+ 1885 0034 2300D704 		sb	a3,64(a4)
+ 1886              	 #APP
+ 1887              	# 576 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 1888              		fence.i
+ 1889              	# 0 "" 2
+ 1890              	 #NO_APP
+ 1891 003c 83461703 		lbu	a3,49(a4)
+ 1892 0040 93C7F7FF 		not	a5,a5
+ 1893 0044 F58F     		and	a5,a5,a3
+ 1894 0046 A308F702 		sb	a5,49(a4)
+ 1895 004a 23000704 		sb	zero,64(a4)
+ 1896 004e B247     		lw	a5,12(sp)
+ 1897              	 #APP
+ 1898              	# 114 "../../sdk/ch592/RVMSIS/core_riscv.h" 1
+ 1899              		csrrs a5, 0x800, a5
+ 1900              	# 0 "" 2
+ 1901              	# 578 "../../sdk/ch592/StdPeriphDriver/CH59x_clk.c" 1
+ 578 0054 0F100000 	    sys_safe_access_disable();
+ 579              	}
+ 1902              		fence.i
+ 1903              	# 0 "" 2
+ 1904              	 #NO_APP
+ 1905 0058 4101     		addi	sp,sp,16
+ 1906 005a 8280     		jr	ra
+ 1908              		.section	.text.RTC_GetITFlag,"ax",@progbits
+ 1909              		.align	1
+ 1910              		.globl	RTC_GetITFlag
+ 1912              	RTC_GetITFlag:
+ 1913 0000 B7170040 		li	a5,1073745920
+ 1914 0004 11E5     		bnez	a0,.L191
+ 1915 0006 03C50703 		lbu	a0,48(a5)
+ 1916 000a 13750508 		andi	a0,a0,128
+ 1917 000e 8280     		ret
+ 1918              	.L191:
+ 1919 0010 03C50703 		lbu	a0,48(a5)
+ 1920 0014 13750504 		andi	a0,a0,64
+ 1921 0018 8280     		ret
+ 1923              		.section	.text.RTC_ClearITFlag,"ax",@progbits
+ 1924              		.align	1
+ 1925              		.globl	RTC_ClearITFlag
+ 1927              	RTC_ClearITFlag:
+ 1928 0000 09C5     		beqz	a0,.L194
+ 1929 0002 8547     		li	a5,1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 47
+
+
+ 1930 0004 630AF500 		beq	a0,a5,.L195
+ 1931 0008 8280     		ret
+ 1932              	.L194:
+ 1933 000a B7170040 		li	a5,1073745920
+ 1934 000e 13070002 		li	a4,32
+ 1935              	.L197:
+ 1936 0012 2388E702 		sb	a4,48(a5)
+ 1937 0016 8280     		ret
+ 1938              	.L195:
+ 1939 0018 B7170040 		li	a5,1073745920
+ 1940 001c 4147     		li	a4,16
+ 1941 001e D5BF     		j	.L197
+ 1943              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_clk.c
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:8      .text.LClk32K_Cfg:0000000000000000 LClk32K_Cfg
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:64     .text.HSECFG_Current:0000000000000000 HSECFG_Current
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:111    .text.HSECFG_Capacitance:0000000000000000 HSECFG_Capacitance
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:159    .text.LSECFG_Current:0000000000000000 LSECFG_Current
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:206    .text.LClk32K_Select:0000000000000000 LClk32K_Select
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:262    .text.LSECFG_Capacitance:0000000000000000 LSECFG_Capacitance
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:310    .text.RTC_InitTime:0000000000000000 RTC_InitTime
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:507    .text.RTC_GetTime:0000000000000000 RTC_GetTime
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:635    .text.RTC_SetCycle32k:0000000000000000 RTC_SetCycle32k
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:692    .highcode:0000000000000000 RTC_GetCycle32k
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:710    .text.Calibration_LSI:0000000000000000 Calibration_LSI
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1724   .text.RTC_TMRFunCfg:0000000000000000 RTC_TMRFunCfg
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1801   .text.RTC_TRIGFunCfg:0000000000000000 RTC_TRIGFunCfg
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1859   .text.RTC_ModeFunDisable:0000000000000000 RTC_ModeFunDisable
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1912   .text.RTC_GetITFlag:0000000000000000 RTC_GetITFlag
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1927   .text.RTC_ClearITFlag:0000000000000000 RTC_ClearITFlag
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:54     .text.LClk32K_Cfg:000000000000005a .L2
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:17     .text.LClk32K_Cfg:000000000000001a .L4
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:218    .text.LClk32K_Select:0000000000000026 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:447    .text.RTC_InitTime:000000000000013c .L23
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:463    .text.RTC_InitTime:0000000000000170 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:349    .text.RTC_InitTime:000000000000006c .L30
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:497    .text.RTC_InitTime:00000000000001c4 .L31
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:402    .text.RTC_InitTime:00000000000000e8 .L32
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:458    .text.RTC_InitTime:0000000000000162 .L22
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:317    .text.RTC_InitTime:0000000000000012 .L21
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:480    .text.RTC_InitTime:0000000000000196 .L25
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:470    .text.RTC_InitTime:0000000000000182 .L26
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:328    .text.RTC_InitTime:0000000000000032 .L24
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:486    .text.RTC_InitTime:00000000000001a2 .L28
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:472    .text.RTC_InitTime:0000000000000184 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:483    .text.RTC_InitTime:000000000000019e .L52
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:489    .text.RTC_InitTime:00000000000001a8 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:361    .text.RTC_InitTime:0000000000000098 .L34
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:622    .text.RTC_GetTime:0000000000000148 .L56
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:626    .text.RTC_GetTime:0000000000000152 .L57
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:579    .text.RTC_GetTime:00000000000000e0 .L74
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:608    .text.RTC_GetTime:0000000000000128 .L61
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:605    .text.RTC_GetTime:0000000000000124 .L64
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:556    .text.RTC_GetTime:00000000000000a0 .L88
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:589    .text.RTC_GetTime:00000000000000fa .L63
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:527    .text.RTC_GetTime:0000000000000040 .L54
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:597    .text.RTC_GetTime:0000000000000112 .L60
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:545    .text.RTC_GetTime:0000000000000078 .L59
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:558    .text.RTC_GetTime:00000000000000a2 .L65
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:616    .text.RTC_GetTime:000000000000013c .L67
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:618    .text.RTC_GetTime:0000000000000140 .L95
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:560    .text.RTC_GetTime:00000000000000a6 .L66
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:599    .text.RTC_GetTime:0000000000000114 .L73
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:612    .text.RTC_GetTime:0000000000000134 .L70
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:537    .text.RTC_GetTime:0000000000000064 .L72
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:582    .text.RTC_GetTime:00000000000000e8 .L55
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:638    .text.RTC_SetCycle32k:0000000000000006 .L101
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:695    .highcode:0000000000000006 .L105
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1077   .text.Calibration_LSI:0000000000000386 .L110
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s 			page 49
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:912    .text.Calibration_LSI:00000000000001e8 .L111
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1103   .text.Calibration_LSI:00000000000003b4 .L113
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:965    .text.Calibration_LSI:0000000000000262 .L114
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:971    .text.Calibration_LSI:0000000000000274 .L115
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:981    .text.Calibration_LSI:000000000000029a .L116
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1004   .text.Calibration_LSI:00000000000002e2 .L151
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1010   .text.Calibration_LSI:00000000000002f2 .L117
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1129   .text.Calibration_LSI:00000000000003e2 .L119
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1131   .text.Calibration_LSI:00000000000003e6 .L121
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1030   .text.Calibration_LSI:000000000000032e .L152
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1443   .text.Calibration_LSI:00000000000006b8 .L123
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:867    .text.Calibration_LSI:000000000000018c .L126
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:900    .text.Calibration_LSI:00000000000001d4 .L173
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:953    .text.Calibration_LSI:000000000000024e .L174
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1013   .text.Calibration_LSI:00000000000002f8 .L122
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1453   .text.Calibration_LSI:00000000000006d2 .L128
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1487   .text.Calibration_LSI:0000000000000706 .L130
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1224   .text.Calibration_LSI:00000000000004aa .L131
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1521   .text.Calibration_LSI:000000000000073c .L133
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1280   .text.Calibration_LSI:000000000000052c .L134
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1286   .text.Calibration_LSI:000000000000053e .L135
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1295   .text.Calibration_LSI:0000000000000560 .L136
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1358   .text.Calibration_LSI:00000000000005fe .L153
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1555   .text.Calibration_LSI:0000000000000772 .L137
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1374   .text.Calibration_LSI:000000000000062a .L154
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1610   .text.Calibration_LSI:00000000000007dc .L140
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1384   .text.Calibration_LSI:000000000000064a .L155
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1686   .text.Calibration_LSI:0000000000000880 .L142
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1567   .text.Calibration_LSI:0000000000000792 .L144
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1038   .text.Calibration_LSI:0000000000000344 .L175
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1170   .text.Calibration_LSI:0000000000000430 .L127
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1220   .text.Calibration_LSI:000000000000049e .L129
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1276   .text.Calibration_LSI:0000000000000520 .L132
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1368   .text.Calibration_LSI:000000000000061a .L176
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:827    .text.Calibration_LSI:000000000000013e .L150
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1622   .text.Calibration_LSI:0000000000000802 .L156
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1654   .text.Calibration_LSI:0000000000000844 .L149
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1419   .text.Calibration_LSI:0000000000000692 .L178
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1598   .text.Calibration_LSI:00000000000007cc .L177
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1812   .text.RTC_TRIGFunCfg:0000000000000020 .L182
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1867   .text.RTC_ModeFunDisable:0000000000000012 .L185
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1918   .text.RTC_GetITFlag:0000000000000010 .L191
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1932   .text.RTC_ClearITFlag:000000000000000a .L194
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1938   .text.RTC_ClearITFlag:0000000000000018 .L195
+C:\Users\LRNA\AppData\Local\Temp\ccD0tz2M.s:1935   .text.RTC_ClearITFlag:0000000000000012 .L197
+
+UNDEFINED SYMBOLS
+__divdi3
+GetSysClock
+SYS_DisableAllIrq
+SYS_RecoverIrq

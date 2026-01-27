@@ -1,0 +1,567 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 1
+
+
+   1              		.file	"CH57x_flash.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.FLASH_ROM_READ,"ax",@progbits
+   5              		.align	1
+   6              		.globl	FLASH_ROM_READ
+   8              	FLASH_ROM_READ:
+   9 0000 0D06     		addi	a2,a2,3
+  10 0002 719A     		andi	a2,a2,-4
+  11 0004 8147     		li	a5,0
+  12              	.L2:
+  13 0006 3307F500 		add	a4,a0,a5
+  14 000a 6393C700 		bne	a5,a2,.L3
+  15 000e 8280     		ret
+  16              	.L3:
+  17 0010 1443     		lw	a3,0(a4)
+  18 0012 3387F500 		add	a4,a1,a5
+  19 0016 9107     		addi	a5,a5,4
+  20 0018 14C3     		sw	a3,0(a4)
+  21 001a F5B7     		j	.L2
+  23              		.section	.text.UserOptionByteConfig,"ax",@progbits
+  24              		.align	1
+  25              		.globl	UserOptionByteConfig
+  27              	UserOptionByteConfig:
+  28 0000 0111     		addi	sp,sp,-32
+  29 0002 22CC     		sw	s0,24(sp)
+  30 0004 26CA     		sw	s1,20(sp)
+  31 0006 4AC8     		sw	s2,16(sp)
+  32 0008 AE84     		mv	s1,a1
+  33 000a 2A89     		mv	s2,a0
+  34 000c 3284     		mv	s0,a2
+  35 000e 5145     		li	a0,20
+  36 0010 1146     		li	a2,4
+  37 0012 2C00     		addi	a1,sp,8
+  38 0014 06CE     		sw	ra,28(sp)
+  39 0016 97000000 		call	FLASH_ROM_READ
+  39      E7800000 
+  40 001e 2247     		lw	a4,8(sp)
+  41 0020 B7C7F9F3 		li	a5,-201736192
+  42 0024 938797DA 		addi	a5,a5,-599
+  43 0028 0545     		li	a0,1
+  44 002a 6316F708 		bne	a4,a5,.L5
+  45 002e B7F50300 		li	a1,258048
+  46 0032 9146     		li	a3,4
+  47 0034 3000     		addi	a2,sp,8
+  48 0036 F115     		addi	a1,a1,-4
+  49 0038 1945     		li	a0,6
+  50 003a 02C4     		sw	zero,8(sp)
+  51 003c 97000000 		call	FLASH_EEPROM_CMD
+  51      E7800000 
+  52 0044 2247     		lw	a4,8(sp)
+  53 0046 8547     		li	a5,1
+  54 0048 9376770F 		andi	a3,a4,247
+  55 004c 6316F900 		bne	s2,a5,.L7
+  56 0050 1377F70F 		andi	a4,a4,255
+  57 0054 93668700 		ori	a3,a4,8
+  58              	.L7:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 2
+
+
+  59 0058 370700FF 		li	a4,-16777216
+  60 005c 93978601 		slli	a5,a3,24
+  61 0060 B98F     		xor	a5,a5,a4
+  62 0062 0547     		li	a4,1
+  63 0064 D58F     		or	a5,a5,a3
+  64 0066 638EE404 		beq	s1,a4,.L8
+  65              	.L12:
+  66 006a 3EC4     		sw	a5,8(sp)
+  67 006c A247     		lw	a5,8(sp)
+  68 006e 370700FF 		li	a4,-16777216
+  69 0072 1307F73F 		addi	a4,a4,1023
+  70 0076 F98F     		and	a5,a5,a4
+  71 0078 3707B000 		li	a4,11534336
+  72 007c 130707C0 		addi	a4,a4,-1024
+  73 0080 2A04     		slli	s0,s0,10
+  74 0082 798C     		and	s0,s0,a4
+  75 0084 C18F     		or	a5,a5,s0
+  76 0086 37075000 		li	a4,5242880
+  77 008a D98F     		or	a5,a5,a4
+  78 008c 9146     		li	a3,4
+  79 008e 3000     		addi	a2,sp,8
+  80 0090 D145     		li	a1,20
+  81 0092 0945     		li	a0,2
+  82 0094 3EC4     		sw	a5,8(sp)
+  83 0096 97000000 		call	FLASH_EEPROM_CMD
+  83      E7800000 
+  84 009e 5145     		li	a0,20
+  85 00a0 1146     		li	a2,4
+  86 00a2 6C00     		addi	a1,sp,12
+  87 00a4 97000000 		call	FLASH_ROM_READ
+  87      E7800000 
+  88 00ac 2245     		lw	a0,8(sp)
+  89 00ae B247     		lw	a5,12(sp)
+  90 00b0 1D8D     		sub	a0,a0,a5
+  91 00b2 3335A000 		snez	a0,a0
+  92              	.L5:
+  93 00b6 F240     		lw	ra,28(sp)
+  94 00b8 6244     		lw	s0,24(sp)
+  95 00ba D244     		lw	s1,20(sp)
+  96 00bc 4249     		lw	s2,16(sp)
+  97 00be 0561     		addi	sp,sp,32
+  98 00c0 8280     		jr	ra
+  99              	.L8:
+ 100 00c2 93E70710 		ori	a5,a5,256
+ 101 00c6 55B7     		j	.L12
+ 103              		.section	.text.UserOptionByteClose_SWD,"ax",@progbits
+ 104              		.align	1
+ 105              		.globl	UserOptionByteClose_SWD
+ 107              	UserOptionByteClose_SWD:
+ 108 0000 0545     		li	a0,1
+ 109 0002 8280     		ret
+ 111              		.section	.text.UserOptionByte_Active,"ax",@progbits
+ 112              		.align	1
+ 113              		.globl	UserOptionByte_Active
+ 115              	UserOptionByte_Active:
+ 116 0000 0111     		addi	sp,sp,-32
+ 117 0002 8146     		li	a3,0
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 3
+
+
+ 118 0004 0146     		li	a2,0
+ 119 0006 8145     		li	a1,0
+ 120 0008 1145     		li	a0,4
+ 121 000a 06CE     		sw	ra,28(sp)
+ 122 000c 97000000 		call	FLASH_EEPROM_CMD
+ 122      E7800000 
+ 123 0014 13078008 		li	a4,136
+ 124              	 #APP
+ 125              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT
+   2              	 * ******************************* File Name          : core_riscv.h Author
+   3              	 *        : WCH Version            : V1.0.0 Date               : 2024/07/25
+   4              	 * Description        : CH585 Series RISC-V Core Peripheral Access Layer Header
+   5              	 * File
+   6              	 *********************************************************************************
+   7              	 * Copyright (c) 2024 Nanjing Qinheng Microelectronics Co., Ltd.
+   8              	 * Attention: This software (modified or not) and binary are used for
+   9              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  10              	 *******************************************************************************/
+  11              	#ifndef __CORE_RISCV_H__
+  12              	#define __CORE_RISCV_H__
+  13              	
+  14              	#include <stdint.h>
+  15              	
+  16              	#ifdef __cplusplus
+  17              	extern "C" {
+  18              	#endif
+  19              	
+  20              	/* define compiler specific symbols */
+  21              	#if defined(__CC_ARM)
+  22              	#define __ASM __asm       /*!< asm keyword for ARM Compiler          */
+  23              	#define __INLINE __inline /*!< inline keyword for ARM Compiler       */
+  24              	
+  25              	#elif defined(__ICCARM__)
+  26              	#define __ASM __asm /*!< asm keyword for IAR Compiler          */
+  27              	#define __INLINE                                                               \
+  28              	  inline /*!< inline keyword for IAR Compiler. Only avaiable in High           \
+  29              	            optimization mode! */
+  30              	
+  31              	#elif defined(__GNUC__)
+  32              	#define __ASM __asm     /*!< asm keyword for GNU Compiler          */
+  33              	#define __INLINE inline /*!< inline keyword for GNU Compiler       */
+  34              	
+  35              	#elif defined(__TASKING__)
+  36              	#define __ASM __asm     /*!< asm keyword for TASKING Compiler      */
+  37              	#define __INLINE inline /*!< inline keyword for TASKING Compiler   */
+  38              	
+  39              	#endif
+  40              	
+  41              	/* IO definitions */
+  42              	#ifdef __cplusplus
+  43              	#define __I volatile /*!< defines 'read only' permissions      */
+  44              	#else
+  45              	#define __I volatile const /*!< defines 'read only' permissions     */
+  46              	#endif
+  47              	#define __O volatile  /*!< defines 'write only' permissions     */
+  48              	#define __IO volatile /*!< defines 'read / write' permissions   */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 4
+
+
+  49              	#define RV_STATIC_INLINE static inline
+  50              	
+  51              	// typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  52              	
+  53              	typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+  54              	typedef enum { RESET = 0, SET = !RESET } FlagStatus, ITStatus;
+  55              	
+  56              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  57              	typedef struct {
+  58              	  __I uint32_t ISR[8];      // 0
+  59              	  __I uint32_t IPR[8];      // 20H
+  60              	  __IO uint32_t ITHRESDR;   // 40H
+  61              	  uint8_t RESERVED[8];      // 44H
+  62              	  __I uint32_t GISR;        // 4CH
+  63              	  __IO uint8_t VTFIDR[4];   // 50H
+  64              	  uint8_t RESERVED0[0x0C];  // 54H
+  65              	  __IO uint32_t VTFADDR[4]; // 60H
+  66              	  uint8_t RESERVED1[0x90];  // 70H
+  67              	  __O uint32_t IENR[8];     // 100H
+  68              	  uint8_t RESERVED2[0x60];  // 120H
+  69              	  __O uint32_t IRER[8];     // 180H
+  70              	  uint8_t RESERVED3[0x60];  // 1A0H
+  71              	  __O uint32_t IPSR[8];     // 200H
+  72              	  uint8_t RESERVED4[0x60];  // 220H
+  73              	  __O uint32_t IPRR[8];     // 280H
+  74              	  uint8_t RESERVED5[0x60];  // 2A0H
+  75              	  __IO uint32_t IACTR[8];   // 300H
+  76              	  uint8_t RESERVED6[0xE0];  // 320H
+  77              	  __IO uint8_t IPRIOR[256]; // 400H
+  78              	  uint8_t RESERVED7[0x810]; // 500H
+  79              	  __IO uint32_t SCTLR;      // D10H
+  80              	} PFIC_Type;
+  81              	
+  82              	/* memory mapped structure for SysTick */
+  83              	typedef struct {
+  84              	  __IO uint32_t CTLR;
+  85              	  __IO uint32_t SR;
+  86              	  union {
+  87              	    __IO uint32_t CNT;
+  88              	    __IO uint32_t CNTL;
+  89              	  };
+  90              	  uint8_t RESERVED[4];
+  91              	  union {
+  92              	    __IO uint32_t CMP;
+  93              	    __IO uint32_t CMPL;
+  94              	  };
+  95              	  uint8_t RESERVED0[4];
+  96              	} SysTick_Type;
+  97              	
+  98              	#define PFIC ((PFIC_Type *)0xE000E000)
+  99              	#define SysTick ((SysTick_Type *)0xE000F000)
+ 100              	
+ 101              	#define PFIC_KEY1 ((uint32_t)0xFA050000)
+ 102              	#define PFIC_KEY2 ((uint32_t)0xBCAF0000)
+ 103              	#define PFIC_KEY3 ((uint32_t)0xBEEF0000)
+ 104              	
+ 105              	/* ##########################   define  #################################### */
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 5
+
+
+ 106              	#define __nop() __asm__ volatile("nop")
+ 107              	
+ 108              	#define read_csr(reg)                                                          \
+ 109              	  ({                                                                           \
+ 110              	    unsigned long __tmp;                                                       \
+ 111              	    __asm__ volatile("csrr %0, " #reg : "=r"(__tmp));                          \
+ 112              	    __tmp;                                                                     \
+ 113              	  })
+ 114              	
+ 115              	#define write_csr(reg, val)                                                    \
+ 116              	  ({                                                                           \
+ 117              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)                \
+ 118              	      __asm__ volatile("csrw  " #reg ", %0" ::"i"(val));                       \
+ 119              	    else                                                                       \
+ 120              	      __asm__ volatile("csrw  " #reg ", %0" ::"r"(val));                       \
+ 121              	  })
+ 122              	
+ 123              	/*********************************************************************
+ 124              	 * @fn      __risc_v_enable_irq
+ 125              	 *
+ 126              	 * @brief   recover Global Interrupt
+ 127              	 *
+ 128              	 * @return  mpie and mie bit in mstatus.
+ 129              	 */
+ 130              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 131              	__risc_v_enable_irq(uint32_t mpie_mie) {
+ 132              	  uint32_t result;
+ 133              	
+ 134              	  __asm volatile("csrrs %0, 0x800, %1"
+ 135              	                 : "=r"(result)
+ 136              	                 : "r"(mpie_mie)
+ 137              	                 : "memory");
+ 138              	  return result;
+ 139              	}
+ 140              	
+ 141              	/*********************************************************************
+ 142              	 * @fn      __disable_irq
+ 143              	 *
+ 144              	 * @brief   Disable Global Interrupt
+ 145              	 *
+ 146              	 * @return  mpie and mie bit in mstatus.
+ 147              	 */
+ 148              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 149              	__risc_v_disable_irq(void) {
+ 150              	  uint32_t result;
+ 151              	
+ 152 0018 F3370780 	  __asm volatile("csrrc %0, 0x800, %1" : "=r"(result) : "r"(0x88) : "memory");
+ 153              	  return result & 0x88;
+ 126              		csrrc a5, 0x800, a4
+ 127              	# 0 "" 2
+ 128              	 #NO_APP
+ 129 001c 93F78708 		andi	a5,a5,136
+ 130 0020 3EC4     		sw	a5,8(sp)
+ 131              	 #APP
+ 132              	# 132 "../../sdk/ch572/StdPeriphDriver/CH57x_flash.c" 1
+   1              	/********************************** (C) COPYRIGHT *******************************
+   2              	 * File Name          : CH57x_flash.c
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 6
+
+
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.2
+   5              	 * Date               : 2021/11/17
+   6              	 * Description        : source file(ch572/ch570)
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	
+  13              	#include "CH57x_common.h"
+  14              	
+  15              	/* RESET_EN */
+  16              	#define RESET_Enable           0x00000008
+  17              	#define RESET_Disable          0xFFFFFFF7
+  18              	
+  19              	/* LOCKUP_RST_EN */
+  20              	#define UART_NO_KEY_Enable     0x00000100
+  21              	#define UART_NO_KEY_Disable    0xFFFFFEFF
+  22              	
+  23              	/* BOOT_PIN */
+  24              	#define BOOT_PIN_PB22          0x00000200
+  25              	#define BOOT_PIN_PB11          0xFFFFFDFF
+  26              	
+  27              	/* FLASH_WRProt */
+  28              	#define FLASH_WRProt           0xFFF003FF
+  29              	
+  30              	/*********************************************************************
+  31              	 * @fn      FLASH_ROM_READ
+  32              	 *
+  33              	 * @brief   Read Flash
+  34              	 *
+  35              	 * @param   StartAddr   - read address
+  36              	 * @param   Buffer      - read buffer
+  37              	 * @param   len         - read len
+  38              	 *
+  39              	 * @return  none
+  40              	 */
+  41              	void FLASH_ROM_READ(uint32_t StartAddr, void *Buffer, uint32_t len)
+  42              	{
+  43              	    uint32_t  i, Length = (len + 3) >> 2;
+  44              	    uint32_t *pCode = (uint32_t *)StartAddr;
+  45              	    uint32_t *pBuf = (uint32_t *)Buffer;
+  46              	
+  47              	    for(i = 0; i < Length; i++)
+  48              	    {
+  49              	        *pBuf++ = *pCode++;
+  50              	    }
+  51              	}
+  52              	
+  53              	/*********************************************************************
+  54              	 * @fn      UserOptionByteConfig
+  55              	 *
+  56              	 * @brief   Configure User Option Byte.需在调用用户配置字生效函数后生效,且每次烧录后只能修改一次
+  57              	 *          (使用该函数，必须使用官方提供的.S文件，同时调用该函数后，两次上电后，两线调试接口默认关
+  58              	 *
+  59              	 * @param   RESET_EN        - 外部复位引脚使能
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 7
+
+
+  60              	 * @param   UART_NO_KEY_EN  - 串口免按键下载使能
+  61              	 * @param   FLASHProt_Size  - 写保护大小(单位4K)
+  62              	 *
+  63              	 * @return  0-Success, 1-Err
+  64              	 */
+  65              	uint8_t UserOptionByteConfig(FunctionalState RESET_EN, FunctionalState UART_NO_KEY_EN,
+  66              	                           uint32_t FLASHProt_Size)
+  67              	{
+  68              	    uint32_t s, t;
+  69              	
+  70              	    FLASH_ROM_READ(0x14, &s, 4);
+  71              	
+  72              	    if(s == 0xF3F9BDA9)
+  73              	    {
+  74              	        s = 0;
+  75              	        FLASH_EEPROM_CMD(CMD_GET_ROM_INFO, 0x3EFFC, &s, 4);
+  76              	        s &= 0xFF;
+  77              	
+  78              	        if(RESET_EN == ENABLE)
+  79              	            s |= RESET_Enable;
+  80              	        else
+  81              	            s &= RESET_Disable;
+  82              	
+  83              	        /* bit[7:0]-bit[31-24] */
+  84              	        s |= ((~(s << 24)) & 0xFF000000); //高8位 配置信息取反；
+  85              	
+  86              	        if(UART_NO_KEY_EN == ENABLE)
+  87              	            s |= UART_NO_KEY_Enable;
+  88              	
+  89              	        /* bit[23-10] */
+  90              	        s &= 0xFF0003FF;
+  91              	        s |= ((FLASHProt_Size << 10) | (5 << 20)) & 0x00FFFC00;
+  92              	
+  93              	        /*Write user option byte*/
+  94              	        FLASH_ROM_WRITE(0x14, &s, 4);
+  95              	
+  96              	        /* Verify user option byte */
+  97              	        FLASH_ROM_READ(0x14, &t, 4);
+  98              	
+  99              	        if(s == t)
+ 100              	            return 0;
+ 101              	        else
+ 102              	            return 1;
+ 103              	    }
+ 104              	
+ 105              	    return 1;
+ 106              	}
+ 107              	
+ 108              	/*********************************************************************
+ 109              	 * @fn      UserOptionByteClose_SWD
+ 110              	 *
+ 111              	 * @brief   关两线调试接口
+ 112              	 *
+ 113              	 * @return  0-Success, 1-Err
+ 114              	 */
+ 115              	uint8_t UserOptionByteClose_SWD(void)
+ 116              	{
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 8
+
+
+ 117              	    uint32_t s, t;
+ 118              	
+ 119              	    return 1;
+ 120              	}
+ 121              	
+ 122              	/*********************************************************************
+ 123              	 * @fn      UserOptionByte_Active
+ 124              	 *
+ 125              	 * @brief   用户配置字生效函数，执行后自动复位
+ 126              	 *
+ 127              	 * @return  0-Success, 1-Err
+ 128              	 */
+ 129              	void UserOptionByte_Active(void)
+ 130              	{
+ 131              	    FLASH_ROM_SW_RESET();
+ 132 0022 0F100000 	    sys_safe_access_enable();
+ 133              	    R16_INT_LSI_TUNE = 0xFFFF;
+ 133              		fence.i
+ 134              	# 0 "" 2
+ 135              	 #NO_APP
+ 136 0026 B7170040 		li	a5,1073745920
+ 137 002a 13067005 		li	a2,87
+ 138 002e 2380C704 		sb	a2,64(a5)
+ 139 0032 930680FA 		li	a3,-88
+ 140 0036 2380D704 		sb	a3,64(a5)
+ 141              	 #APP
+ 142              	# 132 "../../sdk/ch572/StdPeriphDriver/CH57x_flash.c" 1
+ 143              		fence.i
+ 144              	# 0 "" 2
+ 145              	 #NO_APP
+ 146 003e FD55     		li	a1,-1
+ 147 0040 2396B702 		sh	a1,44(a5)
+ 148 0044 23800704 		sb	zero,64(a5)
+ 149 0048 A245     		lw	a1,8(sp)
+ 150              	 #APP
+ 151              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 152              		csrrs a1, 0x800, a1
+ 153              	# 0 "" 2
+ 154              	# 134 "../../sdk/ch572/StdPeriphDriver/CH57x_flash.c" 1
+ 134 004e 0F100000 	    sys_safe_access_disable();
+ 135              	    sys_safe_access_enable();
+ 155              		fence.i
+ 156              	# 0 "" 2
+ 157              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 158              		csrrc a4, 0x800, a4
+ 159              	# 0 "" 2
+ 160              	 #NO_APP
+ 161 0056 13778708 		andi	a4,a4,136
+ 162 005a 3AC6     		sw	a4,12(sp)
+ 163              	 #APP
+ 164              	# 135 "../../sdk/ch572/StdPeriphDriver/CH57x_flash.c" 1
+ 136              	    R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+ 165              		fence.i
+ 166              	# 0 "" 2
+ 167              	 #NO_APP
+ 168 0060 2380C704 		sb	a2,64(a5)
+ 169 0064 2380D704 		sb	a3,64(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 9
+
+
+ 170              	 #APP
+ 171              	# 135 "../../sdk/ch572/StdPeriphDriver/CH57x_flash.c" 1
+ 172              		fence.i
+ 173              	# 0 "" 2
+ 174              	 #NO_APP
+ 175 006c 03C76704 		lbu	a4,70(a5)
+ 176 0070 13671700 		ori	a4,a4,1
+ 177 0074 2383E704 		sb	a4,70(a5)
+ 178 0078 23800704 		sb	zero,64(a5)
+ 179 007c B247     		lw	a5,12(sp)
+ 180              	 #APP
+ 181              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 182              		csrrs a5, 0x800, a5
+ 183              	# 0 "" 2
+ 184              	# 137 "../../sdk/ch572/StdPeriphDriver/CH57x_flash.c" 1
+ 137 0082 0F100000 	    sys_safe_access_disable();
+ 138              	    while(1);
+ 185              		fence.i
+ 186              	# 0 "" 2
+ 187              	 #NO_APP
+ 188              	.L15:
+ 189 0086 01A0     		j	.L15
+ 191              		.section	.text.GET_UNIQUE_ID,"ax",@progbits
+ 192              		.align	1
+ 193              		.globl	GET_UNIQUE_ID
+ 195              	GET_UNIQUE_ID:
+ 196 0000 4111     		addi	sp,sp,-16
+ 197 0002 B7F50300 		li	a1,258048
+ 198 0006 22C4     		sw	s0,8(sp)
+ 199 0008 8146     		li	a3,0
+ 200 000a 2A84     		mv	s0,a0
+ 201 000c 2A86     		mv	a2,a0
+ 202 000e E105     		addi	a1,a1,24
+ 203 0010 1945     		li	a0,6
+ 204 0012 06C6     		sw	ra,12(sp)
+ 205 0014 97000000 		call	FLASH_EEPROM_CMD
+ 205      E7800000 
+ 206 001c 83471400 		lbu	a5,1(s0)
+ 207 0020 03470400 		lbu	a4,0(s0)
+ 208 0024 83462400 		lbu	a3,2(s0)
+ 209 0028 A207     		slli	a5,a5,8
+ 210 002a D98F     		or	a5,a5,a4
+ 211 002c 03473400 		lbu	a4,3(s0)
+ 212 0030 B240     		lw	ra,12(sp)
+ 213 0032 2207     		slli	a4,a4,8
+ 214 0034 558F     		or	a4,a4,a3
+ 215 0036 BA97     		add	a5,a5,a4
+ 216 0038 03475400 		lbu	a4,5(s0)
+ 217 003c 83464400 		lbu	a3,4(s0)
+ 218 0040 2207     		slli	a4,a4,8
+ 219 0042 558F     		or	a4,a4,a3
+ 220 0044 BA97     		add	a5,a5,a4
+ 221 0046 C207     		slli	a5,a5,16
+ 222 0048 C183     		srli	a5,a5,16
+ 223 004a 2303F400 		sb	a5,6(s0)
+ 224 004e A183     		srli	a5,a5,8
+ 225 0050 A303F400 		sb	a5,7(s0)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 10
+
+
+ 226 0054 2244     		lw	s0,8(sp)
+ 227 0056 4101     		addi	sp,sp,16
+ 228 0058 8280     		jr	ra
+ 230              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_flash.c
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:8      .text.FLASH_ROM_READ:0000000000000000 FLASH_ROM_READ
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:27     .text.UserOptionByteConfig:0000000000000000 UserOptionByteConfig
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:107    .text.UserOptionByteClose_SWD:0000000000000000 UserOptionByteClose_SWD
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:115    .text.UserOptionByte_Active:0000000000000000 UserOptionByte_Active
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:195    .text.GET_UNIQUE_ID:0000000000000000 GET_UNIQUE_ID
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:16     .text.FLASH_ROM_READ:0000000000000010 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:12     .text.FLASH_ROM_READ:0000000000000006 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:92     .text.UserOptionByteConfig:00000000000000b6 .L5
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:58     .text.UserOptionByteConfig:0000000000000058 .L7
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:99     .text.UserOptionByteConfig:00000000000000c2 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:65     .text.UserOptionByteConfig:000000000000006a .L12
+C:\Users\LRNA\AppData\Local\Temp\ccDSvFX5.s:188    .text.UserOptionByte_Active:0000000000000086 .L15
+
+UNDEFINED SYMBOLS
+FLASH_EEPROM_CMD

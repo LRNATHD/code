@@ -1,0 +1,1654 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 1
+
+
+   1              		.file	"CH57x_clk.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.LClk_Cfg,"ax",@progbits
+   5              		.align	1
+   6              		.globl	LClk_Cfg
+   8              	LClk_Cfg:
+   9 0000 B7170040 		li	a5,1073745920
+  10 0004 83C7F702 		lbu	a5,47(a5)
+  11 0008 4111     		addi	sp,sp,-16
+  12 000a 93F7F70F 		andi	a5,a5,0xff
+  13 000e 13F7E70F 		andi	a4,a5,254
+  14 0012 19C1     		beqz	a0,.L3
+  15 0014 13E71700 		ori	a4,a5,1
+  16              	.L3:
+  17 0018 93078008 		li	a5,136
+  18              	 #APP
+  19              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+   1              	/********************************** (C) COPYRIGHT
+   2              	 * ******************************* File Name          : core_riscv.h Author
+   3              	 *        : WCH Version            : V1.0.0 Date               : 2024/07/25
+   4              	 * Description        : CH585 Series RISC-V Core Peripheral Access Layer Header
+   5              	 * File
+   6              	 *********************************************************************************
+   7              	 * Copyright (c) 2024 Nanjing Qinheng Microelectronics Co., Ltd.
+   8              	 * Attention: This software (modified or not) and binary are used for
+   9              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  10              	 *******************************************************************************/
+  11              	#ifndef __CORE_RISCV_H__
+  12              	#define __CORE_RISCV_H__
+  13              	
+  14              	#include <stdint.h>
+  15              	
+  16              	#ifdef __cplusplus
+  17              	extern "C" {
+  18              	#endif
+  19              	
+  20              	/* define compiler specific symbols */
+  21              	#if defined(__CC_ARM)
+  22              	#define __ASM __asm       /*!< asm keyword for ARM Compiler          */
+  23              	#define __INLINE __inline /*!< inline keyword for ARM Compiler       */
+  24              	
+  25              	#elif defined(__ICCARM__)
+  26              	#define __ASM __asm /*!< asm keyword for IAR Compiler          */
+  27              	#define __INLINE                                                               \
+  28              	  inline /*!< inline keyword for IAR Compiler. Only avaiable in High           \
+  29              	            optimization mode! */
+  30              	
+  31              	#elif defined(__GNUC__)
+  32              	#define __ASM __asm     /*!< asm keyword for GNU Compiler          */
+  33              	#define __INLINE inline /*!< inline keyword for GNU Compiler       */
+  34              	
+  35              	#elif defined(__TASKING__)
+  36              	#define __ASM __asm     /*!< asm keyword for TASKING Compiler      */
+  37              	#define __INLINE inline /*!< inline keyword for TASKING Compiler   */
+  38              	
+  39              	#endif
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 2
+
+
+  40              	
+  41              	/* IO definitions */
+  42              	#ifdef __cplusplus
+  43              	#define __I volatile /*!< defines 'read only' permissions      */
+  44              	#else
+  45              	#define __I volatile const /*!< defines 'read only' permissions     */
+  46              	#endif
+  47              	#define __O volatile  /*!< defines 'write only' permissions     */
+  48              	#define __IO volatile /*!< defines 'read / write' permissions   */
+  49              	#define RV_STATIC_INLINE static inline
+  50              	
+  51              	// typedef enum {SUCCESS = 0, ERROR = !SUCCESS} ErrorStatus;
+  52              	
+  53              	typedef enum { DISABLE = 0, ENABLE = !DISABLE } FunctionalState;
+  54              	typedef enum { RESET = 0, SET = !RESET } FlagStatus, ITStatus;
+  55              	
+  56              	/* memory mapped structure for Program Fast Interrupt Controller (PFIC) */
+  57              	typedef struct {
+  58              	  __I uint32_t ISR[8];      // 0
+  59              	  __I uint32_t IPR[8];      // 20H
+  60              	  __IO uint32_t ITHRESDR;   // 40H
+  61              	  uint8_t RESERVED[8];      // 44H
+  62              	  __I uint32_t GISR;        // 4CH
+  63              	  __IO uint8_t VTFIDR[4];   // 50H
+  64              	  uint8_t RESERVED0[0x0C];  // 54H
+  65              	  __IO uint32_t VTFADDR[4]; // 60H
+  66              	  uint8_t RESERVED1[0x90];  // 70H
+  67              	  __O uint32_t IENR[8];     // 100H
+  68              	  uint8_t RESERVED2[0x60];  // 120H
+  69              	  __O uint32_t IRER[8];     // 180H
+  70              	  uint8_t RESERVED3[0x60];  // 1A0H
+  71              	  __O uint32_t IPSR[8];     // 200H
+  72              	  uint8_t RESERVED4[0x60];  // 220H
+  73              	  __O uint32_t IPRR[8];     // 280H
+  74              	  uint8_t RESERVED5[0x60];  // 2A0H
+  75              	  __IO uint32_t IACTR[8];   // 300H
+  76              	  uint8_t RESERVED6[0xE0];  // 320H
+  77              	  __IO uint8_t IPRIOR[256]; // 400H
+  78              	  uint8_t RESERVED7[0x810]; // 500H
+  79              	  __IO uint32_t SCTLR;      // D10H
+  80              	} PFIC_Type;
+  81              	
+  82              	/* memory mapped structure for SysTick */
+  83              	typedef struct {
+  84              	  __IO uint32_t CTLR;
+  85              	  __IO uint32_t SR;
+  86              	  union {
+  87              	    __IO uint32_t CNT;
+  88              	    __IO uint32_t CNTL;
+  89              	  };
+  90              	  uint8_t RESERVED[4];
+  91              	  union {
+  92              	    __IO uint32_t CMP;
+  93              	    __IO uint32_t CMPL;
+  94              	  };
+  95              	  uint8_t RESERVED0[4];
+  96              	} SysTick_Type;
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 3
+
+
+  97              	
+  98              	#define PFIC ((PFIC_Type *)0xE000E000)
+  99              	#define SysTick ((SysTick_Type *)0xE000F000)
+ 100              	
+ 101              	#define PFIC_KEY1 ((uint32_t)0xFA050000)
+ 102              	#define PFIC_KEY2 ((uint32_t)0xBCAF0000)
+ 103              	#define PFIC_KEY3 ((uint32_t)0xBEEF0000)
+ 104              	
+ 105              	/* ##########################   define  #################################### */
+ 106              	#define __nop() __asm__ volatile("nop")
+ 107              	
+ 108              	#define read_csr(reg)                                                          \
+ 109              	  ({                                                                           \
+ 110              	    unsigned long __tmp;                                                       \
+ 111              	    __asm__ volatile("csrr %0, " #reg : "=r"(__tmp));                          \
+ 112              	    __tmp;                                                                     \
+ 113              	  })
+ 114              	
+ 115              	#define write_csr(reg, val)                                                    \
+ 116              	  ({                                                                           \
+ 117              	    if (__builtin_constant_p(val) && (unsigned long)(val) < 32)                \
+ 118              	      __asm__ volatile("csrw  " #reg ", %0" ::"i"(val));                       \
+ 119              	    else                                                                       \
+ 120              	      __asm__ volatile("csrw  " #reg ", %0" ::"r"(val));                       \
+ 121              	  })
+ 122              	
+ 123              	/*********************************************************************
+ 124              	 * @fn      __risc_v_enable_irq
+ 125              	 *
+ 126              	 * @brief   recover Global Interrupt
+ 127              	 *
+ 128              	 * @return  mpie and mie bit in mstatus.
+ 129              	 */
+ 130              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 131              	__risc_v_enable_irq(uint32_t mpie_mie) {
+ 132              	  uint32_t result;
+ 133              	
+ 134              	  __asm volatile("csrrs %0, 0x800, %1"
+ 135              	                 : "=r"(result)
+ 136              	                 : "r"(mpie_mie)
+ 137              	                 : "memory");
+ 138              	  return result;
+ 139              	}
+ 140              	
+ 141              	/*********************************************************************
+ 142              	 * @fn      __disable_irq
+ 143              	 *
+ 144              	 * @brief   Disable Global Interrupt
+ 145              	 *
+ 146              	 * @return  mpie and mie bit in mstatus.
+ 147              	 */
+ 148              	__attribute__((always_inline)) RV_STATIC_INLINE uint32_t
+ 149              	__risc_v_disable_irq(void) {
+ 150              	  uint32_t result;
+ 151              	
+ 152 001c F3B70780 	  __asm volatile("csrrc %0, 0x800, %1" : "=r"(result) : "r"(0x88) : "memory");
+ 153              	  return result & 0x88;
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 4
+
+
+  20              		csrrc a5, 0x800, a5
+  21              	# 0 "" 2
+  22              	 #NO_APP
+  23 0020 93F78708 		andi	a5,a5,136
+  24 0024 3EC6     		sw	a5,12(sp)
+  25              	 #APP
+  26              	# 42 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+   1              	/********************************** (C) COPYRIGHT *******************************
+   2              	 * File Name          : CH57x_clk.c
+   3              	 * Author             : WCH
+   4              	 * Version            : V1.2
+   5              	 * Date               : 2021/11/17
+   6              	 * Description        : source file(ch572/ch570)
+   7              	 *********************************************************************************
+   8              	 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+   9              	 * Attention: This software (modified or not) and binary are used for 
+  10              	 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+  11              	 *******************************************************************************/
+  12              	
+  13              	#include "CH57x_common.h"
+  14              	
+  15              	/**
+  16              	 * @brief  LSI时钟（Hz）
+  17              	 */
+  18              	uint32_t Freq_LSI = 0;
+  19              	
+  20              	/*********************************************************************
+  21              	 * @fn      LClk_Cfg
+  22              	 *
+  23              	 * @brief   低频时钟电源配置
+  24              	 *
+  25              	 * @param   s   - 是否打开电源
+  26              	 *
+  27              	 * @return  none
+  28              	 */
+  29              	void LClk_Cfg(FunctionalState s)
+  30              	{
+  31              	    uint8_t cfg = R8_LSI_CONFIG;
+  32              	
+  33              	    if(s == DISABLE)
+  34              	    {
+  35              	        cfg &= ~RB_CLK_LSI_PON;
+  36              	    }
+  37              	    else
+  38              	    {
+  39              	        cfg |= RB_CLK_LSI_PON;
+  40              	    }
+  41              	
+  42 0026 0F100000 	    sys_safe_access_enable();
+  43              	    R8_LSI_CONFIG = cfg;
+  27              		fence.i
+  28              	# 0 "" 2
+  29              	 #NO_APP
+  30 002a B7170040 		li	a5,1073745920
+  31 002e 93067005 		li	a3,87
+  32 0032 2380D704 		sb	a3,64(a5)
+  33 0036 930680FA 		li	a3,-88
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 5
+
+
+  34 003a 2380D704 		sb	a3,64(a5)
+  35              	 #APP
+  36              	# 42 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  37              		fence.i
+  38              	# 0 "" 2
+  39              	 #NO_APP
+  40 0042 A387E702 		sb	a4,47(a5)
+  41 0046 23800704 		sb	zero,64(a5)
+  42 004a B247     		lw	a5,12(sp)
+  43              	 #APP
+  44              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+  45              		csrrs a5, 0x800, a5
+  46              	# 0 "" 2
+  47              	# 44 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  44 0050 0F100000 	    sys_safe_access_disable();
+  45              	}
+  48              		fence.i
+  49              	# 0 "" 2
+  50              	 #NO_APP
+  51 0054 4101     		addi	sp,sp,16
+  52 0056 8280     		jr	ra
+  54              		.section	.text.HSECFG_Current,"ax",@progbits
+  55              		.align	1
+  56              		.globl	HSECFG_Current
+  58              	HSECFG_Current:
+  59 0000 B7170040 		li	a5,1073745920
+  60 0004 03C7E704 		lbu	a4,78(a5)
+  61 0008 0D89     		andi	a0,a0,3
+  62 000a 4111     		addi	sp,sp,-16
+  63 000c 1377C70F 		andi	a4,a4,252
+  64 0010 498F     		or	a4,a4,a0
+  65 0012 93068008 		li	a3,136
+  66              	 #APP
+  67              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+  68              		csrrc a3, 0x800, a3
+  69              	# 0 "" 2
+  70              	 #NO_APP
+  71 001a 93F68608 		andi	a3,a3,136
+  72 001e 36C6     		sw	a3,12(sp)
+  73              	 #APP
+  74              	# 63 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  46              	
+  47              	/*********************************************************************
+  48              	 * @fn      HSECFG_Current
+  49              	 *
+  50              	 * @brief   HSE晶体 偏置电流配置
+  51              	 *
+  52              	 * @param   c   - 75%,100%,125%,150%
+  53              	 *
+  54              	 * @return  none
+  55              	 */
+  56              	void HSECFG_Current(HSECurrentTypeDef c)
+  57              	{
+  58              	    uint8_t x32M_c;
+  59              	
+  60              	    x32M_c = R8_XT32M_TUNE;
+  61              	    x32M_c = (x32M_c & 0xfc) | (c & 0x03);
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 6
+
+
+  62              	
+  63 0020 0F100000 	    sys_safe_access_enable();
+  64              	    R8_XT32M_TUNE = x32M_c;
+  75              		fence.i
+  76              	# 0 "" 2
+  77              	 #NO_APP
+  78 0024 93067005 		li	a3,87
+  79 0028 2380D704 		sb	a3,64(a5)
+  80 002c 930680FA 		li	a3,-88
+  81 0030 2380D704 		sb	a3,64(a5)
+  82              	 #APP
+  83              	# 63 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  84              		fence.i
+  85              	# 0 "" 2
+  86              	 #NO_APP
+  87 0038 2387E704 		sb	a4,78(a5)
+  88 003c 23800704 		sb	zero,64(a5)
+  89 0040 B247     		lw	a5,12(sp)
+  90              	 #APP
+  91              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+  92              		csrrs a5, 0x800, a5
+  93              	# 0 "" 2
+  94              	# 65 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  65 0046 0F100000 	    sys_safe_access_disable();
+  66              	}
+  95              		fence.i
+  96              	# 0 "" 2
+  97              	 #NO_APP
+  98 004a 4101     		addi	sp,sp,16
+  99 004c 8280     		jr	ra
+ 101              		.section	.text.HSECFG_Capacitance,"ax",@progbits
+ 102              		.align	1
+ 103              		.globl	HSECFG_Capacitance
+ 105              	HSECFG_Capacitance:
+ 106 0000 37170040 		li	a4,1073745920
+ 107 0004 8347E704 		lbu	a5,78(a4)
+ 108 0008 1205     		slli	a0,a0,4
+ 109 000a 4111     		addi	sp,sp,-16
+ 110 000c BD8B     		andi	a5,a5,15
+ 111 000e C98F     		or	a5,a5,a0
+ 112 0010 93F7F70F 		andi	a5,a5,0xff
+ 113 0014 93068008 		li	a3,136
+ 114              	 #APP
+ 115              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 116              		csrrc a3, 0x800, a3
+ 117              	# 0 "" 2
+ 118              	 #NO_APP
+ 119 001c 93F68608 		andi	a3,a3,136
+ 120 0020 36C6     		sw	a3,12(sp)
+ 121              	 #APP
+ 122              	# 84 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  67              	
+  68              	/*********************************************************************
+  69              	 * @fn      HSECFG_Capacitance
+  70              	 *
+  71              	 * @brief   HSE晶体 负载电容配置
+  72              	 *
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 7
+
+
+  73              	 * @param   c   - refer to HSECapTypeDef
+  74              	 *
+  75              	 * @return  none
+  76              	 */
+  77              	void HSECFG_Capacitance(HSECapTypeDef c)
+  78              	{
+  79              	    uint8_t x32M_c;
+  80              	
+  81              	    x32M_c = R8_XT32M_TUNE;
+  82              	    x32M_c = (x32M_c & 0x0f) | (c << 4);
+  83              	
+  84 0022 0F100000 	    sys_safe_access_enable();
+  85              	    R8_XT32M_TUNE = x32M_c;
+ 123              		fence.i
+ 124              	# 0 "" 2
+ 125              	 #NO_APP
+ 126 0026 93067005 		li	a3,87
+ 127 002a 2300D704 		sb	a3,64(a4)
+ 128 002e 930680FA 		li	a3,-88
+ 129 0032 2300D704 		sb	a3,64(a4)
+ 130              	 #APP
+ 131              	# 84 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 132              		fence.i
+ 133              	# 0 "" 2
+ 134              	 #NO_APP
+ 135 003a 2307F704 		sb	a5,78(a4)
+ 136 003e 23000704 		sb	zero,64(a4)
+ 137 0042 B247     		lw	a5,12(sp)
+ 138              	 #APP
+ 139              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 140              		csrrs a5, 0x800, a5
+ 141              	# 0 "" 2
+ 142              	# 86 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  86 0048 0F100000 	    sys_safe_access_disable();
+  87              	}
+ 143              		fence.i
+ 144              	# 0 "" 2
+ 145              	 #NO_APP
+ 146 004c 4101     		addi	sp,sp,16
+ 147 004e 8280     		jr	ra
+ 149              		.section	.text.RTC_InitClock,"ax",@progbits
+ 150              		.align	1
+ 151              		.globl	RTC_InitClock
+ 153              	RTC_InitClock:
+ 154 0000 0111     		addi	sp,sp,-32
+ 155 0002 06CE     		sw	ra,28(sp)
+ 156 0004 22CC     		sw	s0,24(sp)
+ 157 0006 26CA     		sw	s1,20(sp)
+ 158 0008 8947     		li	a5,2
+ 159 000a 63ECA70A 		bgtu	a0,a5,.L11
+ 160 000e 8547     		li	a5,1
+ 161 0010 B394A700 		sll	s1,a5,a0
+ 162              	.L12:
+ 163 0014 37170040 		li	a4,1073745920
+ 164 0018 83570705 		lhu	a5,80(a4)
+ 165 001c B166     		li	a3,49152
+ 166 001e D58F     		or	a5,a5,a3
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 8
+
+
+ 167 0020 2318F704 		sh	a5,80(a4)
+ 168 0024 93078008 		li	a5,136
+ 169              	 #APP
+ 170              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 171              		csrrc a5, 0x800, a5
+ 172              	# 0 "" 2
+ 173              	 #NO_APP
+ 174 002c 93F78708 		andi	a5,a5,136
+ 175 0030 3EC6     		sw	a5,12(sp)
+ 176              	 #APP
+ 177              	# 123 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+  88              	
+  89              	/*********************************************************************
+  90              	 * @fn      RTC_InitClock
+  91              	 *
+  92              	 * @brief   初始化 RTC时钟, 捕获周期数越高,初始化时间越长,时钟精度越高
+  93              	 *
+  94              	 * @param   cnt     - the total number of cycles captured by the oscillator
+  95              	 *
+  96              	 * @return  RTC时钟, 24~42KHz
+  97              	 */
+  98              	uint32_t RTC_InitClock(RTC_OSCCntTypeDef cnt)
+  99              	{
+ 100              	    uint32_t count;
+ 101              	    uint32_t cyc;
+ 102              	    uint32_t last_ov_cnt = 0;
+ 103              	    uint32_t new_ov_cnt = 0;
+ 104              	    uint32_t ov_cnt_ov_cnt = 0;
+ 105              	
+ 106              	    if(cnt<Count_32)
+ 107              	    {
+ 108              	        cyc = 1<<cnt;
+ 109              	    }
+ 110              	    else if(cnt<Count_1024)
+ 111              	    {
+ 112              	        cyc = 1<<(cnt+2);
+ 113              	    }
+ 114              	    else if(cnt<Count_2047)
+ 115              	    {
+ 116              	        cyc = 1024;
+ 117              	    }
+ 118              	    else
+ 119              	    {
+ 120              	        cyc = 2047;
+ 121              	    }
+ 122              	    R16_OSC_CAL_CNT |= RB_OSC_CAL_OV_CLR | RB_OSC_CAL_IF;
+ 123 0032 0F100000 	    sys_safe_access_enable();
+ 124              	    R8_OSC_CAL_CTRL |= RB_CNT_CLR;
+ 178              		fence.i
+ 179              	# 0 "" 2
+ 180              	 #NO_APP
+ 181 0036 93077005 		li	a5,87
+ 182 003a 2300F704 		sb	a5,64(a4)
+ 183 003e 930780FA 		li	a5,-88
+ 184 0042 2300F704 		sb	a5,64(a4)
+ 185              	 #APP
+ 186              	# 123 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 9
+
+
+ 187              		fence.i
+ 188              	# 0 "" 2
+ 189              	 #NO_APP
+ 190 004a 83473705 		lbu	a5,83(a4)
+ 191 004e 1375F50F 		andi	a0,a0,0xff
+ 192 0052 93E70708 		ori	a5,a5,128
+ 193 0056 A309F704 		sb	a5,83(a4)
+ 194 005a A309A704 		sb	a0,83(a4)
+ 195 005e 83473705 		lbu	a5,83(a4)
+ 196 0062 93E70702 		ori	a5,a5,32
+ 197 0066 A309F704 		sb	a5,83(a4)
+ 198 006a 23000704 		sb	zero,64(a4)
+ 199 006e B247     		lw	a5,12(sp)
+ 200              	 #APP
+ 201              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 202              		csrrs a5, 0x800, a5
+ 203              	# 0 "" 2
+ 204              	# 127 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 125              	    R8_OSC_CAL_CTRL = cnt;
+ 126              	    R8_OSC_CAL_CTRL |= RB_OSC_CNT_EN;
+ 127 0074 0F100000 	    sys_safe_access_disable();
+ 128              	    while(!(R16_OSC_CAL_CNT&RB_OSC_CAL_IF))
+ 205              		fence.i
+ 206              	# 0 "" 2
+ 207              	 #NO_APP
+ 208 0078 8147     		li	a5,0
+ 209 007a 0146     		li	a2,0
+ 210              	.L14:
+ 211 007c 83560705 		lhu	a3,80(a4)
+ 212 0080 C206     		slli	a3,a3,16
+ 213 0082 C186     		srai	a3,a3,16
+ 214 0084 63D00606 		bgez	a3,.L16
+ 215 0088 03550705 		lhu	a0,80(a4)
+ 216 008c 03472705 		lbu	a4,82(a4)
+ 217 0090 13948700 		slli	s0,a5,8
+ 218 0094 93172501 		slli	a5,a0,18
+ 219 0098 3A94     		add	s0,s0,a4
+ 220 009a C983     		srli	a5,a5,18
+ 221 009c 3A04     		slli	s0,s0,14
+ 222 009e 3E94     		add	s0,s0,a5
+ 223 00a0 97000000 		call	GetSysClock
+ 223      E7800000 
+ 224 00a8 B3579402 		divu	a5,s0,s1
+ 225 00ac F240     		lw	ra,28(sp)
+ 226 00ae 6244     		lw	s0,24(sp)
+ 227 00b0 D244     		lw	s1,20(sp)
+ 228 00b2 3355F502 		divu	a0,a0,a5
+ 229 00b6 97070000 		sw	a0,.LANCHOR0,a5
+ 229      23A0A700 
+ 230 00be 0561     		addi	sp,sp,32
+ 231 00c0 8280     		jr	ra
+ 232              	.L11:
+ 233 00c2 9547     		li	a5,5
+ 234 00c4 63E8A700 		bgtu	a0,a5,.L13
+ 235 00c8 93072500 		addi	a5,a0,2
+ 236 00cc 8544     		li	s1,1
+ 237 00ce B394F400 		sll	s1,s1,a5
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 10
+
+
+ 238 00d2 89B7     		j	.L12
+ 239              	.L13:
+ 240 00d4 9947     		li	a5,6
+ 241 00d6 93040040 		li	s1,1024
+ 242 00da E30DF5F2 		beq	a0,a5,.L12
+ 243 00de 9304F07F 		li	s1,2047
+ 244 00e2 0DBF     		j	.L12
+ 245              	.L16:
+ 246 00e4 83462705 		lbu	a3,82(a4)
+ 247 00e8 93F6F60F 		andi	a3,a3,0xff
+ 248 00ec 63F3C600 		bleu	a2,a3,.L15
+ 249 00f0 8507     		addi	a5,a5,1
+ 250              	.L15:
+ 251 00f2 3686     		mv	a2,a3
+ 252 00f4 61B7     		j	.L14
+ 254              		.section	.text.RTC_InitTime,"ax",@progbits
+ 255              		.align	1
+ 256              		.globl	RTC_InitTime
+ 258              	RTC_InitTime:
+ 259 0000 4111     		addi	sp,sp,-16
+ 260 0002 AA88     		mv	a7,a0
+ 261 0004 0143     		li	t1,0
+ 262 0006 930E407E 		li	t4,2020
+ 263 000a 130F0019 		li	t5,400
+ 264 000e 930F4006 		li	t6,100
+ 265              	.L20:
+ 266 0012 63EF1E17 		bgtu	a7,t4,.L22
+ 267 0016 93080019 		li	a7,400
+ 268 001a 130E4006 		li	t3,100
+ 269 001e B3781503 		remu	a7,a0,a7
+ 270 0022 854E     		li	t4,1
+ 271 0024 0D4F     		li	t5,3
+ 272 0026 994F     		li	t6,6
+ 273 0028 337EC503 		remu	t3,a0,t3
+ 274 002c 0D89     		andi	a0,a0,3
+ 275 002e 13351500 		seqz	a0,a0
+ 276              	.L23:
+ 277 0032 63E4BE18 		bgtu	a1,t4,.L28
+ 278 0036 E145     		li	a1,24
+ 279 0038 7D16     		addi	a2,a2,-1
+ 280 003a 1A96     		add	a2,a2,t1
+ 281 003c B3F6B602 		remu	a3,a3,a1
+ 282 0040 93058070 		li	a1,1800
+ 283 0044 B386B602 		mul	a3,a3,a1
+ 284 0048 F945     		li	a1,30
+ 285 004a 3307B702 		mul	a4,a4,a1
+ 286 004e 8145     		li	a1,0
+ 287 0050 3697     		add	a4,a3,a4
+ 288 0052 93D61700 		srli	a3,a5,1
+ 289 0056 3697     		add	a4,a4,a3
+ 290 0058 858B     		andi	a5,a5,1
+ 291 005a 97060000 		lla	a3,.LANCHOR0
+ 291      93860600 
+ 292 0062 9442     		lw	a3,0(a3)
+ 293 0064 91C3     		beqz	a5,.L29
+ 294 0066 B685     		mv	a1,a3
+ 295              	.L29:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 11
+
+
+ 296 0068 B307D602 		mul	a5,a2,a3
+ 297 006c 2166     		li	a2,32768
+ 298 006e 7D16     		addi	a2,a2,-1
+ 299 0070 1308302A 		li	a6,675
+ 300 0074 13D5F700 		srli	a0,a5,15
+ 301 0078 F18F     		and	a5,a5,a2
+ 302 007a 3307D702 		mul	a4,a4,a3
+ 303 007e B3870703 		mul	a5,a5,a6
+ 304 0082 798E     		and	a2,a4,a2
+ 305 0084 0606     		slli	a2,a2,1
+ 306 0086 3D83     		srli	a4,a4,15
+ 307 0088 B385D502 		mul	a1,a1,a3
+ 308 008c 9166     		li	a3,16384
+ 309 008e B695     		add	a1,a1,a3
+ 310 0090 93F6F71F 		andi	a3,a5,511
+ 311 0094 9E06     		slli	a3,a3,7
+ 312 0096 B296     		add	a3,a3,a2
+ 313 0098 BD81     		srli	a1,a1,15
+ 314 009a AE96     		add	a3,a3,a1
+ 315 009c A583     		srli	a5,a5,9
+ 316 009e BA97     		add	a5,a5,a4
+ 317 00a0 13D70601 		srli	a4,a3,16
+ 318 00a4 BA97     		add	a5,a4,a5
+ 319 00a6 2D67     		li	a4,45056
+ 320 00a8 1307078C 		addi	a4,a4,-1856
+ 321 00ac 33D6E702 		divu	a2,a5,a4
+ 322 00b0 C206     		slli	a3,a3,16
+ 323 00b2 C182     		srli	a3,a3,16
+ 324 00b4 B3F7E702 		remu	a5,a5,a4
+ 325 00b8 2A96     		add	a2,a2,a0
+ 326 00ba 37170040 		li	a4,1073745920
+ 327 00be C207     		slli	a5,a5,16
+ 328 00c0 DD8E     		or	a3,a5,a3
+ 329              	.L30:
+ 330 00c2 8347F702 		lbu	a5,47(a4)
+ 331 00c6 93F70708 		andi	a5,a5,128
+ 332 00ca A303F100 		sb	a5,7(sp)
+ 333 00ce 83457100 		lbu	a1,7(sp)
+ 334 00d2 8347F702 		lbu	a5,47(a4)
+ 335 00d6 93F70708 		andi	a5,a5,128
+ 336 00da E394B7FE 		bne	a5,a1,.L30
+ 337 00de 83477100 		lbu	a5,7(sp)
+ 338 00e2 37170040 		li	a4,1073745920
+ 339 00e6 93F7F70F 		andi	a5,a5,0xff
+ 340 00ea 638E0710 		beqz	a5,.L31
+ 341              	.L34:
+ 342 00ee 93078008 		li	a5,136
+ 343              	 #APP
+ 344              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 345              		csrrc a5, 0x800, a5
+ 346              	# 0 "" 2
+ 347              	 #NO_APP
+ 348 00f6 93F78708 		andi	a5,a5,136
+ 349 00fa 3EC4     		sw	a5,8(sp)
+ 350              	 #APP
+ 351              	# 229 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 129              	    {
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 12
+
+
+ 130              	        new_ov_cnt = R8_OSC_CAL_OV_CNT;
+ 131              	        if(new_ov_cnt<last_ov_cnt)
+ 132              	        {
+ 133              	            ov_cnt_ov_cnt++;
+ 134              	        }
+ 135              	        last_ov_cnt = new_ov_cnt;
+ 136              	    }
+ 137              	    count = ((uint32_t)R16_OSC_CAL_CNT&RB_OSC_CAL_CNT) + ((uint32_t)R8_OSC_CAL_OV_CNT+ov_cnt_ov_cnt
+ 138              	    Freq_LSI = GetSysClock()/(count/cyc);
+ 139              	    return Freq_LSI;
+ 140              	}
+ 141              	
+ 142              	/*********************************************************************
+ 143              	 * @fn      RTCInitTime
+ 144              	 *
+ 145              	 * @brief   RTC时钟初始化当前时间，注意：万年历计数根据实时LSI频率计数，当LSI频率有较大波动时，获取
+ 146              	 *
+ 147              	 * @param   y       - 配置年，MAX_Y = BEGYEAR + 44
+ 148              	 * @param   mon     - 配置月，MAX_MON = 12
+ 149              	 * @param   d       - 配置日，MAX_D = 31
+ 150              	 * @param   h       - 配置小时，MAX_H = 23
+ 151              	 * @param   m       - 配置分钟，MAX_M = 59
+ 152              	 * @param   s       - 配置秒，MAX_S = 59
+ 153              	 *
+ 154              	 * @return  none
+ 155              	 */
+ 156              	void RTC_InitTime(uint16_t y, uint16_t mon, uint16_t d, uint16_t h, uint16_t m, uint16_t s)
+ 157              	{
+ 158              	    uint32_t         t;
+ 159              	    uint32_t         year, month, day, sec2;
+ 160              	    uint32_t         t32k;
+ 161              	    volatile uint8_t clk_pin;
+ 162              	    uint32_t temp,temp1,temp2,temp3;
+ 163              	    uint32_t tmp,tmp1,tmp2;
+ 164              	
+ 165              	    year = y;
+ 166              	    month = mon;
+ 167              	    day = 0;
+ 168              	    while(year > BEGYEAR)
+ 169              	    {
+ 170              	        day += YearLength(year - 1);
+ 171              	        year--;
+ 172              	    }
+ 173              	    while(month > 1)
+ 174              	    {
+ 175              	        day += monthLength(IsLeapYear(y), month - 2);
+ 176              	        month--;
+ 177              	    }
+ 178              	
+ 179              	    day += d - 1;
+ 180              	    sec2 = (h % 24) * 1800 + m * 30 + s / 2;
+ 181              	    t32k = (s & 1) ? (Freq_LSI) : (0);
+ 182              	    t = sec2;
+ 183              	    t = t << 16 | t32k;
+ 184              	
+ 185              	    temp = day * Freq_LSI;
+ 186              	    temp1 = temp % 32768; // 天数余数
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 13
+
+
+ 187              	    temp = temp / 32768; // 天数
+ 188              	
+ 189              	    temp2 = temp1 * 675; // temp1 / 32768 * 2831155200 / 65536
+ 190              	    temp3 = temp2 % 512;   // 天数余数 转换成2s为单位的余数
+ 191              	    temp2 = temp2 / 512;   // 天数余数 转换成2s为单位的数
+ 192              	
+ 193              	    temp1 = temp3 * 128; // 2s为单位的余数 转换成 周期数  temp3 / 512 * 65536
+ 194              	
+ 195              	    tmp = sec2 * Freq_LSI;
+ 196              	    tmp1 = tmp % 32768; // 2s余数
+ 197              	    tmp = tmp / 32768; // 2s数
+ 198              	
+ 199              	    tmp2 = tmp1 * 2 ; //  2s为单位的余数 转换成 周期数  // tmp1 / 32768 * 65536
+ 200              	
+ 201              	    t32k = (t32k * Freq_LSI + 16384) / 32768; // 周期数
+ 202              	
+ 203              	    t32k += tmp2 + temp1; // 总周期数
+ 204              	    tmp += (t32k/65536) + temp2; // 总2s数
+ 205              	    temp += (tmp/43200);    // 天数
+ 206              	
+ 207              	    t32k %= 65536;  // 周期数
+ 208              	    tmp %= 43200;   // 2s数
+ 209              	
+ 210              	    t = tmp;     // 64000
+ 211              	    t = t << 16 | t32k; // 1
+ 212              	
+ 213              	
+ 214              	    do
+ 215              	    {
+ 216              	        clk_pin = (R8_LSI_CONFIG & RB_LSI_CLK_PIN);
+ 217              	    } while(clk_pin != (R8_LSI_CONFIG & RB_LSI_CLK_PIN));
+ 218              	    if(!clk_pin)
+ 219              	    {
+ 220              	        while(!clk_pin)
+ 221              	        {
+ 222              	            do
+ 223              	            {
+ 224              	                clk_pin = (R8_LSI_CONFIG & RB_LSI_CLK_PIN);
+ 225              	            } while(clk_pin != (R8_LSI_CONFIG & RB_LSI_CLK_PIN));
+ 226              	        }
+ 227              	    }
+ 228              	
+ 229 00fc 0F100000 	    sys_safe_access_enable();
+ 230              	    R32_RTC_TRIG = temp;
+ 352              		fence.i
+ 353              	# 0 "" 2
+ 354              	 #NO_APP
+ 355 0100 B7170040 		li	a5,1073745920
+ 356 0104 13077005 		li	a4,87
+ 357 0108 2380E704 		sb	a4,64(a5)
+ 358 010c 130780FA 		li	a4,-88
+ 359 0110 2380E704 		sb	a4,64(a5)
+ 360              	 #APP
+ 361              	# 229 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 362              		fence.i
+ 363              	# 0 "" 2
+ 364              	 #NO_APP
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 14
+
+
+ 365 0118 D0DB     		sw	a2,52(a5)
+ 366 011a 03C71703 		lbu	a4,49(a5)
+ 367 011e 13670708 		ori	a4,a4,128
+ 368 0122 A388E702 		sb	a4,49(a5)
+ 369 0126 23800704 		sb	zero,64(a5)
+ 370 012a A247     		lw	a5,8(sp)
+ 371              	 #APP
+ 372              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 373              		csrrs a5, 0x800, a5
+ 374              	# 0 "" 2
+ 375              	# 232 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 231              	    R8_RTC_MODE_CTRL |= RB_RTC_LOAD_HI;
+ 232 0130 0F100000 	    sys_safe_access_disable();
+ 233              	    while((R32_RTC_TRIG & 0x3FFF) != (R32_RTC_CNT_DIV2 & 0x3FFF));
+ 376              		fence.i
+ 377              	# 0 "" 2
+ 378              	 #NO_APP
+ 379 0134 1166     		li	a2,16384
+ 380 0136 37170040 		li	a4,1073745920
+ 381 013a 7D16     		addi	a2,a2,-1
+ 382              	.L32:
+ 383 013c 5C5B     		lw	a5,52(a4)
+ 384 013e 485F     		lw	a0,60(a4)
+ 385 0140 93054703 		addi	a1,a4,52
+ 386 0144 A98F     		xor	a5,a5,a0
+ 387 0146 F18F     		and	a5,a5,a2
+ 388 0148 F5FB     		bnez	a5,.L32
+ 389 014a 93078008 		li	a5,136
+ 390              	 #APP
+ 391              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 392              		csrrc a5, 0x800, a5
+ 393              	# 0 "" 2
+ 394              	 #NO_APP
+ 395 0152 93F78708 		andi	a5,a5,136
+ 396 0156 3EC6     		sw	a5,12(sp)
+ 397              	 #APP
+ 398              	# 234 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 234 0158 0F100000 	    sys_safe_access_enable();
+ 235              	    R32_RTC_TRIG = t;
+ 399              		fence.i
+ 400              	# 0 "" 2
+ 401              	 #NO_APP
+ 402 015c 93077005 		li	a5,87
+ 403 0160 2300F704 		sb	a5,64(a4)
+ 404 0164 930780FA 		li	a5,-88
+ 405 0168 2300F704 		sb	a5,64(a4)
+ 406              	 #APP
+ 407              	# 234 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 408              		fence.i
+ 409              	# 0 "" 2
+ 410              	 #NO_APP
+ 411 0170 94C1     		sw	a3,0(a1)
+ 412 0172 83471703 		lbu	a5,49(a4)
+ 413 0176 93E70704 		ori	a5,a5,64
+ 414 017a A308F702 		sb	a5,49(a4)
+ 415 017e 23000704 		sb	zero,64(a4)
+ 416 0182 B247     		lw	a5,12(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 15
+
+
+ 417              	 #APP
+ 418              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 419              		csrrs a5, 0x800, a5
+ 420              	# 0 "" 2
+ 421              	# 237 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 236              	    R8_RTC_MODE_CTRL |= RB_RTC_LOAD_LO;
+ 237 0188 0F100000 	    sys_safe_access_disable();
+ 238              	}
+ 422              		fence.i
+ 423              	# 0 "" 2
+ 424              	 #NO_APP
+ 425 018c 4101     		addi	sp,sp,16
+ 426 018e 8280     		jr	ra
+ 427              	.L22:
+ 428 0190 FD18     		addi	a7,a7,-1
+ 429 0192 33FEE803 		remu	t3,a7,t5
+ 430 0196 1308E016 		li	a6,366
+ 431 019a 630E0E00 		beqz	t3,.L21
+ 432 019e 33FEF803 		remu	t3,a7,t6
+ 433 01a2 1308D016 		li	a6,365
+ 434 01a6 63080E00 		beqz	t3,.L21
+ 435 01aa 13F83800 		andi	a6,a7,3
+ 436 01ae 13381800 		seqz	a6,a6
+ 437 01b2 1308D816 		addi	a6,a6,365
+ 438              	.L21:
+ 439 01b6 4293     		add	t1,t1,a6
+ 440 01b8 A9BD     		j	.L20
+ 441              	.L28:
+ 442 01ba 639DE501 		bne	a1,t5,.L24
+ 443 01be 0548     		li	a6,1
+ 444 01c0 63860800 		beqz	a7,.L25
+ 445 01c4 0148     		li	a6,0
+ 446 01c6 63030E00 		beqz	t3,.L25
+ 447 01ca 2A88     		mv	a6,a0
+ 448              	.L25:
+ 449 01cc 7108     		addi	a6,a6,28
+ 450              	.L26:
+ 451 01ce 4293     		add	t1,t1,a6
+ 452 01d0 FD15     		addi	a1,a1,-1
+ 453 01d2 85B5     		j	.L23
+ 454              	.L24:
+ 455 01d4 9382E5FF 		addi	t0,a1,-2
+ 456 01d8 13F81500 		andi	a6,a1,1
+ 457 01dc 63F45F00 		bleu	t0,t6,.L27
+ 458              	.L54:
+ 459 01e0 7908     		addi	a6,a6,30
+ 460 01e2 F5B7     		j	.L26
+ 461              	.L27:
+ 462 01e4 13381800 		seqz	a6,a6
+ 463 01e8 E5BF     		j	.L54
+ 464              	.L33:
+ 465 01ea 8347F702 		lbu	a5,47(a4)
+ 466 01ee 93F70708 		andi	a5,a5,128
+ 467 01f2 A303F100 		sb	a5,7(sp)
+ 468 01f6 83457100 		lbu	a1,7(sp)
+ 469 01fa 8347F702 		lbu	a5,47(a4)
+ 470 01fe 93F70708 		andi	a5,a5,128
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 16
+
+
+ 471 0202 E394B7FE 		bne	a5,a1,.L33
+ 472              	.L31:
+ 473 0206 83477100 		lbu	a5,7(sp)
+ 474 020a 93F7F70F 		andi	a5,a5,0xff
+ 475 020e F1DF     		beqz	a5,.L33
+ 476 0210 F9BD     		j	.L34
+ 478              		.section	.text.RTC_GetTime,"ax",@progbits
+ 479              		.align	1
+ 480              		.globl	RTC_GetTime
+ 482              	RTC_GetTime:
+ 483 0000 B7180040 		li	a7,1073745920
+ 484 0004 03A8C803 		lw	a6,60(a7)
+ 485 0008 03DEA803 		lhu	t3,58(a7)
+ 486 000c 03D38803 		lhu	t1,56(a7)
+ 487 0010 97080000 		lla	a7,.LANCHOR0
+ 487      93880800 
+ 488 0018 83AE0800 		lw	t4,0(a7)
+ 489 001c 4A08     		slli	a6,a6,18
+ 490 001e 13582801 		srli	a6,a6,18
+ 491 0022 3E08     		slli	a6,a6,15
+ 492 0024 B35FD803 		divu	t6,a6,t4
+ 493 0028 AD68     		li	a7,45056
+ 494 002a 138F088C 		addi	t5,a7,-1856
+ 495 002e 93D21E00 		srli	t0,t4,1
+ 496 0032 3E03     		slli	t1,t1,15
+ 497 0034 1693     		add	t1,t1,t0
+ 498 0036 4111     		addi	sp,sp,-16
+ 499 0038 22C6     		sw	s0,12(sp)
+ 500 003a 26C4     		sw	s1,8(sp)
+ 501 003c 4AC2     		sw	s2,4(sp)
+ 502 003e 4EC0     		sw	s3,0(sp)
+ 503 0040 93034006 		li	t2,100
+ 504 0044 3378D803 		remu	a6,a6,t4
+ 505 0048 B308E803 		mul	a7,a6,t5
+ 506 004c 1318FE00 		slli	a6,t3,15
+ 507 0050 337ED803 		remu	t3,a6,t4
+ 508 0054 420E     		slli	t3,t3,16
+ 509 0056 169E     		add	t3,t3,t0
+ 510 0058 3353D303 		divu	t1,t1,t4
+ 511 005c 335EDE03 		divu	t3,t3,t4
+ 512 0060 1A9E     		add	t3,t3,t1
+ 513 0062 33F3D803 		remu	t1,a7,t4
+ 514 0066 4203     		slli	t1,t1,16
+ 515 0068 1693     		add	t1,t1,t0
+ 516 006a 3353D303 		divu	t1,t1,t4
+ 517 006e 9302D016 		li	t0,365
+ 518 0072 B3D8D803 		divu	a7,a7,t4
+ 519 0076 7293     		add	t1,t1,t3
+ 520 0078 135E0301 		srli	t3,t1,16
+ 521 007c 1353F300 		srli	t1,t1,15
+ 522 0080 13731300 		andi	t1,t1,1
+ 523 0084 B35ED803 		divu	t4,a6,t4
+ 524 0088 F698     		add	a7,a7,t4
+ 525 008a F298     		add	a7,t3,a7
+ 526 008c 33D8E803 		divu	a6,a7,t5
+ 527 0090 B3F8E803 		remu	a7,a7,t5
+ 528 0094 7E98     		add	a6,a6,t6
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 17
+
+
+ 529 0096 130FC016 		li	t5,364
+ 530 009a 930F0019 		li	t6,400
+ 531 009e 8608     		slli	a7,a7,1
+ 532 00a0 4693     		add	t1,a7,t1
+ 533 00a2 9308407E 		li	a7,2020
+ 534 00a6 23101501 		sh	a7,0(a0)
+ 535              	.L56:
+ 536 00aa 035E0500 		lhu	t3,0(a0)
+ 537 00ae B378FE03 		remu	a7,t3,t6
+ 538 00b2 638B080E 		beqz	a7,.L58
+ 539 00b6 B3787E02 		remu	a7,t3,t2
+ 540 00ba 638C080E 		beqz	a7,.L59
+ 541 00be 93783E00 		andi	a7,t3,3
+ 542 00c2 93BE1800 		seqz	t4,a7
+ 543 00c6 938EDE16 		addi	t4,t4,365
+ 544 00ca 6373D809 		bleu	t4,a6,.L74
+ 545              	.L72:
+ 546 00ce 23900500 		sh	zero,0(a1)
+ 547 00d2 0544     		li	s0,1
+ 548 00d4 9944     		li	s1,6
+ 549 00d6 F94F     		li	t6,30
+ 550 00d8 F542     		li	t0,29
+ 551 00da 13090019 		li	s2,400
+ 552 00de 93034006 		li	t2,100
+ 553              	.L61:
+ 554 00e2 83D80500 		lhu	a7,0(a1)
+ 555 00e6 138F1800 		addi	t5,a7,1
+ 556 00ea 639F8808 		bne	a7,s0,.L63
+ 557 00ee 835E0500 		lhu	t4,0(a0)
+ 558 00f2 054E     		li	t3,1
+ 559 00f4 B3F92E03 		remu	s3,t4,s2
+ 560 00f8 638B0900 		beqz	s3,.L64
+ 561 00fc B3F87E02 		remu	a7,t4,t2
+ 562 0100 014E     		li	t3,0
+ 563 0102 63860800 		beqz	a7,.L64
+ 564 0106 13FE3E00 		andi	t3,t4,3
+ 565 010a 133E1E00 		seqz	t3,t3
+ 566              	.L64:
+ 567 010e 710E     		addi	t3,t3,28
+ 568 0110 637AC805 		bgeu	a6,t3,.L65
+ 569              	.L66:
+ 570 0114 2390E501 		sh	t5,0(a1)
+ 571 0118 0508     		addi	a6,a6,1
+ 572 011a 23100601 		sh	a6,0(a2)
+ 573 011e 0566     		li	a2,4096
+ 574 0120 130606E1 		addi	a2,a2,-496
+ 575 0124 B355C302 		divu	a1,t1,a2
+ 576 0128 3244     		lw	s0,12(sp)
+ 577 012a A244     		lw	s1,8(sp)
+ 578 012c 1249     		lw	s2,4(sp)
+ 579 012e 8249     		lw	s3,0(sp)
+ 580 0130 3376C302 		remu	a2,t1,a2
+ 581 0134 2390B600 		sh	a1,0(a3)
+ 582 0138 9306C003 		li	a3,60
+ 583 013c 3356D602 		divu	a2,a2,a3
+ 584 0140 3373D302 		remu	t1,t1,a3
+ 585 0144 2310C700 		sh	a2,0(a4)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 18
+
+
+ 586 0148 23906700 		sh	t1,0(a5)
+ 587 014c 4101     		addi	sp,sp,16
+ 588 014e 8280     		jr	ra
+ 589              	.L74:
+ 590 0150 93B81800 		seqz	a7,a7
+ 591 0154 9388D816 		addi	a7,a7,365
+ 592              	.L57:
+ 593 0158 050E     		addi	t3,t3,1
+ 594 015a 33081841 		sub	a6,a6,a7
+ 595 015e 2310C501 		sh	t3,0(a0)
+ 596 0162 A1B7     		j	.L56
+ 597              	.L65:
+ 598 0164 8548     		li	a7,1
+ 599 0166 638B0900 		beqz	s3,.L62
+ 600 016a 33FE7E02 		remu	t3,t4,t2
+ 601 016e 8148     		li	a7,0
+ 602 0170 63060E00 		beqz	t3,.L62
+ 603 0174 93F83E00 		andi	a7,t4,3
+ 604 0178 93B81800 		seqz	a7,a7
+ 605              	.L62:
+ 606 017c F108     		addi	a7,a7,28
+ 607              	.L73:
+ 608 017e 33081841 		sub	a6,a6,a7
+ 609 0182 2390E501 		sh	t5,0(a1)
+ 610 0186 B1BF     		j	.L61
+ 611              	.L63:
+ 612 0188 13FE1800 		andi	t3,a7,1
+ 613 018c 63F81401 		bleu	a7,s1,.L67
+ 614 0190 63180E00 		bnez	t3,.L92
+ 615              	.L70:
+ 616 0194 E3F002F9 		bleu	a6,t0,.L66
+ 617 0198 F948     		li	a7,30
+ 618 019a D5B7     		j	.L73
+ 619              	.L67:
+ 620 019c E31C0EFE 		bnez	t3,.L70
+ 621              	.L92:
+ 622 01a0 E3FA0FF7 		bleu	a6,t6,.L66
+ 623 01a4 FD48     		li	a7,31
+ 624 01a6 E1BF     		j	.L73
+ 625              	.L58:
+ 626 01a8 E3F302F3 		bleu	a6,t0,.L72
+ 627 01ac 9308E016 		li	a7,366
+ 628 01b0 65B7     		j	.L57
+ 629              	.L59:
+ 630 01b2 E37E0FF1 		bleu	a6,t5,.L72
+ 631 01b6 9308D016 		li	a7,365
+ 632 01ba 79BF     		j	.L57
+ 634              		.section	.text.RTC_SetCycleLSI,"ax",@progbits
+ 635              		.align	1
+ 636              		.globl	RTC_SetCycleLSI
+ 638              	RTC_SetCycleLSI:
+ 639 0000 4111     		addi	sp,sp,-16
+ 640 0002 B7170040 		li	a5,1073745920
+ 641              	.L98:
+ 642 0006 03C7F702 		lbu	a4,47(a5)
+ 643 000a 13770708 		andi	a4,a4,128
+ 644 000e A305E100 		sb	a4,11(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 19
+
+
+ 645 0012 8346B100 		lbu	a3,11(sp)
+ 646 0016 03C7F702 		lbu	a4,47(a5)
+ 647 001a 13770708 		andi	a4,a4,128
+ 648 001e E314D7FE 		bne	a4,a3,.L98
+ 649 0022 0347B100 		lbu	a4,11(sp)
+ 650 0026 1377F70F 		andi	a4,a4,0xff
+ 651 002a 71DF     		beqz	a4,.L98
+ 652 002c 13078008 		li	a4,136
+ 653              	 #APP
+ 654              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 655              		csrrc a4, 0x800, a4
+ 656              	# 0 "" 2
+ 657              	 #NO_APP
+ 658 0034 13778708 		andi	a4,a4,136
+ 659 0038 3AC6     		sw	a4,12(sp)
+ 660              	 #APP
+ 661              	# 332 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 239              	
+ 240              	/*********************************************************************
+ 241              	 * @fn      RTC_GetTime
+ 242              	 *
+ 243              	 * @brief   获取当前时间
+ 244              	 *
+ 245              	 * @param   py      - 获取到的年，MAX_Y = BEGYEAR + 44
+ 246              	 * @param   pmon    - 获取到的月，MAX_MON = 12
+ 247              	 * @param   pd      - 获取到的日，MAX_D = 31
+ 248              	 * @param   ph      - 获取到的小时，MAX_H = 23
+ 249              	 * @param   pm      - 获取到的分钟，MAX_M = 59
+ 250              	 * @param   ps      - 获取到的秒，MAX_S = 59
+ 251              	 *
+ 252              	 * @return  none
+ 253              	 */
+ 254              	void RTC_GetTime(uint16_t *py, uint16_t *pmon, uint16_t *pd, uint16_t *ph, uint16_t *pm, uint16_t *
+ 255              	{
+ 256              	    uint32_t t;
+ 257              	    uint32_t day, sec2, t32k;
+ 258              	    uint32_t temp,temp1,temp2,temp3;
+ 259              	    uint32_t tmp,tmp1,tmp2;
+ 260              	
+ 261              	    day = R32_RTC_CNT_DIV2 & 0x3FFF;
+ 262              	    sec2 = R16_RTC_CNT_DIV1;
+ 263              	    t32k = R16_RTC_CNT_LSI;
+ 264              	
+ 265              	    temp = day * 32768;
+ 266              	    temp1 = temp % Freq_LSI; // 天数余数
+ 267              	    temp = temp / Freq_LSI; // 天数
+ 268              	
+ 269              	    temp2 = temp1 * 43200; // temp1 / Freq_LSI * 43200
+ 270              	    temp3 = temp2 % Freq_LSI;   // 天数余数 转换成2s为单位的余数
+ 271              	    temp2 = temp2 / Freq_LSI;   // 天数余数 转换成2s为单位的数
+ 272              	
+ 273              	    temp1 = (temp3 * 65536 + Freq_LSI/2 ) / Freq_LSI; // 2s为单位的余数 转换成 周期数  temp3 / Freq
+ 274              	
+ 275              	    tmp = sec2 * 32768;
+ 276              	    tmp1 = tmp % Freq_LSI; // 2s余数           5376
+ 277              	    tmp = tmp / Freq_LSI; // 2s数                 1799
+ 278              	
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 20
+
+
+ 279              	    tmp2 = (tmp1 * 65536 + Freq_LSI/2 ) / Freq_LSI; //  2s为单位的余数 转换成 周期数  // tmp1 / Fre
+ 280              	
+ 281              	    t32k = (t32k * 32768 + Freq_LSI/2 ) / Freq_LSI; // 周期数       54525
+ 282              	
+ 283              	
+ 284              	    t32k += tmp2 + temp1; // 总周期数
+ 285              	    tmp += (t32k/65536) + temp2; // 总2s数
+ 286              	    temp += (tmp/43200);    // 天数
+ 287              	
+ 288              	    t32k %= 65536;  // 周期数
+ 289              	    tmp %= 43200;   // 2s数
+ 290              	
+ 291              	
+ 292              	    t = tmp * 2 + ((t32k < 0x8000) ? 0 : 1);
+ 293              	
+ 294              	    *py = BEGYEAR;
+ 295              	    while(temp >= YearLength(*py))
+ 296              	    {
+ 297              	        temp -= YearLength(*py);
+ 298              	        (*py)++;
+ 299              	    }
+ 300              	
+ 301              	    *pmon = 0;
+ 302              	    while(temp >= monthLength(IsLeapYear(*py), *pmon))
+ 303              	    {
+ 304              	        temp -= monthLength(IsLeapYear(*py), *pmon);
+ 305              	        (*pmon)++;
+ 306              	    }
+ 307              	    (*pmon)++;
+ 308              	    *pd = temp + 1;
+ 309              	    *ph = t / 3600;
+ 310              	    *pm = t % 3600 / 60;
+ 311              	    *ps = t % 60;
+ 312              	}
+ 313              	
+ 314              	/*********************************************************************
+ 315              	 * @fn      RTC_SetCycleLSI
+ 316              	 *
+ 317              	 * @brief   基于LSI时钟，配置当前RTC 周期数
+ 318              	 *
+ 319              	 * @param   cyc     - 配置周期计数初值，MAX_CYC = 0xA8BFFFFF = 2831155199
+ 320              	 *
+ 321              	 * @return  none
+ 322              	 */
+ 323              	void RTC_SetCycleLSI(uint32_t cyc)
+ 324              	{
+ 325              	    volatile uint8_t clk_pin;
+ 326              	
+ 327              	    do
+ 328              	    {
+ 329              	        clk_pin = (R8_LSI_CONFIG & RB_LSI_CLK_PIN);
+ 330              	    } while((clk_pin != (R8_LSI_CONFIG & RB_LSI_CLK_PIN)) || (!clk_pin));
+ 331              	
+ 332 003a 0F100000 	    sys_safe_access_enable();
+ 333              	    R32_RTC_TRIG = cyc;
+ 662              		fence.i
+ 663              	# 0 "" 2
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 21
+
+
+ 664              	 #NO_APP
+ 665 003e 13077005 		li	a4,87
+ 666 0042 2380E704 		sb	a4,64(a5)
+ 667 0046 130780FA 		li	a4,-88
+ 668 004a 2380E704 		sb	a4,64(a5)
+ 669              	 #APP
+ 670              	# 332 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 671              		fence.i
+ 672              	# 0 "" 2
+ 673              	 #NO_APP
+ 674 0052 C8DB     		sw	a0,52(a5)
+ 675 0054 03C71703 		lbu	a4,49(a5)
+ 676 0058 13670704 		ori	a4,a4,64
+ 677 005c A388E702 		sb	a4,49(a5)
+ 678 0060 23800704 		sb	zero,64(a5)
+ 679 0064 B247     		lw	a5,12(sp)
+ 680              	 #APP
+ 681              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 682              		csrrs a5, 0x800, a5
+ 683              	# 0 "" 2
+ 684              	# 335 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 334              	    R8_RTC_MODE_CTRL |= RB_RTC_LOAD_LO;
+ 335 006a 0F100000 	    sys_safe_access_disable();
+ 336              	}
+ 685              		fence.i
+ 686              	# 0 "" 2
+ 687              	 #NO_APP
+ 688 006e 4101     		addi	sp,sp,16
+ 689 0070 8280     		jr	ra
+ 691              		.section	.text.RTC_GetCycleLSI,"ax",@progbits
+ 692              		.align	1
+ 693              		.globl	RTC_GetCycleLSI
+ 695              	RTC_GetCycleLSI:
+ 696 0000 4111     		addi	sp,sp,-16
+ 697 0002 B7170040 		li	a5,1073745920
+ 698              	.L102:
+ 699 0006 985F     		lw	a4,56(a5)
+ 700 0008 3AC6     		sw	a4,12(sp)
+ 701 000a 945F     		lw	a3,56(a5)
+ 702 000c 3247     		lw	a4,12(sp)
+ 703 000e E39CE6FE 		bne	a3,a4,.L102
+ 704 0012 3245     		lw	a0,12(sp)
+ 705 0014 4101     		addi	sp,sp,16
+ 706 0016 8280     		jr	ra
+ 708              		.section	.text.RTC_TMRFunCfg,"ax",@progbits
+ 709              		.align	1
+ 710              		.globl	RTC_TMRFunCfg
+ 712              	RTC_TMRFunCfg:
+ 713 0000 4111     		addi	sp,sp,-16
+ 714 0002 13078008 		li	a4,136
+ 715              	 #APP
+ 716              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 717              		csrrc a5, 0x800, a4
+ 718              	# 0 "" 2
+ 719              	 #NO_APP
+ 720 000a 93F78708 		andi	a5,a5,136
+ 721 000e 3EC4     		sw	a5,8(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 22
+
+
+ 722              	 #APP
+ 723              	# 370 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 337              	
+ 338              	/*********************************************************************
+ 339              	 * @fn      RTC_GetCycleLSI
+ 340              	 *
+ 341              	 * @brief   基于LSI时钟，获取当前RTC 周期数
+ 342              	 *
+ 343              	 * @param   none
+ 344              	 *
+ 345              	 * @return  当前周期数，MAX_CYC = 0xA8BFFFFF = 2831155199
+ 346              	 */
+ 347              	uint32_t RTC_GetCycleLSI(void)
+ 348              	{
+ 349              	    volatile uint32_t i;
+ 350              	
+ 351              	    do
+ 352              	    {
+ 353              	        i = R32_RTC_CNT_LSI;
+ 354              	    } while(i != R32_RTC_CNT_LSI);
+ 355              	
+ 356              	    return (i);
+ 357              	}
+ 358              	
+ 359              	/*********************************************************************
+ 360              	 * @fn      RTC_TMRFunCfg
+ 361              	 *
+ 362              	 * @brief   RTC定时模式配置（注意定时基准固定为32768Hz）
+ 363              	 *
+ 364              	 * @param   t   - refer to RTC_TMRCycTypeDef
+ 365              	 *
+ 366              	 * @return  none
+ 367              	 */
+ 368              	void RTC_TMRFunCfg(RTC_TMRCycTypeDef t)
+ 369              	{
+ 370 0010 0F100000 	    sys_safe_access_enable();
+ 371              	    R8_RTC_MODE_CTRL &= ~(RB_RTC_TMR_EN | RB_RTC_TMR_MODE);
+ 724              		fence.i
+ 725              	# 0 "" 2
+ 726              	 #NO_APP
+ 727 0014 B7170040 		li	a5,1073745920
+ 728 0018 93057005 		li	a1,87
+ 729 001c 2380B704 		sb	a1,64(a5)
+ 730 0020 130680FA 		li	a2,-88
+ 731 0024 2380C704 		sb	a2,64(a5)
+ 732              	 #APP
+ 733              	# 370 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 734              		fence.i
+ 735              	# 0 "" 2
+ 736              	 #NO_APP
+ 737 002c 83C61703 		lbu	a3,49(a5)
+ 738 0030 93F6860E 		andi	a3,a3,232
+ 739 0034 A388D702 		sb	a3,49(a5)
+ 740 0038 23800704 		sb	zero,64(a5)
+ 741 003c A246     		lw	a3,8(sp)
+ 742              	 #APP
+ 743              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 23
+
+
+ 744              		csrrs a3, 0x800, a3
+ 745              	# 0 "" 2
+ 746              	# 372 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 372 0042 0F100000 	    sys_safe_access_disable();
+ 373              	    sys_safe_access_enable();
+ 747              		fence.i
+ 748              	# 0 "" 2
+ 749              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 750              		csrrc a4, 0x800, a4
+ 751              	# 0 "" 2
+ 752              	 #NO_APP
+ 753 004a 13778708 		andi	a4,a4,136
+ 754 004e 3AC6     		sw	a4,12(sp)
+ 755              	 #APP
+ 756              	# 373 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 374              	    R8_RTC_MODE_CTRL |= RB_RTC_TMR_EN | (t);
+ 757              		fence.i
+ 758              	# 0 "" 2
+ 759              	 #NO_APP
+ 760 0054 2380B704 		sb	a1,64(a5)
+ 761 0058 2380C704 		sb	a2,64(a5)
+ 762              	 #APP
+ 763              	# 373 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 764              		fence.i
+ 765              	# 0 "" 2
+ 766              	 #NO_APP
+ 767 0060 03C71703 		lbu	a4,49(a5)
+ 768 0064 598D     		or	a0,a0,a4
+ 769 0066 13650501 		ori	a0,a0,16
+ 770 006a 1375F50F 		andi	a0,a0,0xff
+ 771 006e A388A702 		sb	a0,49(a5)
+ 772 0072 23800704 		sb	zero,64(a5)
+ 773 0076 B247     		lw	a5,12(sp)
+ 774              	 #APP
+ 775              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 776              		csrrs a5, 0x800, a5
+ 777              	# 0 "" 2
+ 778              	# 375 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 375 007c 0F100000 	    sys_safe_access_disable();
+ 376              	}
+ 779              		fence.i
+ 780              	# 0 "" 2
+ 781              	 #NO_APP
+ 782 0080 4101     		addi	sp,sp,16
+ 783 0082 8280     		jr	ra
+ 785              		.section	.text.RTC_TRIGFunCfg,"ax",@progbits
+ 786              		.align	1
+ 787              		.globl	RTC_TRIGFunCfg
+ 789              	RTC_TRIGFunCfg:
+ 790 0000 0111     		addi	sp,sp,-32
+ 791 0002 22CC     		sw	s0,24(sp)
+ 792 0004 06CE     		sw	ra,28(sp)
+ 793 0006 2A84     		mv	s0,a0
+ 794 0008 97000000 		call	RTC_GetCycleLSI
+ 794      E7800000 
+ 795 0010 2295     		add	a0,a0,s0
+ 796 0012 B707C0A8 		li	a5,-1463812096
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 24
+
+
+ 797 0016 63F5A700 		bleu	a0,a5,.L108
+ 798 001a B7074057 		li	a5,1463812096
+ 799 001e 3E95     		add	a0,a0,a5
+ 800              	.L108:
+ 801 0020 93078008 		li	a5,136
+ 802              	 #APP
+ 803              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 804              		csrrc a5, 0x800, a5
+ 805              	# 0 "" 2
+ 806              	 #NO_APP
+ 807 0028 93F78708 		andi	a5,a5,136
+ 808 002c 3EC6     		sw	a5,12(sp)
+ 809              	 #APP
+ 810              	# 397 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 377              	
+ 378              	/*********************************************************************
+ 379              	 * @fn      RTC_TRIGFunCfg
+ 380              	 *
+ 381              	 * @brief   RTC时间触发模式配置
+ 382              	 *
+ 383              	 * @param   cyc - 相对当前时间的触发间隔时间，基于LSI时钟周期数
+ 384              	 *
+ 385              	 * @return  none
+ 386              	 */
+ 387              	void RTC_TRIGFunCfg(uint32_t cyc)
+ 388              	{
+ 389              	    uint32_t t;
+ 390              	
+ 391              	    t = RTC_GetCycleLSI() + cyc;
+ 392              	    if(t > RTC_MAX_COUNT)
+ 393              	    {
+ 394              	        t -= RTC_MAX_COUNT;
+ 395              	    }
+ 396              	
+ 397 002e 0F100000 	    sys_safe_access_enable();
+ 398              	    R32_RTC_TRIG = t;
+ 811              		fence.i
+ 812              	# 0 "" 2
+ 813              	 #NO_APP
+ 814 0032 B7170040 		li	a5,1073745920
+ 815 0036 13077005 		li	a4,87
+ 816 003a 2380E704 		sb	a4,64(a5)
+ 817 003e 130780FA 		li	a4,-88
+ 818 0042 2380E704 		sb	a4,64(a5)
+ 819              	 #APP
+ 820              	# 397 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 821              		fence.i
+ 822              	# 0 "" 2
+ 823              	 #NO_APP
+ 824 004a C8DB     		sw	a0,52(a5)
+ 825 004c 03C71703 		lbu	a4,49(a5)
+ 826 0050 13670702 		ori	a4,a4,32
+ 827 0054 A388E702 		sb	a4,49(a5)
+ 828 0058 23800704 		sb	zero,64(a5)
+ 829 005c B247     		lw	a5,12(sp)
+ 830              	 #APP
+ 831              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 25
+
+
+ 832              		csrrs a5, 0x800, a5
+ 833              	# 0 "" 2
+ 834              	# 400 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 399              	    R8_RTC_MODE_CTRL |= RB_RTC_TRIG_EN;
+ 400 0062 0F100000 	    sys_safe_access_disable();
+ 401              	}
+ 835              		fence.i
+ 836              	# 0 "" 2
+ 837              	 #NO_APP
+ 838 0066 F240     		lw	ra,28(sp)
+ 839 0068 6244     		lw	s0,24(sp)
+ 840 006a 0561     		addi	sp,sp,32
+ 841 006c 8280     		jr	ra
+ 843              		.section	.text.RTC_ModeFunDisable,"ax",@progbits
+ 844              		.align	1
+ 845              		.globl	RTC_ModeFunDisable
+ 847              	RTC_ModeFunDisable:
+ 848 0000 4111     		addi	sp,sp,-16
+ 849 0002 93070002 		li	a5,32
+ 850 0006 11C5     		beqz	a0,.L111
+ 851 0008 0547     		li	a4,1
+ 852 000a 8147     		li	a5,0
+ 853 000c 6313E500 		bne	a0,a4,.L111
+ 854 0010 C147     		li	a5,16
+ 855              	.L111:
+ 856 0012 13078008 		li	a4,136
+ 857              	 #APP
+ 858              	# 152 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 859              		csrrc a4, 0x800, a4
+ 860              	# 0 "" 2
+ 861              	 #NO_APP
+ 862 001a 13778708 		andi	a4,a4,136
+ 863 001e 3AC6     		sw	a4,12(sp)
+ 864              	 #APP
+ 865              	# 425 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 402              	
+ 403              	/*********************************************************************
+ 404              	 * @fn      RTC_ModeFunDisable
+ 405              	 *
+ 406              	 * @brief   RTC 模式功能关闭
+ 407              	 *
+ 408              	 * @param   m   - 需要关闭的当前模式
+ 409              	 *
+ 410              	 * @return  none
+ 411              	 */
+ 412              	void RTC_ModeFunDisable(RTC_MODETypeDef m)
+ 413              	{
+ 414              	    uint8_t i = 0;
+ 415              	
+ 416              	    if(m == RTC_TRIG_MODE)
+ 417              	    {
+ 418              	        i |= RB_RTC_TRIG_EN;
+ 419              	    }
+ 420              	    else if(m == RTC_TMR_MODE)
+ 421              	    {
+ 422              	        i |= RB_RTC_TMR_EN;
+ 423              	    }
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 26
+
+
+ 424              	
+ 425 0020 0F100000 	    sys_safe_access_enable();
+ 426              	    R8_RTC_MODE_CTRL &= ~(i);
+ 866              		fence.i
+ 867              	# 0 "" 2
+ 868              	 #NO_APP
+ 869 0024 37170040 		li	a4,1073745920
+ 870 0028 93067005 		li	a3,87
+ 871 002c 2300D704 		sb	a3,64(a4)
+ 872 0030 930680FA 		li	a3,-88
+ 873 0034 2300D704 		sb	a3,64(a4)
+ 874              	 #APP
+ 875              	# 425 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 876              		fence.i
+ 877              	# 0 "" 2
+ 878              	 #NO_APP
+ 879 003c 83461703 		lbu	a3,49(a4)
+ 880 0040 93C7F7FF 		not	a5,a5
+ 881 0044 F58F     		and	a5,a5,a3
+ 882 0046 A308F702 		sb	a5,49(a4)
+ 883 004a 23000704 		sb	zero,64(a4)
+ 884 004e B247     		lw	a5,12(sp)
+ 885              	 #APP
+ 886              	# 134 "../../sdk/ch572/RVMSIS/core_riscv.h" 1
+ 887              		csrrs a5, 0x800, a5
+ 888              	# 0 "" 2
+ 889              	# 427 "../../sdk/ch572/StdPeriphDriver/CH57x_clk.c" 1
+ 427 0054 0F100000 	    sys_safe_access_disable();
+ 428              	}
+ 890              		fence.i
+ 891              	# 0 "" 2
+ 892              	 #NO_APP
+ 893 0058 4101     		addi	sp,sp,16
+ 894 005a 8280     		jr	ra
+ 896              		.section	.text.RTC_GetITFlag,"ax",@progbits
+ 897              		.align	1
+ 898              		.globl	RTC_GetITFlag
+ 900              	RTC_GetITFlag:
+ 901 0000 B7170040 		li	a5,1073745920
+ 902 0004 11E5     		bnez	a0,.L117
+ 903 0006 03C50703 		lbu	a0,48(a5)
+ 904 000a 13750508 		andi	a0,a0,128
+ 905 000e 8280     		ret
+ 906              	.L117:
+ 907 0010 03C50703 		lbu	a0,48(a5)
+ 908 0014 13750504 		andi	a0,a0,64
+ 909 0018 8280     		ret
+ 911              		.section	.text.RTC_ClearITFlag,"ax",@progbits
+ 912              		.align	1
+ 913              		.globl	RTC_ClearITFlag
+ 915              	RTC_ClearITFlag:
+ 916 0000 09C5     		beqz	a0,.L120
+ 917 0002 8547     		li	a5,1
+ 918 0004 630AF500 		beq	a0,a5,.L121
+ 919 0008 8280     		ret
+ 920              	.L120:
+ 921 000a B7170040 		li	a5,1073745920
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 27
+
+
+ 922 000e 13070002 		li	a4,32
+ 923              	.L123:
+ 924 0012 2388E702 		sb	a4,48(a5)
+ 925 0016 8280     		ret
+ 926              	.L121:
+ 927 0018 B7170040 		li	a5,1073745920
+ 928 001c 4147     		li	a4,16
+ 929 001e D5BF     		j	.L123
+ 931              		.globl	Freq_LSI
+ 932              		.section	.sbss.Freq_LSI,"aw",@nobits
+ 933              		.align	2
+ 934              		.set	.LANCHOR0,. + 0
+ 937              	Freq_LSI:
+ 938 0000 00000000 		.zero	4
+ 939              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH57x_clk.c
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:8      .text.LClk_Cfg:0000000000000000 LClk_Cfg
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:58     .text.HSECFG_Current:0000000000000000 HSECFG_Current
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:105    .text.HSECFG_Capacitance:0000000000000000 HSECFG_Capacitance
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:153    .text.RTC_InitClock:0000000000000000 RTC_InitClock
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:258    .text.RTC_InitTime:0000000000000000 RTC_InitTime
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:482    .text.RTC_GetTime:0000000000000000 RTC_GetTime
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:638    .text.RTC_SetCycleLSI:0000000000000000 RTC_SetCycleLSI
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:695    .text.RTC_GetCycleLSI:0000000000000000 RTC_GetCycleLSI
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:712    .text.RTC_TMRFunCfg:0000000000000000 RTC_TMRFunCfg
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:789    .text.RTC_TRIGFunCfg:0000000000000000 RTC_TRIGFunCfg
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:847    .text.RTC_ModeFunDisable:0000000000000000 RTC_ModeFunDisable
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:900    .text.RTC_GetITFlag:0000000000000000 RTC_GetITFlag
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:915    .text.RTC_ClearITFlag:0000000000000000 RTC_ClearITFlag
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:937    .sbss.Freq_LSI:0000000000000000 Freq_LSI
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:934    .sbss.Freq_LSI:0000000000000000 .LANCHOR0
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:16     .text.LClk_Cfg:0000000000000018 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:229    .text.RTC_InitClock:00000000000000b6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:232    .text.RTC_InitClock:00000000000000c2 .L11
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:245    .text.RTC_InitClock:00000000000000e4 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:239    .text.RTC_InitClock:00000000000000d4 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:162    .text.RTC_InitClock:0000000000000014 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:250    .text.RTC_InitClock:00000000000000f2 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:210    .text.RTC_InitClock:000000000000007c .L14
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:291    .text.RTC_InitTime:000000000000005a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:427    .text.RTC_InitTime:0000000000000190 .L22
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:441    .text.RTC_InitTime:00000000000001ba .L28
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:295    .text.RTC_InitTime:0000000000000068 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:329    .text.RTC_InitTime:00000000000000c2 .L30
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:472    .text.RTC_InitTime:0000000000000206 .L31
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:382    .text.RTC_InitTime:000000000000013c .L32
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:438    .text.RTC_InitTime:00000000000001b6 .L21
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:265    .text.RTC_InitTime:0000000000000012 .L20
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:454    .text.RTC_InitTime:00000000000001d4 .L24
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:448    .text.RTC_InitTime:00000000000001cc .L25
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:276    .text.RTC_InitTime:0000000000000032 .L23
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:461    .text.RTC_InitTime:00000000000001e4 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:450    .text.RTC_InitTime:00000000000001ce .L26
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:458    .text.RTC_InitTime:00000000000001e0 .L54
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:464    .text.RTC_InitTime:00000000000001ea .L33
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:341    .text.RTC_InitTime:00000000000000ee .L34
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:487    .text.RTC_GetTime:0000000000000010 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:625    .text.RTC_GetTime:00000000000001a8 .L58
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:629    .text.RTC_GetTime:00000000000001b2 .L59
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:589    .text.RTC_GetTime:0000000000000150 .L74
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:611    .text.RTC_GetTime:0000000000000188 .L63
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:566    .text.RTC_GetTime:000000000000010e .L64
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:597    .text.RTC_GetTime:0000000000000164 .L65
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:535    .text.RTC_GetTime:00000000000000aa .L56
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:605    .text.RTC_GetTime:000000000000017c .L62
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:553    .text.RTC_GetTime:00000000000000e2 .L61
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:619    .text.RTC_GetTime:000000000000019c .L67
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:621    .text.RTC_GetTime:00000000000001a0 .L92
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:569    .text.RTC_GetTime:0000000000000114 .L66
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:607    .text.RTC_GetTime:000000000000017e .L73
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:615    .text.RTC_GetTime:0000000000000194 .L70
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s 			page 29
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:545    .text.RTC_GetTime:00000000000000ce .L72
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:592    .text.RTC_GetTime:0000000000000158 .L57
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:641    .text.RTC_SetCycleLSI:0000000000000006 .L98
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:698    .text.RTC_GetCycleLSI:0000000000000006 .L102
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:800    .text.RTC_TRIGFunCfg:0000000000000020 .L108
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:855    .text.RTC_ModeFunDisable:0000000000000012 .L111
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:906    .text.RTC_GetITFlag:0000000000000010 .L117
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:920    .text.RTC_ClearITFlag:000000000000000a .L120
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:926    .text.RTC_ClearITFlag:0000000000000018 .L121
+C:\Users\LRNA\AppData\Local\Temp\ccphFrlD.s:923    .text.RTC_ClearITFlag:0000000000000012 .L123
+
+UNDEFINED SYMBOLS
+GetSysClock

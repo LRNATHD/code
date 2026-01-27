@@ -1,0 +1,94 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s 			page 1
+
+
+   1              		.file	"CH59x_timer2.c"
+   2              		.option nopic
+   3              		.text
+   4              		.section	.text.TMR2_TimerInit,"ax",@progbits
+   5              		.align	1
+   6              		.globl	TMR2_TimerInit
+   8              	TMR2_TimerInit:
+   9 0000 B7370040 		li	a5,1073754112
+  10 0004 23A6A780 		sw	a0,-2036(a5)
+  11 0008 0947     		li	a4,2
+  12 000a 2380E780 		sb	a4,-2048(a5)
+  13 000e 1147     		li	a4,4
+  14 0010 2380E780 		sb	a4,-2048(a5)
+  15 0014 8280     		ret
+  17              		.section	.text.TMR2_EXTSingleCounterInit,"ax",@progbits
+  18              		.align	1
+  19              		.globl	TMR2_EXTSingleCounterInit
+  21              	TMR2_EXTSingleCounterInit:
+  22 0000 1A05     		slli	a0,a0,6
+  23 0002 B7370040 		li	a5,1073754112
+  24 0006 0947     		li	a4,2
+  25 0008 13655501 		ori	a0,a0,21
+  26 000c 2380E780 		sb	a4,-2048(a5)
+  27 0010 1375F50F 		andi	a0,a0,0xff
+  28 0014 2380A780 		sb	a0,-2048(a5)
+  29 0018 8280     		ret
+  31              		.section	.text.TMR2_PWMInit,"ax",@progbits
+  32              		.align	1
+  33              		.globl	TMR2_PWMInit
+  35              	TMR2_PWMInit:
+  36 0000 1205     		slli	a0,a0,4
+  37 0002 9A05     		slli	a1,a1,6
+  38 0004 B7370040 		li	a5,1073754112
+  39 0008 0947     		li	a4,2
+  40 000a 4D8D     		or	a0,a0,a1
+  41 000c 2380E780 		sb	a4,-2048(a5)
+  42 0010 1375F50F 		andi	a0,a0,0xff
+  43 0014 2380A780 		sb	a0,-2048(a5)
+  44 0018 8280     		ret
+  46              		.section	.text.TMR2_CapInit,"ax",@progbits
+  47              		.align	1
+  48              		.globl	TMR2_CapInit
+  50              	TMR2_CapInit:
+  51 0000 1A05     		slli	a0,a0,6
+  52 0002 B7370040 		li	a5,1073754112
+  53 0006 0947     		li	a4,2
+  54 0008 13655500 		ori	a0,a0,5
+  55 000c 2380E780 		sb	a4,-2048(a5)
+  56 0010 1375F50F 		andi	a0,a0,0xff
+  57 0014 2380A780 		sb	a0,-2048(a5)
+  58 0018 8280     		ret
+  60              		.section	.text.TMR2_DMACfg,"ax",@progbits
+  61              		.align	1
+  62              		.globl	TMR2_DMACfg
+  64              	TMR2_DMACfg:
+  65 0000 11E5     		bnez	a0,.L6
+  66 0002 B7370040 		li	a5,1073754112
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s 			page 2
+
+
+  67 0006 A3800780 		sb	zero,-2047(a5)
+  68 000a 8280     		ret
+  69              	.L6:
+  70 000c C205     		slli	a1,a1,16
+  71 000e B7370040 		li	a5,1073754112
+  72 0012 C181     		srli	a1,a1,16
+  73 0014 4206     		slli	a2,a2,16
+  74 0016 239CB780 		sh	a1,-2024(a5)
+  75 001a 4182     		srli	a2,a2,16
+  76 001c 239EC780 		sh	a2,-2020(a5)
+  77 0020 1547     		li	a4,5
+  78 0022 91E2     		bnez	a3,.L9
+  79 0024 0547     		li	a4,1
+  80              	.L9:
+  81 0026 A380E780 		sb	a4,-2047(a5)
+  82 002a 8280     		ret
+  84              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_timer2.c
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:8      .text.TMR2_TimerInit:0000000000000000 TMR2_TimerInit
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:21     .text.TMR2_EXTSingleCounterInit:0000000000000000 TMR2_EXTSingleCounterInit
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:35     .text.TMR2_PWMInit:0000000000000000 TMR2_PWMInit
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:50     .text.TMR2_CapInit:0000000000000000 TMR2_CapInit
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:64     .text.TMR2_DMACfg:0000000000000000 TMR2_DMACfg
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:69     .text.TMR2_DMACfg:000000000000000c .L6
+C:\Users\LRNA\AppData\Local\Temp\ccqTSVSS.s:80     .text.TMR2_DMACfg:0000000000000026 .L9
+
+NO UNDEFINED SYMBOLS

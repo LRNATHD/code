@@ -3,20 +3,26 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/mounriver/EXAM/SRC/StdPeriphDriver/inc",
-                "${workspaceFolder}/mounriver/EXAM/SRC/RVMSIS",
-                "${workspaceFolder}/mounriver/SRC/StdPeriphDriver/inc",
-                "${workspaceFolder}/mounriver/SRC/RVMSIS"
+                "${workspaceFolder}/antigravity-mounriver/sdk/ch592/StdPeriphDriver/inc",
+                "${workspaceFolder}/antigravity-mounriver/sdk/ch592/RVMSIS",
+                "${workspaceFolder}/antigravity-mounriver/personal/ScienceOlympiadEV/User",
+                "${workspaceFolder}/antigravity-mounriver/personal/ScienceOlympiadEV/StdPeriphDriver/inc",
+                "${workspaceFolder}/antigravity-mounriver/personal/ScienceOlympiadEV/obj",
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "CH592",
+                "DEBUG=1",
+                "INT_SOFT=0",
+                "__INTERRUPT="
             ],
+            "compilerPath": "C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gcc.exe",
             "cStandard": "c99",
             "cppStandard": "c++11",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
