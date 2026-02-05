@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="240" viewBox="0 0 160 240">
+  <defs>
+    <linearGradient id="coverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="240" rx="4" fill="url(#coverGrad)" opacity="0.3"/>
+  <g transform="translate(80, 120)" fill="none" stroke="#667eea" stroke-width="2" opacity="0.6">
+    <path d="M-30 -20 L-30 30 Q-30 35 -25 35 L25 35 Q30 35 30 30 L30 -35 Q30 -40 25 -40 L-15 -40"/>
+    <path d="M-15 -40 L-15 -20 L-30 -20"/>
+    <line x1="-20" y1="-10" x2="20" y2="-10"/>
+    <line x1="-20" y1="0" x2="20" y2="0"/>
+    <line x1="-20" y1="10" x2="10" y2="10"/>
+  </g>
+</svg>

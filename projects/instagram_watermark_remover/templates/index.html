@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Watermark Remover</title>
+    <meta name="description" content="Remove Instagram watermarks from your Google Photos using AI-powered inpainting">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Animated Background -->
+        <div class="bg-gradient"></div>
+        <div class="bg-noise"></div>
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" />
+                            <circle cx="12" cy="12" r="4" />
+                            <circle cx="18" cy="6" r="1.5" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <h1>Watermark Remover</h1>
+                </div>
+                <div class="header-actions">
+                    {% if is_authenticated %}
+                    <div class="status-badge authenticated">
+                        <span class="status-dot"></span>
+                        Connected to Google Photos
+                    </div>
+                    <a href="/auth/logout" class="btn btn-ghost">Logout</a>
+                    {% else %}
+                    <div class="status-badge">
+                        <span class="status-dot"></span>
+                        Not Connected
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            {% if not has_credentials %}
+            <!-- Setup Required -->
+            <section class="setup-section glass-card">
+                <div class="setup-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                </div>
+                <h2>Initial Setup Required</h2>
+                <p>To connect to Google Photos, you need to set up API credentials:</p>
+                <ol class="setup-steps">
+                    <li>Go to the <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">Google Cloud Console</a></li>
+                    <li>Create a new project or select an existing one</li>
+                    <li>Enable the <strong>Google Photos Library API</strong></li>
+                    <li>Configure OAuth consent screen</li>
+                    <li>Create OAuth 2.0 credentials (Desktop app type)</li>
+                    <li>Download the JSON file and save it as:<br>
+                        <code>credentials/client_secret.json</code></li>
+                </ol>
+                <button class="btn btn-primary" onclick="location.reload()">
+                    I've Added the Credentials
+                </button>
+            </section>
+            
+            {% elif not is_authenticated %}
+            <!-- Authentication Required -->
+            <section class="auth-section glass-card">
+                <div class="auth-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <h2>Connect to Google Photos</h2>
+                <p>Sign in with your Google account to access your photos</p>
+                <a href="/auth/login" class="btn btn-google">
+                    <svg class="google-icon" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Sign in with Google
+                </a>
+            </section>
+            
+            {% else %}
+            <!-- Main App Interface -->
+            <div class="app-grid">
+                <!-- Sidebar / Controls -->
+                <aside class="sidebar glass-card">
+                    <div class="sidebar-section">
+                        <h3>Source</h3>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" data-source="google">Google Photos</button>
+                            <button class="tab-btn" data-source="local">Local Upload</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Photos Source -->
+                    <div class="source-panel" id="google-source">
+                        <div class="sidebar-section">
+                            <label for="album-select">Album</label>
+                            <select id="album-select" class="select-input">
+                                <option value="">All Photos</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-full" id="fetch-photos-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Fetch Photos
+                        </button>
+                    </div>
+                    
+                    <!-- Local Upload Source -->
+                    <div class="source-panel hidden" id="local-source">
+                        <div class="upload-zone" id="upload-zone">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                            </svg>
+                            <p>Drag & drop images here</p>
+                            <span>or click to browse</span>
+                            <input type="file" id="file-input" multiple accept="image/*" hidden>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Watermark Position</h3>
+                        <div class="position-grid">
+                            <button class="position-btn" data-position="top_left" title="Top Left">↖</button>
+                            <button class="position-btn" data-position="top_right" title="Top Right">↗</button>
+                            <button class="position-btn" data-position="bottom_left" title="Bottom Left">↙</button>
+                            <button class="position-btn active" data-position="bottom_right" title="Bottom Right">↘</button>
+                            <button class="position-btn auto" data-position="auto" title="Auto Detect">Auto</button>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Actions</h3>
+                        <button class="btn btn-gradient btn-full" id="process-btn" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                            Remove Watermarks
+                        </button>
+                        <button class="btn btn-secondary btn-full" id="select-all-btn">
+                            Select All
+                        </button>
+                    </div>
+                    
+                    <!-- Progress Section -->
+                    <div class="sidebar-section hidden" id="progress-section">
+                        <h3>Processing</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span id="progress-current">0</span> / <span id="progress-total">0</span>
+                            </div>
+                            <p class="progress-status" id="progress-status">Ready</p>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Photo Grid -->
+                <section class="photo-section">
+                    <div class="photo-tabs">
+                        <button class="photo-tab active" data-view="source">Source Photos</button>
+                        <button class="photo-tab" data-view="processed">Processed</button>
+                    </div>
+                    
+                    <div class="photo-grid-container">
+                        <div class="photo-grid" id="photo-grid">
+                            <div class="empty-state">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64">
+                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <h3>No Photos Yet</h3>
+                                <p>Fetch photos from Google Photos or upload local images</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            {% endif %}
+        </main>
+        
+        <!-- Image Preview Modal -->
+        <div class="modal hidden" id="preview-modal">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="modal-close">&times;</button>
+                <div class="preview-container">
+                    <div class="preview-panel">
+                        <h4>Original</h4>
+                        <img id="preview-original" src="" alt="Original">
+                    </div>
+                    <div class="preview-panel">
+                        <h4>Processed</h4>
+                        <img id="preview-processed" src="" alt="Processed">
+                        <div class="preview-loading hidden" id="preview-loading">
+                            <div class="spinner"></div>
+                            <p>Processing...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-actions">
+                    <button class="btn btn-secondary" id="preview-process-btn">Process This Image</button>
+                    <a class="btn btn-primary hidden" id="preview-download-btn" download>Download</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
