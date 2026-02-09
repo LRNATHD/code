@@ -7,16 +7,16 @@ BASE_DIR = Path(__file__).parent
 
 # Server settings
 HOST = "0.0.0.0"
-PORT = 5555
+PORT = int(os.environ.get("SERVICE_PORT", 9871))
 DEBUG = True
 
 # Authentication
-# Password for accessing the web reader (change this!)
-ACCESS_PASSWORD = os.environ.get("FBREADER_PASSWORD")
+# Password for accessing all startup apps (shared across apps)
+ACCESS_PASSWORD = os.environ.get("STARTUP_APPS_PASSWORD")
 
 # Session settings
 SECRET_KEY = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key-change-in-production")
-SESSION_TIMEOUT_HOURS = 24 * 7  # 1 week
+SESSION_TIMEOUT_HOURS = 24 * 30  # 1 month
 
 # FBReader paths (Windows UWP app)
 FBREADER_BASE = Path(os.environ.get(

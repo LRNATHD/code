@@ -7,6 +7,15 @@ let currentFilter = 'all';
 let currentView = 'grid';
 let searchQuery = '';
 
+// Get recently opened books from localStorage
+function getRecentlyOpened() {
+    try {
+        return JSON.parse(localStorage.getItem('recentlyOpened') || '[]');
+    } catch (e) {
+        return [];
+    }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadBooks();
@@ -89,6 +98,10 @@ async function loadBooks() {
 function renderBooks() {
     const container = document.getElementById('booksContainer');
 
+    // Get recently opened book IDs for sorting/filtering
+    const recentlyOpened = getRecentlyOpened();
+    const recentIds = recentlyOpened.map(r => r.id);
+
     // Filter books
     let filtered = allBooks.filter(book => {
         // Search filter
@@ -104,15 +117,32 @@ function renderBooks() {
             return book.progress > 0 && book.progress < 100;
         } else if (currentFilter === 'completed') {
             return book.progress >= 100;
+        } else if (currentFilter === 'recent') {
+            return recentIds.includes(book.book_id);
         }
 
         return true;
     });
 
+    // Sort by recently opened if on recent filter
+    if (currentFilter === 'recent') {
+        filtered.sort((a, b) => {
+            const aIndex = recentIds.indexOf(a.book_id);
+            const bIndex = recentIds.indexOf(b.book_id);
+            return aIndex - bIndex;
+        });
+    }
+
     if (filtered.length === 0) {
+        let emptyMessage = 'No books found';
+        if (searchQuery) {
+            emptyMessage += ' matching your search';
+        } else if (currentFilter === 'recent') {
+            emptyMessage = 'No recently opened books. Start reading to see them here!';
+        }
         container.innerHTML = `
             <div class="loading-state">
-                <p>No books found${searchQuery ? ' matching your search' : ''}.</p>
+                <p>${emptyMessage}</p>
             </div>
         `;
         return;

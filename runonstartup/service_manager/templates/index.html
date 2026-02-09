@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* Background slideshow */
+        #bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        #bg img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        #bg img.active {
+            opacity: 0.3;
+        }
+
+        /* Three.js container */
+        #container {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+        }
+
+        /* Card styles (rendered as CSS3D elements) */
+        .card {
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid #333;
+            padding: 16px 20px;
+            width: 220px;
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .card:hover {
+            border-color: #555;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .card-header h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: #eee;
+            letter-spacing: 0.5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #b85450;
+        }
+
+        .status-dot.healthy {
+            background: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+        }
+
+        .status-dot.running {
+            background: #facc15;
+            box-shadow: 0 0 8px #facc15;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #444;
+            background: transparent;
+            color: #888;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #222;
+            color: #fff;
+            border-color: #666;
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-start {
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+
+        .btn-start:hover:not(:disabled) {
+            background: #4ade80;
+            color: #000;
+        }
+
+        .btn-stop {
+            border-color: #f87171;
+            color: #f87171;
+        }
+
+        .btn-stop:hover:not(:disabled) {
+            background: #f87171;
+            color: #000;
+        }
+
+        .btn-restart {
+            border-color: #facc15;
+            color: #facc15;
+        }
+
+        .btn-restart:hover:not(:disabled) {
+            background: #facc15;
+            color: #000;
+        }
+
+        .btn-run {
+            border-color: #60a5fa;
+            color: #60a5fa;
+        }
+
+        .btn-run:hover {
+            background: #60a5fa;
+            color: #000;
+        }
+
+        /* Password Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid #333;
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px 16px;
+            font-size: 14px;
+            width: 160px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .modal-content input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .modal-content button {
+            background: #333;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 8px;
+            border-radius: 4px;
+        }
+
+        .modal-content button:hover {
+            background: #444;
+        }
+
+        .modal-content .error {
+            color: #f87171;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bg"></div>
+    <div id="container"></div>
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <input type="password" id="password-input" placeholder="•••••">
+            <button onclick="submitPassword()">Go</button>
+            <div id="password-error" class="error"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
+    <script>
+        let services = [], tasks = [];
+        let pendingAction = null;
+        let scene, camera, renderer;
+        let cardObjects = [];
+        let bgImages = [], bgIndex = 0;
+
+        // ========== BACKGROUND SLIDESHOW ==========
+        async function loadBackgroundImages() {
+            try {
+                const resp = await fetch('/api/voles');
+                const data = await resp.json();
+                bgImages = data.images || [];
+                if (bgImages.length > 0) {
+                    // Shuffle
+                    bgImages.sort(() => Math.random() - 0.5);
+                    // Preload first few
+                    const bg = document.getElementById('bg');
+                    for (let i = 0; i < Math.min(3, bgImages.length); i++) {
+                        const img = document.createElement('img');
+                        img.src = bgImages[i];
+                        if (i === 0) img.classList.add('active');
+                        bg.appendChild(img);
+                    }
+                    // Start slideshow
+                    setInterval(nextBgImage, 5000);
+                }
+            } catch (e) { console.error('BG load failed:', e); }
+        }
+
+        function nextBgImage() {
+            const bg = document.getElementById('bg');
+            const imgs = bg.querySelectorAll('img');
+            if (imgs.length === 0) return;
+
+            imgs.forEach(img => img.classList.remove('active'));
+            bgIndex = (bgIndex + 1) % bgImages.length;
+
+            // Check if we need to add this image
+            let found = false;
+            imgs.forEach(img => {
+                if (img.src === bgImages[bgIndex]) {
+                    img.classList.add('active');
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                const img = document.createElement('img');
+                img.src = bgImages[bgIndex];
+                img.onload = () => img.classList.add('active');
+                bg.appendChild(img);
+                // Clean up old images (keep last 5)
+                while (bg.children.length > 5) bg.removeChild(bg.firstChild);
+            }
+        }
+
+        // ========== THREE.JS SETUP ==========
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+            camera.position.z = 800;
+
+            renderer = new THREE.CSS3DRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Subtle floating animation
+            const t = Date.now() * 0.001;
+            cardObjects.forEach((obj, i) => {
+                obj.position.y = obj.userData.baseY + Math.sin(t + i * 0.5) * 8;
+                obj.rotation.y = Math.sin(t * 0.3 + i * 0.3) * 0.03;
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // ========== FETCH DATA ==========
+        async function fetchStatus() {
+            try {
+                const resp = await fetch('/api/status');
+                const data = await resp.json();
+                services = data.services;
+                tasks = data.tasks;
+                renderCards();
+            } catch (e) { console.error('Fetch failed:', e); }
+        }
+
+        // ========== RENDER CARDS ==========
+        function renderCards() {
+            // Clear existing
+            cardObjects.forEach(obj => scene.remove(obj));
+            cardObjects = [];
+
+            const allItems = [...services.map(s => ({ ...s, isTask: false })),
+            ...tasks.map(t => ({ ...t, isTask: true }))];
+
+            const cols = Math.min(4, allItems.length);
+            const spacing = 260;
+            const startX = -((cols - 1) * spacing) / 2;
+
+            allItems.forEach((item, i) => {
+                const col = i % cols;
+                const row = Math.floor(i / cols);
+
+                const div = document.createElement('div');
+                div.className = 'card';
+
+                if (item.isTask) {
+                    div.innerHTML = `
+                        <div class="card-header">
+                            <h3>${item.name}</h3>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-run" onclick="action('${item.id}', 'run', true)">Run</button>
+                        </div>
+                    `;
+                } else {
+                    const statusClass = item.healthy ? 'healthy' : (item.running ? 'running' : 'stopped');
+                    div.innerHTML = `
+                        <div class="card-header">
+                            <div class="status-dot ${statusClass}"></div>
+                            <h3>${item.name}</h3>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-start" onclick="action('${item.id}', 'start', false)" ${item.running ? 'disabled' : ''}>▶</button>
+                            <button class="btn btn-stop" onclick="action('${item.id}', 'stop', false)" ${!item.running ? 'disabled' : ''}>■</button>
+                            <button class="btn btn-restart" onclick="action('${item.id}', 'restart', false)">↻</button>
+                        </div>
+                    `;
+                }
+
+                const obj = new THREE.CSS3DObject(div);
+                obj.position.x = startX + col * spacing;
+                obj.position.y = 100 - row * 140;
+                obj.position.z = 0;
+                obj.userData.baseY = obj.position.y;
+
+                scene.add(obj);
+                cardObjects.push(obj);
+            });
+        }
+
+        // ========== ACTIONS ==========
+        function action(id, act, isTask) {
+            const url = isTask ? `/api/task/${id}/${act}` : `/api/service/${id}/${act}`;
+            pendingAction = { url };
+            document.getElementById('password-modal').classList.add('show');
+            document.getElementById('password-input').focus();
+            document.getElementById('password-error').textContent = '';
+        }
+
+        async function submitPassword() {
+            const password = document.getElementById('password-input').value;
+            if (!pendingAction) return;
+
+            try {
+                const resp = await fetch(pendingAction.url, {
+                    method: 'POST',
+                    headers: { 'X-Password': password }
+                });
+                const data = await resp.json();
+
+                if (data.success) {
+                    document.getElementById('password-modal').classList.remove('show');
+                    document.getElementById('password-input').value = '';
+                    pendingAction = null;
+                    setTimeout(fetchStatus, 500);
+                } else {
+                    document.getElementById('password-error').textContent = data.message || 'Failed';
+                }
+            } catch (e) {
+                document.getElementById('password-error').textContent = 'Error';
+            }
+        }
+
+        document.getElementById('password-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') submitPassword();
+            if (e.key === 'Escape') {
+                document.getElementById('password-modal').classList.remove('show');
+                pendingAction = null;
+            }
+        });
+
+        // ========== INIT ==========
+        initThree();
+        loadBackgroundImages();
+        fetchStatus();
+        setInterval(fetchStatus, 15000);
+    </script>
+</body>
+
+</html>

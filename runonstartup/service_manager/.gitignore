@@ -1,0 +1,4 @@
+# Service Manager gitignore
+__pycache__/
+*.py[cod]
+*.log

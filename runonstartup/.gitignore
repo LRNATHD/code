@@ -1,0 +1,46 @@
+# Root-level gitignore for runonstartup
+
+# Logs
+*.log
+cloudflared.log
+unified_server.log
+startup_log.txt
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Credentials and secrets (catch-all) - now stored in %APPDATA%
+# Keeping these just in case any slip through
+*.pem
+*.key
+.env
+.env.*
+
+# Data files with user content
+**/db.json
+**/data/
+
+# Cache
+**/cache/
+*.epub
+
+# Virtual environments
+venv/
+.env/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Service Manager specific
+service_manager/__pycache__/

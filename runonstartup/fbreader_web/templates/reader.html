@@ -158,6 +158,8 @@
                     <span id="fontSizeDisplay">100%</span>
                     <button class="size-btn" onclick="changeFontSize(10)">A+</button>
                 </div>
+                <input type="range" id="fontSizeSlider" min="50" max="250" value="100" step="5"
+                    onchange="setFontSize(this.value)" oninput="setFontSize(this.value)" class="settings-slider">
             </div>
 
             <div class="setting-group">
@@ -165,15 +167,71 @@
                 <select id="fontFamily" onchange="changeFontFamily(this.value)">
                     <option value="default">Default</option>
                     <option value="serif">Serif</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Times New Roman', serif">Times New Roman</option>
                     <option value="sans-serif">Sans Serif</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Helvetica Neue', sans-serif">Helvetica</option>
                     <option value="monospace">Monospace</option>
+                    <option value="'OpenDyslexic', sans-serif">OpenDyslexic</option>
                 </select>
             </div>
 
             <div class="setting-group">
-                <label>Line Height</label>
-                <input type="range" id="lineHeight" min="1" max="2.5" step="0.1" value="1.6"
-                    onchange="changeLineHeight(this.value)">
+                <label>Line Height: <span id="lineHeightDisplay">1.6</span></label>
+                <input type="range" id="lineHeight" min="1" max="3" step="0.1" value="1.6"
+                    onchange="changeLineHeight(this.value)" oninput="changeLineHeight(this.value)"
+                    class="settings-slider">
+            </div>
+
+            <div class="setting-group">
+                <label>Margins</label>
+                <select id="margins" onchange="changeMargins(this.value)">
+                    <option value="none">None</option>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="xlarge">Extra Large</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>Text Alignment</label>
+                <div class="align-options">
+                    <button class="align-btn" data-align="left" onclick="changeTextAlign('left')" title="Left">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="15" y2="12"></line>
+                            <line x1="3" y1="18" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <button class="align-btn active" data-align="justify" onclick="changeTextAlign('justify')"
+                        title="Justify">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <button class="align-btn" data-align="center" onclick="changeTextAlign('center')" title="Center">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="6" y1="6" x2="18" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="6" y1="18" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <button class="align-btn" data-align="right" onclick="changeTextAlign('right')" title="Right">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="9" y1="12" x2="21" y2="12"></line>
+                            <line x1="6" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </aside>

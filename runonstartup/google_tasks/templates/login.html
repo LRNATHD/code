@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login - FBReader Web{% endblock %}
+{% block title %}Login - Google Tasks Custom{% endblock %}
 
 {% block body_class %}login-page{% endblock %}
 
@@ -10,13 +10,12 @@
         <div class="login-header">
             <div class="logo">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                    <path d="M8 7h8M8 11h8M8 15h5"></path>
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                 </svg>
             </div>
-            <h1>FBReader Web</h1>
-            <p class="subtitle">Access your library from anywhere</p>
+            <h1>Tasks Custom</h1>
+            <p class="subtitle">Automate your recurring tasks</p>
         </div>
 
         <form method="POST" class="login-form" id="loginForm" autocomplete="on">
@@ -31,8 +30,7 @@
             </div>
             {% endif %}
 
-            <!-- Hidden username field helps browsers recognize this as a login form -->
-            <input type="text" name="username" value="fbreader" autocomplete="username"
+            <input type="text" name="username" value="tasks" autocomplete="username"
                 style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" aria-hidden="true">
 
             <div class="form-group">
@@ -66,7 +64,7 @@
             </div>
 
             <button type="submit" class="btn-primary">
-                <span>Access Library</span>
+                <span>Access Dashboard</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -75,15 +73,11 @@
         </form>
 
         <div class="login-footer">
-            <p>Powered by FBReader Book Network</p>
+            <p>Powered by Google Tasks API</p>
         </div>
     </div>
 
-    <div class="background-decoration">
-        <div class="floating-book book-1"></div>
-        <div class="floating-book book-2"></div>
-        <div class="floating-book book-3"></div>
-    </div>
+
 </div>
 
 <script>

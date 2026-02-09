@@ -10,7 +10,9 @@ let settings = {
     theme: 'light',
     fontSize: 100,
     fontFamily: 'default',
-    lineHeight: 1.6
+    lineHeight: 1.6,
+    margins: 'medium',
+    textAlign: 'justify'
 };
 
 // Load settings from localStorage
@@ -27,6 +29,50 @@ function loadSettings() {
 
 function saveSettings() {
     localStorage.setItem('readerSettings', JSON.stringify(settings));
+}
+
+// Reading position persistence per book
+function getBookPositionKey(id) {
+    return `bookPosition_${id}`;
+}
+
+function saveBookPosition(bookId, cfi) {
+    if (!cfi) return;
+    localStorage.setItem(getBookPositionKey(bookId), cfi);
+}
+
+function loadBookPosition(bookId) {
+    return localStorage.getItem(getBookPositionKey(bookId));
+}
+
+// Recently opened books tracking
+function addToRecentlyOpened(bookId, title) {
+    const key = 'recentlyOpened';
+    let recent = [];
+    try {
+        recent = JSON.parse(localStorage.getItem(key) || '[]');
+    } catch (e) {
+        recent = [];
+    }
+
+    // Remove if already exists
+    recent = recent.filter(b => b.id !== bookId);
+
+    // Add to front
+    recent.unshift({ id: bookId, title: title, timestamp: Date.now() });
+
+    // Keep only last 20
+    recent = recent.slice(0, 20);
+
+    localStorage.setItem(key, JSON.stringify(recent));
+}
+
+function getRecentlyOpened() {
+    try {
+        return JSON.parse(localStorage.getItem('recentlyOpened') || '[]');
+    } catch (e) {
+        return [];
+    }
 }
 
 // Initialize reader
@@ -124,6 +170,9 @@ function setupEventListeners() {
 async function loadBook() {
     const loadingOverlay = document.getElementById('loadingOverlay');
 
+    // Track this book as recently opened
+    addToRecentlyOpened(bookId, bookTitle);
+
     // Fetch book content
     const response = await fetch(`/api/book/${bookId}/content`);
     if (!response.ok) {
@@ -155,8 +204,13 @@ async function loadBook() {
     const navigation = await book.loaded.navigation;
     renderToc(navigation.toc);
 
-    // Display book
-    await rendition.display();
+    // Check for saved position and display book at that position
+    const savedCfi = loadBookPosition(bookId);
+    if (savedCfi) {
+        await rendition.display(savedCfi);
+    } else {
+        await rendition.display();
+    }
 
     // Hide loading overlay
     loadingOverlay.classList.add('hidden');
@@ -167,6 +221,11 @@ async function loadBook() {
         updateProgress(location);
         updateCurrentChapter(location);
         savePosition(location);
+
+        // Save position to localStorage for persistence
+        if (location.start && location.start.cfi) {
+            saveBookPosition(bookId, location.start.cfi);
+        }
     });
 
     // Listen for rendered content to apply styles
@@ -294,17 +353,52 @@ function applyReaderStyles() {
 
     const fontFamily = settings.fontFamily === 'default' ? '' : settings.fontFamily;
 
+    // Calculate margin based on setting
+    let marginValue;
+    switch (settings.margins) {
+        case 'none': marginValue = '0'; break;
+        case 'small': marginValue = '10px'; break;
+        case 'medium': marginValue = '20px'; break;
+        case 'large': marginValue = '40px'; break;
+        case 'xlarge': marginValue = '60px'; break;
+        default: marginValue = '20px';
+    }
+
     rendition.themes.default({
         body: {
             'font-size': `${settings.fontSize}% !important`,
             'line-height': `${settings.lineHeight} !important`,
-            'font-family': fontFamily ? `${fontFamily} !important` : 'inherit'
+            'font-family': fontFamily ? `${fontFamily} !important` : 'inherit',
+            'text-align': `${settings.textAlign} !important`,
+            'padding-left': `${marginValue} !important`,
+            'padding-right': `${marginValue} !important`
+        },
+        'img': {
+            'max-width': '100% !important',
+            'height': 'auto !important',
+            'object-fit': 'contain !important'
+        },
+        'svg': {
+            'max-width': '100% !important',
+            'height': 'auto !important'
+        },
+        'p': {
+            'text-align': `${settings.textAlign} !important`
         }
     });
 }
 
 function changeFontSize(delta) {
-    settings.fontSize = Math.max(60, Math.min(200, settings.fontSize + delta));
+    settings.fontSize = Math.max(50, Math.min(250, settings.fontSize + delta));
+    document.getElementById('fontSizeDisplay').textContent = `${settings.fontSize}%`;
+    const slider = document.getElementById('fontSizeSlider');
+    if (slider) slider.value = settings.fontSize;
+    saveSettings();
+    applyReaderStyles();
+}
+
+function setFontSize(value) {
+    settings.fontSize = Math.max(50, Math.min(250, parseInt(value)));
     document.getElementById('fontSizeDisplay').textContent = `${settings.fontSize}%`;
     saveSettings();
     applyReaderStyles();
@@ -318,14 +412,42 @@ function changeFontFamily(family) {
 
 function changeLineHeight(value) {
     settings.lineHeight = parseFloat(value);
+    document.getElementById('lineHeightDisplay').textContent = value;
+    saveSettings();
+    applyReaderStyles();
+}
+
+function changeMargins(value) {
+    settings.margins = value;
+    saveSettings();
+    applyReaderStyles();
+}
+
+function changeTextAlign(value) {
+    settings.textAlign = value;
+    document.querySelectorAll('.align-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.align === value);
+    });
     saveSettings();
     applyReaderStyles();
 }
 
 function updateSettingsUI() {
     document.getElementById('fontSizeDisplay').textContent = `${settings.fontSize}%`;
+    const fontSizeSlider = document.getElementById('fontSizeSlider');
+    if (fontSizeSlider) fontSizeSlider.value = settings.fontSize;
+
     document.getElementById('fontFamily').value = settings.fontFamily;
     document.getElementById('lineHeight').value = settings.lineHeight;
+    const lineHeightDisplay = document.getElementById('lineHeightDisplay');
+    if (lineHeightDisplay) lineHeightDisplay.textContent = settings.lineHeight;
+
+    const marginsSelect = document.getElementById('margins');
+    if (marginsSelect) marginsSelect.value = settings.margins;
+
+    document.querySelectorAll('.align-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.align === settings.textAlign);
+    });
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.theme === settings.theme);

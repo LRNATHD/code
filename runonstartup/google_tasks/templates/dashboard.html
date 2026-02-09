@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Google Tasks Custom{% endblock %}
+
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+<div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+            </div>
+            <h1>Tasks Custom</h1>
+        </div>
+        <div class="header-right">
+            <button class="btn-logout" onclick="checkRecurring()" title="Check for task progressions">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 4v6h-6"></path>
+                    <path d="M1 20v-6h6"></path>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+            </button>
+            <a href="{{ url_for('logout') }}" class="btn-logout">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Quick Add Rule Section -->
+        <section class="section quick-rule-section">
+            <div class="section-header">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Quick Add Rule
+                </h2>
+            </div>
+            <form class="quick-rule-form" id="quickRuleForm" onsubmit="createQuickRule(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskName">Task name contains</label>
+                        <input type="text" id="taskName" placeholder="e.g., plank" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="incrementBy">Increment by (seconds)</label>
+                        <input type="number" id="incrementBy" value="1" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickTaskList">Task List</label>
+                        <select id="quickTaskList" required>
+                            {% for list in task_lists %}
+                            <option value="{{ list.id }}">{{ list.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add
+                    </button>
+                </div>
+                <p class="hint">This will match tasks containing the name and increment any time value (like 1:30) by
+                    the specified seconds.</p>
+            </form>
+        </section>
+
+        <!-- Rules Section -->
+        <section class="section rules-section">
+            <div class="section-header">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+                    </svg>
+                    Your Rules
+                </h2>
+            </div>
+            <div class="rules-list" id="rulesList">
+                {% if rules %}
+                {% for rule in rules %}
+                <div class="rule-card" data-rule-id="{{ rule.rule_id }}">
+                    <div class="rule-info">
+                        <h3>{{ rule.name }}</h3>
+                        <span class="rule-detail">+{{ rule.increment_value|int }}s per completion</span>
+                    </div>
+                    <button class="btn-delete" onclick="deleteRule('{{ rule.rule_id }}')" title="Delete">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="empty-state">
+                    <p>No rules yet. Add one above!</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Task Lists Section -->
+        <section class="section task-lists-section">
+            <div class="section-header">
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                    Task Lists
+                </h2>
+            </div>
+            <div class="task-lists-grid" id="taskListsGrid">
+                {% for list in task_lists %}
+                <div class="task-list-card" data-list-id="{{ list.id }}">
+                    <h3>{{ list.title }}</h3>
+                    <p class="task-count">Loading...</p>
+                    <button class="btn-view" onclick="viewTasks('{{ list.id }}', '{{ list.title }}')">
+                        View Tasks
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Tasks Modal -->
+<div class="modal" id="tasksModal">
+    <div class="modal-overlay" onclick="closeTasksModal()"></div>
+    <div class="modal-content large">
+        <div class="modal-header">
+            <h2 id="tasksModalTitle">Tasks</h2>
+            <button class="btn-close" onclick="closeTasksModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body" id="tasksModalBody">
+            <div class="loading">Loading tasks...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const taskLists = {{ task_lists | tojson }};
+    let currentTaskListId = null;
+    let rules = {{ rules | tojson }};
+
+    // Load task counts
+    async function loadTaskCounts() {
+        for (const list of taskLists) {
+            try {
+                const response = await fetch(`/api/tasks/${list.id}`);
+                const data = await response.json();
+                const card = document.querySelector(`[data-list-id="${list.id}"]`);
+                if (card) {
+                    card.querySelector('.task-count').textContent =
+                        `${data.tasks?.length || 0} tasks`;
+                }
+            } catch (e) {
+                console.error(`Error loading tasks for ${list.id}:`, e);
+            }
+        }
+    }
+
+    // View tasks
+    async function viewTasks(listId, listTitle) {
+        currentTaskListId = listId;
+        document.getElementById('tasksModalTitle').textContent = listTitle;
+        document.getElementById('tasksModal').classList.add('active');
+
+        try {
+            const response = await fetch(`/api/tasks/${listId}`);
+            const data = await response.json();
+
+            if (data.tasks && data.tasks.length > 0) {
+                const tasksHtml = data.tasks.map(task => {
+                    // Check if any rule matches this task
+                    const matchingRules = rules.filter(r => {
+                        if (!r.enabled) return false;
+                        try {
+                            return new RegExp(r.task_pattern, 'i').test(task.title);
+                        } catch (e) {
+                            return false;
+                        }
+                    });
+
+                    return `
+                        <div class="task-item">
+                            <div class="task-info">
+                                <h3>${task.title}</h3>
+                                ${task.due ? `<span class="due-date">Due: ${new Date(task.due).toLocaleDateString()}</span>` : ''}
+                            </div>
+                            ${matchingRules.length > 0 ? `
+                                <button class="btn-increment" onclick="applyRule('${listId}', '${task.id}', '${matchingRules[0].rule_id}')">
+                                    +${matchingRules[0].increment_value}s
+                                </button>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('tasksModalBody').innerHTML = tasksHtml;
+            } else {
+                document.getElementById('tasksModalBody').innerHTML = '<div class="empty-state"><p>No tasks</p></div>';
+            }
+        } catch (e) {
+            document.getElementById('tasksModalBody').innerHTML = `<div class="error">Error: ${e.message}</div>`;
+        }
+    }
+
+    function closeTasksModal() {
+        document.getElementById('tasksModal').classList.remove('active');
+    }
+
+    // Apply a rule
+    async function applyRule(taskListId, taskId, ruleId) {
+        try {
+            const response = await fetch('/api/apply-rule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ task_list_id: taskListId, task_id: taskId, rule_id: ruleId })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showNotification(`Updated: ${data.new_title}`);
+                // Refresh
+                const list = taskLists.find(l => l.id === taskListId);
+                if (list) viewTasks(taskListId, list.title);
+            } else {
+                showNotification(data.error || 'Failed', 'error');
+            }
+        } catch (e) {
+            showNotification('Error: ' + e.message, 'error');
+        }
+    }
+
+    // Quick rule creation
+    async function createQuickRule(event) {
+        event.preventDefault();
+
+        const taskName = document.getElementById('taskName').value.trim();
+        const incrementBy = parseInt(document.getElementById('incrementBy').value);
+        const taskListId = document.getElementById('quickTaskList').value;
+
+        const data = {
+            name: `${taskName} (+${incrementBy}s)`,
+            task_pattern: taskName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),  // Escape regex chars
+            task_list_id: taskListId,
+            increment_type: 'duration_format',
+            increment_value: incrementBy
+        };
+
+        try {
+            const response = await fetch('/api/rules', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.rule) {
+                showNotification('Rule created!');
+                location.reload();
+            } else {
+                showNotification(result.error || 'Failed', 'error');
+            }
+        } catch (e) {
+            showNotification('Error: ' + e.message, 'error');
+        }
+    }
+
+    async function deleteRule(ruleId) {
+        if (!confirm('Delete this rule?')) return;
+
+        try {
+            const response = await fetch(`/api/rules/${ruleId}`, { method: 'DELETE' });
+            if ((await response.json()).success) {
+                location.reload();
+            }
+        } catch (e) {
+            showNotification('Error: ' + e.message, 'error');
+        }
+    }
+
+    async function checkRecurring() {
+        showNotification('Checking for recurring task updates...', 'success');
+        try {
+            const response = await fetch('/api/check-recurring', { method: 'POST' });
+            const data = await response.json();
+
+            if (data.success) {
+                if (data.messages && data.messages.length > 0) {
+                    showNotification(`Processed: ${data.messages.join(', ')}`);
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showNotification('No new recurring tasks needed.');
+                }
+            } else {
+                showNotification(data.error || 'Failed', 'error');
+            }
+        } catch (e) {
+            showNotification('Error: ' + e.message, 'error');
+        }
+    }
+
+    function showNotification(message, type = 'success') {
+        const existing = document.querySelector('.notification');
+        if (existing) existing.remove();
+
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.add('show'), 10);
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    loadTaskCounts();
+</script>
+{% endblock %}

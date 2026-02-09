@@ -1,0 +1,83 @@
+{
+    "_comment": "Service registry - AI agents: add new services here, don't modify Python code",
+    "_ports": "Internal ports 9871-9879 are used by apps. Service manager on 9870 acts as reverse proxy.",
+    "manager": {
+        "port": 9870,
+        "domain": "home.noahsmith.dev"
+    },
+    "services": [
+        {
+            "id": "fbreader",
+            "name": "FBReader Web",
+            "internal_port": 9871,
+            "path": "/books",
+            "domain": "read.noahsmith.dev",
+            "dir": "../fbreader_web",
+            "start_cmd": "py app.py",
+            "health_url": "/api/status",
+            "type": "flask",
+            "description": "Web interface for my FBReader ebook library. Syncs with the FBReader UWP app to access my book collection from anywhere.",
+            "tech": [
+                "Flask",
+                "Python",
+                "FBReader API"
+            ],
+            "github": "https://github.com/yourusername/fbreader-web"
+        },
+        {
+            "id": "google_tasks",
+            "name": "Google Tasks",
+            "internal_port": 9872,
+            "path": "/tasks",
+            "domain": "tasks.noahsmith.dev",
+            "dir": "../google_tasks",
+            "start_cmd": "py app.py",
+            "health_url": "/api/status",
+            "type": "flask",
+            "description": "Custom Google Tasks client with automation rules. Supports recurring task patterns like incrementing workout timers and automatic task creation.",
+            "tech": [
+                "Flask",
+                "Google Tasks API",
+                "OAuth2"
+            ],
+            "github": "https://github.com/yourusername/google-tasks-custom"
+        },
+        {
+            "id": "parts_inventory",
+            "name": "Parts Inventory",
+            "internal_port": 9873,
+            "path": "/parts",
+            "domain": "organizer.noahsmith.dev",
+            "dir": "../parts_inventory",
+            "start_cmd": "py server.py",
+            "health_url": "/",
+            "type": "flask",
+            "description": "Electronics parts inventory tracker. Helps me keep track of components, quantities, and storage locations for my hardware projects.",
+            "tech": [
+                "Vanilla JS",
+                "Python",
+                "JSON storage"
+            ],
+            "github": "https://github.com/yourusername/parts-inventory"
+        }
+    ],
+    "tasks": [
+        {
+            "id": "portfolio_sync",
+            "name": "Portfolio Sync",
+            "cmd": "python c:\\Users\\LRNA\\Desktop\\code\\sync_to_portfolio.py",
+            "type": "task",
+            "trigger": "manual",
+            "description": "Syncs markdown files from my code folder to my MkDocs portfolio. Files with `portfolio:` frontmatter are automatically placed in the right location.",
+            "tech": [
+                "Python",
+                "MkDocs",
+                "YAML frontmatter"
+            ]
+        }
+    ],
+    "cloudflare": {
+        "tunnel_name": "fbreader",
+        "config_path": "C:\\Users\\LRNA\\.cloudflared\\config.yml"
+    }
+}

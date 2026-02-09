@@ -34,11 +34,11 @@
 }
 
 .reader-page.theme-dark {
-    --reader-bg: #1a1a1a;
-    --reader-text: #e0e0e0;
-    --reader-secondary: #999999;
+    --reader-bg: #000000;
+    --reader-text: #ffffff;
+    --reader-secondary: #aaaaaa;
     --reader-border: #333333;
-    --reader-header-bg: #252525;
+    --reader-header-bg: #000000;
 }
 
 /* ==================== Reader Header ==================== */
@@ -431,8 +431,8 @@
 }
 
 .theme-btn[data-theme="dark"] {
-    background: #1a1a1a;
-    color: #e0e0e0;
+    background: #000000;
+    color: #ffffff;
 }
 
 .font-size-control {
@@ -490,6 +490,38 @@
     background: var(--accent-primary);
     border-radius: 50%;
     cursor: pointer;
+}
+
+.settings-slider {
+    width: 100%;
+    margin-top: var(--space-3);
+}
+
+.align-options {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.align-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--reader-border, var(--border-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    background: transparent;
+}
+
+.align-btn:hover {
+    border-color: var(--accent-primary);
+}
+
+.align-btn.active {
+    border-color: var(--accent-primary);
+    background: var(--accent-glow);
+    color: var(--accent-primary);
 }
 
 /* ==================== Responsive ==================== */

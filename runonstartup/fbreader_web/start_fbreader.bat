@@ -13,4 +13,4 @@ start "FBReader Tunnel" /min cmd /c "cloudflared tunnel run fbreader"
 
 echo FBReader Web started!
 echo - Flask app running on http://localhost:5555
-echo - Tunnel available at https://reading.noahsmith.dev
+echo - Tunnel available at https://read.noahsmith.dev

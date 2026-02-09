@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Setup - Google Tasks Custom{% endblock %}
+
+{% block body_class %}setup-page{% endblock %}
+
+{% block content %}
+<div class="setup-container">
+    <div class="setup-card">
+        <div class="setup-header">
+            <div class="logo">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+            </div>
+            <h1>Setup Required</h1>
+            <p class="subtitle">Configure Google Tasks API access</p>
+        </div>
+
+        {% if error %}
+        <div class="error-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <div class="setup-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Create Google Cloud Project</h3>
+                    <p>Go to <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a> and
+                        create a new project or select an existing one.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Enable Google Tasks API</h3>
+                    <p>Navigate to <strong>APIs & Services > Library</strong> and enable the <strong>Google Tasks
+                            API</strong>.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Create OAuth Credentials</h3>
+                    <p>Go to <strong>APIs & Services > Credentials</strong>, create an <strong>OAuth 2.0 Client
+                            ID</strong> (Desktop app), and download the JSON file.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Save Credentials File</h3>
+                    <p>Rename the downloaded file to <code>credentials.json</code> and place it in:</p>
+                    <code class="path">google_tasks/credentials/credentials.json</code>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Restart the App</h3>
+                    <p>Restart the application. On first run, you'll be prompted to authorize access in your browser.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="setup-footer">
+            <a href="{{ url_for('dashboard') }}" class="btn-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+                Retry
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
