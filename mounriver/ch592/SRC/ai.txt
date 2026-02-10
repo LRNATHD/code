@@ -1,0 +1,5 @@
+RULES
+====
+1. NEVER delete or edit any files in this folder or its subfolders
+2. Only copy files out of this folder for use in projects
+3. These are vendor-provided CH59x drivers, startup, and linker scripts

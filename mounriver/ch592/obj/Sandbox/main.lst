@@ -1,0 +1,247 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s 			page 1
+
+
+   1              		.file	"main.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+   8              		.align	2
+   9              	.LC0:
+  10 0000 4D6F746F 		.string	"Motor Ramp Down"
+  10      72205261 
+  10      6D702044 
+  10      6F776E00 
+  11              		.align	2
+  12              	.LC1:
+  13 0010 50574D3A 		.string	"PWM:     "
+  13      20202020 
+  13      2000
+  14 001a 0000     		.align	2
+  15              	.LC2:
+  16 001c 50574D3A 		.string	"PWM: 0%  "
+  16      20302520 
+  16      2000
+  17 0026 0000     		.align	2
+  18              	.LC3:
+  19 0028 446F6E65 		.string	"Done."
+  19      2E00
+  20              		.section	.text.startup.main,"ax",@progbits
+  21              		.align	1
+  22              		.globl	main
+  24              	main:
+  25 0000 1D71     		addi	sp,sp,-96
+  26 0002 13058004 		li	a0,72
+  27 0006 86CE     		sw	ra,92(sp)
+  28 0008 A2CC     		sw	s0,88(sp)
+  29 000a A6CA     		sw	s1,84(sp)
+  30 000c CAC8     		sw	s2,80(sp)
+  31 000e CEC6     		sw	s3,76(sp)
+  32 0010 D2C4     		sw	s4,72(sp)
+  33 0012 D6C2     		sw	s5,68(sp)
+  34 0014 DAC0     		sw	s6,64(sp)
+  35 0016 5EDE     		sw	s7,60(sp)
+  36 0018 97000000 		call	SetSysClock
+  36      E7800000 
+  37 0020 8D45     		li	a1,3
+  38 0022 3D65     		li	a0,61440
+  39 0024 97000000 		call	GPIOA_ModeCfg
+  39      E7800000 
+  40 002c B7170040 		li	a5,1073745920
+  41 0030 9387870A 		addi	a5,a5,168
+  42 0034 9843     		lw	a4,0(a5)
+  43 0036 B166     		li	a3,49152
+  44 0038 1305800C 		li	a0,200
+  45 003c 558F     		or	a4,a4,a3
+  46 003e 98C3     		sw	a4,0(a5)
+  47 0040 97000000 		call	mDelaymS
+  47      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s 			page 2
+
+
+  48 0048 97000000 		call	OLED_Init
+  48      E7800000 
+  49 0050 97000000 		call	OLED_Clear
+  49      E7800000 
+  50 0058 17060000 		lla	a2,.LC0
+  50      13060600 
+  51 0060 8145     		li	a1,0
+  52 0062 0145     		li	a0,0
+  53 0064 97000000 		call	OLED_ShowString
+  53      E7800000 
+  54 006c B7570040 		li	a5,1073762304
+  55 0070 1147     		li	a4,4
+  56 0072 9D64     		li	s1,28672
+  57 0074 A381E700 		sb	a4,3(a5)
+  58 0078 13850453 		addi	a0,s1,1328
+  59 007c 97000000 		call	PWMX_16bit_CycleCfg
+  59      E7800000 
+  60 0084 93850453 		addi	a1,s1,1328
+  61 0088 8546     		li	a3,1
+  62 008a 0146     		li	a2,0
+  63 008c 0545     		li	a0,1
+  64 008e 97000000 		call	PWMX_16bit_ACTOUT
+  64      E7800000 
+  65 0096 93850453 		addi	a1,s1,1328
+  66 009a 8546     		li	a3,1
+  67 009c 0146     		li	a2,0
+  68 009e 0945     		li	a0,2
+  69 00a0 B7393000 		li	s3,3158016
+  70 00a4 37594D3A 		li	s2,978145280
+  71 00a8 97000000 		call	PWMX_16bit_ACTOUT
+  71      E7800000 
+  72 00b0 13044006 		li	s0,100
+  73 00b4 93840453 		addi	s1,s1,1328
+  74 00b8 130A4006 		li	s4,100
+  75 00bc 170B0000 		lla	s6,.LC1
+  75      130B0B00 
+  76 00c4 A94A     		li	s5,10
+  77 00c6 A54B     		li	s7,9
+  78 00c8 93891903 		addi	s3,s3,49
+  79 00cc 13090975 		addi	s2,s2,1872
+  80              	.L7:
+  81 00d0 B3059402 		mul	a1,s0,s1
+  82 00d4 8546     		li	a3,1
+  83 00d6 0146     		li	a2,0
+  84 00d8 0545     		li	a0,1
+  85 00da B3D54503 		divu	a1,a1,s4
+  86 00de C205     		slli	a1,a1,16
+  87 00e0 C181     		srli	a1,a1,16
+  88 00e2 2EC6     		sw	a1,12(sp)
+  89 00e4 97000000 		call	PWMX_16bit_ACTOUT
+  89      E7800000 
+  90 00ec B245     		lw	a1,12(sp)
+  91 00ee 0146     		li	a2,0
+  92 00f0 0945     		li	a0,2
+  93 00f2 8546     		li	a3,1
+  94 00f4 97000000 		call	PWMX_16bit_ACTOUT
+  94      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s 			page 3
+
+
+  95 00fc 5A86     		mv	a2,s6
+  96 00fe 8945     		li	a1,2
+  97 0100 0145     		li	a0,0
+  98 0102 97000000 		call	OLED_ShowString
+  98      E7800000 
+  99 010a 631B440B 		bne	s0,s4,.L2
+ 100 010e 4ECC     		sw	s3,24(sp)
+ 101              	.L3:
+ 102 0110 93070002 		li	a5,32
+ 103 0114 1410     		addi	a3,sp,32
+ 104 0116 2302F102 		sb	a5,36(sp)
+ 105 011a 4AD0     		sw	s2,32(sp)
+ 106 011c 2C08     		addi	a1,sp,24
+ 107 011e 9547     		li	a5,5
+ 108 0120 3686     		mv	a2,a3
+ 109              	.L5:
+ 110 0122 03850500 		lb	a0,0(a1)
+ 111 0126 13871700 		addi	a4,a5,1
+ 112 012a 8505     		addi	a1,a1,1
+ 113 012c 8506     		addi	a3,a3,1
+ 114 012e 61E1     		bne	a0,zero,.L6
+ 115 0130 1408     		addi	a3,sp,16
+ 116 0132 93870702 		addi	a5,a5,32
+ 117 0136 B697     		add	a5,a5,a3
+ 118 0138 93065002 		li	a3,37
+ 119 013c 2388D7FE 		sb	a3,-16(a5)
+ 120 0140 93070702 		addi	a5,a4,32
+ 121 0144 1808     		addi	a4,sp,16
+ 122 0146 3E97     		add	a4,a5,a4
+ 123 0148 8945     		li	a1,2
+ 124 014a 230807FE 		sb	zero,-16(a4)
+ 125 014e 97000000 		call	OLED_ShowString
+ 125      E7800000 
+ 126 0156 13052003 		li	a0,50
+ 127 015a 97000000 		call	mDelaymS
+ 127      E7800000 
+ 128 0162 7D14     		addi	s0,s0,-1
+ 129 0164 FD57     		li	a5,-1
+ 130 0166 E315F4F6 		bne	s0,a5,.L7
+ 131 016a 8146     		li	a3,0
+ 132 016c 0146     		li	a2,0
+ 133 016e 8145     		li	a1,0
+ 134 0170 0545     		li	a0,1
+ 135 0172 97000000 		call	PWMX_16bit_ACTOUT
+ 135      E7800000 
+ 136 017a 8146     		li	a3,0
+ 137 017c 0146     		li	a2,0
+ 138 017e 8145     		li	a1,0
+ 139 0180 0945     		li	a0,2
+ 140 0182 97000000 		call	PWMX_16bit_ACTOUT
+ 140      E7800000 
+ 141 018a 17060000 		lla	a2,.LC2
+ 141      13060600 
+ 142 0192 8945     		li	a1,2
+ 143 0194 0145     		li	a0,0
+ 144 0196 97000000 		call	OLED_ShowString
+ 144      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s 			page 4
+
+
+ 145 019e 17060000 		lla	a2,.LC3
+ 145      13060600 
+ 146 01a6 8D45     		li	a1,3
+ 147 01a8 0145     		li	a0,0
+ 148 01aa 97000000 		call	OLED_ShowString
+ 148      E7800000 
+ 149              	.L8:
+ 150 01b2 13054006 		li	a0,100
+ 151 01b6 97000000 		call	mDelaymS
+ 151      E7800000 
+ 152 01be D5BF     		j	.L8
+ 153              	.L2:
+ 154 01c0 33675403 		rem	a4,s0,s5
+ 155 01c4 8147     		li	a5,0
+ 156 01c6 63D98B00 		ble	s0,s7,.L4
+ 157 01ca B3475403 		div	a5,s0,s5
+ 158 01ce 93870703 		addi	a5,a5,48
+ 159 01d2 230CF100 		sb	a5,24(sp)
+ 160 01d6 8547     		li	a5,1
+ 161              	.L4:
+ 162 01d8 93870702 		addi	a5,a5,32
+ 163 01dc 1408     		addi	a3,sp,16
+ 164 01de B697     		add	a5,a5,a3
+ 165 01e0 13070703 		addi	a4,a4,48
+ 166 01e4 2384E7FE 		sb	a4,-24(a5)
+ 167 01e8 A38407FE 		sb	zero,-23(a5)
+ 168 01ec 15B7     		j	.L3
+ 169              	.L6:
+ 170 01ee 2382A600 		sb	a0,4(a3)
+ 171 01f2 BA87     		mv	a5,a4
+ 172 01f4 3DB7     		j	.L5
+ 174              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:24     .text.startup.main:0000000000000000 main
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:25     .text.startup.main:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:9      .rodata.main.str1.4:0000000000000000 .LC0
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:50     .text.startup.main:0000000000000058 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:12     .rodata.main.str1.4:0000000000000010 .LC1
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:75     .text.startup.main:00000000000000bc .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:15     .rodata.main.str1.4:000000000000001c .LC2
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:141    .text.startup.main:000000000000018a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:18     .rodata.main.str1.4:0000000000000028 .LC3
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:145    .text.startup.main:000000000000019e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:153    .text.startup.main:00000000000001c0 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:169    .text.startup.main:00000000000001ee .L6
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:80     .text.startup.main:00000000000000d0 .L7
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:149    .text.startup.main:00000000000001b2 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:161    .text.startup.main:00000000000001d8 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:101    .text.startup.main:0000000000000110 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccQPxaw3.s:109    .text.startup.main:0000000000000122 .L5
+
+UNDEFINED SYMBOLS
+SetSysClock
+GPIOA_ModeCfg
+mDelaymS
+OLED_Init
+OLED_Clear
+OLED_ShowString
+PWMX_16bit_CycleCfg
+PWMX_16bit_ACTOUT

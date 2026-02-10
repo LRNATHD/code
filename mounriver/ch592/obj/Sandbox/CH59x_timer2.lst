@@ -1,0 +1,103 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s 			page 1
+
+
+   1              		.file	"CH59x_timer2.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.TMR2_TimerInit,"ax",@progbits
+   8              		.align	1
+   9              		.globl	TMR2_TimerInit
+  11              	TMR2_TimerInit:
+  12 0000 B7370040 		li	a5,1073754112
+  13 0004 1387C780 		addi	a4,a5,-2036
+  14 0008 08C3     		sw	a0,0(a4)
+  15 000a 0947     		li	a4,2
+  16 000c 2380E780 		sb	a4,-2048(a5)
+  17 0010 1147     		li	a4,4
+  18 0012 2380E780 		sb	a4,-2048(a5)
+  19 0016 8280     		ret
+  21              		.section	.text.TMR2_EXTSingleCounterInit,"ax",@progbits
+  22              		.align	1
+  23              		.globl	TMR2_EXTSingleCounterInit
+  25              	TMR2_EXTSingleCounterInit:
+  26 0000 1A05     		slli	a0,a0,6
+  27 0002 B7370040 		li	a5,1073754112
+  28 0006 0947     		li	a4,2
+  29 0008 13655501 		ori	a0,a0,21
+  30 000c 2380E780 		sb	a4,-2048(a5)
+  31 0010 1375F50F 		andi	a0,a0,0xff
+  32 0014 2380A780 		sb	a0,-2048(a5)
+  33 0018 8280     		ret
+  35              		.section	.text.TMR2_PWMInit,"ax",@progbits
+  36              		.align	1
+  37              		.globl	TMR2_PWMInit
+  39              	TMR2_PWMInit:
+  40 0000 1205     		slli	a0,a0,4
+  41 0002 9A05     		slli	a1,a1,6
+  42 0004 B7370040 		li	a5,1073754112
+  43 0008 0947     		li	a4,2
+  44 000a 4D8D     		or	a0,a0,a1
+  45 000c 2380E780 		sb	a4,-2048(a5)
+  46 0010 1375F50F 		andi	a0,a0,0xff
+  47 0014 2380A780 		sb	a0,-2048(a5)
+  48 0018 8280     		ret
+  50              		.section	.text.TMR2_CapInit,"ax",@progbits
+  51              		.align	1
+  52              		.globl	TMR2_CapInit
+  54              	TMR2_CapInit:
+  55 0000 1A05     		slli	a0,a0,6
+  56 0002 B7370040 		li	a5,1073754112
+  57 0006 0947     		li	a4,2
+  58 0008 13655500 		ori	a0,a0,5
+  59 000c 2380E780 		sb	a4,-2048(a5)
+  60 0010 1375F50F 		andi	a0,a0,0xff
+  61 0014 2380A780 		sb	a0,-2048(a5)
+  62 0018 8280     		ret
+  64              		.section	.text.TMR2_DMACfg,"ax",@progbits
+  65              		.align	1
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s 			page 2
+
+
+  66              		.globl	TMR2_DMACfg
+  68              	TMR2_DMACfg:
+  69 0000 11E5     		bne	a0,zero,.L6
+  70 0002 B7370040 		li	a5,1073754112
+  71 0006 A3800780 		sb	zero,-2047(a5)
+  72 000a 8280     		ret
+  73              	.L6:
+  74 000c C205     		slli	a1,a1,16
+  75 000e B7370040 		li	a5,1073754112
+  76 0012 C181     		srli	a1,a1,16
+  77 0014 4206     		slli	a2,a2,16
+  78 0016 239CB780 		sh	a1,-2024(a5)
+  79 001a 4182     		srli	a2,a2,16
+  80 001c 239EC780 		sh	a2,-2020(a5)
+  81 0020 1547     		li	a4,5
+  82 0022 91E2     		bne	a3,zero,.L9
+  83 0024 0547     		li	a4,1
+  84              	.L9:
+  85 0026 A380E780 		sb	a4,-2047(a5)
+  86 002a 8280     		ret
+  88              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_timer2.c
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:11     .text.TMR2_TimerInit:0000000000000000 TMR2_TimerInit
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:12     .text.TMR2_TimerInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:25     .text.TMR2_EXTSingleCounterInit:0000000000000000 TMR2_EXTSingleCounterInit
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:26     .text.TMR2_EXTSingleCounterInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:39     .text.TMR2_PWMInit:0000000000000000 TMR2_PWMInit
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:40     .text.TMR2_PWMInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:54     .text.TMR2_CapInit:0000000000000000 TMR2_CapInit
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:55     .text.TMR2_CapInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:68     .text.TMR2_DMACfg:0000000000000000 TMR2_DMACfg
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:69     .text.TMR2_DMACfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:73     .text.TMR2_DMACfg:000000000000000c .L6
+C:\Users\LRNA\AppData\Local\Temp\ccR78OJr.s:84     .text.TMR2_DMACfg:0000000000000026 .L9
+
+NO UNDEFINED SYMBOLS

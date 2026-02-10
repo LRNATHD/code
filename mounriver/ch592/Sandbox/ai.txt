@@ -1,0 +1,26 @@
+RULES
+====
+1. main.c contains the motor PWM ramp-down test
+2. oled_driver.c/h is the SSD1306 I2C display driver
+3. Build with make from this folder, output in obj/
+
+KEY INFO
+====
+| File          | Purpose                                          |
+| ------------- | ------------------------------------------------ |
+| main.c        | Motor ramp-down: 100% -> 0% PWM + OLED display  |
+| oled_driver.c | SSD1306 128x32 bit-bang I2C driver                |
+| oled_driver.h | OLED API: Init, Clear, ShowChar, ShowString       |
+
+| Motor Pin     | GPIO   | PWM Channel |
+| ------------- | ------ | ----------- |
+| Left_Enable   | PA12   | PWM4        |
+| Right_Enable  | PA13   | PWM5        |
+| Left_Phase    | PA14   | -           |
+| Right_Phase   | PA15   | -           |
+
+COMMANDS
+====
+Build:  make
+Clean:  make clean
+Output: obj/firmware.hex, obj/firmware.bin

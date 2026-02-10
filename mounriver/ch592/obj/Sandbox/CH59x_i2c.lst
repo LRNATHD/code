@@ -1,0 +1,710 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 1
+
+
+   1              		.file	"CH59x_i2c.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.I2C_Cmd,"ax",@progbits
+   8              		.align	1
+   9              		.globl	I2C_Cmd
+  11              	I2C_Cmd:
+  12 0000 37570040 		li	a4,1073762304
+  13 0004 83570780 		lhu	a5,-2048(a4)
+  14 0008 11C5     		beq	a0,zero,.L2
+  15 000a 93E71700 		ori	a5,a5,1
+  16              	.L4:
+  17 000e 2310F780 		sh	a5,-2048(a4)
+  18 0012 8280     		ret
+  19              	.L2:
+  20 0014 C207     		slli	a5,a5,16
+  21 0016 C183     		srli	a5,a5,16
+  22 0018 F99B     		andi	a5,a5,-2
+  23 001a C207     		slli	a5,a5,16
+  24 001c C183     		srli	a5,a5,16
+  25 001e C5BF     		j	.L4
+  27              		.section	.text.I2C_GenerateSTART,"ax",@progbits
+  28              		.align	1
+  29              		.globl	I2C_GenerateSTART
+  31              	I2C_GenerateSTART:
+  32 0000 37570040 		li	a4,1073762304
+  33 0004 83570780 		lhu	a5,-2048(a4)
+  34 0008 11C5     		beq	a0,zero,.L6
+  35 000a 93E70710 		ori	a5,a5,256
+  36              	.L8:
+  37 000e 2310F780 		sh	a5,-2048(a4)
+  38 0012 8280     		ret
+  39              	.L6:
+  40 0014 C207     		slli	a5,a5,16
+  41 0016 C183     		srli	a5,a5,16
+  42 0018 93F7F7EF 		andi	a5,a5,-257
+  43 001c C207     		slli	a5,a5,16
+  44 001e C183     		srli	a5,a5,16
+  45 0020 FDB7     		j	.L8
+  47              		.section	.text.I2C_GenerateSTOP,"ax",@progbits
+  48              		.align	1
+  49              		.globl	I2C_GenerateSTOP
+  51              	I2C_GenerateSTOP:
+  52 0000 37570040 		li	a4,1073762304
+  53 0004 83570780 		lhu	a5,-2048(a4)
+  54 0008 11C5     		beq	a0,zero,.L10
+  55 000a 93E70720 		ori	a5,a5,512
+  56              	.L12:
+  57 000e 2310F780 		sh	a5,-2048(a4)
+  58 0012 8280     		ret
+  59              	.L10:
+  60 0014 C207     		slli	a5,a5,16
+  61 0016 C183     		srli	a5,a5,16
+  62 0018 93F7F7DF 		andi	a5,a5,-513
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 2
+
+
+  63 001c C207     		slli	a5,a5,16
+  64 001e C183     		srli	a5,a5,16
+  65 0020 FDB7     		j	.L12
+  67              		.section	.text.I2C_AcknowledgeConfig,"ax",@progbits
+  68              		.align	1
+  69              		.globl	I2C_AcknowledgeConfig
+  71              	I2C_AcknowledgeConfig:
+  72 0000 37570040 		li	a4,1073762304
+  73 0004 83570780 		lhu	a5,-2048(a4)
+  74 0008 11C5     		beq	a0,zero,.L14
+  75 000a 93E70740 		ori	a5,a5,1024
+  76              	.L16:
+  77 000e 2310F780 		sh	a5,-2048(a4)
+  78 0012 8280     		ret
+  79              	.L14:
+  80 0014 C207     		slli	a5,a5,16
+  81 0016 C183     		srli	a5,a5,16
+  82 0018 93F7F7BF 		andi	a5,a5,-1025
+  83 001c C207     		slli	a5,a5,16
+  84 001e C183     		srli	a5,a5,16
+  85 0020 FDB7     		j	.L16
+  87              		.section	.text.I2C_OwnAddress2Config,"ax",@progbits
+  88              		.align	1
+  89              		.globl	I2C_OwnAddress2Config
+  91              	I2C_OwnAddress2Config:
+  92 0000 37570040 		li	a4,1073762304
+  93 0004 8357C780 		lhu	a5,-2036(a4)
+  94 0008 1375E50F 		andi	a0,a0,254
+  95 000c C207     		slli	a5,a5,16
+  96 000e C183     		srli	a5,a5,16
+  97 0010 93F717F0 		andi	a5,a5,-255
+  98 0014 C207     		slli	a5,a5,16
+  99 0016 C183     		srli	a5,a5,16
+ 100 0018 2316F780 		sh	a5,-2036(a4)
+ 101 001c 8357C780 		lhu	a5,-2036(a4)
+ 102 0020 C98F     		or	a5,a5,a0
+ 103 0022 2316F780 		sh	a5,-2036(a4)
+ 104 0026 8280     		ret
+ 106              		.section	.text.I2C_DualAddressCmd,"ax",@progbits
+ 107              		.align	1
+ 108              		.globl	I2C_DualAddressCmd
+ 110              	I2C_DualAddressCmd:
+ 111 0000 37570040 		li	a4,1073762304
+ 112 0004 8357C780 		lhu	a5,-2036(a4)
+ 113 0008 11C5     		beq	a0,zero,.L19
+ 114 000a 93E71700 		ori	a5,a5,1
+ 115              	.L21:
+ 116 000e 2316F780 		sh	a5,-2036(a4)
+ 117 0012 8280     		ret
+ 118              	.L19:
+ 119 0014 C207     		slli	a5,a5,16
+ 120 0016 C183     		srli	a5,a5,16
+ 121 0018 F99B     		andi	a5,a5,-2
+ 122 001a C207     		slli	a5,a5,16
+ 123 001c C183     		srli	a5,a5,16
+ 124 001e C5BF     		j	.L21
+ 126              		.section	.text.I2C_GeneralCallCmd,"ax",@progbits
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 3
+
+
+ 127              		.align	1
+ 128              		.globl	I2C_GeneralCallCmd
+ 130              	I2C_GeneralCallCmd:
+ 131 0000 37570040 		li	a4,1073762304
+ 132 0004 83570780 		lhu	a5,-2048(a4)
+ 133 0008 11C5     		beq	a0,zero,.L23
+ 134 000a 93E70704 		ori	a5,a5,64
+ 135              	.L25:
+ 136 000e 2310F780 		sh	a5,-2048(a4)
+ 137 0012 8280     		ret
+ 138              	.L23:
+ 139 0014 C207     		slli	a5,a5,16
+ 140 0016 C183     		srli	a5,a5,16
+ 141 0018 93F7F7FB 		andi	a5,a5,-65
+ 142 001c C207     		slli	a5,a5,16
+ 143 001e C183     		srli	a5,a5,16
+ 144 0020 FDB7     		j	.L25
+ 146              		.section	.text.I2C_ITConfig,"ax",@progbits
+ 147              		.align	1
+ 148              		.globl	I2C_ITConfig
+ 150              	I2C_ITConfig:
+ 151 0000 37570040 		li	a4,1073762304
+ 152 0004 83574780 		lhu	a5,-2044(a4)
+ 153 0008 4205     		slli	a0,a0,16
+ 154 000a 4181     		srli	a0,a0,16
+ 155 000c 89C5     		beq	a1,zero,.L27
+ 156 000e C98F     		or	a5,a5,a0
+ 157              	.L29:
+ 158 0010 2312F780 		sh	a5,-2044(a4)
+ 159 0014 8280     		ret
+ 160              	.L27:
+ 161 0016 1345F5FF 		not	a0,a0
+ 162 001a E98F     		and	a5,a5,a0
+ 163 001c D5BF     		j	.L29
+ 165              		.section	.text.I2C_SendData,"ax",@progbits
+ 166              		.align	1
+ 167              		.globl	I2C_SendData
+ 169              	I2C_SendData:
+ 170 0000 B7570040 		li	a5,1073762304
+ 171 0004 2398A780 		sh	a0,-2032(a5)
+ 172 0008 8280     		ret
+ 174              		.section	.text.I2C_ReceiveData,"ax",@progbits
+ 175              		.align	1
+ 176              		.globl	I2C_ReceiveData
+ 178              	I2C_ReceiveData:
+ 179 0000 B7570040 		li	a5,1073762304
+ 180 0004 03D50781 		lhu	a0,-2032(a5)
+ 181 0008 1375F50F 		andi	a0,a0,0xff
+ 182 000c 8280     		ret
+ 184              		.section	.text.I2C_Send7bitAddress,"ax",@progbits
+ 185              		.align	1
+ 186              		.globl	I2C_Send7bitAddress
+ 188              	I2C_Send7bitAddress:
+ 189 0000 9377E50F 		andi	a5,a0,254
+ 190 0004 99C1     		beq	a1,zero,.L34
+ 191 0006 93671500 		ori	a5,a0,1
+ 192              	.L34:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 4
+
+
+ 193 000a 37570040 		li	a4,1073762304
+ 194 000e 2318F780 		sh	a5,-2032(a4)
+ 195 0012 8280     		ret
+ 197              		.section	.text.I2C_SoftwareResetCmd,"ax",@progbits
+ 198              		.align	1
+ 199              		.globl	I2C_SoftwareResetCmd
+ 201              	I2C_SoftwareResetCmd:
+ 202 0000 37570040 		li	a4,1073762304
+ 203 0004 83570780 		lhu	a5,-2048(a4)
+ 204 0008 11C5     		beq	a0,zero,.L36
+ 205 000a A166     		li	a3,32768
+ 206 000c D58F     		or	a5,a5,a3
+ 207              	.L38:
+ 208 000e 2310F780 		sh	a5,-2048(a4)
+ 209 0012 8280     		ret
+ 210              	.L36:
+ 211 0014 C607     		slli	a5,a5,17
+ 212 0016 C583     		srli	a5,a5,17
+ 213 0018 DDBF     		j	.L38
+ 215              		.section	.text.I2C_Init,"ax",@progbits
+ 216              		.align	1
+ 217              		.globl	I2C_Init
+ 219              	I2C_Init:
+ 220 0000 0111     		addi	sp,sp,-32
+ 221 0002 26CA     		sw	s1,20(sp)
+ 222 0004 B7540040 		li	s1,1073762304
+ 223 0008 52C4     		sw	s4,8(sp)
+ 224 000a 3E8A     		mv	s4,a5
+ 225 000c 83D70480 		lhu	a5,-2048(s1)
+ 226 0010 4EC6     		sw	s3,12(sp)
+ 227 0012 BA89     		mv	s3,a4
+ 228 0014 2167     		li	a4,32768
+ 229 0016 D98F     		or	a5,a5,a4
+ 230 0018 06CE     		sw	ra,28(sp)
+ 231 001a 22CC     		sw	s0,24(sp)
+ 232 001c 4AC8     		sw	s2,16(sp)
+ 233 001e 56C2     		sw	s5,4(sp)
+ 234 0020 5AC0     		sw	s6,0(sp)
+ 235 0022 2390F480 		sh	a5,-2048(s1)
+ 236 0026 2A89     		mv	s2,a0
+ 237 0028 0145     		li	a0,0
+ 238 002a 2E84     		mv	s0,a1
+ 239 002c 328B     		mv	s6,a2
+ 240 002e B68A     		mv	s5,a3
+ 241 0030 97000000 		call	I2C_SoftwareResetCmd
+ 241      E7800000 
+ 242 0038 97000000 		call	GetSysClock
+ 242      E7800000 
+ 243 0040 37480F00 		li	a6,999424
+ 244 0044 13080824 		addi	a6,a6,576
+ 245 0048 33580503 		divu	a6,a0,a6
+ 246 004c 83D74480 		lhu	a5,-2044(s1)
+ 247 0050 C207     		slli	a5,a5,16
+ 248 0052 C183     		srli	a5,a5,16
+ 249 0054 93F707FC 		andi	a5,a5,-64
+ 250 0058 C207     		slli	a5,a5,16
+ 251 005a C183     		srli	a5,a5,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 5
+
+
+ 252 005c 2392F480 		sh	a5,-2044(s1)
+ 253 0060 83D74480 		lhu	a5,-2044(s1)
+ 254 0064 B3E70701 		or	a5,a5,a6
+ 255 0068 C207     		slli	a5,a5,16
+ 256 006a C183     		srli	a5,a5,16
+ 257 006c 2392F480 		sh	a5,-2044(s1)
+ 258 0070 83D70480 		lhu	a5,-2048(s1)
+ 259 0074 C207     		slli	a5,a5,16
+ 260 0076 C183     		srli	a5,a5,16
+ 261 0078 F99B     		andi	a5,a5,-2
+ 262 007a C207     		slli	a5,a5,16
+ 263 007c C183     		srli	a5,a5,16
+ 264 007e 2390F480 		sh	a5,-2048(s1)
+ 265 0082 E167     		li	a5,98304
+ 266 0084 9387076A 		addi	a5,a5,1696
+ 267 0088 63E4870A 		bgtu	s0,a5,.L40
+ 268 008c 0604     		slli	s0,s0,1
+ 269 008e 33548502 		divu	s0,a0,s0
+ 270 0092 8567     		li	a5,4096
+ 271 0094 1387C7FF 		addi	a4,a5,-4
+ 272 0098 1146     		li	a2,4
+ 273 009a 4204     		slli	s0,s0,16
+ 274 009c 4180     		srli	s0,s0,16
+ 275 009e 618F     		and	a4,s0,a4
+ 276 00a0 01C7     		beq	a4,zero,.L41
+ 277 00a2 FD17     		addi	a5,a5,-1
+ 278 00a4 3376F400 		and	a2,s0,a5
+ 279              	.L41:
+ 280 00a8 0508     		addi	a6,a6,1
+ 281 00aa 9307F003 		li	a5,63
+ 282 00ae 63F40701 		bleu	a6,a5,.L50
+ 283 00b2 1308F003 		li	a6,63
+ 284              	.L50:
+ 285 00b6 4208     		slli	a6,a6,16
+ 286 00b8 B7570040 		li	a5,1073762304
+ 287 00bc 13580801 		srli	a6,a6,16
+ 288 00c0 23900783 		sh	a6,-2016(a5)
+ 289 00c4 B7550040 		li	a1,1073762304
+ 290 00c8 239EC580 		sh	a2,-2020(a1)
+ 291 00cc 83D70580 		lhu	a5,-2048(a1)
+ 292 00d0 F240     		lw	ra,28(sp)
+ 293 00d2 6244     		lw	s0,24(sp)
+ 294 00d4 93E71700 		ori	a5,a5,1
+ 295 00d8 2390F580 		sh	a5,-2048(a1)
+ 296 00dc 83D70580 		lhu	a5,-2048(a1)
+ 297 00e0 D244     		lw	s1,20(sp)
+ 298 00e2 024B     		lw	s6,0(sp)
+ 299 00e4 C207     		slli	a5,a5,16
+ 300 00e6 C183     		srli	a5,a5,16
+ 301 00e8 93F757BF 		andi	a5,a5,-1035
+ 302 00ec C207     		slli	a5,a5,16
+ 303 00ee C183     		srli	a5,a5,16
+ 304 00f0 2390F580 		sh	a5,-2048(a1)
+ 305 00f4 03D50580 		lhu	a0,-2048(a1)
+ 306 00f8 33655501 		or	a0,a0,s5
+ 307 00fc 33652501 		or	a0,a0,s2
+ 308 0100 4205     		slli	a0,a0,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 6
+
+
+ 309 0102 4181     		srli	a0,a0,16
+ 310 0104 2390A580 		sh	a0,-2048(a1)
+ 311 0108 83D78580 		lhu	a5,-2040(a1)
+ 312 010c 23940580 		sh	zero,-2040(a1)
+ 313 0110 83D68580 		lhu	a3,-2040(a1)
+ 314 0114 4249     		lw	s2,16(sp)
+ 315 0116 924A     		lw	s5,4(sp)
+ 316 0118 B3E74601 		or	a5,a3,s4
+ 317 011c 33E73701 		or	a4,a5,s3
+ 318 0120 4207     		slli	a4,a4,16
+ 319 0122 4183     		srli	a4,a4,16
+ 320 0124 2394E580 		sh	a4,-2040(a1)
+ 321 0128 B249     		lw	s3,12(sp)
+ 322 012a 224A     		lw	s4,8(sp)
+ 323 012c 0561     		addi	sp,sp,32
+ 324 012e 8280     		jr	ra
+ 325              	.L40:
+ 326 0130 631A0B02 		bne	s6,zero,.L44
+ 327 0134 8D45     		li	a1,3
+ 328 0136 B305B402 		mul	a1,s0,a1
+ 329 013a B355B502 		divu	a1,a0,a1
+ 330 013e D205     		slli	a1,a1,20
+ 331 0140 D181     		srli	a1,a1,20
+ 332 0142 2E86     		mv	a2,a1
+ 333 0144 91E1     		bne	a1,zero,.L45
+ 334 0146 0546     		li	a2,1
+ 335              	.L45:
+ 336 0148 4206     		slli	a2,a2,16
+ 337 014a 4182     		srli	a2,a2,16
+ 338              	.L46:
+ 339 014c A167     		li	a5,32768
+ 340 014e 5D8E     		or	a2,a2,a5
+ 341 0150 9307C012 		li	a5,300
+ 342 0154 3308F802 		mul	a6,a6,a5
+ 343 0158 9307803E 		li	a5,1000
+ 344 015c 3358F802 		divu	a6,a6,a5
+ 345 0160 0508     		addi	a6,a6,1
+ 346 0162 91BF     		j	.L50
+ 347              	.L44:
+ 348 0164 E547     		li	a5,25
+ 349 0166 3304F402 		mul	s0,s0,a5
+ 350 016a 9167     		li	a5,16384
+ 351 016c 33568502 		divu	a2,a0,s0
+ 352 0170 5206     		slli	a2,a2,20
+ 353 0172 5182     		srli	a2,a2,20
+ 354 0174 5D8E     		or	a2,a2,a5
+ 355 0176 D9BF     		j	.L46
+ 357              		.section	.text.I2C_NACKPositionConfig,"ax",@progbits
+ 358              		.align	1
+ 359              		.globl	I2C_NACKPositionConfig
+ 361              	I2C_NACKPositionConfig:
+ 362 0000 B7560040 		li	a3,1073762304
+ 363 0004 83D70680 		lhu	a5,-2048(a3)
+ 364 0008 13050580 		addi	a0,a0,-2048
+ 365 000c 11E9     		bne	a0,zero,.L52
+ 366 000e 0567     		li	a4,4096
+ 367 0010 13070780 		addi	a4,a4,-2048
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 7
+
+
+ 368 0014 D98F     		or	a5,a5,a4
+ 369 0016 C207     		slli	a5,a5,16
+ 370 0018 C183     		srli	a5,a5,16
+ 371              	.L54:
+ 372 001a 2390F680 		sh	a5,-2048(a3)
+ 373 001e 8280     		ret
+ 374              	.L52:
+ 375 0020 7D77     		li	a4,-4096
+ 376 0022 1307F77F 		addi	a4,a4,2047
+ 377 0026 F98F     		and	a5,a5,a4
+ 378 0028 CDBF     		j	.L54
+ 380              		.section	.text.I2C_SMBusAlertConfig,"ax",@progbits
+ 381              		.align	1
+ 382              		.globl	I2C_SMBusAlertConfig
+ 384              	I2C_SMBusAlertConfig:
+ 385 0000 8967     		li	a5,8192
+ 386 0002 631BF500 		bne	a0,a5,.L56
+ 387 0006 37570040 		li	a4,1073762304
+ 388 000a 83570780 		lhu	a5,-2048(a4)
+ 389 000e 8966     		li	a3,8192
+ 390 0010 D58F     		or	a5,a5,a3
+ 391 0012 2310F780 		sh	a5,-2048(a4)
+ 392 0016 8280     		ret
+ 393              	.L56:
+ 394 0018 B7560040 		li	a3,1073762304
+ 395 001c 83D70680 		lhu	a5,-2048(a3)
+ 396 0020 7977     		li	a4,-8192
+ 397 0022 7D17     		addi	a4,a4,-1
+ 398 0024 F98F     		and	a5,a5,a4
+ 399 0026 2390F680 		sh	a5,-2048(a3)
+ 400 002a 8280     		ret
+ 402              		.section	.text.I2C_TransmitPEC,"ax",@progbits
+ 403              		.align	1
+ 404              		.globl	I2C_TransmitPEC
+ 406              	I2C_TransmitPEC:
+ 407 0000 11C9     		beq	a0,zero,.L59
+ 408 0002 37570040 		li	a4,1073762304
+ 409 0006 83570780 		lhu	a5,-2048(a4)
+ 410 000a 8566     		li	a3,4096
+ 411 000c D58F     		or	a5,a5,a3
+ 412 000e 2310F780 		sh	a5,-2048(a4)
+ 413 0012 8280     		ret
+ 414              	.L59:
+ 415 0014 B7560040 		li	a3,1073762304
+ 416 0018 83D70680 		lhu	a5,-2048(a3)
+ 417 001c 7D77     		li	a4,-4096
+ 418 001e 7D17     		addi	a4,a4,-1
+ 419 0020 F98F     		and	a5,a5,a4
+ 420 0022 2390F680 		sh	a5,-2048(a3)
+ 421 0026 8280     		ret
+ 423              		.section	.text.I2C_PECPositionConfig,"ax",@progbits
+ 424              		.align	1
+ 425              		.globl	I2C_PECPositionConfig
+ 427              	I2C_PECPositionConfig:
+ 428 0000 17030000 		tail	I2C_NACKPositionConfig
+ 428      67000300 
+ 430              		.section	.text.I2C_CalculatePEC,"ax",@progbits
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 8
+
+
+ 431              		.align	1
+ 432              		.globl	I2C_CalculatePEC
+ 434              	I2C_CalculatePEC:
+ 435 0000 37570040 		li	a4,1073762304
+ 436 0004 83570780 		lhu	a5,-2048(a4)
+ 437 0008 11C5     		beq	a0,zero,.L63
+ 438 000a 93E70702 		ori	a5,a5,32
+ 439              	.L65:
+ 440 000e 2310F780 		sh	a5,-2048(a4)
+ 441 0012 8280     		ret
+ 442              	.L63:
+ 443 0014 C207     		slli	a5,a5,16
+ 444 0016 C183     		srli	a5,a5,16
+ 445 0018 93F7F7FD 		andi	a5,a5,-33
+ 446 001c C207     		slli	a5,a5,16
+ 447 001e C183     		srli	a5,a5,16
+ 448 0020 FDB7     		j	.L65
+ 450              		.section	.text.I2C_GetPEC,"ax",@progbits
+ 451              		.align	1
+ 452              		.globl	I2C_GetPEC
+ 454              	I2C_GetPEC:
+ 455 0000 B7570040 		li	a5,1073762304
+ 456 0004 03D58781 		lhu	a0,-2024(a5)
+ 457 0008 2181     		srli	a0,a0,8
+ 458 000a 8280     		ret
+ 460              		.section	.text.I2C_ARPCmd,"ax",@progbits
+ 461              		.align	1
+ 462              		.globl	I2C_ARPCmd
+ 464              	I2C_ARPCmd:
+ 465 0000 37570040 		li	a4,1073762304
+ 466 0004 83570780 		lhu	a5,-2048(a4)
+ 467 0008 11C5     		beq	a0,zero,.L68
+ 468 000a 93E70701 		ori	a5,a5,16
+ 469              	.L70:
+ 470 000e 2310F780 		sh	a5,-2048(a4)
+ 471 0012 8280     		ret
+ 472              	.L68:
+ 473 0014 C207     		slli	a5,a5,16
+ 474 0016 C183     		srli	a5,a5,16
+ 475 0018 BD9B     		andi	a5,a5,-17
+ 476 001a C207     		slli	a5,a5,16
+ 477 001c C183     		srli	a5,a5,16
+ 478 001e C5BF     		j	.L70
+ 480              		.section	.text.I2C_StretchClockCmd,"ax",@progbits
+ 481              		.align	1
+ 482              		.globl	I2C_StretchClockCmd
+ 484              	I2C_StretchClockCmd:
+ 485 0000 37570040 		li	a4,1073762304
+ 486 0004 83570780 		lhu	a5,-2048(a4)
+ 487 0008 11E5     		bne	a0,zero,.L72
+ 488 000a 93E70708 		ori	a5,a5,128
+ 489              	.L74:
+ 490 000e 2310F780 		sh	a5,-2048(a4)
+ 491 0012 8280     		ret
+ 492              	.L72:
+ 493 0014 C207     		slli	a5,a5,16
+ 494 0016 C183     		srli	a5,a5,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 9
+
+
+ 495 0018 93F7F7F7 		andi	a5,a5,-129
+ 496 001c C207     		slli	a5,a5,16
+ 497 001e C183     		srli	a5,a5,16
+ 498 0020 FDB7     		j	.L74
+ 500              		.section	.text.I2C_FastModeDutyCycleConfig,"ax",@progbits
+ 501              		.align	1
+ 502              		.globl	I2C_FastModeDutyCycleConfig
+ 504              	I2C_FastModeDutyCycleConfig:
+ 505 0000 9167     		li	a5,16384
+ 506 0002 630CF500 		beq	a0,a5,.L76
+ 507 0006 B7560040 		li	a3,1073762304
+ 508 000a 83D7C681 		lhu	a5,-2020(a3)
+ 509 000e 7177     		li	a4,-16384
+ 510 0010 7D17     		addi	a4,a4,-1
+ 511 0012 F98F     		and	a5,a5,a4
+ 512 0014 239EF680 		sh	a5,-2020(a3)
+ 513 0018 8280     		ret
+ 514              	.L76:
+ 515 001a 37570040 		li	a4,1073762304
+ 516 001e 8357C781 		lhu	a5,-2020(a4)
+ 517 0022 9166     		li	a3,16384
+ 518 0024 D58F     		or	a5,a5,a3
+ 519 0026 231EF780 		sh	a5,-2020(a4)
+ 520 002a 8280     		ret
+ 522              		.section	.text.I2C_CheckEvent,"ax",@progbits
+ 523              		.align	1
+ 524              		.globl	I2C_CheckEvent
+ 526              	I2C_CheckEvent:
+ 527 0000 B7570040 		li	a5,1073762304
+ 528 0004 03D74781 		lhu	a4,-2028(a5)
+ 529 0008 83D78781 		lhu	a5,-2024(a5)
+ 530 000c C207     		slli	a5,a5,16
+ 531 000e D98F     		or	a5,a5,a4
+ 532 0010 E98F     		and	a5,a5,a0
+ 533 0012 A207     		slli	a5,a5,8
+ 534 0014 A183     		srli	a5,a5,8
+ 535 0016 3385A740 		sub	a0,a5,a0
+ 536 001a 13351500 		seqz	a0,a0
+ 537 001e 8280     		ret
+ 539              		.section	.text.I2C_GetLastEvent,"ax",@progbits
+ 540              		.align	1
+ 541              		.globl	I2C_GetLastEvent
+ 543              	I2C_GetLastEvent:
+ 544 0000 B7570040 		li	a5,1073762304
+ 545 0004 03D74781 		lhu	a4,-2028(a5)
+ 546 0008 03D58781 		lhu	a0,-2024(a5)
+ 547 000c 4205     		slli	a0,a0,16
+ 548 000e 598D     		or	a0,a0,a4
+ 549 0010 2205     		slli	a0,a0,8
+ 550 0012 2181     		srli	a0,a0,8
+ 551 0014 8280     		ret
+ 553              		.section	.text.I2C_GetFlagStatus,"ax",@progbits
+ 554              		.align	1
+ 555              		.globl	I2C_GetFlagStatus
+ 557              	I2C_GetFlagStatus:
+ 558 0000 4111     		addi	sp,sp,-16
+ 559 0002 02C4     		sw	zero,8(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 10
+
+
+ 560 0004 B7570040 		li	a5,1073762304
+ 561 0008 02C6     		sw	zero,12(sp)
+ 562 000a 93870780 		addi	a5,a5,-2048
+ 563 000e 3EC6     		sw	a5,12(sp)
+ 564 0010 9357C501 		srli	a5,a0,28
+ 565 0014 3EC4     		sw	a5,8(sp)
+ 566 0016 2247     		lw	a4,8(sp)
+ 567 0018 2205     		slli	a0,a0,8
+ 568 001a 93578500 		srli	a5,a0,8
+ 569 001e 19CB     		beq	a4,zero,.L81
+ 570 0020 3247     		lw	a4,12(sp)
+ 571 0022 5107     		addi	a4,a4,20
+ 572              	.L84:
+ 573 0024 3AC6     		sw	a4,12(sp)
+ 574 0026 3247     		lw	a4,12(sp)
+ 575 0028 0843     		lw	a0,0(a4)
+ 576 002a 4101     		addi	sp,sp,16
+ 577 002c 7D8D     		and	a0,a0,a5
+ 578 002e 3335A000 		snez	a0,a0
+ 579 0032 8280     		jr	ra
+ 580              	.L81:
+ 581 0034 3247     		lw	a4,12(sp)
+ 582 0036 C183     		srli	a5,a5,16
+ 583 0038 6107     		addi	a4,a4,24
+ 584 003a EDB7     		j	.L84
+ 586              		.section	.text.I2C_ClearFlag,"ax",@progbits
+ 587              		.align	1
+ 588              		.globl	I2C_ClearFlag
+ 590              	I2C_ClearFlag:
+ 591 0000 1345F5FF 		not	a0,a0
+ 592 0004 4205     		slli	a0,a0,16
+ 593 0006 4181     		srli	a0,a0,16
+ 594 0008 B7570040 		li	a5,1073762304
+ 595 000c 239AA780 		sh	a0,-2028(a5)
+ 596 0010 8280     		ret
+ 598              		.section	.text.I2C_GetITStatus,"ax",@progbits
+ 599              		.align	1
+ 600              		.globl	I2C_GetITStatus
+ 602              	I2C_GetITStatus:
+ 603 0000 B7560040 		li	a3,1073762304
+ 604 0004 03D74680 		lhu	a4,-2044(a3)
+ 605 0008 AA87     		mv	a5,a0
+ 606 000a 03D54681 		lhu	a0,-2028(a3)
+ 607 000e 4207     		slli	a4,a4,16
+ 608 0010 4183     		srli	a4,a4,16
+ 609 0012 7D8D     		and	a0,a0,a5
+ 610 0014 01C9     		beq	a0,zero,.L86
+ 611 0016 13D50701 		srli	a0,a5,16
+ 612 001a 798D     		and	a0,a0,a4
+ 613 001c 13750570 		andi	a0,a0,1792
+ 614 0020 3335A000 		snez	a0,a0
+ 615              	.L86:
+ 616 0024 8280     		ret
+ 618              		.section	.text.I2C_ClearITPendingBit,"ax",@progbits
+ 619              		.align	1
+ 620              		.globl	I2C_ClearITPendingBit
+ 622              	I2C_ClearITPendingBit:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 11
+
+
+ 623 0000 17030000 		tail	I2C_ClearFlag
+ 623      67000300 
+ 625              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_i2c.c
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:11     .text.I2C_Cmd:0000000000000000 I2C_Cmd
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:12     .text.I2C_Cmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:31     .text.I2C_GenerateSTART:0000000000000000 I2C_GenerateSTART
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:32     .text.I2C_GenerateSTART:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:51     .text.I2C_GenerateSTOP:0000000000000000 I2C_GenerateSTOP
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:52     .text.I2C_GenerateSTOP:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:71     .text.I2C_AcknowledgeConfig:0000000000000000 I2C_AcknowledgeConfig
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:72     .text.I2C_AcknowledgeConfig:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:91     .text.I2C_OwnAddress2Config:0000000000000000 I2C_OwnAddress2Config
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:92     .text.I2C_OwnAddress2Config:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:110    .text.I2C_DualAddressCmd:0000000000000000 I2C_DualAddressCmd
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:111    .text.I2C_DualAddressCmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:130    .text.I2C_GeneralCallCmd:0000000000000000 I2C_GeneralCallCmd
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:131    .text.I2C_GeneralCallCmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:150    .text.I2C_ITConfig:0000000000000000 I2C_ITConfig
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:151    .text.I2C_ITConfig:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:169    .text.I2C_SendData:0000000000000000 I2C_SendData
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:170    .text.I2C_SendData:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:178    .text.I2C_ReceiveData:0000000000000000 I2C_ReceiveData
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:179    .text.I2C_ReceiveData:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:188    .text.I2C_Send7bitAddress:0000000000000000 I2C_Send7bitAddress
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:189    .text.I2C_Send7bitAddress:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:201    .text.I2C_SoftwareResetCmd:0000000000000000 I2C_SoftwareResetCmd
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:202    .text.I2C_SoftwareResetCmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:219    .text.I2C_Init:0000000000000000 I2C_Init
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:220    .text.I2C_Init:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:361    .text.I2C_NACKPositionConfig:0000000000000000 I2C_NACKPositionConfig
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:362    .text.I2C_NACKPositionConfig:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:384    .text.I2C_SMBusAlertConfig:0000000000000000 I2C_SMBusAlertConfig
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:385    .text.I2C_SMBusAlertConfig:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:406    .text.I2C_TransmitPEC:0000000000000000 I2C_TransmitPEC
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:407    .text.I2C_TransmitPEC:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:427    .text.I2C_PECPositionConfig:0000000000000000 I2C_PECPositionConfig
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:428    .text.I2C_PECPositionConfig:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:434    .text.I2C_CalculatePEC:0000000000000000 I2C_CalculatePEC
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:435    .text.I2C_CalculatePEC:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:454    .text.I2C_GetPEC:0000000000000000 I2C_GetPEC
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:455    .text.I2C_GetPEC:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:464    .text.I2C_ARPCmd:0000000000000000 I2C_ARPCmd
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:465    .text.I2C_ARPCmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:484    .text.I2C_StretchClockCmd:0000000000000000 I2C_StretchClockCmd
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:485    .text.I2C_StretchClockCmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:504    .text.I2C_FastModeDutyCycleConfig:0000000000000000 I2C_FastModeDutyCycleConfig
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:505    .text.I2C_FastModeDutyCycleConfig:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:526    .text.I2C_CheckEvent:0000000000000000 I2C_CheckEvent
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:527    .text.I2C_CheckEvent:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:543    .text.I2C_GetLastEvent:0000000000000000 I2C_GetLastEvent
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:544    .text.I2C_GetLastEvent:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:557    .text.I2C_GetFlagStatus:0000000000000000 I2C_GetFlagStatus
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:558    .text.I2C_GetFlagStatus:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:590    .text.I2C_ClearFlag:0000000000000000 I2C_ClearFlag
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:591    .text.I2C_ClearFlag:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:602    .text.I2C_GetITStatus:0000000000000000 I2C_GetITStatus
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:603    .text.I2C_GetITStatus:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:622    .text.I2C_ClearITPendingBit:0000000000000000 I2C_ClearITPendingBit
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s 			page 13
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:623    .text.I2C_ClearITPendingBit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:19     .text.I2C_Cmd:0000000000000014 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:16     .text.I2C_Cmd:000000000000000e .L4
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:39     .text.I2C_GenerateSTART:0000000000000014 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:36     .text.I2C_GenerateSTART:000000000000000e .L8
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:59     .text.I2C_GenerateSTOP:0000000000000014 .L10
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:56     .text.I2C_GenerateSTOP:000000000000000e .L12
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:79     .text.I2C_AcknowledgeConfig:0000000000000014 .L14
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:76     .text.I2C_AcknowledgeConfig:000000000000000e .L16
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:118    .text.I2C_DualAddressCmd:0000000000000014 .L19
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:115    .text.I2C_DualAddressCmd:000000000000000e .L21
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:138    .text.I2C_GeneralCallCmd:0000000000000014 .L23
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:135    .text.I2C_GeneralCallCmd:000000000000000e .L25
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:160    .text.I2C_ITConfig:0000000000000016 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:157    .text.I2C_ITConfig:0000000000000010 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:192    .text.I2C_Send7bitAddress:000000000000000a .L34
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:210    .text.I2C_SoftwareResetCmd:0000000000000014 .L36
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:207    .text.I2C_SoftwareResetCmd:000000000000000e .L38
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:325    .text.I2C_Init:0000000000000130 .L40
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:279    .text.I2C_Init:00000000000000a8 .L41
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:284    .text.I2C_Init:00000000000000b6 .L50
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:347    .text.I2C_Init:0000000000000164 .L44
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:335    .text.I2C_Init:0000000000000148 .L45
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:338    .text.I2C_Init:000000000000014c .L46
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:374    .text.I2C_NACKPositionConfig:0000000000000020 .L52
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:371    .text.I2C_NACKPositionConfig:000000000000001a .L54
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:393    .text.I2C_SMBusAlertConfig:0000000000000018 .L56
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:414    .text.I2C_TransmitPEC:0000000000000014 .L59
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:442    .text.I2C_CalculatePEC:0000000000000014 .L63
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:439    .text.I2C_CalculatePEC:000000000000000e .L65
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:472    .text.I2C_ARPCmd:0000000000000014 .L68
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:469    .text.I2C_ARPCmd:000000000000000e .L70
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:492    .text.I2C_StretchClockCmd:0000000000000014 .L72
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:489    .text.I2C_StretchClockCmd:000000000000000e .L74
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:514    .text.I2C_FastModeDutyCycleConfig:000000000000001a .L76
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:580    .text.I2C_GetFlagStatus:0000000000000034 .L81
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:572    .text.I2C_GetFlagStatus:0000000000000024 .L84
+C:\Users\LRNA\AppData\Local\Temp\ccsJN3To.s:615    .text.I2C_GetITStatus:0000000000000024 .L86
+
+UNDEFINED SYMBOLS
+GetSysClock

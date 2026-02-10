@@ -1,0 +1,441 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 1
+
+
+   1              		.file	"CH59x_spi0.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.SPI0_MasterDefInit,"ax",@progbits
+   8              		.align	1
+   9              		.globl	SPI0_MasterDefInit
+  11              	SPI0_MasterDefInit:
+  12 0000 B7470040 		li	a5,1073758208
+  13 0004 1147     		li	a4,4
+  14 0006 A381E700 		sb	a4,3(a5)
+  15 000a 0947     		li	a4,2
+  16 000c 2380E700 		sb	a4,0(a5)
+  17 0010 13070006 		li	a4,96
+  18 0014 2380E700 		sb	a4,0(a5)
+  19 0018 03C71700 		lbu	a4,1(a5)
+  20 001c 13670701 		ori	a4,a4,16
+  21 0020 A380E700 		sb	a4,1(a5)
+  22 0024 03C71700 		lbu	a4,1(a5)
+  23 0028 1377E70F 		andi	a4,a4,254
+  24 002c A380E700 		sb	a4,1(a5)
+  25 0030 8280     		ret
+  27              		.section	.text.SPI0_CLKCfg,"ax",@progbits
+  28              		.align	1
+  29              		.globl	SPI0_CLKCfg
+  31              	SPI0_CLKCfg:
+  32 0000 8947     		li	a5,2
+  33 0002 37470040 		li	a4,1073758208
+  34 0006 631DF500 		bne	a0,a5,.L3
+  35 000a 83471700 		lbu	a5,1(a4)
+  36 000e 93E70704 		ori	a5,a5,64
+  37              	.L5:
+  38 0012 A300F700 		sb	a5,1(a4)
+  39 0016 B7470040 		li	a5,1073758208
+  40 001a A381A700 		sb	a0,3(a5)
+  41 001e 8280     		ret
+  42              	.L3:
+  43 0020 83471700 		lbu	a5,1(a4)
+  44 0024 93F7F70B 		andi	a5,a5,191
+  45 0028 EDB7     		j	.L5
+  47              		.section	.text.SPI0_DataMode,"ax",@progbits
+  48              		.align	1
+  49              		.globl	SPI0_DataMode
+  51              	SPI0_DataMode:
+  52 0000 8947     		li	a5,2
+  53 0002 6305F504 		beq	a0,a5,.L7
+  54 0006 63E2A702 		bgtu	a0,a5,.L8
+  55 000a 05E5     		bne	a0,zero,.L13
+  56 000c B7470040 		li	a5,1073758208
+  57 0010 03C70700 		lbu	a4,0(a5)
+  58 0014 1377770F 		andi	a4,a4,247
+  59              	.L16:
+  60 0018 2380E700 		sb	a4,0(a5)
+  61 001c 03C71700 		lbu	a4,1(a5)
+  62 0020 13670702 		ori	a4,a4,32
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 2
+
+
+  63              	.L14:
+  64 0024 A380E700 		sb	a4,1(a5)
+  65 0028 8280     		ret
+  66              	.L8:
+  67 002a 8D47     		li	a5,3
+  68 002c 6307F502 		beq	a0,a5,.L11
+  69 0030 8280     		ret
+  70              	.L13:
+  71 0032 B7470040 		li	a5,1073758208
+  72 0036 03C70700 		lbu	a4,0(a5)
+  73 003a 1377770F 		andi	a4,a4,247
+  74              	.L15:
+  75 003e 2380E700 		sb	a4,0(a5)
+  76 0042 03C71700 		lbu	a4,1(a5)
+  77 0046 1377F70D 		andi	a4,a4,223
+  78 004a E9BF     		j	.L14
+  79              	.L7:
+  80 004c B7470040 		li	a5,1073758208
+  81 0050 03C70700 		lbu	a4,0(a5)
+  82 0054 13678700 		ori	a4,a4,8
+  83 0058 C1B7     		j	.L16
+  84              	.L11:
+  85 005a B7470040 		li	a5,1073758208
+  86 005e 03C70700 		lbu	a4,0(a5)
+  87 0062 13678700 		ori	a4,a4,8
+  88 0066 E1BF     		j	.L15
+  90              		.section	.text.SPI0_MasterSendByte,"ax",@progbits
+  91              		.align	1
+  92              		.globl	SPI0_MasterSendByte
+  94              	SPI0_MasterSendByte:
+  95 0000 B7470040 		li	a5,1073758208
+  96 0004 03C70700 		lbu	a4,0(a5)
+  97 0008 1377F70E 		andi	a4,a4,239
+  98 000c 2380E700 		sb	a4,0(a5)
+  99 0010 2382A700 		sb	a0,4(a5)
+ 100 0014 37470040 		li	a4,1073758208
+ 101              	.L18:
+ 102 0018 83476700 		lbu	a5,6(a4)
+ 103 001c 93F70704 		andi	a5,a5,64
+ 104 0020 E5DF     		beq	a5,zero,.L18
+ 105 0022 8280     		ret
+ 107              		.section	.text.SPI0_MasterRecvByte,"ax",@progbits
+ 108              		.align	1
+ 109              		.globl	SPI0_MasterRecvByte
+ 111              	SPI0_MasterRecvByte:
+ 112 0000 B7470040 		li	a5,1073758208
+ 113 0004 03C70700 		lbu	a4,0(a5)
+ 114 0008 13670701 		ori	a4,a4,16
+ 115 000c 2380E700 		sb	a4,0(a5)
+ 116 0010 7D57     		li	a4,-1
+ 117 0012 2382E700 		sb	a4,4(a5)
+ 118 0016 37470040 		li	a4,1073758208
+ 119              	.L22:
+ 120 001a 83476700 		lbu	a5,6(a4)
+ 121 001e 93F70704 		andi	a5,a5,64
+ 122 0022 E5DF     		beq	a5,zero,.L22
+ 123 0024 03454700 		lbu	a0,4(a4)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 3
+
+
+ 124 0028 8280     		ret
+ 126              		.section	.text.SPI0_MasterTrans,"ax",@progbits
+ 127              		.align	1
+ 128              		.globl	SPI0_MasterTrans
+ 130              	SPI0_MasterTrans:
+ 131 0000 B7470040 		li	a5,1073758208
+ 132 0004 03C70700 		lbu	a4,0(a5)
+ 133 0008 9D46     		li	a3,7
+ 134 000a 37460040 		li	a2,1073758208
+ 135 000e 1377F70E 		andi	a4,a4,239
+ 136 0012 2380E700 		sb	a4,0(a5)
+ 137 0016 2396B700 		sh	a1,12(a5)
+ 138 001a AA95     		add	a1,a0,a1
+ 139 001c 0547     		li	a4,1
+ 140 001e C205     		slli	a1,a1,16
+ 141 0020 2383E700 		sb	a4,6(a5)
+ 142 0024 C181     		srli	a1,a1,16
+ 143 0026 37470040 		li	a4,1073758208
+ 144              	.L26:
+ 145 002a 93170501 		slli	a5,a0,16
+ 146 002e C183     		srli	a5,a5,16
+ 147              	.L27:
+ 148 0030 6398B700 		bne	a5,a1,.L28
+ 149 0034 37470040 		li	a4,1073758208
+ 150              	.L29:
+ 151 0038 83477700 		lbu	a5,7(a4)
+ 152 003c F5FF     		bne	a5,zero,.L29
+ 153 003e 8280     		ret
+ 154              	.L28:
+ 155 0040 03487700 		lbu	a6,7(a4)
+ 156 0044 E3E606FF 		bgtu	a6,a3,.L27
+ 157 0048 83470500 		lbu	a5,0(a0)
+ 158 004c 0505     		addi	a0,a0,1
+ 159 004e 2308F600 		sb	a5,16(a2)
+ 160 0052 E1BF     		j	.L26
+ 162              		.section	.text.SPI0_MasterRecv,"ax",@progbits
+ 163              		.align	1
+ 164              		.globl	SPI0_MasterRecv
+ 166              	SPI0_MasterRecv:
+ 167 0000 B7470040 		li	a5,1073758208
+ 168 0004 03C70700 		lbu	a4,0(a5)
+ 169 0008 B7460040 		li	a3,1073758208
+ 170 000c 13670701 		ori	a4,a4,16
+ 171 0010 2380E700 		sb	a4,0(a5)
+ 172 0014 2396B700 		sh	a1,12(a5)
+ 173 0018 AA95     		add	a1,a0,a1
+ 174 001a 0547     		li	a4,1
+ 175 001c C205     		slli	a1,a1,16
+ 176 001e 2383E700 		sb	a4,6(a5)
+ 177 0022 C181     		srli	a1,a1,16
+ 178 0024 37470040 		li	a4,1073758208
+ 179              	.L33:
+ 180 0028 93170501 		slli	a5,a0,16
+ 181 002c C183     		srli	a5,a5,16
+ 182              	.L34:
+ 183 002e 6393B700 		bne	a5,a1,.L35
+ 184 0032 8280     		ret
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 4
+
+
+ 185              	.L35:
+ 186 0034 03467700 		lbu	a2,7(a4)
+ 187 0038 7DDA     		beq	a2,zero,.L34
+ 188 003a 83C70601 		lbu	a5,16(a3)
+ 189 003e 0505     		addi	a0,a0,1
+ 190 0040 A30FF5FE 		sb	a5,-1(a0)
+ 191 0044 D5B7     		j	.L33
+ 193              		.section	.text.SPI0_MasterDMATrans,"ax",@progbits
+ 194              		.align	1
+ 195              		.globl	SPI0_MasterDMATrans
+ 197              	SPI0_MasterDMATrans:
+ 198 0000 B7470040 		li	a5,1073758208
+ 199 0004 03C70700 		lbu	a4,0(a5)
+ 200 0008 1377F70E 		andi	a4,a4,239
+ 201 000c 2380E700 		sb	a4,0(a5)
+ 202 0010 13170501 		slli	a4,a0,16
+ 203 0014 2E95     		add	a0,a0,a1
+ 204 0016 4183     		srli	a4,a4,16
+ 205 0018 4205     		slli	a0,a0,16
+ 206 001a 239CE700 		sh	a4,24(a5)
+ 207 001e 4181     		srli	a0,a0,16
+ 208 0020 239EA700 		sh	a0,28(a5)
+ 209 0024 2396B700 		sh	a1,12(a5)
+ 210 0028 2547     		li	a4,9
+ 211 002a 2383E700 		sb	a4,6(a5)
+ 212 002e 03C71700 		lbu	a4,1(a5)
+ 213 0032 13671700 		ori	a4,a4,1
+ 214 0036 A380E700 		sb	a4,1(a5)
+ 215              	.L39:
+ 216 003a 03C76700 		lbu	a4,6(a5)
+ 217 003e 058B     		andi	a4,a4,1
+ 218 0040 6DDF     		beq	a4,zero,.L39
+ 219 0042 03C71700 		lbu	a4,1(a5)
+ 220 0046 1377E70F 		andi	a4,a4,254
+ 221 004a A380E700 		sb	a4,1(a5)
+ 222 004e 8280     		ret
+ 224              		.section	.text.SPI0_MasterDMARecv,"ax",@progbits
+ 225              		.align	1
+ 226              		.globl	SPI0_MasterDMARecv
+ 228              	SPI0_MasterDMARecv:
+ 229 0000 B7470040 		li	a5,1073758208
+ 230 0004 03C70700 		lbu	a4,0(a5)
+ 231 0008 13670701 		ori	a4,a4,16
+ 232 000c 2380E700 		sb	a4,0(a5)
+ 233 0010 13170501 		slli	a4,a0,16
+ 234 0014 2E95     		add	a0,a0,a1
+ 235 0016 4183     		srli	a4,a4,16
+ 236 0018 4205     		slli	a0,a0,16
+ 237 001a 239CE700 		sh	a4,24(a5)
+ 238 001e 4181     		srli	a0,a0,16
+ 239 0020 239EA700 		sh	a0,28(a5)
+ 240 0024 2396B700 		sh	a1,12(a5)
+ 241 0028 2547     		li	a4,9
+ 242 002a 2383E700 		sb	a4,6(a5)
+ 243 002e 03C71700 		lbu	a4,1(a5)
+ 244 0032 13671700 		ori	a4,a4,1
+ 245 0036 A380E700 		sb	a4,1(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 5
+
+
+ 246              	.L43:
+ 247 003a 03C76700 		lbu	a4,6(a5)
+ 248 003e 058B     		andi	a4,a4,1
+ 249 0040 6DDF     		beq	a4,zero,.L43
+ 250 0042 03C71700 		lbu	a4,1(a5)
+ 251 0046 1377E70F 		andi	a4,a4,254
+ 252 004a A380E700 		sb	a4,1(a5)
+ 253 004e 8280     		ret
+ 255              		.section	.text.SPI0_SlaveInit,"ax",@progbits
+ 256              		.align	1
+ 257              		.globl	SPI0_SlaveInit
+ 259              	SPI0_SlaveInit:
+ 260 0000 B7470040 		li	a5,1073758208
+ 261 0004 0947     		li	a4,2
+ 262 0006 2380E700 		sb	a4,0(a5)
+ 263 000a 130710F8 		li	a4,-127
+ 264 000e 2380E700 		sb	a4,0(a5)
+ 265 0012 03C71700 		lbu	a4,1(a5)
+ 266 0016 13670701 		ori	a4,a4,16
+ 267 001a A380E700 		sb	a4,1(a5)
+ 268 001e 8280     		ret
+ 270              		.section	.text.SPI0_SlaveRecvByte,"ax",@progbits
+ 271              		.align	1
+ 272              		.globl	SPI0_SlaveRecvByte
+ 274              	SPI0_SlaveRecvByte:
+ 275 0000 37470040 		li	a4,1073758208
+ 276 0004 83470700 		lbu	a5,0(a4)
+ 277 0008 93E70701 		ori	a5,a5,16
+ 278 000c 2300F700 		sb	a5,0(a4)
+ 279 0010 B7470040 		li	a5,1073758208
+ 280              	.L48:
+ 281 0014 03C77700 		lbu	a4,7(a5)
+ 282 0018 75DF     		beq	a4,zero,.L48
+ 283 001a 03C50701 		lbu	a0,16(a5)
+ 284 001e 8280     		ret
+ 286              		.section	.text.SPI0_SlaveSendByte,"ax",@progbits
+ 287              		.align	1
+ 288              		.globl	SPI0_SlaveSendByte
+ 290              	SPI0_SlaveSendByte:
+ 291 0000 B7470040 		li	a5,1073758208
+ 292 0004 03C70700 		lbu	a4,0(a5)
+ 293 0008 1377F70E 		andi	a4,a4,239
+ 294 000c 2380E700 		sb	a4,0(a5)
+ 295 0010 2388A700 		sb	a0,16(a5)
+ 296 0014 37470040 		li	a4,1073758208
+ 297              	.L52:
+ 298 0018 83477700 		lbu	a5,7(a4)
+ 299 001c F5FF     		bne	a5,zero,.L52
+ 300 001e 8280     		ret
+ 302              		.section	.highcode,"ax",@progbits
+ 303              		.align	1
+ 304              		.globl	SPI0_SlaveRecv
+ 306              	SPI0_SlaveRecv:
+ 307 0000 B7470040 		li	a5,1073758208
+ 308 0004 03C70700 		lbu	a4,0(a5)
+ 309 0008 AA95     		add	a1,a0,a1
+ 310 000a C205     		slli	a1,a1,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 6
+
+
+ 311 000c 13670701 		ori	a4,a4,16
+ 312 0010 2380E700 		sb	a4,0(a5)
+ 313 0014 0547     		li	a4,1
+ 314 0016 2383E700 		sb	a4,6(a5)
+ 315 001a C181     		srli	a1,a1,16
+ 316 001c 37470040 		li	a4,1073758208
+ 317 0020 B7460040 		li	a3,1073758208
+ 318              	.L55:
+ 319 0024 93170501 		slli	a5,a0,16
+ 320 0028 C183     		srli	a5,a5,16
+ 321              	.L56:
+ 322 002a 6393B700 		bne	a5,a1,.L57
+ 323 002e 8280     		ret
+ 324              	.L57:
+ 325 0030 03467700 		lbu	a2,7(a4)
+ 326 0034 7DDA     		beq	a2,zero,.L56
+ 327 0036 83C70601 		lbu	a5,16(a3)
+ 328 003a 0505     		addi	a0,a0,1
+ 329 003c A30FF5FE 		sb	a5,-1(a0)
+ 330 0040 D5B7     		j	.L55
+ 332              		.align	1
+ 333              		.globl	SPI0_SlaveTrans
+ 335              	SPI0_SlaveTrans:
+ 336 0042 B7470040 		li	a5,1073758208
+ 337 0046 03C70700 		lbu	a4,0(a5)
+ 338 004a AA95     		add	a1,a0,a1
+ 339 004c C205     		slli	a1,a1,16
+ 340 004e 1377F70E 		andi	a4,a4,239
+ 341 0052 2380E700 		sb	a4,0(a5)
+ 342 0056 0547     		li	a4,1
+ 343 0058 2383E700 		sb	a4,6(a5)
+ 344 005c C181     		srli	a1,a1,16
+ 345 005e 37470040 		li	a4,1073758208
+ 346 0062 9D46     		li	a3,7
+ 347 0064 37460040 		li	a2,1073758208
+ 348              	.L61:
+ 349 0068 93170501 		slli	a5,a0,16
+ 350 006c C183     		srli	a5,a5,16
+ 351              	.L62:
+ 352 006e 6398B700 		bne	a5,a1,.L63
+ 353 0072 37470040 		li	a4,1073758208
+ 354              	.L64:
+ 355 0076 83477700 		lbu	a5,7(a4)
+ 356 007a F5FF     		bne	a5,zero,.L64
+ 357 007c 8280     		ret
+ 358              	.L63:
+ 359 007e 03487700 		lbu	a6,7(a4)
+ 360 0082 E3E606FF 		bgtu	a6,a3,.L62
+ 361 0086 83470500 		lbu	a5,0(a0)
+ 362 008a 0505     		addi	a0,a0,1
+ 363 008c 2308F600 		sb	a5,16(a2)
+ 364 0090 E1BF     		j	.L61
+ 366              		.section	.text.SPI0_SlaveDMARecv,"ax",@progbits
+ 367              		.align	1
+ 368              		.globl	SPI0_SlaveDMARecv
+ 370              	SPI0_SlaveDMARecv:
+ 371 0000 17030000 		tail	SPI0_MasterDMARecv
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 7
+
+
+ 371      67000300 
+ 373              		.section	.text.SPI0_SlaveDMATrans,"ax",@progbits
+ 374              		.align	1
+ 375              		.globl	SPI0_SlaveDMATrans
+ 377              	SPI0_SlaveDMATrans:
+ 378 0000 17030000 		tail	SPI0_MasterDMATrans
+ 378      67000300 
+ 380              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_spi0.c
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:11     .text.SPI0_MasterDefInit:0000000000000000 SPI0_MasterDefInit
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:12     .text.SPI0_MasterDefInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:31     .text.SPI0_CLKCfg:0000000000000000 SPI0_CLKCfg
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:32     .text.SPI0_CLKCfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:51     .text.SPI0_DataMode:0000000000000000 SPI0_DataMode
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:52     .text.SPI0_DataMode:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:94     .text.SPI0_MasterSendByte:0000000000000000 SPI0_MasterSendByte
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:95     .text.SPI0_MasterSendByte:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:111    .text.SPI0_MasterRecvByte:0000000000000000 SPI0_MasterRecvByte
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:112    .text.SPI0_MasterRecvByte:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:130    .text.SPI0_MasterTrans:0000000000000000 SPI0_MasterTrans
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:131    .text.SPI0_MasterTrans:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:166    .text.SPI0_MasterRecv:0000000000000000 SPI0_MasterRecv
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:167    .text.SPI0_MasterRecv:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:197    .text.SPI0_MasterDMATrans:0000000000000000 SPI0_MasterDMATrans
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:198    .text.SPI0_MasterDMATrans:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:228    .text.SPI0_MasterDMARecv:0000000000000000 SPI0_MasterDMARecv
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:229    .text.SPI0_MasterDMARecv:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:259    .text.SPI0_SlaveInit:0000000000000000 SPI0_SlaveInit
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:260    .text.SPI0_SlaveInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:274    .text.SPI0_SlaveRecvByte:0000000000000000 SPI0_SlaveRecvByte
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:275    .text.SPI0_SlaveRecvByte:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:290    .text.SPI0_SlaveSendByte:0000000000000000 SPI0_SlaveSendByte
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:291    .text.SPI0_SlaveSendByte:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:306    .highcode:0000000000000000 SPI0_SlaveRecv
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:307    .highcode:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:335    .highcode:0000000000000042 SPI0_SlaveTrans
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:370    .text.SPI0_SlaveDMARecv:0000000000000000 SPI0_SlaveDMARecv
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:371    .text.SPI0_SlaveDMARecv:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:377    .text.SPI0_SlaveDMATrans:0000000000000000 SPI0_SlaveDMATrans
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:378    .text.SPI0_SlaveDMATrans:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:42     .text.SPI0_CLKCfg:0000000000000020 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:37     .text.SPI0_CLKCfg:0000000000000012 .L5
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:79     .text.SPI0_DataMode:000000000000004c .L7
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:66     .text.SPI0_DataMode:000000000000002a .L8
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:70     .text.SPI0_DataMode:0000000000000032 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:84     .text.SPI0_DataMode:000000000000005a .L11
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:63     .text.SPI0_DataMode:0000000000000024 .L14
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:59     .text.SPI0_DataMode:0000000000000018 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:74     .text.SPI0_DataMode:000000000000003e .L15
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:101    .text.SPI0_MasterSendByte:0000000000000018 .L18
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:119    .text.SPI0_MasterRecvByte:000000000000001a .L22
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:154    .text.SPI0_MasterTrans:0000000000000040 .L28
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:150    .text.SPI0_MasterTrans:0000000000000038 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:147    .text.SPI0_MasterTrans:0000000000000030 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:144    .text.SPI0_MasterTrans:000000000000002a .L26
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:185    .text.SPI0_MasterRecv:0000000000000034 .L35
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:182    .text.SPI0_MasterRecv:000000000000002e .L34
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:179    .text.SPI0_MasterRecv:0000000000000028 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:215    .text.SPI0_MasterDMATrans:000000000000003a .L39
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:246    .text.SPI0_MasterDMARecv:000000000000003a .L43
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:280    .text.SPI0_SlaveRecvByte:0000000000000014 .L48
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:297    .text.SPI0_SlaveSendByte:0000000000000018 .L52
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:324    .highcode:0000000000000030 .L57
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:321    .highcode:000000000000002a .L56
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s 			page 9
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:318    .highcode:0000000000000024 .L55
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:358    .highcode:000000000000007e .L63
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:354    .highcode:0000000000000076 .L64
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:351    .highcode:000000000000006e .L62
+C:\Users\LRNA\AppData\Local\Temp\ccnkjoHZ.s:348    .highcode:0000000000000068 .L61
+
+NO UNDEFINED SYMBOLS

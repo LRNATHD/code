@@ -1,0 +1,39 @@
+RULES
+====
+1. All projects reference shared ../SRC/ for drivers, startup, linker script
+2. Each project has: Makefile + src/ + obj/ (created by make)
+3. Add new .c files to C_SOURCES in Makefile
+4. Toolchain prefix: riscv-wch-elf-
+5. Only one main() per project
+6. Flash .hex or .bin manually (no automated flash target)
+
+KEY INFO
+====
+| Folder            | Purpose                                      |
+| ----------------- | -------------------------------------------- |
+| SRC/              | Shared CH592 drivers, startup, linker script |
+| ScienceOlympiadEV/| Original MRS project (Main.c, encoders, EV)  |
+| Sandbox/          | Motor test: PWM ramp-down + OLED display     |
+| Template/         | Bare skeleton for new projects               |
+
+| SRC Contents       | Files                                       |
+| ------------------ | ------------------------------------------- |
+| StdPeriphDriver/   | CH59x_*.c + inc/ headers + libISP592.a      |
+| RVMSIS/            | core_riscv.c, core_riscv.h                  |
+| Startup/           | startup_CH592.S                             |
+| Ld/                | Link.ld                                     |
+
+COMMANDS
+====
+Build:   cd <project> && make
+Clean:   cd <project> && make clean
+Output:  <project>/obj/firmware.hex, firmware.bin
+
+CHECKLIST
+====
+[ ] New project setup:
+    1. Copy Template/ folder
+    2. Rename folder
+    3. Add src files to src/
+    4. Update C_SOURCES in Makefile
+    5. Run make
