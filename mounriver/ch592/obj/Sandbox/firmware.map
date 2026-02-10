@@ -80,8 +80,22 @@ c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/tool
                               ../obj/Sandbox/CH59x_flash.o (FLASH_EEPROM_CMD)
 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_divdi3.o)
                               ../obj/Sandbox/CH59x_clk.o (__divdi3)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+                              ../obj/Sandbox/main.o (__divsf3)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+                              ../obj/Sandbox/main.o (__mulsf3)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+                              ../obj/Sandbox/main.o (__subsf3)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+                              ../obj/Sandbox/main.o (__fixsfsi)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+                              ../obj/Sandbox/main.o (__floatsisf)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+                              ../obj/Sandbox/main.o (__floatunsisf)
 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
                               c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_divdi3.o) (__clz_tab)
+c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
+                              c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o) (__clzsi2)
 
 Discarded input sections
 
@@ -149,8 +163,6 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 ../obj/Sandbox/CH59x_gpio.o
  .text.GPIOA_ITModeCfg
                 0x0000000000000000       0x76 ../obj/Sandbox/CH59x_gpio.o
- .text.GPIOB_ITModeCfg
-                0x0000000000000000       0x7e ../obj/Sandbox/CH59x_gpio.o
  .text.GPIOPinRemap
                 0x0000000000000000       0x1a ../obj/Sandbox/CH59x_gpio.o
  .text.GPIOAGPPCfg
@@ -1036,14 +1048,30 @@ Discarded input sections
  .eh_frame      0x0000000000000000       0x28 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_divdi3.o)
  .riscv.attributes
                 0x0000000000000000       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_divdi3.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
  .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
  .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
  .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
- .rodata.__clz_tab
-                0x0000000000000000      0x100 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
- .comment       0x0000000000000000       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
- .riscv.attributes
-                0x0000000000000000       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
+ .text          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
+ .data          0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
+ .bss           0x0000000000000000        0x0 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
 
 Memory Configuration
 
@@ -1112,7 +1140,7 @@ END GROUP
                 0x0000000000000004                . = ALIGN (0x4)
                 0x0000000000000004                PROVIDE (_highcode_lma = .)
 
-.highcode       0x0000000020000000      0x788 load address 0x0000000000000004
+.highcode       0x0000000020000000      0x7cc load address 0x0000000000000004
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                PROVIDE (_highcode_vma_start = .)
  *(.vector)
@@ -1120,7 +1148,6 @@ END GROUP
  *(SORT_NONE(.vector_handler))
  .vector_handler
                 0x0000000020000090        0x2 ../obj/Sandbox/startup_CH592.o
-                0x0000000020000090                GPIOB_IRQHandler
                 0x0000000020000090                GPIOA_IRQHandler
                 0x0000000020000090                SysTick_Handler
                 0x0000000020000090                NMI_Handler
@@ -1146,124 +1173,152 @@ END GROUP
                 0x0000000020000090                UART3_IRQHandler
                 0x0000000020000090                TMR1_IRQHandler
  *(.highcode)
- .highcode      0x0000000020000092      0x2ce ../obj/Sandbox/CH59x_sys.o
-                0x0000000020000092                SetSysClock
-                0x0000000020000252                SYS_ResetExecute
-                0x00000000200002aa                HardFault_Handler
-                0x000000002000032a                mDelayuS
-                0x0000000020000338                mDelaymS
- .highcode      0x0000000020000360      0x426 ../SRC/StdPeriphDriver\libISP592.a(ISP583.o)
-                0x0000000020000360                FLASH_ROM_BEG
-                0x0000000020000372                FLASH_ROM_END
-                0x0000000020000380                FLASH_ROM_IN
-                0x000000002000038e                FLASH_ROM_OUT
-                0x000000002000039c                FLASH_ROM_ADDR
-                0x00000000200003e4                FLASH_ROM_WAIT
-                0x000000002000041c                FLASH_EEPROM_CMD
+ .highcode      0x0000000020000092       0x46 ../obj/Sandbox/main.o
+                0x0000000020000092                GPIOB_IRQHandler
+ .highcode      0x00000000200000d8      0x2ce ../obj/Sandbox/CH59x_sys.o
+                0x00000000200000d8                SetSysClock
+                0x0000000020000298                SYS_ResetExecute
+                0x00000000200002f0                HardFault_Handler
+                0x0000000020000370                mDelayuS
+                0x000000002000037e                mDelaymS
+ .highcode      0x00000000200003a6      0x426 ../SRC/StdPeriphDriver\libISP592.a(ISP583.o)
+                0x00000000200003a6                FLASH_ROM_BEG
+                0x00000000200003b8                FLASH_ROM_END
+                0x00000000200003c6                FLASH_ROM_IN
+                0x00000000200003d4                FLASH_ROM_OUT
+                0x00000000200003e2                FLASH_ROM_ADDR
+                0x000000002000042a                FLASH_ROM_WAIT
+                0x0000000020000462                FLASH_EEPROM_CMD
  *(.highcode.*)
-                0x0000000020000788                . = ALIGN (0x4)
- *fill*         0x0000000020000786        0x2 
-                0x0000000020000788                PROVIDE (_highcode_vma_end = .)
+                0x00000000200007cc                . = ALIGN (0x4)
+                0x00000000200007cc                PROVIDE (_highcode_vma_end = .)
 
-.text           0x000000000000078c      0x8a0
-                0x000000000000078c                . = ALIGN (0x4)
+.text           0x00000000000007d0     0x1790
+                0x00000000000007d0                . = ALIGN (0x4)
  *(SORT_NONE(.handle_reset))
- .handle_reset  0x000000000000078c       0xb6 ../obj/Sandbox/startup_CH592.o
-                0x000000000000078c                handle_reset
+ .handle_reset  0x00000000000007d0       0xae ../obj/Sandbox/startup_CH592.o
+                0x00000000000007d0                handle_reset
  *(.text)
  *(.text.*)
+ .text.int_to_str
+                0x000000000000087e       0x54 ../obj/Sandbox/main.o
+ .text.float_to_str
+                0x00000000000008d2       0x7a ../obj/Sandbox/main.o
  .text.startup.main
-                0x0000000000000842      0x19c ../obj/Sandbox/main.o
-                0x0000000000000842                main
+                0x000000000000094c      0x1e8 ../obj/Sandbox/main.o
+                0x000000000000094c                main
  .text.I2C_Delay
-                0x00000000000009de       0x1e ../obj/Sandbox/oled_driver.o
-                0x00000000000009de                I2C_Delay
+                0x0000000000000b34       0x1e ../obj/Sandbox/oled_driver.o
+                0x0000000000000b34                I2C_Delay
  .text.I2C_Start
-                0x00000000000009fc       0x3e ../obj/Sandbox/oled_driver.o
-                0x00000000000009fc                I2C_Start
+                0x0000000000000b52       0x3e ../obj/Sandbox/oled_driver.o
+                0x0000000000000b52                I2C_Start
  .text.I2C_Stop
-                0x0000000000000a3a       0x34 ../obj/Sandbox/oled_driver.o
-                0x0000000000000a3a                I2C_Stop
+                0x0000000000000b90       0x34 ../obj/Sandbox/oled_driver.o
+                0x0000000000000b90                I2C_Stop
  .text.I2C_SendByte
-                0x0000000000000a6e       0x8c ../obj/Sandbox/oled_driver.o
-                0x0000000000000a6e                I2C_SendByte
+                0x0000000000000bc4       0x8c ../obj/Sandbox/oled_driver.o
+                0x0000000000000bc4                I2C_SendByte
  .text.OLED_WriteCmd
-                0x0000000000000afa       0x20 ../obj/Sandbox/oled_driver.o
-                0x0000000000000afa                OLED_WriteCmd
+                0x0000000000000c50       0x20 ../obj/Sandbox/oled_driver.o
+                0x0000000000000c50                OLED_WriteCmd
  .text.OLED_WriteData
-                0x0000000000000b1a       0x22 ../obj/Sandbox/oled_driver.o
-                0x0000000000000b1a                OLED_WriteData
+                0x0000000000000c70       0x22 ../obj/Sandbox/oled_driver.o
+                0x0000000000000c70                OLED_WriteData
  .text.OLED_SetCursor
-                0x0000000000000b3c       0x28 ../obj/Sandbox/oled_driver.o
-                0x0000000000000b3c                OLED_SetCursor
+                0x0000000000000c92       0x28 ../obj/Sandbox/oled_driver.o
+                0x0000000000000c92                OLED_SetCursor
  .text.OLED_Clear
-                0x0000000000000b64       0x44 ../obj/Sandbox/oled_driver.o
-                0x0000000000000b64                OLED_Clear
+                0x0000000000000cba       0x44 ../obj/Sandbox/oled_driver.o
+                0x0000000000000cba                OLED_Clear
  .text.OLED_Init
-                0x0000000000000ba8       0xb0 ../obj/Sandbox/oled_driver.o
-                0x0000000000000ba8                OLED_Init
+                0x0000000000000cfe       0xb0 ../obj/Sandbox/oled_driver.o
+                0x0000000000000cfe                OLED_Init
  .text.OLED_ShowChar
-                0x0000000000000c58       0x62 ../obj/Sandbox/oled_driver.o
-                0x0000000000000c58                OLED_ShowChar
+                0x0000000000000dae       0x62 ../obj/Sandbox/oled_driver.o
+                0x0000000000000dae                OLED_ShowChar
  .text.OLED_ShowString
-                0x0000000000000cba       0x32 ../obj/Sandbox/oled_driver.o
-                0x0000000000000cba                OLED_ShowString
+                0x0000000000000e10       0x32 ../obj/Sandbox/oled_driver.o
+                0x0000000000000e10                OLED_ShowString
  .text.GPIOA_ModeCfg
-                0x0000000000000cec       0x9e ../obj/Sandbox/CH59x_gpio.o
-                0x0000000000000cec                GPIOA_ModeCfg
+                0x0000000000000e42       0x9e ../obj/Sandbox/CH59x_gpio.o
+                0x0000000000000e42                GPIOA_ModeCfg
  .text.GPIOB_ModeCfg
-                0x0000000000000d8a       0x9e ../obj/Sandbox/CH59x_gpio.o
-                0x0000000000000d8a                GPIOB_ModeCfg
+                0x0000000000000ee0       0x9e ../obj/Sandbox/CH59x_gpio.o
+                0x0000000000000ee0                GPIOB_ModeCfg
+ .text.GPIOB_ITModeCfg
+                0x0000000000000f7e       0x7e ../obj/Sandbox/CH59x_gpio.o
+                0x0000000000000f7e                GPIOB_ITModeCfg
  .text.PWMX_16bit_CycleCfg
-                0x0000000000000e28       0x18 ../obj/Sandbox/CH59x_pwm.o
-                0x0000000000000e28                PWMX_16bit_CycleCfg
+                0x0000000000000ffc       0x18 ../obj/Sandbox/CH59x_pwm.o
+                0x0000000000000ffc                PWMX_16bit_CycleCfg
  .text.PWMX_16bit_ACTOUT
-                0x0000000000000e40       0x6a ../obj/Sandbox/CH59x_pwm.o
-                0x0000000000000e40                PWMX_16bit_ACTOUT
+                0x0000000000001014       0x6a ../obj/Sandbox/CH59x_pwm.o
+                0x0000000000001014                PWMX_16bit_ACTOUT
+ .text.__divsf3
+                0x000000000000107e      0x2ea c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+                0x000000000000107e                __divsf3
+ .text.__mulsf3
+                0x0000000000001368      0x2d8 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+                0x0000000000001368                __mulsf3
+ .text.__subsf3
+                0x0000000000001640      0x38c c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+                0x0000000000001640                __subsf3
+ .text.__fixsfsi
+                0x00000000000019cc       0x60 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+                0x00000000000019cc                __fixsfsi
+ .text.__floatsisf
+                0x0000000000001a2c       0xcc c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+                0x0000000000001a2c                __floatsisf
+ .text.__floatunsisf
+                0x0000000000001af8       0xbc c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+                0x0000000000001af8                __floatunsisf
+ .text.__clzsi2
+                0x0000000000001bb4       0x6e c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
+                0x0000000000001bb4                __clzsi2
  *(.rodata)
  *(.rodata*)
- *fill*         0x0000000000000eaa        0x2 
+ *fill*         0x0000000000001c22        0x2 
  .rodata.main.str1.4
-                0x0000000000000eac       0x2e ../obj/Sandbox/main.o
- *fill*         0x0000000000000eda        0x2 
+                0x0000000000001c24       0x43 ../obj/Sandbox/main.o
+ *fill*         0x0000000000001c67        0x1 
  .rodata.FONT5x7
-                0x0000000000000edc      0x127 ../obj/Sandbox/oled_driver.o
-                0x0000000000000edc                FONT5x7
- *fill*         0x0000000000001003        0x1 
+                0x0000000000001c68      0x127 ../obj/Sandbox/oled_driver.o
+                0x0000000000001c68                FONT5x7
+ *fill*         0x0000000000001d8f        0x1 
  .rodata.GPIOA_ModeCfg
-                0x0000000000001004       0x14 ../obj/Sandbox/CH59x_gpio.o
+                0x0000000000001d90       0x14 ../obj/Sandbox/CH59x_gpio.o
  .rodata.GPIOB_ModeCfg
-                0x0000000000001018       0x14 ../obj/Sandbox/CH59x_gpio.o
+                0x0000000000001da4       0x14 ../obj/Sandbox/CH59x_gpio.o
+ .rodata.__divsf3
+                0x0000000000001db8       0xa8 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+ .rodata.__clz_tab
+                0x0000000000001e60      0x100 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
+                0x0000000000001e60                __clz_tab
  *(.sdata2.*)
  *(.glue_7)
  *(.glue_7t)
  *(.gnu.linkonce.t.*)
-                0x000000000000102c                . = ALIGN (0x4)
+                0x0000000000001f60                . = ALIGN (0x4)
 
-.rela.dyn       0x000000000000102c        0x0
- .rela.init     0x000000000000102c        0x0 ../obj/Sandbox/main.o
- .rela.vector   0x000000000000102c        0x0 ../obj/Sandbox/main.o
- .rela.handle_reset
-                0x000000000000102c        0x0 ../obj/Sandbox/main.o
-
-.fini           0x000000000000102c        0x0
+.fini           0x0000000000001f60        0x0
  *(SORT_NONE(.fini))
-                0x000000000000102c                . = ALIGN (0x4)
+                0x0000000000001f60                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_etext = .)
                 [!provide]                        PROVIDE (_eitcm = .)
 
-.preinit_array  0x000000000000102c        0x0
+.preinit_array  0x0000000000001f60        0x0
                 [!provide]                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array)
                 [!provide]                        PROVIDE (__preinit_array_end = .)
 
-.init_array     0x000000000000102c        0x0
+.init_array     0x0000000000001f60        0x0
                 [!provide]                        PROVIDE (__init_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
  *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
                 [!provide]                        PROVIDE (__init_array_end = .)
 
-.fini_array     0x000000000000102c        0x0
+.fini_array     0x0000000000001f60        0x0
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
  *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
@@ -1283,43 +1338,54 @@ END GROUP
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
 
-.dalign         0x0000000020000788        0x0 load address 0x000000000000102c
-                0x0000000020000788                . = (ORIGIN (RAM) + SIZEOF (.highcode))
+.dalign         0x00000000200007cc        0x0 load address 0x0000000000001f60
+                0x00000000200007cc                . = (ORIGIN (RAM) + SIZEOF (.highcode))
 
-.dlalign        0x000000000000102c        0x0
-                0x000000000000102c                . = ALIGN (0x4)
-                0x000000000000102c                PROVIDE (_data_lma = .)
+.dlalign        0x0000000000001f60        0x0
+                0x0000000000001f60                . = ALIGN (0x4)
+                0x0000000000001f60                PROVIDE (_data_lma = .)
 
-.data           0x0000000020000788        0x0 load address 0x000000000000102c
-                0x0000000020000788                . = ALIGN (0x4)
-                0x0000000020000788                PROVIDE (_data_vma = .)
+.data           0x00000000200007cc       0x10 load address 0x0000000000001f60
+                0x00000000200007cc                . = ALIGN (0x4)
+                0x00000000200007cc                PROVIDE (_data_vma = .)
  *(.gnu.linkonce.r.*)
  *(.data .data.*)
  *(.gnu.linkonce.d.*)
-                0x0000000020000788                . = ALIGN (0x8)
-                0x0000000020000f88                PROVIDE (__global_pointer$ = (. + 0x800))
+                0x00000000200007d0                . = ALIGN (0x8)
+ *fill*         0x00000000200007cc        0x4 
+                0x0000000020000fd0                PROVIDE (__global_pointer$ = (. + 0x800))
  *(.sdata .sdata.*)
  *(.gnu.linkonce.s.*)
-                0x0000000020000788                . = ALIGN (0x8)
+                0x00000000200007d0                . = ALIGN (0x8)
  *(.srodata.cst16)
  *(.srodata.cst8)
  *(.srodata.cst4)
+ .srodata.cst4  0x00000000200007d0        0xc ../obj/Sandbox/main.o
  *(.srodata.cst2)
  *(.srodata .srodata.*)
-                0x0000000020000788                . = ALIGN (0x4)
-                0x0000000020000788                PROVIDE (_edata = .)
+                0x00000000200007dc                . = ALIGN (0x4)
+                0x00000000200007dc                PROVIDE (_edata = .)
 
-.bss            0x0000000020000788        0x0 load address 0x000000000000102c
-                0x0000000020000788                . = ALIGN (0x4)
-                0x0000000020000788                PROVIDE (_sbss = .)
+.rela.dyn       0x00000000200007dc        0x0 load address 0x0000000000001f70
+ .rela.init     0x00000000200007dc        0x0 ../obj/Sandbox/main.o
+ .rela.vector   0x00000000200007dc        0x0 ../obj/Sandbox/main.o
+ .rela.handle_reset
+                0x00000000200007dc        0x0 ../obj/Sandbox/main.o
+
+.bss            0x00000000200007dc        0x4 load address 0x0000000000001f70
+                0x00000000200007dc                . = ALIGN (0x4)
+                0x00000000200007dc                PROVIDE (_sbss = .)
  *(.sbss*)
+ .sbss.count_left
+                0x00000000200007dc        0x4 ../obj/Sandbox/main.o
+                0x00000000200007dc                count_left
  *(.gnu.linkonce.sb.*)
  *(.bss*)
  *(.gnu.linkonce.b.*)
  *(COMMON*)
-                0x0000000020000788                . = ALIGN (0x4)
-                0x0000000020000788                PROVIDE (_ebss = .)
-                0x0000000020000788                PROVIDE (_end = _ebss)
+                0x00000000200007e0                . = ALIGN (0x4)
+                0x00000000200007e0                PROVIDE (_ebss = .)
+                0x00000000200007e0                PROVIDE (_end = _ebss)
                 [!provide]                        PROVIDE (end = .)
 
 .stack          0x0000000020006600      0x200
@@ -1340,6 +1406,14 @@ OUTPUT(../obj/Sandbox/firmware.elf elf32-littleriscv)
  .comment       0x0000000000000031       0x32 ../obj/Sandbox/CH59x_sys.o
  .comment       0x0000000000000031       0x33 ../SRC/StdPeriphDriver\libISP592.a(ISP583.o)
                                          0x34 (size before relaxing)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
+ .comment       0x0000000000000064       0x32 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
 
 .riscv.attributes
                 0x0000000000000000       0x34
@@ -1355,6 +1429,22 @@ OUTPUT(../obj/Sandbox/firmware.elf elf32-littleriscv)
                 0x00000000000000d0       0x34 ../obj/Sandbox/CH59x_sys.o
  .riscv.attributes
                 0x0000000000000104       0x32 ../obj/Sandbox/startup_CH592.o
+ .riscv.attributes
+                0x0000000000000136       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+ .riscv.attributes
+                0x000000000000016a       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+ .riscv.attributes
+                0x000000000000019e       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+ .riscv.attributes
+                0x00000000000001d2       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+ .riscv.attributes
+                0x0000000000000206       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+ .riscv.attributes
+                0x000000000000023a       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+ .riscv.attributes
+                0x000000000000026e       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
+ .riscv.attributes
+                0x00000000000002a2       0x34 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
 
 Cross Reference Table
 
@@ -1423,10 +1513,13 @@ GPIOA_IRQHandler                                  ../obj/Sandbox/startup_CH592.o
 GPIOA_ITModeCfg                                   ../obj/Sandbox/CH59x_gpio.o
 GPIOA_ModeCfg                                     ../obj/Sandbox/CH59x_gpio.o
                                                   ../obj/Sandbox/main.o
-GPIOB_IRQHandler                                  ../obj/Sandbox/startup_CH592.o
+GPIOB_GetITFlagBit                                ../obj/Sandbox/main.o
+GPIOB_IRQHandler                                  ../obj/Sandbox/main.o
 GPIOB_ITModeCfg                                   ../obj/Sandbox/CH59x_gpio.o
+                                                  ../obj/Sandbox/main.o
 GPIOB_ModeCfg                                     ../obj/Sandbox/CH59x_gpio.o
                                                   ../obj/Sandbox/oled_driver.o
+                                                  ../obj/Sandbox/main.o
 GPIOPinRemap                                      ../obj/Sandbox/CH59x_gpio.o
 GetSysClock                                       ../obj/Sandbox/CH59x_sys.o
                                                   ../obj/Sandbox/CH59x_uart3.o
@@ -1643,9 +1736,24 @@ WWDG_ITCfg                                        ../obj/Sandbox/CH59x_sys.o
 WWDG_ResetCfg                                     ../obj/Sandbox/CH59x_sys.o
 WaitUSB_Interrupt                                 ../obj/Sandbox/CH59x_usbhostBase.o
 __clz_tab                                         c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clz.o)
+                                                  c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_divdi3.o)
+__clzsi2                                          c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_clzsi2.o)
+                                                  c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+                                                  c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+                                                  c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+                                                  c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+                                                  c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
 __divdi3                                          c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(_divdi3.o)
                                                   ../obj/Sandbox/CH59x_clk.o
+__divsf3                                          c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(divsf3.o)
+                                                  ../obj/Sandbox/main.o
+__fixsfsi                                         c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(fixsfsi.o)
+                                                  ../obj/Sandbox/main.o
+__floatsisf                                       c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatsisf.o)
+                                                  ../obj/Sandbox/main.o
+__floatunsisf                                     c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(floatunsisf.o)
+                                                  ../obj/Sandbox/main.o
 __fp_lock_all                                     c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-findfp.o)
 __fp_unlock_all                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-findfp.o)
 __global_pointer$                                 ../obj/Sandbox/startup_CH592.o
@@ -1670,6 +1778,8 @@ __malloc_sbrk_start                               c:/mounriver/mounriver_studio2
 __malloc_unlock                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-mlock.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-nano-mallocr.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-nano-freer.o)
+__mulsf3                                          c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(mulsf3.o)
+                                                  ../obj/Sandbox/main.o
 __retarget_lock_acquire                           c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-lock.o)
 __retarget_lock_acquire_recursive                 c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-lock.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-mlock.o)
@@ -1746,6 +1856,8 @@ __sread                                           c:/mounriver/mounriver_studio2
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-findfp.o)
 __sseek                                           c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-stdio.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-findfp.o)
+__subsf3                                          c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0\libgcc.a(subsf3.o)
+                                                  ../obj/Sandbox/main.o
 __swbuf                                           c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-wbuf.o)
 __swbuf_r                                         c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-wbuf.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-nano-vfprintf.o)
@@ -1856,6 +1968,7 @@ _write_r                                          c:/mounriver/mounriver_studio2
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-stdio.o)
 adc_to_temperature_celsius                        ../obj/Sandbox/CH59x_adc.o
 cleanup_glue                                      c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-reent.o)
+count_left                                        ../obj/Sandbox/main.o
 errno                                             c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libc_nano.a(lib_a-reent.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libnosys.a(read.o)
                                                   c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc12/bin/../lib/gcc/riscv-wch-elf/12.2.0/../../../../riscv-wch-elf/lib\libnosys.a(lseek.o)

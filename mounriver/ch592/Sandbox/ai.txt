@@ -8,7 +8,7 @@ KEY INFO
 ====
 | File          | Purpose                                          |
 | ------------- | ------------------------------------------------ |
-| main.c        | Motor ramp-down: 100% -> 0% PWM + OLED display  |
+| main.c        | Speed: 15% & 100% (Dual-Edge Interrupts + Debug Display) |
 | oled_driver.c | SSD1306 128x32 bit-bang I2C driver                |
 | oled_driver.h | OLED API: Init, Clear, ShowChar, ShowString       |
 
