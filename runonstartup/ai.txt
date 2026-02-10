@@ -1,0 +1,133 @@
+CONTEXT: Startup Flask web apps exposed via Cloudflare Tunnel to *.noahsmith.dev
+
+================================================================================
+RULES (MUST FOLLOW)
+================================================================================
+
+1. ENVIRONMENT VARIABLE: Always load before starting any Flask app:
+   $env:STARTUP_APPS_PASSWORD = [Environment]::GetEnvironmentVariable("STARTUP_APPS_PASSWORD", "User"); py app.py
+
+2. PORTS: Use next available (current max: 5557). Update service_manager/services.json.
+
+3. DESIGN: OLED theme only. Pure black #000000, white #ffffff, cyan #00ffff accents. No border-radius. No shadows.
+
+4. AUTH: All apps use STARTUP_APPS_PASSWORD. Copy pattern from existing apps.
+
+5. HEALTH: Every app must have GET /api/status returning OK (public, no auth).
+
+================================================================================
+CURRENT APPS
+================================================================================
+
+parts_inventory | port 8000  | organizer.noahsmith.dev
+fbreader_web    | port 5555  | books.noahsmith.dev  
+google_tasks    | port 5556  | tasks.noahsmith.dev
+service_manager | port 9870  | (internal dashboard)
+
+================================================================================
+KEY PATHS
+================================================================================
+
+tunnel_config   : C:\Users\LRNA\.cloudflared\config.yml
+startup_script  : c:\Users\Noahs\Desktop\code\runonstartup\start_all.bat
+services_json   : c:\Users\Noahs\Desktop\code\runonstartup\service_manager\services.json
+
+================================================================================
+COMMANDS
+================================================================================
+
+# Start app (with env var)
+$env:STARTUP_APPS_PASSWORD = [Environment]::GetEnvironmentVariable("STARTUP_APPS_PASSWORD", "User"); py app.py
+
+# Kill all
+taskkill /F /IM python.exe; taskkill /F /IM cloudflared.exe
+
+# Check health
+Invoke-WebRequest -Uri "http://localhost:PORT/api/status" -UseBasicParsing
+
+# Add new domain to tunnel
+cloudflared tunnel route dns fbreader newapp.noahsmith.dev
+
+================================================================================
+FILE STRUCTURE (REQUIRED FOR NEW APPS)
+================================================================================
+
+new_app/
+├── app.py              # Flask app, import config, use is_authenticated()
+├── config.py           # PORT, ACCESS_PASSWORD = os.environ.get("STARTUP_APPS_PASSWORD")
+├── requirements.txt
+├── start_silent.vbs    # See template below
+├── static/css/style.css
+└── templates/
+    ├── base.html
+    └── login.html
+
+================================================================================
+TEMPLATES
+================================================================================
+
+--- config.py ---
+import os
+PORT = 5558
+ACCESS_PASSWORD = os.environ.get("STARTUP_APPS_PASSWORD")
+SESSION_TIMEOUT_HOURS = 168
+
+--- start_silent.vbs ---
+Set WshShell = CreateObject("WScript.Shell")
+WshShell.CurrentDirectory = "c:\Users\LRNA\Desktop\code\runonstartup\NEW_APP_NAME"
+Set WshEnv = WshShell.Environment("USER")
+password = WshEnv("STARTUP_APPS_PASSWORD")
+Set procEnv = WshShell.Environment("PROCESS")
+procEnv("STARTUP_APPS_PASSWORD") = password
+WshShell.Run "cmd /c py app.py", 0
+Set WshShell = Nothing
+
+--- CSS variables (use these exactly) ---
+:root {
+    --bg-dark: #000000;
+    --accent-primary: #ffffff;
+    --accent-secondary: #00ffff;
+    --text-main: #ffffff;
+    --text-muted: #cccccc;
+    --border-color: #ffffff;
+    --border-subtle: #333333;
+}
+
+--- tunnel config entry (add to config.yml) ---
+- hostname: newapp.noahsmith.dev
+  service: http://127.0.0.1:5558
+
+--- start_all.bat entry ---
+start "" "C:\Users\LRNA\Desktop\code\runonstartup\new_app\start_silent.vbs"
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+SYMPTOM: "Invalid Password" on login
+CAUSE:   App started without env var
+FIX:     Kill python.exe, restart with $env:STARTUP_APPS_PASSWORD = ... command
+
+SYMPTOM: Domain not routing
+CAUSE:   Tunnel needs restart after config change
+FIX:     taskkill /F /IM cloudflared.exe; cloudflared tunnel run fbreader
+
+SYMPTOM: Port in use
+CAUSE:   Old python process
+FIX:     taskkill /F /IM python.exe
+
+================================================================================
+NEW APP CHECKLIST
+================================================================================
+
+[ ] Created directory runonstartup/new_app/
+[ ] config.py uses STARTUP_APPS_PASSWORD from env
+[ ] /api/status endpoint exists (public)
+[ ] CSS uses OLED theme variables
+[ ] start_silent.vbs created with correct path
+[ ] Added to start_all.bat
+[ ] Added to service_manager/services.json
+[ ] Added hostname to ~/.cloudflared/config.yml
+[ ] Ran: cloudflared tunnel route dns fbreader newapp.noahsmith.dev
+[ ] Tested login with password
+[ ] Tested external domain access
