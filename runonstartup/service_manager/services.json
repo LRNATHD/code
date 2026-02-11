@@ -59,6 +59,23 @@
                 "JSON storage"
             ],
             "github": "https://github.com/yourusername/parts-inventory"
+        },
+        {
+            "id": "mp3_sync",
+            "name": "MP3 Sync",
+            "internal_port": 9874,
+            "path": "/music",
+            "dir": "../mp3_sync",
+            "start_cmd": "py app.py",
+            "health_url": "/api/status",
+            "has_config": true,
+            "type": "flask",
+            "description": "Syncs YouTube Music playlists and liked songs to a local folder as MP3 files.",
+            "tech": [
+                "Flask",
+                "ytmusicapi",
+                "yt-dlp"
+            ]
         }
     ],
     "tasks": [
@@ -68,7 +85,7 @@
             "cmd": "python c:\\Users\\LRNA\\Desktop\\code\\sync_to_portfolio.py",
             "type": "task",
             "trigger": "manual",
-            "description": "Syncs markdown files from my code folder to my MkDocs portfolio. Files with `portfolio:` frontmatter are automatically placed in the right location.",
+            "description": "Updates noahsmith.dev with new markdown pages. Scans across multiple project folders for files with `portfolio:` frontmatter and syncs them into the MkDocs site.",
             "tech": [
                 "Python",
                 "MkDocs",

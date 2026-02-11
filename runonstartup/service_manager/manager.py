@@ -28,6 +28,7 @@ class ServiceStatus:
     port: int
     pid: Optional[int] = None
     error: Optional[str] = None
+    description: Optional[str] = None
 
 
 def load_config() -> dict:
@@ -219,7 +220,8 @@ def get_all_status() -> list[ServiceStatus]:
             running=running,
             healthy=healthy,
             port=port,
-            pid=pid
+            pid=pid,
+            description=svc.get('description', '')
         ))
     
     return statuses
@@ -229,3 +231,51 @@ def get_all_tasks() -> list[dict]:
     """Get all tasks from config."""
     config = load_config()
     return config.get('tasks', [])
+
+
+# ── Generic Config Proxy ─────────────────────────────────
+# Any service with "has_config": true in services.json and
+# GET/POST /api/config endpoints gets config management for free.
+
+def get_service_config(service_id: str) -> tuple[bool, dict | str]:
+    """Fetch config from a running service's /api/config endpoint."""
+    service = get_service_by_id(service_id)
+    if not service:
+        return False, f"Service '{service_id}' not found"
+    if not service.get('has_config'):
+        return False, f"Service '{service_id}' has no config endpoint"
+
+    port = service.get('internal_port', service.get('port'))
+    try:
+        resp = requests.get(f"http://127.0.0.1:{port}/api/config", timeout=5)
+        return True, resp.json()
+    except Exception as e:
+        return False, f"Config fetch failed: {e}"
+
+
+def set_service_config(service_id: str, data: dict, password: str = "") -> tuple[bool, dict | str]:
+    """Post config update to a running service's /api/config endpoint."""
+    service = get_service_by_id(service_id)
+    if not service:
+        return False, f"Service '{service_id}' not found"
+    if not service.get('has_config'):
+        return False, f"Service '{service_id}' has no config endpoint"
+
+    port = service.get('internal_port', service.get('port'))
+    try:
+        resp = requests.post(
+            f"http://127.0.0.1:{port}/api/config",
+            json=data,
+            headers={'X-Password': password},
+            timeout=5
+        )
+        return True, resp.json()
+    except Exception as e:
+        return False, f"Config update failed: {e}"
+
+
+def get_services_with_config() -> list[str]:
+    """Return list of service IDs that have config endpoints."""
+    config = load_config()
+    return [s['id'] for s in config.get('services', []) if s.get('has_config')]
+

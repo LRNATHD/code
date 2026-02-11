@@ -25,6 +25,12 @@ timeout /t 2 /nobreak >nul
 :: Start Google Tasks Custom (Hidden)
 start "" "C:\Users\LRNA\Desktop\code\runonstartup\google_tasks\start_silent.vbs"
 
+:: Small delay
+timeout /t 2 /nobreak >nul
+
+:: Start MP3 Sync (Hidden)
+start "" "C:\Users\LRNA\Desktop\code\runonstartup\mp3_sync\start_silent.vbs"
+
 :: The terminal window running THIS script will close automatically
 exit
 

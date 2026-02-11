@@ -23,6 +23,7 @@ parts_inventory | port 8000  | organizer.noahsmith.dev
 fbreader_web    | port 5555  | books.noahsmith.dev  
 google_tasks    | port 5556  | tasks.noahsmith.dev
 service_manager | port 9870  | (internal dashboard)
+mp3_sync        | port 9874  | (internal only)
 
 ================================================================================
 KEY PATHS

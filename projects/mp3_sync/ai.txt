@@ -1,0 +1,39 @@
+RULES
+====
+1. Auth files (oauth.json, browser.json) live in %APPDATA%\MP3SyncOAuth\, NOT in repo
+2. Support two auth methods: browser headers (browser.json) and OAuth (oauth.json)
+3. browser.json is preferred if both exist
+4. Cookies/headers expire - if "Sign in" error appears, re-run setup_auth.py
+5. config.json stays in repo root (no secrets in it)
+6. Downloads go to {drive}:\{music_root_folder}\{playlist_name}\
+
+KEY INFO
+====
+| File              | Purpose                                    |
+| sync_manager.py   | Main sync loop - detects drive, fetches playlists, downloads |
+| setup_auth.py     | Interactive auth setup (browser headers or OAuth)            |
+| config.json       | User config (drive label, sync options)                      |
+| sync_worker.py    | Worker helpers                                               |
+
+| Auth Method   | File         | Pros                      | Cons                |
+| Browser       | browser.json | Quick setup, lasts ~2 yrs | Manual re-auth      |
+| OAuth         | oauth.json   | Auto-refresh tokens       | Needs GCP project   |
+
+COMMANDS
+====
+# Setup auth
+python setup_auth.py
+
+# Run sync (waits for drive)
+python sync_manager.py
+
+# Run sync via bat
+run_sync.bat
+
+CHECKLIST
+====
+[ ] Auth working (test with setup_auth.py)
+[ ] Drive label in config.json matches MP3 player
+[ ] yt-dlp installed and on PATH
+[ ] deno installed (winget install DenoLand.Deno) - required by yt-dlp for YouTube signature solving
+[ ] Firefox installed with YouTube logged in (yt-dlp uses cookies from Firefox)

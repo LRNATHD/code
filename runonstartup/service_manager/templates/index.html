@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,109 +15,431 @@
 
         body {
             background: #000;
-            overflow: hidden;
-            font-family: system-ui, -apple-system, sans-serif;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            overflow: auto;
         }
 
-        /* Background slideshow */
-        #bg {
+        /* Top bar */
+        #topbar {
             position: fixed;
-            inset: 0;
-            z-index: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #000;
+            border-bottom: 1px solid #222;
         }
 
-        #bg img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        #pw-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        #pw-bar.hidden {
+            display: none;
+        }
+
+        #pw-bar input {
+            background: #000;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 4px 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            width: 110px;
+        }
+
+        #pw-bar input:focus {
+            outline: none;
+            border-color: #00ffff;
+        }
+
+        #pw-bar button,
+        .topbtn {
+            background: #000;
+            border: 1px solid #333;
+            color: #888;
+            padding: 4px 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .topbtn:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        #pw-bar button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        #pw-lock {
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+            padding: 4px;
+        }
+
+        #pw-lock:hover {
+            color: #fff;
+        }
+
+        #pw-lock.hidden {
+            display: none;
+        }
+
+        .topbar-spacer {
+            flex: 1;
+        }
+
+        .save-msg {
+            font-size: 11px;
+            color: #4ade80;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 0.3s;
         }
 
-        #bg img.active {
-            opacity: 0.3;
+        .save-msg.show {
+            opacity: 1;
         }
 
-        /* Three.js container */
-        #container {
-            position: fixed;
-            inset: 0;
+        /* Canvas for cards */
+        #canvas {
+            position: relative;
+            min-height: calc(100vh - 36px);
+            margin-top: 36px;
+        }
+
+        /* Service cards */
+        .card {
+            position: absolute;
+            background: #000;
+            border: 1px solid #333;
+            padding: 20px 24px;
+            width: 340px;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            flex-direction: column;
+            cursor: grab;
+            user-select: none;
+            transition: border-color 0.15s;
             z-index: 1;
         }
 
-        /* Card styles (rendered as CSS3D elements) */
-        .card {
-            background: rgba(15, 15, 15, 0.95);
-            border: 1px solid #333;
-            padding: 16px 20px;
-            width: 220px;
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            font-family: system-ui, -apple-system, sans-serif;
+        .card:hover {
+            border-color: #fff;
         }
 
-        .card:hover {
-            border-color: #555;
+        .card.dragging {
+            cursor: grabbing;
+            z-index: 999;
+            border-color: #00ffff;
         }
 
         .card-header {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .card-header h3 {
-            font-size: 14px;
-            font-weight: 500;
-            color: #eee;
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
             letter-spacing: 0.5px;
+            flex: 1;
+        }
+
+        .z-controls {
+            display: flex;
+            gap: 2px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .card:hover .z-controls {
+            opacity: 1;
+        }
+
+        .z-btn {
+            background: none;
+            border: 1px solid #333;
+            color: #555;
+            font-size: 10px;
+            padding: 1px 4px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .z-btn:hover {
+            border-color: #fff;
+            color: #fff;
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #b85450;
+            background: #f87171;
+            flex-shrink: 0;
         }
 
         .status-dot.healthy {
             background: #4ade80;
-            box-shadow: 0 0 8px #4ade80;
+            box-shadow: 0 0 6px #4ade80;
         }
 
         .status-dot.running {
             background: #facc15;
-            box-shadow: 0 0 8px #facc15;
+            box-shadow: 0 0 6px #facc15;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #222;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-status {
+            font-size: 11px;
+            color: #444;
+            font-family: monospace;
+        }
+
+        /* Custom content area */
+        .card-custom {
+            min-height: 0;
+        }
+
+        .card-custom:empty {
+            display: none;
+        }
+
+        /* Inline config fields on card */
+        .inline-cfg {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .cfg-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cfg-row label {
+            font-size: 11px;
+            color: #666;
+            min-width: 90px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cfg-row input[type="text"] {
+            flex: 1;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        .cfg-row input[type="text"]:focus {
+            outline: none;
+            border-color: #a78bfa;
+        }
+
+        .cfg-toggle {
+            position: relative;
+            width: 28px;
+            height: 14px;
+            cursor: pointer;
+        }
+
+        .cfg-toggle input {
+            display: none;
+        }
+
+        .cfg-toggle .sl {
+            position: absolute;
+            inset: 0;
+            background: #333;
+            transition: 0.2s;
+        }
+
+        .cfg-toggle .sl::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            left: 2px;
+            top: 2px;
+            background: #666;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        .cfg-toggle input:checked+.sl {
+            background: #a78bfa;
+        }
+
+        .cfg-toggle input:checked+.sl::before {
+            transform: translateX(14px);
+            background: #000;
+        }
+
+        .cfg-save-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .cfg-save-row button {
+            padding: 4px 12px;
+            border: 1px solid #333;
+            background: #000;
+            color: #888;
+            font-size: 10px;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cfg-save-row button:hover {
+            border-color: #a78bfa;
+            color: #a78bfa;
+        }
+
+        .cfg-save-row .cfg-msg {
+            font-size: 10px;
+            color: #4ade80;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cfg-save-row .cfg-msg.show {
+            opacity: 1;
+        }
+
+        /* Sync progress on card */
+        .sync-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .sync-row button {
+            padding: 4px 12px;
+            border: 1px solid #00ffff;
+            background: #000;
+            color: #00ffff;
+            font-size: 10px;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sync-row button:hover:not(:disabled) {
+            background: #00ffff;
+            color: #000;
+        }
+
+        .sync-row button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .sync-row button.stop-btn {
+            border-color: #f87171;
+            color: #f87171;
+        }
+
+        .sync-row button.stop-btn:hover:not(:disabled) {
+            background: #f87171;
+            color: #000;
+        }
+
+        .sync-progress {
+            height: 2px;
+            background: #222;
+            margin-top: 4px;
+        }
+
+        .sync-progress .fill {
+            height: 100%;
+            background: #00ffff;
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        .sync-info {
+            font-size: 10px;
+            color: #555;
+            font-family: monospace;
+        }
+
+        .sync-info.active {
+            color: #00ffff;
         }
 
         .card-actions {
             display: flex;
             gap: 6px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #222;
         }
 
         .btn {
             flex: 1;
-            padding: 6px 8px;
-            border: 1px solid #444;
-            background: transparent;
-            color: #888;
+            padding: 8px 10px;
+            border: 1px solid #333;
+            background: #000;
+            color: #666;
             font-size: 11px;
+            font-family: 'Outfit', sans-serif;
             cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.15s;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn:hover:not(:disabled) {
-            background: #222;
-            color: #fff;
-            border-color: #666;
+            background: #fff;
+            color: #000;
+            border-color: #fff;
         }
 
         .btn:disabled {
-            opacity: 0.3;
+            opacity: 0.2;
             cursor: not-allowed;
         }
 
@@ -151,181 +474,423 @@
         }
 
         .btn-run {
-            border-color: #60a5fa;
-            color: #60a5fa;
+            border-color: #00ffff;
+            color: #00ffff;
         }
 
         .btn-run:hover {
-            background: #60a5fa;
+            background: #00ffff;
             color: #000;
         }
 
-        /* Password Modal */
-        .modal {
+
+
+        /* Confirm dialog */
+        .confirm-overlay {
             display: none;
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
+            z-index: 1001;
             justify-content: center;
             align-items: center;
         }
 
-        .modal.show {
+        .confirm-overlay.show {
             display: flex;
         }
 
-        .modal-content {
-            background: #111;
-            border: 1px solid #333;
+        .confirm-box {
+            background: #000;
+            border: 1px solid #fff;
             padding: 24px;
-            border-radius: 8px;
             text-align: center;
         }
 
-        .modal-content input {
-            background: #222;
+        .confirm-box p {
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: #ccc;
+        }
+
+        .confirm-box .btn-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .confirm-box button {
+            padding: 8px 20px;
             border: 1px solid #444;
-            color: #fff;
-            padding: 10px 16px;
-            font-size: 14px;
-            width: 160px;
-            text-align: center;
-            border-radius: 4px;
-        }
-
-        .modal-content input:focus {
-            outline: none;
-            border-color: #666;
-        }
-
-        .modal-content button {
-            background: #333;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 14px;
+            background: #000;
+            color: #ccc;
+            font-size: 11px;
             cursor: pointer;
-            margin-left: 8px;
-            border-radius: 4px;
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .modal-content button:hover {
-            background: #444;
+        .confirm-box button.yes {
+            border-color: #4ade80;
+            color: #4ade80;
         }
 
-        .modal-content .error {
-            color: #f87171;
-            margin-top: 10px;
-            font-size: 12px;
+        .confirm-box button.yes:hover {
+            background: #4ade80;
+            color: #000;
+        }
+
+        .confirm-box button:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        /* Custom cards */
+        .custom-card {
+            position: absolute;
+            cursor: grab;
+            user-select: none;
+            z-index: 1;
+        }
+
+        .custom-card.dragging {
+            cursor: grabbing;
+        }
+
+        .custom-card.text-card {
+            background: #000;
+            border: 1px solid #333;
+            padding: 12px;
+            min-width: 100px;
+            min-height: 60px;
+        }
+
+        .custom-card.text-card:hover {
+            border-color: #fff;
+        }
+
+        .custom-card.text-card textarea {
+            width: 100%;
+            height: calc(100% - 24px);
+            background: none;
+            border: none;
+            color: #ccc;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+            line-height: 1.5;
+        }
+
+        .custom-card.rect-card {
+            border: 1px solid #fff;
+            min-width: 60px;
+            min-height: 60px;
+        }
+
+        .custom-card.img-card {
+            border: 1px solid #333;
+            min-width: 60px;
+            min-height: 60px;
+            overflow: hidden;
+        }
+
+        .custom-card.img-card:hover {
+            border-color: #fff;
+        }
+
+        .custom-card.img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .custom-card .cc-topbar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2px;
+            margin-bottom: 4px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .custom-card:hover .cc-topbar {
+            opacity: 1;
+        }
+
+        .cc-btn {
+            background: none;
+            border: 1px solid #333;
+            color: #555;
+            font-size: 10px;
+            padding: 1px 4px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .cc-btn:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .resize-handle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 14px;
+            height: 14px;
+            cursor: nwse-resize;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .custom-card:hover .resize-handle {
+            opacity: 1;
+        }
+
+        .resize-handle::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 8px;
+            height: 8px;
+            border-right: 1px solid #666;
+            border-bottom: 1px solid #666;
+        }
+
+        /* Add card dropdown */
+        .add-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .add-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #000;
+            border: 1px solid #fff;
+            z-index: 200;
+            min-width: 120px;
+            margin-top: 4px;
+        }
+
+        .add-dropdown.show {
+            display: block;
+        }
+
+        .add-dropdown button {
+            display: block;
+            width: 100%;
+            background: none;
+            border: none;
+            border-bottom: 1px solid #222;
+            color: #ccc;
+            padding: 8px 12px;
+            text-align: left;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .add-dropdown button:last-child {
+            border-bottom: none;
+        }
+
+        .add-dropdown button:hover {
+            background: #222;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
-    <div id="bg"></div>
-    <div id="container"></div>
+    <div id="topbar">
+        <div id="pw-bar">
+            <input type="password" id="pw-input" placeholder="password">
+            <button onclick="savePassword()">→</button>
+        </div>
+        <div id="pw-lock" class="hidden" onclick="showPasswordBar()">🔒</div>
+        <div class="topbar-spacer"></div>
+        <div class="add-menu">
+            <button class="topbtn" onclick="toggleAddMenu()">+ Add</button>
+            <div id="add-dropdown" class="add-dropdown">
+                <button onclick="addCustomCard('text')">Text Box</button>
+                <button onclick="addCustomCard('rect')">Rectangle</button>
+                <button onclick="addCustomCard('img')">Image</button>
+            </div>
+        </div>
+        <button class="topbtn" onclick="confirmSaveLayout()">Save Layout</button>
+        <button class="topbtn" onclick="loadLayout()">Reset Layout</button>
+        <span id="save-msg" class="save-msg"></span>
+    </div>
 
-    <div id="password-modal" class="modal">
-        <div class="modal-content">
-            <input type="password" id="password-input" placeholder="•••••">
-            <button onclick="submitPassword()">Go</button>
-            <div id="password-error" class="error"></div>
+    <div id="canvas"></div>
+
+
+
+    <!-- Confirm save dialog -->
+    <div id="confirm-overlay" class="confirm-overlay">
+        <div class="confirm-box">
+            <p>Save current card positions?</p>
+            <div class="btn-row">
+                <button class="yes" onclick="doSaveLayout()">Yes</button>
+                <button onclick="cancelSave()">Cancel</button>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
     <script>
         let services = [], tasks = [];
-        let pendingAction = null;
-        let scene, camera, renderer;
-        let cardObjects = [];
-        let bgImages = [], bgIndex = 0;
+        let servicesMeta = {};
+        let configServiceId = null;
+        let savedLayout = {};
+        let customCards = []; // { id, type, x, y, z, w, h, content }
+        let ccIdCounter = 0;
 
-        // ========== BACKGROUND SLIDESHOW ==========
-        async function loadBackgroundImages() {
+        // ========== DRAG STATE ==========
+        let dragEl = null, dragOffX = 0, dragOffY = 0;
+        let resizeEl = null, resizeStartX = 0, resizeStartY = 0, resizeStartW = 0, resizeStartH = 0;
+
+        // ========== PASSWORD ==========
+        function getPassword() { return localStorage.getItem('mgr_pw') || ''; }
+        function savePassword() {
+            const pw = document.getElementById('pw-input').value;
+            if (!pw) return;
+            localStorage.setItem('mgr_pw', pw);
+            document.getElementById('pw-bar').classList.add('hidden');
+            document.getElementById('pw-lock').classList.remove('hidden');
+        }
+        function showPasswordBar() {
+            document.getElementById('pw-bar').classList.remove('hidden');
+            document.getElementById('pw-lock').classList.add('hidden');
+            document.getElementById('pw-input').focus();
+        }
+        if (getPassword()) {
+            document.getElementById('pw-bar').classList.add('hidden');
+            document.getElementById('pw-lock').classList.remove('hidden');
+        }
+        document.getElementById('pw-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') savePassword();
+        });
+
+        // ========== LAYOUT SAVE/LOAD ==========
+        async function loadLayout() {
             try {
-                const resp = await fetch('/api/voles');
+                const resp = await fetch('/api/layout');
+                savedLayout = await resp.json();
+                applyLayout();
+                flashMsg('Layout restored');
+            } catch (e) { console.error(e); }
+        }
+
+        function applyLayout() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const id = card.dataset.id;
+                if (savedLayout[id]) {
+                    card.style.left = savedLayout[id].x + 'px';
+                    card.style.top = savedLayout[id].y + 'px';
+                    if (savedLayout[id].z) card.style.zIndex = savedLayout[id].z;
+                }
+            });
+        }
+
+        function confirmSaveLayout() {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+            document.getElementById('confirm-overlay').classList.add('show');
+        }
+
+        function cancelSave() {
+            document.getElementById('confirm-overlay').classList.remove('show');
+        }
+
+        async function doSaveLayout() {
+            document.getElementById('confirm-overlay').classList.remove('show');
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+
+            const layout = { _customCards: getCustomCardData() };
+            document.querySelectorAll('.card').forEach(card => {
+                layout[card.dataset.id] = {
+                    x: parseInt(card.style.left) || 0,
+                    y: parseInt(card.style.top) || 0,
+                    z: parseInt(card.style.zIndex) || 1
+                };
+            });
+
+            try {
+                const resp = await fetch('/api/layout', {
+                    method: 'POST',
+                    headers: { 'X-Password': pw, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(layout)
+                });
                 const data = await resp.json();
-                bgImages = data.images || [];
-                if (bgImages.length > 0) {
-                    // Shuffle
-                    bgImages.sort(() => Math.random() - 0.5);
-                    // Preload first few
-                    const bg = document.getElementById('bg');
-                    for (let i = 0; i < Math.min(3, bgImages.length); i++) {
-                        const img = document.createElement('img');
-                        img.src = bgImages[i];
-                        if (i === 0) img.classList.add('active');
-                        bg.appendChild(img);
+                if (data.success) {
+                    savedLayout = layout;
+                    flashMsg('Layout saved');
+                } else {
+                    if ((data.message || '').toLowerCase().includes('password')) {
+                        localStorage.removeItem('mgr_pw');
+                        showPasswordBar();
                     }
-                    // Start slideshow
-                    setInterval(nextBgImage, 5000);
+                    flashMsg('Save failed');
                 }
-            } catch (e) { console.error('BG load failed:', e); }
+            } catch (e) { flashMsg('Save error'); }
         }
 
-        function nextBgImage() {
-            const bg = document.getElementById('bg');
-            const imgs = bg.querySelectorAll('img');
-            if (imgs.length === 0) return;
+        function flashMsg(text) {
+            const el = document.getElementById('save-msg');
+            el.textContent = text;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 2000);
+        }
 
-            imgs.forEach(img => img.classList.remove('active'));
-            bgIndex = (bgIndex + 1) % bgImages.length;
-
-            // Check if we need to add this image
-            let found = false;
-            imgs.forEach(img => {
-                if (img.src === bgImages[bgIndex]) {
-                    img.classList.add('active');
-                    found = true;
-                }
+        // ========== DRAG ==========
+        function initDrag(card) {
+            card.addEventListener('mousedown', e => {
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+                if (e.target.classList.contains('resize-handle')) return;
+                dragEl = card;
+                dragEl.classList.add('dragging');
+                dragOffX = e.clientX - card.offsetLeft;
+                dragOffY = e.clientY - card.offsetTop;
+                e.preventDefault();
             });
+        }
 
-            if (!found) {
-                const img = document.createElement('img');
-                img.src = bgImages[bgIndex];
-                img.onload = () => img.classList.add('active');
-                bg.appendChild(img);
-                // Clean up old images (keep last 5)
-                while (bg.children.length > 5) bg.removeChild(bg.firstChild);
+        document.addEventListener('mousemove', e => {
+            if (resizeEl) {
+                const w = Math.max(60, resizeStartW + (e.clientX - resizeStartX));
+                const h = Math.max(40, resizeStartH + (e.clientY - resizeStartY));
+                resizeEl.style.width = w + 'px';
+                resizeEl.style.height = h + 'px';
+                return;
             }
+            if (!dragEl) return;
+            dragEl.style.left = (e.clientX - dragOffX) + 'px';
+            dragEl.style.top = (e.clientY - dragOffY) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (dragEl) dragEl.classList.remove('dragging');
+            dragEl = null;
+            resizeEl = null;
+        });
+
+        // ========== FETCH ==========
+        async function fetchMeta() {
+            try {
+                const resp = await fetch('/api/services/meta');
+                servicesMeta = await resp.json();
+            } catch (e) { }
         }
 
-        // ========== THREE.JS SETUP ==========
-        function initThree() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
-            camera.position.z = 800;
-
-            renderer = new THREE.CSS3DRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('container').appendChild(renderer.domElement);
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            animate();
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Subtle floating animation
-            const t = Date.now() * 0.001;
-            cardObjects.forEach((obj, i) => {
-                obj.position.y = obj.userData.baseY + Math.sin(t + i * 0.5) * 8;
-                obj.rotation.y = Math.sin(t * 0.3 + i * 0.3) * 0.03;
-            });
-
-            renderer.render(scene, camera);
-        }
-
-        // ========== FETCH DATA ==========
         async function fetchStatus() {
             try {
                 const resp = await fetch('/api/status');
@@ -333,109 +898,386 @@
                 services = data.services;
                 tasks = data.tasks;
                 renderCards();
-            } catch (e) { console.error('Fetch failed:', e); }
+            } catch (e) { }
         }
 
-        // ========== RENDER CARDS ==========
+        // ========== RENDER ==========
+        let cardPositions = {}; // remember positions + z across re-renders
+
+        const zControls = `<div class="z-controls">
+            <button class="z-btn" onclick="zOrder(this,'front')" title="To front">⇈</button>
+            <button class="z-btn" onclick="zOrder(this,'up')" title="Forward">↑</button>
+            <button class="z-btn" onclick="zOrder(this,'down')" title="Back">↓</button>
+            <button class="z-btn" onclick="zOrder(this,'back')" title="To back">⇊</button>
+        </div>`;
+
+        function zOrder(btn, dir) {
+            const card = btn.closest('.card');
+            const all = [...document.querySelectorAll('#canvas .card')];
+            const zVals = all.map(c => parseInt(c.style.zIndex) || 1);
+            const curZ = parseInt(card.style.zIndex) || 1;
+            if (dir === 'front') card.style.zIndex = Math.max(...zVals) + 1;
+            else if (dir === 'back') card.style.zIndex = Math.min(...zVals) - 1;
+            else if (dir === 'up') card.style.zIndex = curZ + 1;
+            else if (dir === 'down') card.style.zIndex = Math.max(0, curZ - 1);
+            // Update remembered state
+            cardPositions[card.dataset.id] = cardPositions[card.dataset.id] || {};
+            cardPositions[card.dataset.id].z = parseInt(card.style.zIndex);
+        }
+
         function renderCards() {
-            // Clear existing
-            cardObjects.forEach(obj => scene.remove(obj));
-            cardObjects = [];
+            const canvas = document.getElementById('canvas');
 
-            const allItems = [...services.map(s => ({ ...s, isTask: false })),
-            ...tasks.map(t => ({ ...t, isTask: true }))];
+            // Save current positions before re-render
+            canvas.querySelectorAll('.card').forEach(card => {
+                cardPositions[card.dataset.id] = {
+                    x: parseInt(card.style.left) || 0,
+                    y: parseInt(card.style.top) || 0,
+                    z: parseInt(card.style.zIndex) || 1
+                };
+            });
 
-            const cols = Math.min(4, allItems.length);
-            const spacing = 260;
-            const startX = -((cols - 1) * spacing) / 2;
+            canvas.innerHTML = '';
+
+            const allItems = [
+                ...services.map(s => ({ ...s, isTask: false })),
+                ...tasks.map(t => ({ ...t, isTask: true }))
+            ];
+
+            const cols = Math.min(3, allItems.length);
+            const spacingX = 380;
+            const spacingY = 300;
+            const startX = 40;
+            const startY = 50;
 
             allItems.forEach((item, i) => {
                 const col = i % cols;
                 const row = Math.floor(i / cols);
 
-                const div = document.createElement('div');
-                div.className = 'card';
+                // Position priority: remembered > saved layout > grid default
+                const defaultPos = { x: startX + col * spacingX, y: startY + row * spacingY };
+                const pos = cardPositions[item.id] || savedLayout[item.id] || defaultPos;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.id = item.id;
+                card.style.left = pos.x + 'px';
+                card.style.top = pos.y + 'px';
+                card.style.zIndex = pos.z || (i + 1);
 
                 if (item.isTask) {
-                    div.innerHTML = `
+                    card.innerHTML = `
                         <div class="card-header">
                             <h3>${item.name}</h3>
+                            ${zControls}
                         </div>
-                        <div class="card-actions">
-                            <button class="btn btn-run" onclick="action('${item.id}', 'run', true)">Run</button>
+                        ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
+                        <div class="card-body">
+                            <div class="card-custom"></div>
+                            <div class="card-actions">
+                                <button class="btn btn-run" onclick="doAction('${item.id}', 'run', true)">Run</button>
+                            </div>
                         </div>
                     `;
                 } else {
-                    const statusClass = item.healthy ? 'healthy' : (item.running ? 'running' : 'stopped');
-                    div.innerHTML = `
+                    const sc = item.healthy ? 'healthy' : (item.running ? 'running' : 'stopped');
+                    const statusText = item.healthy ? 'HEALTHY' : (item.running ? 'RUNNING' : 'STOPPED');
+                    card.innerHTML = `
                         <div class="card-header">
-                            <div class="status-dot ${statusClass}"></div>
+                            <div class="status-dot ${sc}"></div>
                             <h3>${item.name}</h3>
+                            ${zControls}
                         </div>
-                        <div class="card-actions">
-                            <button class="btn btn-start" onclick="action('${item.id}', 'start', false)" ${item.running ? 'disabled' : ''}>▶</button>
-                            <button class="btn btn-stop" onclick="action('${item.id}', 'stop', false)" ${!item.running ? 'disabled' : ''}>■</button>
-                            <button class="btn btn-restart" onclick="action('${item.id}', 'restart', false)">↻</button>
+                        ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
+                        <div class="card-body">
+                            <div class="card-status">${statusText} · :${item.port}</div>
+                            <div class="card-custom" data-svc="${item.id}"></div>
+                            <div class="card-actions">
+                                <button class="btn btn-start" onclick="doAction('${item.id}', 'start', false)" ${item.running ? 'disabled' : ''}>Start</button>
+                                <button class="btn btn-stop" onclick="doAction('${item.id}', 'stop', false)" ${!item.running ? 'disabled' : ''}>Stop</button>
+                                <button class="btn btn-restart" onclick="doAction('${item.id}', 'restart', false)">Restart</button>
+                            </div>
                         </div>
                     `;
                 }
 
-                const obj = new THREE.CSS3DObject(div);
-                obj.position.x = startX + col * spacing;
-                obj.position.y = 100 - row * 140;
-                obj.position.z = 0;
-                obj.userData.baseY = obj.position.y;
-
-                scene.add(obj);
-                cardObjects.push(obj);
+                canvas.appendChild(card);
+                initDrag(card);
             });
+
+            // Load inline config for services that have it
+            loadInlineConfigs();
         }
 
         // ========== ACTIONS ==========
-        function action(id, act, isTask) {
+        async function doAction(id, act, isTask) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
             const url = isTask ? `/api/task/${id}/${act}` : `/api/service/${id}/${act}`;
-            pendingAction = { url };
-            document.getElementById('password-modal').classList.add('show');
-            document.getElementById('password-input').focus();
-            document.getElementById('password-error').textContent = '';
+            try {
+                const resp = await fetch(url, { method: 'POST', headers: { 'X-Password': pw } });
+                const data = await resp.json();
+                if (data.success === false && (data.message || '').toLowerCase().includes('password')) {
+                    localStorage.removeItem('mgr_pw');
+                    showPasswordBar();
+                }
+                setTimeout(fetchStatus, 500);
+            } catch (e) { }
         }
 
-        async function submitPassword() {
-            const password = document.getElementById('password-input').value;
-            if (!pendingAction) return;
-
-            try {
-                const resp = await fetch(pendingAction.url, {
-                    method: 'POST',
-                    headers: { 'X-Password': password }
-                });
-                const data = await resp.json();
-
-                if (data.success) {
-                    document.getElementById('password-modal').classList.remove('show');
-                    document.getElementById('password-input').value = '';
-                    pendingAction = null;
-                    setTimeout(fetchStatus, 500);
-                } else {
-                    document.getElementById('password-error').textContent = data.message || 'Failed';
-                }
-            } catch (e) {
-                document.getElementById('password-error').textContent = 'Error';
+        // ========== INLINE CONFIG (generic) ==========
+        async function loadInlineConfigs() {
+            for (const [svcId, meta] of Object.entries(servicesMeta)) {
+                if (!meta.has_config) continue;
+                const el = document.querySelector(`.card-custom[data-svc="${svcId}"]`);
+                if (!el) continue;
+                try {
+                    const resp = await fetch(`/api/service/${svcId}/config`);
+                    const data = await resp.json();
+                    if (data.success === false) continue;
+                    renderInlineConfig(el, svcId, data);
+                } catch (e) { }
             }
         }
 
-        document.getElementById('password-input').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') submitPassword();
-            if (e.key === 'Escape') {
-                document.getElementById('password-modal').classList.remove('show');
-                pendingAction = null;
+        function renderInlineConfig(container, svcId, data) {
+            let html = '<div class="inline-cfg">';
+            for (const [key, val] of Object.entries(data)) {
+                const label = key.replace(/_/g, ' ');
+                if (typeof val === 'boolean') {
+                    html += `<div class="cfg-row">
+                        <label>${label}</label>
+                        <label class="cfg-toggle">
+                            <input type="checkbox" data-svc="${svcId}" data-key="${key}" ${val ? 'checked' : ''}>
+                            <span class="sl"></span>
+                        </label>
+                    </div>`;
+                } else {
+                    html += `<div class="cfg-row">
+                        <label>${label}</label>
+                        <input type="text" data-svc="${svcId}" data-key="${key}" value="${val}">
+                    </div>`;
+                }
+            }
+            html += `<div class="cfg-save-row">
+                <button onclick="saveInlineConfig('${svcId}')">Save</button>
+                <span class="cfg-msg" id="cfg-msg-${svcId}"></span>
+            </div>`;
+
+            // Sync controls (for services that support it)
+            html += `<div class="sync-row" id="sync-row-${svcId}">
+                <button onclick="triggerSync('${svcId}')" id="sync-btn-${svcId}">Sync Now</button>
+                <button class="stop-btn" onclick="stopSync('${svcId}')" id="sync-stop-${svcId}" disabled>Stop</button>
+            </div>`;
+            html += `<div class="sync-progress" id="sync-prog-${svcId}"><div class="fill" id="sync-fill-${svcId}"></div></div>`;
+            html += `<div class="sync-info" id="sync-info-${svcId}"></div>`;
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Start polling sync status
+            pollSyncStatus(svcId);
+        }
+
+        async function saveInlineConfig(svcId) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+            const data = {};
+            document.querySelectorAll(`[data-svc="${svcId}"][data-key]`).forEach(el => {
+                if (el.type === 'checkbox') data[el.dataset.key] = el.checked;
+                else data[el.dataset.key] = el.value;
+            });
+            try {
+                const resp = await fetch(`/api/service/${svcId}/config`, {
+                    method: 'POST',
+                    headers: { 'X-Password': pw, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await resp.json();
+                if (result.success === false && (result.message || '').includes('password')) {
+                    localStorage.removeItem('mgr_pw');
+                    showPasswordBar();
+                    return;
+                }
+                const msg = document.getElementById(`cfg-msg-${svcId}`);
+                if (msg) { msg.textContent = 'Saved'; msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2000); }
+            } catch (e) { }
+        }
+
+        // ========== SYNC CONTROLS (generic via proxy) ==========
+        async function triggerSync(svcId) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+            try {
+                await fetch(`/api/service/${svcId}/proxy/api/sync`, {
+                    method: 'POST',
+                    headers: { 'X-Password': pw }
+                });
+            } catch (e) { }
+        }
+
+        async function stopSync(svcId) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+            try {
+                await fetch(`/api/service/${svcId}/proxy/api/sync/stop`, {
+                    method: 'POST',
+                    headers: { 'X-Password': pw }
+                });
+            } catch (e) { }
+        }
+
+        async function pollSyncStatus(svcId) {
+            const update = async () => {
+                try {
+                    const resp = await fetch(`/api/service/${svcId}/proxy/api/sync/status`);
+                    const s = await resp.json();
+                    if (s.success === false) return; // proxy error, service not running
+
+                    const btn = document.getElementById(`sync-btn-${svcId}`);
+                    const stop = document.getElementById(`sync-stop-${svcId}`);
+                    const fill = document.getElementById(`sync-fill-${svcId}`);
+                    const info = document.getElementById(`sync-info-${svcId}`);
+                    if (!btn) return;
+
+                    btn.disabled = s.running;
+                    stop.disabled = !s.running;
+
+                    const pct = s.tracks_total > 0 ? (s.tracks_done / s.tracks_total * 100) : 0;
+                    fill.style.width = pct + '%';
+
+                    if (s.running) {
+                        info.className = 'sync-info active';
+                        info.textContent = `${s.current_playlist} · ${s.current_track} · ${s.tracks_done}/${s.tracks_total}`;
+                    } else if (s.last_sync) {
+                        info.className = 'sync-info';
+                        info.textContent = `last: ${s.last_sync}`;
+                    } else {
+                        info.className = 'sync-info';
+                        info.textContent = '';
+                    }
+                } catch (e) { }
+            };
+            update();
+            setInterval(update, 4000);
+        }
+
+        // ========== ADD MENU ==========
+        function toggleAddMenu() {
+            document.getElementById('add-dropdown').classList.toggle('show');
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.add-menu')) {
+                document.getElementById('add-dropdown').classList.remove('show');
             }
         });
 
+        // ========== CUSTOM CARDS ==========
+        function addCustomCard(type, data) {
+            document.getElementById('add-dropdown').classList.remove('show');
+            const id = data ? data.id : 'cc_' + Date.now() + '_' + (ccIdCounter++);
+            const x = data ? data.x : 100 + Math.random() * 200;
+            const y = data ? data.y : 100 + Math.random() * 200;
+            const w = data ? data.w : (type === 'text' ? 240 : type === 'img' ? 200 : 160);
+            const h = data ? data.h : (type === 'text' ? 150 : type === 'img' ? 150 : 120);
+            const z = data ? (data.z || 1) : 1;
+            const content = data ? (data.content || '') : '';
+
+            const el = document.createElement('div');
+            el.className = `custom-card ${type}-card`;
+            el.dataset.ccid = id;
+            el.dataset.cctype = type;
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            el.style.width = w + 'px';
+            el.style.height = h + 'px';
+            el.style.zIndex = z;
+
+            const topbar = `<div class="cc-topbar">
+                <button class="cc-btn" onclick="deleteCustomCard(this)" title="Delete">✕</button>
+            </div>`;
+
+            if (type === 'text') {
+                el.innerHTML = topbar + `<textarea placeholder="type here...">${content}</textarea>`;
+            } else if (type === 'rect') {
+                el.innerHTML = topbar;
+            } else if (type === 'img') {
+                if (content) {
+                    el.innerHTML = topbar + `<img src="${content}">`;
+                } else {
+                    const url = prompt('Image URL:');
+                    if (!url) return;
+                    el.innerHTML = topbar + `<img src="${url}">`;
+                    el.dataset.imgurl = url;
+                }
+            }
+
+            el.innerHTML += '<div class="resize-handle"></div>';
+
+            // Resize handle
+            const handle = el.querySelector('.resize-handle');
+            handle.addEventListener('mousedown', e => {
+                resizeEl = el;
+                resizeStartX = e.clientX;
+                resizeStartY = e.clientY;
+                resizeStartW = el.offsetWidth;
+                resizeStartH = el.offsetHeight;
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            document.getElementById('canvas').appendChild(el);
+            initDrag(el);
+        }
+
+        function deleteCustomCard(btn) {
+            btn.closest('.custom-card').remove();
+        }
+
+        function getCustomCardData() {
+            const cards = [];
+            document.querySelectorAll('.custom-card').forEach(el => {
+                const type = el.dataset.cctype;
+                const card = {
+                    id: el.dataset.ccid,
+                    type: type,
+                    x: parseInt(el.style.left) || 0,
+                    y: parseInt(el.style.top) || 0,
+                    w: el.offsetWidth,
+                    h: el.offsetHeight,
+                    z: parseInt(el.style.zIndex) || 1
+                };
+                if (type === 'text') {
+                    const ta = el.querySelector('textarea');
+                    card.content = ta ? ta.value : '';
+                } else if (type === 'img') {
+                    const img = el.querySelector('img');
+                    card.content = img ? img.src : '';
+                }
+                cards.push(card);
+            });
+            return cards;
+        }
+
+        function loadCustomCards(arr) {
+            // Remove existing custom cards
+            document.querySelectorAll('.custom-card').forEach(el => el.remove());
+            if (!arr) return;
+            arr.forEach(data => addCustomCard(data.type, data));
+        }
+
         // ========== INIT ==========
-        initThree();
-        loadBackgroundImages();
-        fetchStatus();
+        (async () => {
+            await fetchMeta();
+            try {
+                const resp = await fetch('/api/layout');
+                savedLayout = await resp.json();
+                if (savedLayout._customCards) {
+                    loadCustomCards(savedLayout._customCards);
+                }
+            } catch (e) { }
+            await fetchStatus();
+        })();
         setInterval(fetchStatus, 15000);
     </script>
 </body>

@@ -1,0 +1,6 @@
+import os
+
+PORT = int(os.environ.get("SERVICE_PORT", 9874))
+HOST = "0.0.0.0"
+ACCESS_PASSWORD = os.environ.get("STARTUP_APPS_PASSWORD")
+SESSION_TIMEOUT_HOURS = 168

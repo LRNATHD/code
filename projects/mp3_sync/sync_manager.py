@@ -9,9 +9,10 @@ import ctypes
 from ytmusicapi import YTMusic
 
 CONFIG_FILE = 'config.json'
-# OAuth credentials stored in APPDATA (outside repo for security)
+# Auth credentials stored in APPDATA (outside repo for security)
 OAUTH_DIR = os.path.join(os.environ.get('APPDATA', ''), 'MP3SyncOAuth')
 OAUTH_FILE = os.path.join(OAUTH_DIR, 'oauth.json')
+BROWSER_FILE = os.path.join(OAUTH_DIR, 'browser.json')
 DEFAULT_CONFIG = {
     "drive_label": "MP3PLAYER",
     "music_root_folder": "Music",
@@ -60,11 +61,20 @@ def find_drive_by_label(target_label):
     return None
 
 def get_authenticated_api():
+    """Try browser.json first, then oauth.json."""
+    # Preferred: browser headers auth
+    if os.path.exists(BROWSER_FILE):
+        try:
+            return YTMusic(BROWSER_FILE)
+        except Exception as e:
+            print(f"Error with browser auth: {e}")
+    # Fallback: OAuth tokens
     if os.path.exists(OAUTH_FILE):
         try:
-            return YTMusic(auth=OAUTH_FILE)
+            return YTMusic(OAUTH_FILE)
         except Exception as e:
-            print(f"Error authenticating API: {e}")
+            print(f"Error with OAuth auth: {e}")
+    print("No auth found! Run: python setup_auth.py")
     return None
 
 def sanitize_filename(name):
@@ -107,8 +117,9 @@ def download_track(track, folder_path, archive_file):
         '--embed-thumbnail',
         '--embed-metadata',
         '--no-progress',
+        '--cookies-from-browser', 'firefox',
+        '--remote-components', 'ejs:github',
         '--output', filepath, # Direct output to file
-        '--quiet'
     ]
     
     try:

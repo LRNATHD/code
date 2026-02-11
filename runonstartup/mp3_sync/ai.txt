@@ -1,0 +1,42 @@
+RULES
+====
+1. Auth files (oauth.json, browser.json) live in %APPDATA%\MP3SyncOAuth\, NOT in repo
+2. Support two auth methods: browser headers (browser.json) and OAuth (oauth.json)
+3. browser.json is preferred if both exist
+4. If "Sign in" error appears, re-run setup_auth.py from projects\mp3_sync
+5. Downloads go to configurable folder (sync_config.json -> download_folder)
+6. Must implement GET/POST /api/config for service_manager integration
+7. Uses OLED theme (--bg-dark: #000, --accent-secondary: #00ffff)
+8. AUTH: Uses STARTUP_APPS_PASSWORD from env
+
+KEY INFO
+====
+| File              | Purpose                                           |
+| app.py            | Flask web app - config UI + sync control + APIs   |
+| config.py         | PORT, HOST, ACCESS_PASSWORD from env              |
+| sync_engine.py    | Core sync logic - background thread, progress     |
+| sync_config.json  | User config (download folder, sync options)       |
+| start_silent.vbs  | Background launcher for startup                   |
+
+| Endpoint             | Method | Auth | Purpose                              |
+| /api/status          | GET    | No   | Health check for service_manager     |
+| /api/config          | GET    | No   | Return current sync config           |
+| /api/config          | POST   | Yes  | Update sync config                   |
+| /api/sync            | POST   | Yes  | Start manual sync                    |
+| /api/sync/stop       | POST   | Yes  | Stop running sync                    |
+| /api/sync/status     | GET    | No   | Detailed sync progress               |
+
+COMMANDS
+====
+# Run locally (dev)
+$env:STARTUP_APPS_PASSWORD = [Environment]::GetEnvironmentVariable("STARTUP_APPS_PASSWORD", "User"); py app.py
+
+# Setup auth (run from projects\mp3_sync)
+python c:\Users\LRNA\Desktop\code\projects\mp3_sync\setup_auth.py
+
+DEPENDENCIES
+====
+deno (winget install DenoLand.Deno) - required by yt-dlp for YouTube signature solving
+Firefox with YouTube logged in - yt-dlp uses cookies from Firefox
+ytmusicapi - pip install ytmusicapi
+yt-dlp - pip install yt-dlp
