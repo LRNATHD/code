@@ -147,6 +147,11 @@
             border-color: #00ffff;
         }
 
+        .card.locked {
+            border-color: #ff4444 !important;
+            cursor: default !important;
+        }
+
         .card-header {
             display: flex;
             align-items: center;
@@ -271,44 +276,57 @@
 
         .cfg-row input[type="text"]:focus {
             outline: none;
-            border-color: #a78bfa;
+            border-color: #00ffff;
         }
 
-        .cfg-toggle {
+        label.cfg-toggle {
+            display: block;
             position: relative;
-            width: 28px;
-            height: 14px;
+            width: 32px;
+            min-width: 32px;
+            max-width: 32px;
+            height: 18px;
+            background: #222;
             cursor: pointer;
+            flex: 0 0 32px;
+            border-radius: 9px;
+            overflow: hidden;
+            border: none;
+            padding: 0;
+            margin: 0;
+            outline: none;
         }
 
-        .cfg-toggle input {
+        label.cfg-toggle input {
             display: none;
         }
 
-        .cfg-toggle .sl {
+        label.cfg-toggle .sl {
             position: absolute;
             inset: 0;
             background: #333;
             transition: 0.2s;
+            border-radius: 9px;
         }
 
-        .cfg-toggle .sl::before {
+        label.cfg-toggle .sl::before {
             content: '';
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             left: 2px;
             top: 2px;
-            background: #666;
+            background: #888;
             border-radius: 50%;
             transition: 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .cfg-toggle input:checked+.sl {
-            background: #a78bfa;
+        label.cfg-toggle input:checked+.sl {
+            background: #00ffff;
         }
 
-        .cfg-toggle input:checked+.sl::before {
+        label.cfg-toggle input:checked+.sl::before {
             transform: translateX(14px);
             background: #000;
         }
@@ -332,8 +350,8 @@
         }
 
         .cfg-save-row button:hover {
-            border-color: #a78bfa;
-            color: #a78bfa;
+            border-color: #00ffff;
+            color: #00ffff;
         }
 
         .cfg-save-row .cfg-msg {
@@ -558,6 +576,11 @@
             cursor: grabbing;
         }
 
+        .custom-card.locked {
+            border-color: #ff4444 !important;
+            cursor: default !important;
+        }
+
         .custom-card.text-card {
             background: #000;
             border: 1px solid #333;
@@ -607,6 +630,68 @@
             display: block;
         }
 
+        /* Console Card */
+        .custom-card.console-card {
+            background: #111;
+            border: 1px solid #333;
+            min-width: 200px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-card.console-card:hover {
+            border-color: #fff;
+        }
+
+        .console-header {
+            display: flex;
+            background: #222;
+            padding: 2px 4px;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .console-header input {
+            background: #000;
+            border: 1px solid #444;
+            color: #ccc;
+            font-size: 10px;
+            padding: 1px 4px;
+            width: 80px;
+            font-family: monospace;
+        }
+
+        .console-logs {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 10px;
+            color: #ddd;
+            line-height: 1.3;
+            white-space: pre-wrap;
+            word-break: break-all;
+            user-select: text !important;
+            cursor: text;
+        }
+
+        .log-entry {
+            margin-bottom: 2px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 1px;
+        }
+
+        .log-time {
+            color: #666;
+            margin-right: 4px;
+        }
+
+        .log-src {
+            color: #00ffff;
+            margin-right: 4px;
+        }
+
         .custom-card .cc-topbar {
             display: flex;
             justify-content: flex-end;
@@ -633,6 +718,11 @@
         .cc-btn:hover {
             border-color: #fff;
             color: #fff;
+        }
+
+        .cc-btn.active {
+            color: #00ffff;
+            border-color: #00ffff;
         }
 
         .resize-handle {
@@ -705,6 +795,22 @@
             background: #222;
             color: #fff;
         }
+
+        .save-msg {
+            margin-left: 10px;
+            color: #4ade80;
+            font-size: 11px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .save-msg.show {
+            opacity: 1;
+        }
+
+        .save-msg.error {
+            color: #f87171;
+        }
     </style>
 </head>
 
@@ -722,6 +828,7 @@
                 <button onclick="addCustomCard('text')">Text Box</button>
                 <button onclick="addCustomCard('rect')">Rectangle</button>
                 <button onclick="addCustomCard('img')">Image</button>
+                <button onclick="addCustomCard('console')">Console</button>
             </div>
         </div>
         <button class="topbtn" onclick="confirmSaveLayout()">Save Layout</button>
@@ -740,6 +847,22 @@
             <div class="btn-row">
                 <button class="yes" onclick="doSaveLayout()">Yes</button>
                 <button onclick="cancelSave()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="confirm-overlay">
+        <div class="confirm-box" style="width: 400px; text-align: left;">
+            <p style="text-align: center; margin-bottom: 8px; color: #fff;">MP3 Sync Authentication</p>
+            <p style="font-size: 11px; color: #888; margin-bottom: 12px;">
+                Paste the HTTP headers from your browser (Network tab) when playing a song on music.youtube.com.
+            </p>
+            <textarea id="auth-headers"
+                style="width: 100%; height: 150px; background: #111; border: 1px solid #333; color: #aaa; font-family: monospace; font-size: 10px; padding: 8px; resize: none; outline: none; margin-bottom: 12px;"></textarea>
+            <div class="btn-row">
+                <button class="yes" onclick="saveAuth()">Save Credentials</button>
+                <button onclick="closeAuthModal()">Close</button>
             </div>
         </div>
     </div>
@@ -854,13 +977,22 @@
         // ========== DRAG ==========
         function initDrag(card) {
             card.addEventListener('mousedown', e => {
+                if (card.classList.contains('locked')) return;
                 if (e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
                 if (e.target.classList.contains('resize-handle')) return;
+                if (e.target.closest('.console-logs')) return; // Allow text selection in logs
                 dragEl = card;
                 dragEl.classList.add('dragging');
                 dragOffX = e.clientX - card.offsetLeft;
                 dragOffY = e.clientY - card.offsetTop;
                 e.preventDefault();
+            });
+
+            card.addEventListener('dblclick', e => {
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+                if (e.target.closest('.console-logs')) return; // Don't lock if interacting with logs
+
+                card.classList.toggle('locked');
             });
         }
 
@@ -894,9 +1026,13 @@
         async function fetchStatus() {
             try {
                 const resp = await fetch('/api/status');
+                if (!resp.ok) return;
                 const data = await resp.json();
+
+                if (!data.services || !Array.isArray(data.services)) return;
+
                 services = data.services;
-                tasks = data.tasks;
+                tasks = data.tasks || [];
                 renderCards();
             } catch (e) { }
         }
@@ -928,7 +1064,7 @@
         function renderCards() {
             const canvas = document.getElementById('canvas');
 
-            // Save current positions before re-render
+            // Save current positions (services + tasks)
             canvas.querySelectorAll('.card').forEach(card => {
                 cardPositions[card.dataset.id] = {
                     x: parseInt(card.style.left) || 0,
@@ -936,6 +1072,9 @@
                     z: parseInt(card.style.zIndex) || 1
                 };
             });
+
+            // Save CUSTOM CARDS (which are otherwise lost on wipe)
+            const currentCustomCards = getCustomCardData();
 
             canvas.innerHTML = '';
 
@@ -966,6 +1105,10 @@
                 card.style.zIndex = pos.z || (i + 1);
 
                 if (item.isTask) {
+                    let actions = `<button class="btn btn-run" onclick="doAction('${item.id}', 'run', true)">Run</button>`;
+                    if (item.has_auth) {
+                        actions = `<button class="btn" style="border-color:#aaa; color:#aaa" onclick="showAuthModal('${item.id}')">Auth</button>` + actions;
+                    }
                     card.innerHTML = `
                         <div class="card-header">
                             <h3>${item.name}</h3>
@@ -975,7 +1118,7 @@
                         <div class="card-body">
                             <div class="card-custom"></div>
                             <div class="card-actions">
-                                <button class="btn btn-run" onclick="doAction('${item.id}', 'run', true)">Run</button>
+                                ${actions}
                             </div>
                         </div>
                     `;
@@ -1005,11 +1148,28 @@
                 initDrag(card);
             });
 
+            // Restore custom cards
+            loadCustomCards(currentCustomCards);
+
             // Load inline config for services that have it
             loadInlineConfigs();
         }
 
         // ========== ACTIONS ==========
+
+        let flashTimeout;
+        function flashMsg(msg, isError = false) {
+            const el = document.getElementById('save-msg');
+            el.textContent = msg;
+            el.classList.toggle('error', isError);
+            el.classList.add('show');
+
+            clearTimeout(flashTimeout);
+            flashTimeout = setTimeout(() => {
+                el.classList.remove('show');
+            }, 2000);
+        }
+
         async function doAction(id, act, isTask) {
             const pw = getPassword();
             if (!pw) { showPasswordBar(); return; }
@@ -1023,6 +1183,42 @@
                 }
                 setTimeout(fetchStatus, 500);
             } catch (e) { }
+        }
+
+        // ========== MP3 AUTH ==========
+        function showAuthModal(id) {
+            document.getElementById('auth-modal').classList.add('show');
+            document.getElementById('auth-headers').value = '';
+            document.getElementById('auth-headers').focus();
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.remove('show');
+        }
+
+        async function saveAuth() {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+
+            const headers = document.getElementById('auth-headers').value;
+            if (!headers.trim()) return;
+
+            try {
+                const resp = await fetch('/api/mp3_sync/auth', {
+                    method: 'POST',
+                    headers: { 'X-Password': pw, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ headers: headers })
+                });
+                const data = await resp.json();
+                if (data.success) {
+                    flashMsg('Auth Saved');
+                    closeAuthModal();
+                } else {
+                    flashMsg('Error: ' + data.message);
+                }
+            } catch (e) {
+                flashMsg('Network Error');
+            }
         }
 
         // ========== INLINE CONFIG (generic) ==========
@@ -1210,6 +1406,29 @@
                     el.innerHTML = topbar + `<img src="${url}">`;
                     el.dataset.imgurl = url;
                 }
+            } else if (type === 'console') {
+                const srcFilter = data ? (data.srcFilter || '') : '';
+                const logsHTML = data ? (data.logsHTML || '') : '';
+                const autoScroll = data ? (data.autoScroll !== false) : true; // Default true
+
+                el.innerHTML = `
+                    <div class="console-header">
+                        <input type="text" placeholder="Filter Src" value="${srcFilter}" onchange="this.closest('.custom-card').dataset.srcFilter = this.value">
+                        <button class="cc-btn ${autoScroll ? 'active' : ''}" onclick="toggleAutoScroll(this)" title="Auto-scroll">⬇</button>
+                        <button class="cc-btn" onclick="clearConsole(this)" title="Clear Logs">🚫</button>
+                        <div style="flex:1"></div>
+                        <button class="cc-btn" onclick="deleteCustomCard(this)" title="Delete">✕</button>
+                    </div>
+                    <div class="console-logs" ondblclick="copyConsole(this)">${logsHTML}</div>
+                `;
+                el.dataset.srcFilter = srcFilter;
+                el.dataset.autoScroll = autoScroll;
+
+                // Restore scroll position
+                if (data && data.scrollTop) {
+                    const logs = el.querySelector('.console-logs');
+                    setTimeout(() => logs.scrollTop = data.scrollTop, 0);
+                }
             }
 
             el.innerHTML += '<div class="resize-handle"></div>';
@@ -1234,6 +1453,18 @@
             btn.closest('.custom-card').remove();
         }
 
+        function toggleAutoScroll(btn) {
+            const card = btn.closest('.custom-card');
+            const isOn = card.dataset.autoScroll === 'true';
+            card.dataset.autoScroll = !isOn;
+            btn.classList.toggle('active', !isOn);
+            if (!isOn) {
+                // If turning on, scroll to bottom immediately
+                const container = card.querySelector('.console-logs');
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
         function getCustomCardData() {
             const cards = [];
             document.querySelectorAll('.custom-card').forEach(el => {
@@ -1253,6 +1484,12 @@
                 } else if (type === 'img') {
                     const img = el.querySelector('img');
                     card.content = img ? img.src : '';
+                } else if (type === 'console') {
+                    card.srcFilter = el.dataset.srcFilter || '';
+                    card.autoScroll = el.dataset.autoScroll === 'true';
+                    const logs = el.querySelector('.console-logs');
+                    card.logsHTML = logs ? logs.innerHTML : '';
+                    card.scrollTop = logs ? logs.scrollTop : 0; // Save scroll pos
                 }
                 cards.push(card);
             });
@@ -1266,6 +1503,74 @@
             arr.forEach(data => addCustomCard(data.type, data));
         }
 
+        // ========== CONSOLE LOGS ==========
+        let lastLogTime = 0;
+        async function pollConsoleLogs() {
+            // Only poll if there is at least one console card
+            const consoles = document.querySelectorAll('.custom-card.console-card');
+            if (consoles.length === 0) return;
+
+            try {
+                const resp = await fetch(`/api/logs?after=${lastLogTime}&_t=${Date.now()}`);
+                if (!resp.ok) return;
+                const data = await resp.json();
+                if (!data.logs || data.logs.length === 0) return;
+
+                // Update timestamp
+                lastLogTime = data.logs[data.logs.length - 1].timestamp;
+
+                // Re-query consoles to handle DOM updates (renderCards race condition)
+                const liveConsoles = document.querySelectorAll('.custom-card.console-card');
+
+                // Render logic
+                liveConsoles.forEach(card => {
+                    const filter = (card.dataset.srcFilter || '').toLowerCase();
+                    const container = card.querySelector('.console-logs');
+                    const autoScroll = card.dataset.autoScroll === 'true';
+
+                    data.logs.forEach(log => {
+                        if (filter && !log.source.toLowerCase().includes(filter)) return;
+
+                        const timeStr = new Date(log.timestamp * 1000).toLocaleTimeString([], { hour12: false });
+                        const div = document.createElement('div');
+                        div.className = 'log-entry';
+                        div.innerHTML = `<span class="log-time">[${timeStr}]</span> <span class="log-src">${log.source}:</span> ${log.message}`;
+                        container.appendChild(div);
+                    });
+
+                    // Auto-scroll logic
+                    if (autoScroll) {
+                        container.scrollTop = container.scrollHeight;
+                    }
+                });
+            } catch (e) { }
+        }
+
+        function copyConsole(msgEl) {
+            const text = msgEl.innerText;
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalBg = msgEl.style.backgroundColor;
+                msgEl.style.backgroundColor = '#2a2a40';
+                setTimeout(() => msgEl.style.backgroundColor = originalBg, 200);
+            }).catch(err => {
+                console.error('Failed to copy', err);
+            });
+        }
+
+        async function clearConsole(btn) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+
+            try {
+                // Clear server logs
+                await fetch('/api/logs', { method: 'DELETE', headers: { 'X-Password': pw } });
+
+                // Clear all console card views
+                document.querySelectorAll('.console-logs').forEach(el => el.innerHTML = '');
+            } catch (e) { }
+        }
+
         // ========== INIT ==========
         (async () => {
             await fetchMeta();
@@ -1277,9 +1582,11 @@
                 }
             } catch (e) { }
             await fetchStatus();
+            setInterval(pollConsoleLogs, 2000); // Poll logs every 2s
         })();
         setInterval(fetchStatus, 15000);
     </script>
 </body>
+
 
 </html>

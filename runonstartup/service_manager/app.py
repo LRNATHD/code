@@ -206,6 +206,103 @@ def api_service_proxy(service_id, subpath):
         return jsonify({'success': False, 'message': str(e)}), 502
 
 
+# ── Log / Console API ────────────────────────────────
+# Simple in-memory log store for the "Console" block.
+
+LOG_FILE = os.path.join(os.path.dirname(__file__), 'service_manager.log')
+LOG_HISTORY = []
+MAX_LOGS = 1000
+
+# Load logs on startup
+if os.path.exists(LOG_FILE):
+    try:
+        with open(LOG_FILE, 'r') as f:
+            lines = f.readlines()
+            # Tailwind load last MAX_LOGS
+            count = len(lines)
+            start = count - MAX_LOGS if count > MAX_LOGS else 0
+            for line in lines[start:]:
+                try:
+                    LOG_HISTORY.append(json.loads(line))
+                except: pass
+    except: pass
+
+@app.route('/api/log', methods=['POST'])
+@require_password
+def api_post_log():
+    """Accept a log message from any local script."""
+    data = request.get_json()
+    if not data or 'message' not in data:
+        return jsonify({'success': False, 'message': 'Missing message'}), 400
+    
+    import time
+    entry = {
+        'timestamp': time.time(),
+        'source': data.get('source', 'unknown'),
+        'message': data['message']
+    }
+    
+    LOG_HISTORY.append(entry)
+    if len(LOG_HISTORY) > MAX_LOGS:
+        LOG_HISTORY.pop(0)
+
+    # Persist to file
+    try:
+        with open(LOG_FILE, 'a') as f:
+            f.write(json.dumps(entry) + '\n')
+    except: pass
+        
+    return jsonify({'success': True})
+
+@app.route('/api/logs', methods=['DELETE'])
+@require_password
+def api_clear_logs():
+    """Clear all logs."""
+    global LOG_HISTORY
+    LOG_HISTORY = []
+    # Clear file too
+    try:
+        open(LOG_FILE, 'w').close()
+    except: pass
+    return jsonify({'success': True})
+
+@app.route('/api/mp3_sync/auth', methods=['POST'])
+@require_password
+def api_mp3_sync_auth():
+    """Update auth headers for MP3 Sync task."""
+    data = request.get_json()
+    headers_raw = data.get('headers', '')
+    if not headers_raw:
+        return jsonify({'success': False, 'message': 'No headers provided'}), 400
+
+    try:
+        import ytmusicapi
+        # Path to auth file
+        app_data = os.environ.get('APPDATA', '')
+        oauth_dir = os.path.join(app_data, 'MP3SyncOAuth')
+        if not os.path.exists(oauth_dir):
+            os.makedirs(oauth_dir)
+        browser_file = os.path.join(oauth_dir, 'browser.json')
+        
+        # simple check to see if it looks like headers or json
+        # ytmusicapi.setup handles raw headers string by converting to json
+        ytmusicapi.setup(filepath=browser_file, headers_raw=headers_raw)
+        
+        return jsonify({'success': True, 'message': 'Auth headers saved'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+
+
+@app.route('/api/logs', methods=['GET'])
+def api_get_logs():
+    """Get logs, optionally filtered by timestamp."""
+    after = request.args.get('after', type=float, default=0)
+    # Return only logs newer than 'after'
+    new_logs = [l for l in LOG_HISTORY if l['timestamp'] > after]
+    return jsonify({'logs': new_logs})
+
+
 if __name__ == '__main__':
     print(f"Service Manager Dashboard running on http://localhost:{PORT}")
     app.run(host='0.0.0.0', port=PORT, debug=False)

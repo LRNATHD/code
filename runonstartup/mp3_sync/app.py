@@ -94,4 +94,12 @@ def index():
 
 if __name__ == '__main__':
     print(f"MP3 Sync running on http://localhost:{config.PORT}")
+    
+    # Auto-start sync on boot (user request)
+    try:
+        print("Triggering startup sync...")
+        sync_engine.start_sync()
+    except Exception as e:
+        print(f"Failed to start sync: {e}")
+
     app.run(host=config.HOST, port=config.PORT, debug=False)

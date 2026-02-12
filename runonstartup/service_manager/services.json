@@ -59,26 +59,23 @@
                 "JSON storage"
             ],
             "github": "https://github.com/yourusername/parts-inventory"
-        },
-        {
-            "id": "mp3_sync",
-            "name": "MP3 Sync",
-            "internal_port": 9874,
-            "path": "/music",
-            "dir": "../mp3_sync",
-            "start_cmd": "py app.py",
-            "health_url": "/api/status",
-            "has_config": true,
-            "type": "flask",
-            "description": "Syncs YouTube Music playlists and liked songs to a local folder as MP3 files.",
-            "tech": [
-                "Flask",
-                "ytmusicapi",
-                "yt-dlp"
-            ]
         }
     ],
     "tasks": [
+        {
+            "id": "mp3_sync_task",
+            "name": "MP3 Sync",
+            "cmd": "python c:\\Users\\LRNA\\Desktop\\code\\runonstartup\\mp3_sync\\run_sync.py",
+            "type": "task",
+            "trigger": "manual",
+            "description": "Syncs YouTube Music playlists and liked songs to local folder.",
+            "tech": [
+                "Python",
+                "ytmusicapi",
+                "yt-dlp"
+            ],
+            "has_auth": true
+        },
         {
             "id": "portfolio_sync",
             "name": "Portfolio Sync",

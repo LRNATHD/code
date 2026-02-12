@@ -1,0 +1,38 @@
+RULES
+====
+1. Main entry point is app.py (Port 9870, acts as reverse proxy).
+2. UI is Vanilla HTML/JS/CSS (templates/index.html). NO frameworks.
+3. Custom Cards are stored in layout JSON (api/layout).
+4. Locking: Double-click card header/bg to lock/unlock (red border).
+5. Console: Custom card type 'console', auto-scrolls, copies on double-click.
+6. Services defined in services.json. DO NOT hardcode service ports in JS.
+7. Use STARTUP_APPS_PASSWORD env var for auth.
+8. Logs are stored in-memory (max 1000) at api/logs.
+
+KEY INFO
+====
+| File                  | Purpose                                         |
+|-----------------------|-------------------------------------------------|
+| app.py                | Main Flask app, API proxy, Log store            |
+| manager.py            | Process lifecycle (start/stop/kill services)    |
+| services.json         | Registry of all microservices & tasks           |
+| templates/index.html  | Single Page Application UI (Drag, Drop, Cards)  |
+
+| Feature               | Implementation Detail                           |
+|-----------------------|-------------------------------------------------|
+| Custom Cards          | JS: addCustomCard, save to layout JSON          |
+| Locking               | JS: dblclick -> toggle .locked class            |
+| Console               | JS: pollConsoleLogs -> fetch /api/logs          |
+| Copy Log              | JS: dblclick .console-logs -> clipboard         |
+| Service Config        | JS: inline config -> POST /api/config proxy     |
+
+COMMANDS
+====
+# Run locally
+$env:STARTUP_APPS_PASSWORD = [Environment]::GetEnvironmentVariable("STARTUP_APPS_PASSWORD", "User"); py app.py
+
+# Check port
+netstat -ano | findstr :9870
+
+# Update layout manually (if needed)
+POST /api/layout { ... }
