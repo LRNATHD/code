@@ -15,8 +15,12 @@ BUILD_DIR = ../obj/ScienceOlympiadEV
 # Source
 ######################################
 # C sources
+# APP_SOURCE = src/Sandbox.c
+APP_SOURCE = src/main.c
+
 C_SOURCES = \
-src/main.c \
+$(APP_SOURCE) \
+src/oled_driver.c \
 ../SRC/StdPeriphDriver/CH59x_clk.c \
 ../SRC/StdPeriphDriver/CH59x_flash.c \
 ../SRC/StdPeriphDriver/CH59x_gpio.c \

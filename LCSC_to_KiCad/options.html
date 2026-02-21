@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>LCSC to KiCad Options</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 5px;
+            width: 300px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .status {
+            margin-top: 10px;
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>LCSC to KiCad Settings</h2>
+    <label>
+        Download Subdirectory:
+        <input type="text" id="downloadPath" placeholder="KiCad_Imports">
+    </label>
+    <p>Files will be saved to <code>Downloads/[Subdirectory]</code></p>
+    <button id="save">Save</button>
+    <div id="status" class="status">Options saved.</div>
+
+    <script src="options.js"></script>
+</body>
+
+</html>

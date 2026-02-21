@@ -1,0 +1,657 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 1
+
+
+   1              		.file	"oled_driver.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.I2C_Delay,"ax",@progbits
+   8              		.align	1
+   9              		.globl	I2C_Delay
+  11              	I2C_Delay:
+  12 0000 4111     		addi	sp,sp,-16
+  13 0002 A947     		li	a5,10
+  14 0004 A307F100 		sb	a5,15(sp)
+  15              	.L2:
+  16 0008 0347F100 		lbu	a4,15(sp)
+  17 000c 9307F7FF 		addi	a5,a4,-1
+  18 0010 93F7F70F 		andi	a5,a5,0xff
+  19 0014 A307F100 		sb	a5,15(sp)
+  20 0018 65FB     		bne	a4,zero,.L2
+  21 001a 4101     		addi	sp,sp,16
+  22 001c 8280     		jr	ra
+  24              		.section	.text.I2C_Start,"ax",@progbits
+  25              		.align	1
+  26              		.globl	I2C_Start
+  28              	I2C_Start:
+  29 0000 4111     		addi	sp,sp,-16
+  30 0002 22C4     		sw	s0,8(sp)
+  31 0004 37140040 		li	s0,1073745920
+  32 0008 9307840C 		addi	a5,s0,200
+  33 000c 9843     		lw	a4,0(a5)
+  34 000e 06C6     		sw	ra,12(sp)
+  35 0010 1304C40C 		addi	s0,s0,204
+  36 0014 13670701 		ori	a4,a4,16
+  37 0018 98C3     		sw	a4,0(a5)
+  38 001a 9843     		lw	a4,0(a5)
+  39 001c 13670708 		ori	a4,a4,128
+  40 0020 98C3     		sw	a4,0(a5)
+  41 0022 97000000 		call	I2C_Delay
+  41      E7800000 
+  42 002a 1C40     		lw	a5,0(s0)
+  43 002c 93E70701 		ori	a5,a5,16
+  44 0030 1CC0     		sw	a5,0(s0)
+  45 0032 97000000 		call	I2C_Delay
+  45      E7800000 
+  46 003a 1C40     		lw	a5,0(s0)
+  47 003c B240     		lw	ra,12(sp)
+  48 003e 93E70708 		ori	a5,a5,128
+  49 0042 1CC0     		sw	a5,0(s0)
+  50 0044 2244     		lw	s0,8(sp)
+  51 0046 4101     		addi	sp,sp,16
+  52 0048 8280     		jr	ra
+  54              		.section	.text.I2C_Stop,"ax",@progbits
+  55              		.align	1
+  56              		.globl	I2C_Stop
+  58              	I2C_Stop:
+  59 0000 4111     		addi	sp,sp,-16
+  60 0002 22C4     		sw	s0,8(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 2
+
+
+  61 0004 37140040 		li	s0,1073745920
+  62 0008 1307C40C 		addi	a4,s0,204
+  63 000c 1C43     		lw	a5,0(a4)
+  64 000e 06C6     		sw	ra,12(sp)
+  65 0010 1304840C 		addi	s0,s0,200
+  66 0014 93E70701 		ori	a5,a5,16
+  67 0018 1CC3     		sw	a5,0(a4)
+  68 001a 1C40     		lw	a5,0(s0)
+  69 001c 93E70708 		ori	a5,a5,128
+  70 0020 1CC0     		sw	a5,0(s0)
+  71 0022 97000000 		call	I2C_Delay
+  71      E7800000 
+  72 002a 1C40     		lw	a5,0(s0)
+  73 002c B240     		lw	ra,12(sp)
+  74 002e 93E70701 		ori	a5,a5,16
+  75 0032 1CC0     		sw	a5,0(s0)
+  76 0034 2244     		lw	s0,8(sp)
+  77 0036 4101     		addi	sp,sp,16
+  78 0038 17030000 		tail	I2C_Delay
+  78      67000300 
+  80              		.section	.text.I2C_SendByte,"ax",@progbits
+  81              		.align	1
+  82              		.globl	I2C_SendByte
+  84              	I2C_SendByte:
+  85 0000 0111     		addi	sp,sp,-32
+  86 0002 22CC     		sw	s0,24(sp)
+  87 0004 4AC8     		sw	s2,16(sp)
+  88 0006 52C4     		sw	s4,8(sp)
+  89 0008 06CE     		sw	ra,28(sp)
+  90 000a 26CA     		sw	s1,20(sp)
+  91 000c 4EC6     		sw	s3,12(sp)
+  92 000e 2A84     		mv	s0,a0
+  93 0010 2149     		li	s2,8
+  94 0012 371A0040 		li	s4,1073745920
+  95              	.L12:
+  96 0016 93178401 		slli	a5,s0,24
+  97 001a E187     		srai	a5,a5,24
+  98 001c 13078A0C 		addi	a4,s4,200
+  99 0020 63C40700 		blt	a5,zero,.L15
+ 100 0024 1307CA0C 		addi	a4,s4,204
+ 101              	.L15:
+ 102 0028 1C43     		lw	a5,0(a4)
+ 103 002a 93048A0C 		addi	s1,s4,200
+ 104 002e 7D19     		addi	s2,s2,-1
+ 105 0030 93E70701 		ori	a5,a5,16
+ 106 0034 1CC3     		sw	a5,0(a4)
+ 107 0036 97000000 		call	I2C_Delay
+ 107      E7800000 
+ 108 003e 9C40     		lw	a5,0(s1)
+ 109 0040 0604     		slli	s0,s0,1
+ 110 0042 1379F90F 		andi	s2,s2,0xff
+ 111 0046 93E70708 		ori	a5,a5,128
+ 112 004a 9CC0     		sw	a5,0(s1)
+ 113 004c 97000000 		call	I2C_Delay
+ 113      E7800000 
+ 114 0054 8327CA0C 		lw	a5,204(s4)
+ 115 0058 1374F40F 		andi	s0,s0,0xff
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 3
+
+
+ 116 005c 93E70708 		ori	a5,a5,128
+ 117 0060 2326FA0C 		sw	a5,204(s4)
+ 118 0064 E31909FA 		bne	s2,zero,.L12
+ 119 0068 9C40     		lw	a5,0(s1)
+ 120 006a 93E70701 		ori	a5,a5,16
+ 121 006e 9CC0     		sw	a5,0(s1)
+ 122 0070 97000000 		call	I2C_Delay
+ 122      E7800000 
+ 123 0078 9C40     		lw	a5,0(s1)
+ 124 007a 93E70708 		ori	a5,a5,128
+ 125 007e 9CC0     		sw	a5,0(s1)
+ 126 0080 97000000 		call	I2C_Delay
+ 126      E7800000 
+ 127 0088 8327CA0C 		lw	a5,204(s4)
+ 128 008c F240     		lw	ra,28(sp)
+ 129 008e 6244     		lw	s0,24(sp)
+ 130 0090 93E70708 		ori	a5,a5,128
+ 131 0094 2326FA0C 		sw	a5,204(s4)
+ 132 0098 D244     		lw	s1,20(sp)
+ 133 009a 4249     		lw	s2,16(sp)
+ 134 009c B249     		lw	s3,12(sp)
+ 135 009e 224A     		lw	s4,8(sp)
+ 136 00a0 0561     		addi	sp,sp,32
+ 137 00a2 8280     		jr	ra
+ 139              		.section	.text.OLED_WriteCmd,"ax",@progbits
+ 140              		.align	1
+ 141              		.globl	OLED_WriteCmd
+ 143              	OLED_WriteCmd:
+ 144 0000 4111     		addi	sp,sp,-16
+ 145 0002 06C6     		sw	ra,12(sp)
+ 146 0004 22C4     		sw	s0,8(sp)
+ 147 0006 2A84     		mv	s0,a0
+ 148 0008 97000000 		call	I2C_Start
+ 148      E7800000 
+ 149 0010 13058007 		li	a0,120
+ 150 0014 97000000 		call	I2C_SendByte
+ 150      E7800000 
+ 151 001c 0145     		li	a0,0
+ 152 001e 97000000 		call	I2C_SendByte
+ 152      E7800000 
+ 153 0026 2285     		mv	a0,s0
+ 154 0028 97000000 		call	I2C_SendByte
+ 154      E7800000 
+ 155 0030 2244     		lw	s0,8(sp)
+ 156 0032 B240     		lw	ra,12(sp)
+ 157 0034 4101     		addi	sp,sp,16
+ 158 0036 17030000 		tail	I2C_Stop
+ 158      67000300 
+ 160              		.section	.text.OLED_WriteData,"ax",@progbits
+ 161              		.align	1
+ 162              		.globl	OLED_WriteData
+ 164              	OLED_WriteData:
+ 165 0000 4111     		addi	sp,sp,-16
+ 166 0002 06C6     		sw	ra,12(sp)
+ 167 0004 22C4     		sw	s0,8(sp)
+ 168 0006 2A84     		mv	s0,a0
+ 169 0008 97000000 		call	I2C_Start
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 4
+
+
+ 169      E7800000 
+ 170 0010 13058007 		li	a0,120
+ 171 0014 97000000 		call	I2C_SendByte
+ 171      E7800000 
+ 172 001c 13050004 		li	a0,64
+ 173 0020 97000000 		call	I2C_SendByte
+ 173      E7800000 
+ 174 0028 2285     		mv	a0,s0
+ 175 002a 97000000 		call	I2C_SendByte
+ 175      E7800000 
+ 176 0032 2244     		lw	s0,8(sp)
+ 177 0034 B240     		lw	ra,12(sp)
+ 178 0036 4101     		addi	sp,sp,16
+ 179 0038 17030000 		tail	I2C_Stop
+ 179      67000300 
+ 181              		.section	.text.OLED_SetCursor,"ax",@progbits
+ 182              		.align	1
+ 183              		.globl	OLED_SetCursor
+ 185              	OLED_SetCursor:
+ 186 0000 130505FB 		addi	a0,a0,-80
+ 187 0004 4111     		addi	sp,sp,-16
+ 188 0006 1375F50F 		andi	a0,a0,0xff
+ 189 000a 06C6     		sw	ra,12(sp)
+ 190 000c 22C4     		sw	s0,8(sp)
+ 191 000e 2E84     		mv	s0,a1
+ 192 0010 97000000 		call	OLED_WriteCmd
+ 192      E7800000 
+ 193 0018 1375F400 		andi	a0,s0,15
+ 194 001c 97000000 		call	OLED_WriteCmd
+ 194      E7800000 
+ 195 0024 13554400 		srli	a0,s0,4
+ 196 0028 2244     		lw	s0,8(sp)
+ 197 002a B240     		lw	ra,12(sp)
+ 198 002c 13650501 		ori	a0,a0,16
+ 199 0030 4101     		addi	sp,sp,16
+ 200 0032 17030000 		tail	OLED_WriteCmd
+ 200      67000300 
+ 202              		.section	.text.OLED_Clear,"ax",@progbits
+ 203              		.align	1
+ 204              		.globl	OLED_Clear
+ 206              	OLED_Clear:
+ 207 0000 4111     		addi	sp,sp,-16
+ 208 0002 22C4     		sw	s0,8(sp)
+ 209 0004 4AC0     		sw	s2,0(sp)
+ 210 0006 06C6     		sw	ra,12(sp)
+ 211 0008 26C2     		sw	s1,4(sp)
+ 212 000a 1304000B 		li	s0,176
+ 213 000e 1309400B 		li	s2,180
+ 214              	.L24:
+ 215 0012 2285     		mv	a0,s0
+ 216 0014 97000000 		call	OLED_WriteCmd
+ 216      E7800000 
+ 217 001c 0145     		li	a0,0
+ 218 001e 97000000 		call	OLED_WriteCmd
+ 218      E7800000 
+ 219 0026 4145     		li	a0,16
+ 220 0028 97000000 		call	OLED_WriteCmd
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 5
+
+
+ 220      E7800000 
+ 221 0030 93040008 		li	s1,128
+ 222              	.L23:
+ 223 0034 FD14     		addi	s1,s1,-1
+ 224 0036 0145     		li	a0,0
+ 225 0038 93F4F40F 		andi	s1,s1,0xff
+ 226 003c 97000000 		call	OLED_WriteData
+ 226      E7800000 
+ 227 0044 E5F8     		bne	s1,zero,.L23
+ 228 0046 0504     		addi	s0,s0,1
+ 229 0048 1374F40F 		andi	s0,s0,0xff
+ 230 004c E31324FD 		bne	s0,s2,.L24
+ 231 0050 B240     		lw	ra,12(sp)
+ 232 0052 2244     		lw	s0,8(sp)
+ 233 0054 9244     		lw	s1,4(sp)
+ 234 0056 0249     		lw	s2,0(sp)
+ 235 0058 4101     		addi	sp,sp,16
+ 236 005a 8280     		jr	ra
+ 238              		.section	.text.OLED_Init,"ax",@progbits
+ 239              		.align	1
+ 240              		.globl	OLED_Init
+ 242              	OLED_Init:
+ 243 0000 4111     		addi	sp,sp,-16
+ 244 0002 8D45     		li	a1,3
+ 245 0004 13050009 		li	a0,144
+ 246 0008 06C6     		sw	ra,12(sp)
+ 247 000a 97000000 		call	GPIOB_ModeCfg
+ 247      E7800000 
+ 248 0012 B7170040 		li	a5,1073745920
+ 249 0016 9387870C 		addi	a5,a5,200
+ 250 001a 9843     		lw	a4,0(a5)
+ 251 001c 1305E00A 		li	a0,174
+ 252 0020 13670709 		ori	a4,a4,144
+ 253 0024 98C3     		sw	a4,0(a5)
+ 254 0026 97000000 		call	OLED_WriteCmd
+ 254      E7800000 
+ 255 002e 13050002 		li	a0,32
+ 256 0032 97000000 		call	OLED_WriteCmd
+ 256      E7800000 
+ 257 003a 0145     		li	a0,0
+ 258 003c 97000000 		call	OLED_WriteCmd
+ 258      E7800000 
+ 259 0044 1305800C 		li	a0,200
+ 260 0048 97000000 		call	OLED_WriteCmd
+ 260      E7800000 
+ 261 0050 0145     		li	a0,0
+ 262 0052 97000000 		call	OLED_WriteCmd
+ 262      E7800000 
+ 263 005a 4145     		li	a0,16
+ 264 005c 97000000 		call	OLED_WriteCmd
+ 264      E7800000 
+ 265 0064 13050004 		li	a0,64
+ 266 0068 97000000 		call	OLED_WriteCmd
+ 266      E7800000 
+ 267 0070 13051008 		li	a0,129
+ 268 0074 97000000 		call	OLED_WriteCmd
+ 268      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 6
+
+
+ 269 007c 1305F00F 		li	a0,255
+ 270 0080 97000000 		call	OLED_WriteCmd
+ 270      E7800000 
+ 271 0088 1305100A 		li	a0,161
+ 272 008c 97000000 		call	OLED_WriteCmd
+ 272      E7800000 
+ 273 0094 1305600A 		li	a0,166
+ 274 0098 97000000 		call	OLED_WriteCmd
+ 274      E7800000 
+ 275 00a0 1305800A 		li	a0,168
+ 276 00a4 97000000 		call	OLED_WriteCmd
+ 276      E7800000 
+ 277 00ac 7D45     		li	a0,31
+ 278 00ae 97000000 		call	OLED_WriteCmd
+ 278      E7800000 
+ 279 00b6 1305300D 		li	a0,211
+ 280 00ba 97000000 		call	OLED_WriteCmd
+ 280      E7800000 
+ 281 00c2 0145     		li	a0,0
+ 282 00c4 97000000 		call	OLED_WriteCmd
+ 282      E7800000 
+ 283 00cc 1305500D 		li	a0,213
+ 284 00d0 97000000 		call	OLED_WriteCmd
+ 284      E7800000 
+ 285 00d8 1305000F 		li	a0,240
+ 286 00dc 97000000 		call	OLED_WriteCmd
+ 286      E7800000 
+ 287 00e4 1305900D 		li	a0,217
+ 288 00e8 97000000 		call	OLED_WriteCmd
+ 288      E7800000 
+ 289 00f0 13052002 		li	a0,34
+ 290 00f4 97000000 		call	OLED_WriteCmd
+ 290      E7800000 
+ 291 00fc 1305A00D 		li	a0,218
+ 292 0100 97000000 		call	OLED_WriteCmd
+ 292      E7800000 
+ 293 0108 0945     		li	a0,2
+ 294 010a 97000000 		call	OLED_WriteCmd
+ 294      E7800000 
+ 295 0112 1305B00D 		li	a0,219
+ 296 0116 97000000 		call	OLED_WriteCmd
+ 296      E7800000 
+ 297 011e 13050002 		li	a0,32
+ 298 0122 97000000 		call	OLED_WriteCmd
+ 298      E7800000 
+ 299 012a 1305D008 		li	a0,141
+ 300 012e 97000000 		call	OLED_WriteCmd
+ 300      E7800000 
+ 301 0136 5145     		li	a0,20
+ 302 0138 97000000 		call	OLED_WriteCmd
+ 302      E7800000 
+ 303 0140 1305F00A 		li	a0,175
+ 304 0144 97000000 		call	OLED_WriteCmd
+ 304      E7800000 
+ 305 014c B240     		lw	ra,12(sp)
+ 306 014e 4101     		addi	sp,sp,16
+ 307 0150 17030000 		tail	OLED_Clear
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 7
+
+
+ 307      67000300 
+ 309              		.section	.text.OLED_ShowChar,"ax",@progbits
+ 310              		.align	1
+ 311              		.globl	OLED_ShowChar
+ 313              	OLED_ShowChar:
+ 314 0000 1377F60F 		andi	a4,a2,0xff
+ 315 0004 0111     		addi	sp,sp,-32
+ 316 0006 9306F7F9 		addi	a3,a4,-97
+ 317 000a AA87     		mv	a5,a0
+ 318 000c 06CE     		sw	ra,28(sp)
+ 319 000e 2E85     		mv	a0,a1
+ 320 0010 22CC     		sw	s0,24(sp)
+ 321 0012 26CA     		sw	s1,20(sp)
+ 322 0014 4AC8     		sw	s2,16(sp)
+ 323 0016 4EC6     		sw	s3,12(sp)
+ 324 0018 93F6F60F 		andi	a3,a3,0xff
+ 325 001c E545     		li	a1,25
+ 326 001e 63E6D500 		bgtu	a3,a1,.L31
+ 327 0022 0117     		addi	a4,a4,-32
+ 328 0024 13168701 		slli	a2,a4,24
+ 329 0028 6186     		srai	a2,a2,24
+ 330              	.L31:
+ 331 002a 0116     		addi	a2,a2,-32
+ 332 002c 13078007 		li	a4,120
+ 333 0030 1374F60F 		andi	s0,a2,0xff
+ 334 0034 6376F700 		bleu	a5,a4,.L32
+ 335 0038 0505     		addi	a0,a0,1
+ 336 003a 1375F50F 		andi	a0,a0,0xff
+ 337 003e 8147     		li	a5,0
+ 338              	.L32:
+ 339 0040 BE85     		mv	a1,a5
+ 340 0042 97000000 		call	OLED_SetCursor
+ 340      E7800000 
+ 341 004a 93071004 		li	a5,65
+ 342 004e 63F38702 		bleu	s0,a5,.L33
+ 343 0052 1944     		li	s0,6
+ 344              	.L34:
+ 345 0054 7D14     		addi	s0,s0,-1
+ 346 0056 0145     		li	a0,0
+ 347 0058 1374F40F 		andi	s0,s0,0xff
+ 348 005c 97000000 		call	OLED_WriteData
+ 348      E7800000 
+ 349 0064 65F8     		bne	s0,zero,.L34
+ 350 0066 F240     		lw	ra,28(sp)
+ 351 0068 6244     		lw	s0,24(sp)
+ 352 006a D244     		lw	s1,20(sp)
+ 353 006c 4249     		lw	s2,16(sp)
+ 354 006e B249     		lw	s3,12(sp)
+ 355 0070 0561     		addi	sp,sp,32
+ 356 0072 8280     		jr	ra
+ 357              	.L33:
+ 358 0074 9547     		li	a5,5
+ 359 0076 3304F402 		mul	s0,s0,a5
+ 360 007a 8144     		li	s1,0
+ 361 007c 97090000 		lla	s3,FONT5x7
+ 361      93890900 
+ 362 0084 1549     		li	s2,5
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 8
+
+
+ 363              	.L36:
+ 364 0086 B3878400 		add	a5,s1,s0
+ 365 008a CE97     		add	a5,a5,s3
+ 366 008c 03C50700 		lbu	a0,0(a5)
+ 367 0090 8504     		addi	s1,s1,1
+ 368 0092 97000000 		call	OLED_WriteData
+ 368      E7800000 
+ 369 009a E39624FF 		bne	s1,s2,.L36
+ 370 009e 6244     		lw	s0,24(sp)
+ 371 00a0 F240     		lw	ra,28(sp)
+ 372 00a2 D244     		lw	s1,20(sp)
+ 373 00a4 4249     		lw	s2,16(sp)
+ 374 00a6 B249     		lw	s3,12(sp)
+ 375 00a8 0145     		li	a0,0
+ 376 00aa 0561     		addi	sp,sp,32
+ 377 00ac 17030000 		tail	OLED_WriteData
+ 377      67000300 
+ 379              		.section	.text.OLED_ShowString,"ax",@progbits
+ 380              		.align	1
+ 381              		.globl	OLED_ShowString
+ 383              	OLED_ShowString:
+ 384 0000 4111     		addi	sp,sp,-16
+ 385 0002 22C4     		sw	s0,8(sp)
+ 386 0004 26C2     		sw	s1,4(sp)
+ 387 0006 4AC0     		sw	s2,0(sp)
+ 388 0008 06C6     		sw	ra,12(sp)
+ 389 000a 2A84     		mv	s0,a0
+ 390 000c 2E89     		mv	s2,a1
+ 391 000e B284     		mv	s1,a2
+ 392              	.L42:
+ 393 0010 03860400 		lb	a2,0(s1)
+ 394 0014 19E6     		bne	a2,zero,.L43
+ 395 0016 B240     		lw	ra,12(sp)
+ 396 0018 2244     		lw	s0,8(sp)
+ 397 001a 9244     		lw	s1,4(sp)
+ 398 001c 0249     		lw	s2,0(sp)
+ 399 001e 4101     		addi	sp,sp,16
+ 400 0020 8280     		jr	ra
+ 401              	.L43:
+ 402 0022 2285     		mv	a0,s0
+ 403 0024 CA85     		mv	a1,s2
+ 404 0026 1904     		addi	s0,s0,6
+ 405 0028 97000000 		call	OLED_ShowChar
+ 405      E7800000 
+ 406 0030 1374F40F 		andi	s0,s0,0xff
+ 407 0034 8504     		addi	s1,s1,1
+ 408 0036 E9BF     		j	.L42
+ 410              		.globl	FONT5x7
+ 411              		.section	.rodata.FONT5x7,"a"
+ 412              		.align	2
+ 415              	FONT5x7:
+ 416 0000 00       		.string	""
+ 417 0001 00       		.string	""
+ 418 0002 00       		.string	""
+ 419 0003 00       		.string	""
+ 420 0004 00       		.string	""
+ 421 0005 00       		.string	""
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 9
+
+
+ 422 0006 00       		.string	""
+ 423 0007 5F00     		.string	"_"
+ 424 0009 00       		.string	""
+ 425 000a 00       		.string	""
+ 426 000b 0700     		.string	"\007"
+ 427 000d 0700     		.string	"\007"
+ 428 000f 147F147F 		.ascii	"\024\177\024\177\024"
+ 428      14
+ 429 0014 242A7F2A 		.ascii	"$*\177*\022"
+ 429      12
+ 430 0019 23130864 		.ascii	"#\023\bdb"
+ 430      62
+ 431 001e 36495522 		.ascii	"6IU\"P"
+ 431      50
+ 432 0023 00       		.string	""
+ 433 0024 050300   		.string	"\005\003"
+ 434 0027 00       		.string	""
+ 435 0028 00       		.string	""
+ 436 0029 1C224100 		.string	"\034\"A"
+ 437 002d 00       		.string	""
+ 438 002e 41221C00 		.string	"A\"\034"
+ 439 0032 14083E08 		.ascii	"\024\b>\b\024"
+ 439      14
+ 440 0037 08083E08 		.ascii	"\b\b>\b\b"
+ 440      08
+ 441 003c 00       		.string	""
+ 442 003d 503000   		.string	"P0"
+ 443 0040 00       		.string	""
+ 444 0041 08080808 		.ascii	"\b\b\b\b\b"
+ 444      08
+ 445 0046 00       		.string	""
+ 446 0047 606000   		.string	"``"
+ 447 004a 00       		.string	""
+ 448 004b 20100804 		.ascii	" \020\b\004\002"
+ 448      02
+ 449 0050 3E514945 		.ascii	">QIE>"
+ 449      3E
+ 450 0055 00       		.string	""
+ 451 0056 427F4000 		.string	"B\177@"
+ 452 005a 42615149 		.ascii	"BaQIF"
+ 452      46
+ 453 005f 2141454B 		.ascii	"!AEK1"
+ 453      31
+ 454 0064 1814127F 		.ascii	"\030\024\022\177\020"
+ 454      10
+ 455 0069 27454545 		.ascii	"'EEE9"
+ 455      39
+ 456 006e 3C4A4949 		.ascii	"<JII0"
+ 456      30
+ 457 0073 01710905 		.ascii	"\001q\t\005\003"
+ 457      03
+ 458 0078 36494949 		.ascii	"6III6"
+ 458      36
+ 459 007d 06494929 		.ascii	"\006II)\036"
+ 459      1E
+ 460 0082 00       		.string	""
+ 461 0083 363600   		.string	"66"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 10
+
+
+ 462 0086 00       		.string	""
+ 463 0087 00       		.string	""
+ 464 0088 563600   		.string	"V6"
+ 465 008b 00       		.string	""
+ 466 008c 08142241 		.string	"\b\024\"A"
+ 466      00
+ 467 0091 14141414 		.ascii	"\024\024\024\024\024"
+ 467      14
+ 468 0096 00       		.string	""
+ 469 0097 41221408 		.ascii	"A\"\024\b"
+ 470 009b 02015109 		.ascii	"\002\001Q\t\006"
+ 470      06
+ 471 00a0 32497941 		.ascii	"2IyA>"
+ 471      3E
+ 472 00a5 7E111111 		.ascii	"~\021\021\021~"
+ 472      7E
+ 473 00aa 7F494949 		.ascii	"\177III6"
+ 473      36
+ 474 00af 3E414141 		.ascii	">AAA\""
+ 474      22
+ 475 00b4 7F414122 		.ascii	"\177AA\"\034"
+ 475      1C
+ 476 00b9 7F494949 		.ascii	"\177IIIA"
+ 476      41
+ 477 00be 7F090909 		.ascii	"\177\t\t\t\001"
+ 477      01
+ 478 00c3 3E414949 		.ascii	">AIIz"
+ 478      7A
+ 479 00c8 7F080808 		.ascii	"\177\b\b\b\177"
+ 479      7F
+ 480 00cd 00       		.string	""
+ 481 00ce 417F4100 		.string	"A\177A"
+ 482 00d2 2040413F 		.ascii	" @A?\001"
+ 482      01
+ 483 00d7 7F081422 		.ascii	"\177\b\024\"A"
+ 483      41
+ 484 00dc 7F404040 		.ascii	"\177@@@@"
+ 484      40
+ 485 00e1 7F020C02 		.ascii	"\177\002\f\002\177"
+ 485      7F
+ 486 00e6 7F040810 		.ascii	"\177\004\b\020\177"
+ 486      7F
+ 487 00eb 3E414141 		.ascii	">AAA>"
+ 487      3E
+ 488 00f0 7F090909 		.ascii	"\177\t\t\t\006"
+ 488      06
+ 489 00f5 3E415121 		.ascii	">AQ!^"
+ 489      5E
+ 490 00fa 7F091929 		.ascii	"\177\t\031)F"
+ 490      46
+ 491 00ff 46494949 		.ascii	"FIII1"
+ 491      31
+ 492 0104 01017F01 		.ascii	"\001\001\177\001\001"
+ 492      01
+ 493 0109 3F404040 		.ascii	"?@@@?"
+ 493      3F
+ 494 010e 1F204020 		.ascii	"\037 @ \037"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 11
+
+
+ 494      1F
+ 495 0113 3F403840 		.ascii	"?@8@?"
+ 495      3F
+ 496 0118 63140814 		.ascii	"c\024\b\024c"
+ 496      63
+ 497 011d 07087008 		.ascii	"\007\bp\b\007"
+ 497      07
+ 498 0122 61514945 		.ascii	"aQIEC"
+ 498      43
+ 499              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 oled_driver.c
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:11     .text.I2C_Delay:0000000000000000 I2C_Delay
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:12     .text.I2C_Delay:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:28     .text.I2C_Start:0000000000000000 I2C_Start
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:29     .text.I2C_Start:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:58     .text.I2C_Stop:0000000000000000 I2C_Stop
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:59     .text.I2C_Stop:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:84     .text.I2C_SendByte:0000000000000000 I2C_SendByte
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:85     .text.I2C_SendByte:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:143    .text.OLED_WriteCmd:0000000000000000 OLED_WriteCmd
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:144    .text.OLED_WriteCmd:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:164    .text.OLED_WriteData:0000000000000000 OLED_WriteData
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:165    .text.OLED_WriteData:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:185    .text.OLED_SetCursor:0000000000000000 OLED_SetCursor
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:186    .text.OLED_SetCursor:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:206    .text.OLED_Clear:0000000000000000 OLED_Clear
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:207    .text.OLED_Clear:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:242    .text.OLED_Init:0000000000000000 OLED_Init
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:243    .text.OLED_Init:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:313    .text.OLED_ShowChar:0000000000000000 OLED_ShowChar
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:314    .text.OLED_ShowChar:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:415    .rodata.FONT5x7:0000000000000000 FONT5x7
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:383    .text.OLED_ShowString:0000000000000000 OLED_ShowString
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:384    .text.OLED_ShowString:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:15     .text.I2C_Delay:0000000000000008 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:101    .text.I2C_SendByte:0000000000000028 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:95     .text.I2C_SendByte:0000000000000016 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:222    .text.OLED_Clear:0000000000000034 .L23
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:214    .text.OLED_Clear:0000000000000012 .L24
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:361    .text.OLED_ShowChar:000000000000007c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:330    .text.OLED_ShowChar:000000000000002a .L31
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:338    .text.OLED_ShowChar:0000000000000040 .L32
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:357    .text.OLED_ShowChar:0000000000000074 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:344    .text.OLED_ShowChar:0000000000000054 .L34
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:363    .text.OLED_ShowChar:0000000000000086 .L36
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:401    .text.OLED_ShowString:0000000000000022 .L43
+C:\Users\LRNA\AppData\Local\Temp\ccAJUjh8.s:392    .text.OLED_ShowString:0000000000000010 .L42
+
+UNDEFINED SYMBOLS
+GPIOB_ModeCfg

@@ -1,0 +1,74 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s 			page 1
+
+
+   1              		.file	"CH59x_timer3.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.TMR3_TimerInit,"ax",@progbits
+   8              		.align	1
+   9              		.globl	TMR3_TimerInit
+  11              	TMR3_TimerInit:
+  12 0000 B7370040 		li	a5,1073754112
+  13 0004 1387C7C0 		addi	a4,a5,-1012
+  14 0008 08C3     		sw	a0,0(a4)
+  15 000a 0947     		li	a4,2
+  16 000c 2380E7C0 		sb	a4,-1024(a5)
+  17 0010 1147     		li	a4,4
+  18 0012 2380E7C0 		sb	a4,-1024(a5)
+  19 0016 8280     		ret
+  21              		.section	.text.TMR3_EXTSingleCounterInit,"ax",@progbits
+  22              		.align	1
+  23              		.globl	TMR3_EXTSingleCounterInit
+  25              	TMR3_EXTSingleCounterInit:
+  26 0000 1A05     		slli	a0,a0,6
+  27 0002 B7370040 		li	a5,1073754112
+  28 0006 0947     		li	a4,2
+  29 0008 13655501 		ori	a0,a0,21
+  30 000c 2380E7C0 		sb	a4,-1024(a5)
+  31 0010 1375F50F 		andi	a0,a0,0xff
+  32 0014 2380A7C0 		sb	a0,-1024(a5)
+  33 0018 8280     		ret
+  35              		.section	.text.TMR3_PWMInit,"ax",@progbits
+  36              		.align	1
+  37              		.globl	TMR3_PWMInit
+  39              	TMR3_PWMInit:
+  40 0000 1205     		slli	a0,a0,4
+  41 0002 9A05     		slli	a1,a1,6
+  42 0004 B7370040 		li	a5,1073754112
+  43 0008 0947     		li	a4,2
+  44 000a 4D8D     		or	a0,a0,a1
+  45 000c 2380E7C0 		sb	a4,-1024(a5)
+  46 0010 1375F50F 		andi	a0,a0,0xff
+  47 0014 2380A7C0 		sb	a0,-1024(a5)
+  48 0018 8280     		ret
+  50              		.section	.text.TMR3_CapInit,"ax",@progbits
+  51              		.align	1
+  52              		.globl	TMR3_CapInit
+  54              	TMR3_CapInit:
+  55 0000 1A05     		slli	a0,a0,6
+  56 0002 B7370040 		li	a5,1073754112
+  57 0006 0947     		li	a4,2
+  58 0008 13655500 		ori	a0,a0,5
+  59 000c 2380E7C0 		sb	a4,-1024(a5)
+  60 0010 1375F50F 		andi	a0,a0,0xff
+  61 0014 2380A7C0 		sb	a0,-1024(a5)
+  62 0018 8280     		ret
+  64              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_timer3.c
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:11     .text.TMR3_TimerInit:0000000000000000 TMR3_TimerInit
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:12     .text.TMR3_TimerInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:25     .text.TMR3_EXTSingleCounterInit:0000000000000000 TMR3_EXTSingleCounterInit
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:26     .text.TMR3_EXTSingleCounterInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:39     .text.TMR3_PWMInit:0000000000000000 TMR3_PWMInit
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:40     .text.TMR3_PWMInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:54     .text.TMR3_CapInit:0000000000000000 TMR3_CapInit
+C:\Users\LRNA\AppData\Local\Temp\ccocyid2.s:55     .text.TMR3_CapInit:0000000000000000 $x
+
+NO UNDEFINED SYMBOLS

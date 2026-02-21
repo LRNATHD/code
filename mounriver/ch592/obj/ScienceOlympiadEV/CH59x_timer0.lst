@@ -1,0 +1,73 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s 			page 1
+
+
+   1              		.file	"CH59x_timer0.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.TMR0_TimerInit,"ax",@progbits
+   8              		.align	1
+   9              		.globl	TMR0_TimerInit
+  11              	TMR0_TimerInit:
+  12 0000 B7270040 		li	a5,1073750016
+  13 0004 C8C7     		sw	a0,12(a5)
+  14 0006 0947     		li	a4,2
+  15 0008 2380E700 		sb	a4,0(a5)
+  16 000c 1147     		li	a4,4
+  17 000e 2380E700 		sb	a4,0(a5)
+  18 0012 8280     		ret
+  20              		.section	.text.TMR0_EXTSingleCounterInit,"ax",@progbits
+  21              		.align	1
+  22              		.globl	TMR0_EXTSingleCounterInit
+  24              	TMR0_EXTSingleCounterInit:
+  25 0000 1A05     		slli	a0,a0,6
+  26 0002 B7270040 		li	a5,1073750016
+  27 0006 0947     		li	a4,2
+  28 0008 13655501 		ori	a0,a0,21
+  29 000c 2380E700 		sb	a4,0(a5)
+  30 0010 1375F50F 		andi	a0,a0,0xff
+  31 0014 2380A700 		sb	a0,0(a5)
+  32 0018 8280     		ret
+  34              		.section	.text.TMR0_PWMInit,"ax",@progbits
+  35              		.align	1
+  36              		.globl	TMR0_PWMInit
+  38              	TMR0_PWMInit:
+  39 0000 1205     		slli	a0,a0,4
+  40 0002 9A05     		slli	a1,a1,6
+  41 0004 B7270040 		li	a5,1073750016
+  42 0008 0947     		li	a4,2
+  43 000a 4D8D     		or	a0,a0,a1
+  44 000c 2380E700 		sb	a4,0(a5)
+  45 0010 1375F50F 		andi	a0,a0,0xff
+  46 0014 2380A700 		sb	a0,0(a5)
+  47 0018 8280     		ret
+  49              		.section	.text.TMR0_CapInit,"ax",@progbits
+  50              		.align	1
+  51              		.globl	TMR0_CapInit
+  53              	TMR0_CapInit:
+  54 0000 1A05     		slli	a0,a0,6
+  55 0002 B7270040 		li	a5,1073750016
+  56 0006 0947     		li	a4,2
+  57 0008 13655500 		ori	a0,a0,5
+  58 000c 2380E700 		sb	a4,0(a5)
+  59 0010 1375F50F 		andi	a0,a0,0xff
+  60 0014 2380A700 		sb	a0,0(a5)
+  61 0018 8280     		ret
+  63              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_timer0.c
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:11     .text.TMR0_TimerInit:0000000000000000 TMR0_TimerInit
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:12     .text.TMR0_TimerInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:24     .text.TMR0_EXTSingleCounterInit:0000000000000000 TMR0_EXTSingleCounterInit
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:25     .text.TMR0_EXTSingleCounterInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:38     .text.TMR0_PWMInit:0000000000000000 TMR0_PWMInit
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:39     .text.TMR0_PWMInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:53     .text.TMR0_CapInit:0000000000000000 TMR0_CapInit
+C:\Users\LRNA\AppData\Local\Temp\ccgQaHwz.s:54     .text.TMR0_CapInit:0000000000000000 $x
+
+NO UNDEFINED SYMBOLS

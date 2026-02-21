@@ -8,82 +8,77 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=debug24">
     <meta name="description" content="Track and search your component order history from LCSC and DigiKey.">
 </head>
 
 <body>
-    <div class="background-glob"></div>
     <div class="app-container">
-        <!-- Header removed for OLED minimal look -->
-
-        <main>
-            <div id="mainView">
-                <div class="search-container glass-panel">
-                    <div class="input-group">
-                        <input type="text" id="searchInput"
-                            placeholder="Search for ICs, values (e.g., 330nF), or descriptions..." autocomplete="off">
-                        <button id="clearSearch" aria-label="Clear Search">✖</button>
+        <!-- SIDEBAR: Search & List -->
+        <aside class="sidebar">
+            <div class="controls">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search components..." autofocus>
+                    <div class="search-icon">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
                     </div>
-                    <!-- Consolidated Toolbar (Left aligned items + Right aligned upload) -->
-                    <div class="toolbar-row">
-                        <div class="toolbar-controls">
-                            <button id="addManualBtn" class="upload-link"
-                                style="background:none; border:none; color:var(--accent-primary); font-weight:600; cursor:pointer;">＋
-                                Add Custom Item</button>
-                            <span class="separator">|</span>
-                            <button id="openBulkBtn" class="upload-link"
-                                style="background:none; border:none; color:var(--text-muted); cursor:pointer;">Topological
-                                Sort (Bulk Edit)</button>
-                            <span class="separator">|</span>
-                            <span id="itemCount" style="color:var(--text-muted); font-size:0.85rem;">0 items</span>
-                            <button id="clearDataBtn" class="text-btn" style="font-size:0.85rem; opacity:0.7;">Reset
-                                Data</button>
-                        </div>
-                        <div id="uploadTrigger" class="upload-link">Import Parts CSV</div>
-                    </div>
-                    <input type="file" id="csvFileInput" accept=".csv" multiple style="display: none;">
+                    <button id="clearSearch"
+                        style="display:none; position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:#666; cursor:pointer;">✕</button>
                 </div>
 
-                <div id="resultsArea" class="results-grid">
-                    <!-- Results injected here -->
-                    <div class="empty-state">
-                        <div class="icon">📦</div>
-                        <h3>No Parts Found</h3>
-                        <p>Try searching for a component or upload a CSV file to get started.</p>
+                <div class="stats-row">
+                    <div style="display:flex; gap:10px;">
+                        <button id="addManualBtn" class="secondary-btn small" title="Add Custom Item">
+                            <span>+</span> Item
+                        </button>
+                        <button id="uploadTrigger" class="secondary-btn small" title="Import CSV">
+                            <span>↑</span> Import
+                        </button>
+                        <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
                     </div>
                 </div>
             </div>
 
-            <!-- Bulk Editor View (Hidden by default) -->
-            <div id="bulkView" class="hidden">
-                <div class="glass-panel" style="margin-bottom: 20px; position:sticky; top:20px; z-index:20;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                        <h2 style="margin:0;">Bulk Location Editor</h2>
-                        <button id="closeBulkBtn" class="text-btn" style="font-size:1rem;">Done</button>
-                    </div>
-
-                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-                        <input type="text" id="bulkLocationInput" placeholder="Enter Location to Apply (e.g. SMD Box 1)"
-                            style="flex-grow:1; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:rgba(0,0,0,0.3); color:white;">
-                        <button id="applyBulkLocationBtn" class="action-link"
-                            style="background:var(--accent-primary); border:none; color:white; padding:10px 20px; border-radius:8px; cursor:pointer;">Set
-                            Location</button>
-                    </div>
-
-                    <div
-                        style="margin-top: 15px; display:flex; gap: 20px; align-items:center; font-size:0.9rem; color:var(--text-muted);">
-                        <label style="cursor:pointer; display:flex; gap:6px; align-items:center;"><input type="checkbox"
-                                id="bulkSelectAll"> Select / Deselect All</label>
-                        <label style="cursor:pointer; display:flex; gap:6px; align-items:center;"><input type="checkbox"
-                                id="bulkShowNoLoc"> Failed Sort Only (Empty Location)</label>
-                        <span id="bulkSelectedCount" style="margin-left:auto; color:var(--accent-secondary);">0
-                            selected</span>
-                    </div>
+            <div id="resultsArea" class="results-list">
+                <!-- Items populated by JS -->
+                <div class="empty-state" style="padding:20px; text-align:center; color:#666;">
+                    <p>No items found.</p>
                 </div>
+            </div>
 
-                <div id="bulkList" style="display:flex; flex-direction:column; gap:8px;">
-                    <!-- Bulk Lines Injected Here -->
+            <div style="padding:10px; border-top:1px solid #333; font-size:0.8rem; color:#666; text-align:center;">
+                <span id="itemCount">0 items</span> •
+                <button id="clearDataBtn" class="text-btn danger">Clear Data</button>
+            </div>
+        </aside>
+
+        <!-- MAIN: Box Organizer (Zoomable) -->
+        <main class="main-viewport" id="mainViewport">
+            <!-- HUD -->
+            <div class="viewport-hud">
+                <button id="resetViewBtn" class="icon-btn" title="Reset View">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="zoomContainer" class="zoom-container">
+                <div id="boxOrganizerPanel" class="box-panel-content">
+                    <div class="box-segment-label" style="text-align:center; margin-bottom:10px; color:#555;">TOP
+                        SEGMENT (6x12)</div>
+                    <div id="boxTopSegment" class="box-segment"></div>
+
+                    <div class="mid-spacer"></div>
+
+                    <div class="box-segment-label" style="text-align:center; margin-bottom:10px; color:#555;">BOTTOM
+                        SEGMENT (4x6)</div>
+                    <div id="boxBottomSegment" class="box-segment"></div>
                 </div>
             </div>
         </main>
@@ -95,51 +90,51 @@
             <h2>Add Custom Item</h2>
             <form id="manualItemForm">
                 <div class="form-group">
-                    <label>Source</label>
-                    <div class="quick-source-options">
-                        <button type="button" class="quick-source-btn" data-value="AliExpress">AliExpress</button>
-                        <button type="button" class="quick-source-btn" data-value="Amazon">Amazon</button>
-                        <button type="button" class="quick-source-btn" data-value="eBay">eBay</button>
-                    </div>
-                    <input type="text" id="mSource" placeholder="Type source (e.g. Local Store)" required
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color); margin-top:8px;">
-                </div>
-                <div class="form-group">
-                    <label>Part Number / Name</label>
-                    <input type="text" id="mPartNum" placeholder="e.g. ESP32-WROOM or 'Assorted Screws'" required
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
-                </div>
-                <div class="form-group">
-                    <label>Manufacturer (Optional)</label>
-                    <input type="text" id="mMfr" placeholder="e.g. Espressif"
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                    <label>Part Number</label>
+                    <input type="text" id="mPartNum" required
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff;">
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="mDesc" placeholder="e.g. WiFi Module, Dual Core" rows="3"
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);"></textarea>
+                    <input type="text" id="mDesc"
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff;">
+                </div>
+                <!-- Simplified for brevity, detailed fields in JS/Logic handled similarly -->
+                <div class="modal-actions" style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">
+                    <button type="button" id="cancelModalBtn" class="text-btn">Cancel</button>
+                    <button type="submit" class="action-link">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Box Label Edit Modal -->
+    <div id="boxEditModal" class="modal-overlay hidden">
+        <div class="modal glass-panel" style="max-width: 300px;">
+            <h3>Edit Cell Label</h3>
+            <form id="boxEditForm">
+                <input type="hidden" id="editItemId">
+                <div class="form-group">
+                    <label>Main Label (Value/Name)</label>
+                    <textarea id="editLabelMain" rows="1"
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff; resize:none;"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="number" id="mQty" value="1" min="1"
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                    <label>Sub Label (Type)</label>
+                    <textarea id="editLabelSub" rows="1"
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff; resize:none;"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Location (Optional)</label>
-                    <input type="text" id="mLoc" placeholder="e.g. Box 3, Bin A"
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
+                    <label>Size / Package</label>
+                    <input type="text" id="editLabelSize"
+                        style="width:100%; padding:8px; border-radius:4px; border:1px solid #444; background:#222; color:#fff;">
                 </div>
-                <div class="form-group">
-                    <label>Link (Optional)</label>
-                    <input type="url" id="mLink" placeholder="https://..."
-                        style="width:100%; padding:8px; border-radius:8px; background:rgba(0,0,0,0.3); color:white; border:1px solid var(--border-color);">
-                </div>
-                <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
-                    <button type="button" id="cancelModalBtn" class="text-btn"
-                        style="color:var(--text-muted);">Cancel</button>
-                    <button type="submit" class="action-link"
-                        style="background:var(--accent-primary); border:none; color:white; padding:8px 16px; border-radius:8px; cursor:pointer;">Add
-                        Item</button>
+                <div class="modal-actions" style="margin-top:20px; display:flex; justify-content:space-between;">
+                    <button type="button" id="deleteBoxItemBtn" class="text-btn danger">Remove</button>
+                    <div style="display:flex; gap:10px;">
+                        <button type="button" id="cancelBoxEditBtn" class="text-btn">Cancel</button>
+                        <button type="submit" class="action-link">Save</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -148,7 +143,7 @@
     <!-- Notification Toast -->
     <div id="toast" class="toast hidden">Message</div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=debug21"></script>
 </body>
 
 </html>

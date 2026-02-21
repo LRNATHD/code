@@ -1,0 +1,1811 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 1
+
+
+   1              		.file	"CH59x_usbhostClass.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.rodata.AnalyzeHidIntEndp.str1.4,"aMS",@progbits,1
+   8              		.align	2
+   9              	.LC0:
+  10 0000 25303278 		.string	"%02x "
+  10      2000
+  11              		.section	.text.AnalyzeHidIntEndp,"ax",@progbits
+  12              		.align	1
+  13              		.globl	AnalyzeHidIntEndp
+  15              	AnalyzeHidIntEndp:
+  16 0000 7971     		addi	sp,sp,-48
+  17 0002 26D2     		sw	s1,36(sp)
+  18 0004 4AD0     		sw	s2,32(sp)
+  19 0006 06D6     		sw	ra,44(sp)
+  20 0008 22D4     		sw	s0,40(sp)
+  21 000a 4ECE     		sw	s3,28(sp)
+  22 000c 52CC     		sw	s4,24(sp)
+  23 000e 56CA     		sw	s5,20(sp)
+  24 0010 5AC8     		sw	s6,16(sp)
+  25 0012 5EC6     		sw	s7,12(sp)
+  26 0014 2A89     		mv	s2,a0
+  27 0016 AE84     		mv	s1,a1
+  28 0018 A9CD     		beq	a1,zero,.L2
+  29 001a 3147     		li	a4,12
+  30 001c 9387F5FF 		addi	a5,a1,-1
+  31 0020 B387E702 		mul	a5,a5,a4
+  32 0024 17070000 		lla	a4,DevOnHubPort+8
+  32      13070700 
+  33 002c BA97     		add	a5,a5,a4
+  34 002e 23900700 		sh	zero,0(a5)
+  35 0032 23910700 		sh	zero,2(a5)
+  36              	.L4:
+  37 0036 0144     		li	s0,0
+  38 0038 8149     		li	s3,0
+  39 003a 954A     		li	s5,5
+  40 003c 0D4B     		li	s6,3
+  41 003e C14B     		li	s7,16
+  42              	.L3:
+  43 0040 83473900 		lbu	a5,3(s2)
+  44 0044 03472900 		lbu	a4,2(s2)
+  45 0048 A207     		slli	a5,a5,8
+  46 004a D98F     		or	a5,a5,a4
+  47 004c 63ECF902 		bltu	s3,a5,.L9
+  48              	.L8:
+  49 0050 2945     		li	a0,10
+  50 0052 97000000 		call	putchar
+  50      E7800000 
+  51 005a B250     		lw	ra,44(sp)
+  52 005c 2285     		mv	a0,s0
+  53 005e 2254     		lw	s0,40(sp)
+  54 0060 9254     		lw	s1,36(sp)
+  55 0062 0259     		lw	s2,32(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 2
+
+
+  56 0064 F249     		lw	s3,28(sp)
+  57 0066 624A     		lw	s4,24(sp)
+  58 0068 D24A     		lw	s5,20(sp)
+  59 006a 424B     		lw	s6,16(sp)
+  60 006c B24B     		lw	s7,12(sp)
+  61 006e 4561     		addi	sp,sp,48
+  62 0070 8280     		jr	ra
+  63              	.L2:
+  64 0072 97070000 		sh	zero,ThisUsbDev+8,a5
+  64      23900700 
+  65 007a 97070000 		sh	zero,ThisUsbDev+10,a5
+  65      23900700 
+  66 0082 55BF     		j	.L4
+  67              	.L9:
+  68 0084 330A3901 		add	s4,s2,s3
+  69 0088 83471A00 		lbu	a5,1(s4)
+  70 008c 63945707 		bne	a5,s5,.L5
+  71 0090 83473A00 		lbu	a5,3(s4)
+  72 0094 8D8B     		andi	a5,a5,3
+  73 0096 639F6705 		bne	a5,s6,.L5
+  74 009a 83472A00 		lbu	a5,2(s4)
+  75 009e 13978701 		slli	a4,a5,24
+  76 00a2 6187     		srai	a4,a4,24
+  77 00a4 63580704 		bge	a4,zero,.L5
+  78 00a8 97060000 		lla	a3,ThisUsbDev
+  78      93860600 
+  79 00b0 BD8B     		andi	a5,a5,15
+  80 00b2 33878600 		add	a4,a3,s0
+  81 00b6 81CC     		beq	s1,zero,.L11
+  82 00b8 3147     		li	a4,12
+  83 00ba 1386F4FF 		addi	a2,s1,-1
+  84 00be 3306E602 		mul	a2,a2,a4
+  85 00c2 17070000 		lla	a4,DevOnHubPort
+  85      13070700 
+  86 00ca 3297     		add	a4,a4,a2
+  87 00cc 2297     		add	a4,a4,s0
+  88              	.L11:
+  89 00ce 2304F700 		sb	a5,8(a4)
+  90 00d2 A296     		add	a3,a3,s0
+  91 00d4 83C58600 		lbu	a1,8(a3)
+  92 00d8 17050000 		lla	a0,.LC0
+  92      13050500 
+  93 00e0 0504     		addi	s0,s0,1
+  94 00e2 97000000 		call	printf
+  94      E7800000 
+  95 00ea 1374F40F 		andi	s0,s0,0xff
+  96 00ee 8D47     		li	a5,3
+  97 00f0 E3E087F6 		bgtu	s0,a5,.L8
+  98              	.L5:
+  99 00f4 83470A00 		lbu	a5,0(s4)
+ 100 00f8 E3ECFBF4 		bgtu	a5,s7,.L8
+ 101 00fc CE97     		add	a5,s3,a5
+ 102 00fe 93F9F70F 		andi	s3,a5,0xff
+ 103 0102 3DBF     		j	.L3
+ 105              		.section	.text.AnalyzeBulkEndp,"ax",@progbits
+ 106              		.align	1
+ 107              		.globl	AnalyzeBulkEndp
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 3
+
+
+ 109              	AnalyzeBulkEndp:
+ 110 0000 A1C1     		beq	a1,zero,.L13
+ 111 0002 3147     		li	a4,12
+ 112 0004 9387F5FF 		addi	a5,a1,-1
+ 113 0008 B387E702 		mul	a5,a5,a4
+ 114 000c 17070000 		lla	a4,DevOnHubPort+8
+ 114      13070700 
+ 115 0014 BA97     		add	a5,a5,a4
+ 116 0016 23900700 		sh	zero,0(a5)
+ 117 001a 23910700 		sh	zero,2(a5)
+ 118              	.L15:
+ 119 001e 03483500 		lbu	a6,3(a0)
+ 120 0022 83472500 		lbu	a5,2(a0)
+ 121 0026 094E     		li	t3,2
+ 122 0028 2208     		slli	a6,a6,8
+ 123 002a 3368F800 		or	a6,a6,a5
+ 124 002e 8146     		li	a3,0
+ 125 0030 0143     		li	t1,0
+ 126 0032 954E     		li	t4,5
+ 127 0034 094F     		li	t5,2
+ 128 0036 C14F     		li	t6,16
+ 129              	.L14:
+ 130 0038 636D0301 		bltu	t1,a6,.L24
+ 131              	.L26:
+ 132 003c 0145     		li	a0,0
+ 133 003e 8280     		ret
+ 134              	.L13:
+ 135 0040 97070000 		sh	zero,ThisUsbDev+8,a5
+ 135      23900700 
+ 136 0048 97070000 		sh	zero,ThisUsbDev+10,a5
+ 136      23900700 
+ 137 0050 F9B7     		j	.L15
+ 138              	.L24:
+ 139 0052 B3086500 		add	a7,a0,t1
+ 140 0056 83C71800 		lbu	a5,1(a7)
+ 141 005a 639FD703 		bne	a5,t4,.L16
+ 142 005e 83C73800 		lbu	a5,3(a7)
+ 143 0062 8D8B     		andi	a5,a5,3
+ 144 0064 639AE703 		bne	a5,t5,.L16
+ 145 0068 03C72800 		lbu	a4,2(a7)
+ 146 006c 93128701 		slli	t0,a4,24
+ 147 0070 93D28241 		srai	t0,t0,24
+ 148 0074 3D8B     		andi	a4,a4,15
+ 149 0076 B1C1     		beq	a1,zero,.L17
+ 150 0078 1386F5FF 		addi	a2,a1,-1
+ 151 007c 97070000 		lla	a5,DevOnHubPort
+ 151      93870700 
+ 152 0084 63D20202 		bge	t0,zero,.L18
+ 153 0088 B142     		li	t0,12
+ 154 008a 33065602 		mul	a2,a2,t0
+ 155 008e B297     		add	a5,a5,a2
+ 156              	.L27:
+ 157 0090 B697     		add	a5,a5,a3
+ 158 0092 2384E700 		sb	a4,8(a5)
+ 159 0096 8546     		li	a3,1
+ 160              	.L16:
+ 161 0098 83C70800 		lbu	a5,0(a7)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 4
+
+
+ 162 009c E3E0FFFA 		bgtu	a5,t6,.L26
+ 163 00a0 9A97     		add	a5,t1,a5
+ 164 00a2 13F3F70F 		andi	t1,a5,0xff
+ 165 00a6 49BF     		j	.L14
+ 166              	.L18:
+ 167 00a8 B142     		li	t0,12
+ 168 00aa 33065602 		mul	a2,a2,t0
+ 169 00ae B297     		add	a5,a5,a2
+ 170              	.L22:
+ 171 00b0 F297     		add	a5,a5,t3
+ 172 00b2 2384E700 		sb	a4,8(a5)
+ 173 00b6 0D4E     		li	t3,3
+ 174 00b8 C5B7     		j	.L16
+ 175              	.L17:
+ 176 00ba 97070000 		lla	a5,ThisUsbDev
+ 176      93870700 
+ 177 00c2 E3D702FE 		bge	t0,zero,.L22
+ 178 00c6 E9B7     		j	.L27
+ 180              		.section	.text.SearchTypeDevice,"ax",@progbits
+ 181              		.align	1
+ 182              		.globl	SearchTypeDevice
+ 184              	SearchTypeDevice:
+ 185 0000 97060000 		lla	a3,ThisUsbDev
+ 185      93860600 
+ 186 0008 03C63600 		lbu	a2,3(a3)
+ 187 000c A547     		li	a5,9
+ 188 000e 6312F602 		bne	a2,a5,.L29
+ 189 0012 03C70600 		lbu	a4,0(a3)
+ 190 0016 8947     		li	a5,2
+ 191 0018 63FDE700 		bleu	a4,a5,.L29
+ 192 001c 83C5C600 		lbu	a1,12(a3)
+ 193 0020 8547     		li	a5,1
+ 194 0022 17080000 		lla	a6,DevOnHubPort
+ 194      13080800 
+ 195 002a B148     		li	a7,12
+ 196 002c 0943     		li	t1,2
+ 197              	.L30:
+ 198 002e 63FDF500 		bgeu	a1,a5,.L33
+ 199              	.L29:
+ 200 0032 631EA602 		bne	a2,a0,.L34
+ 201 0036 03C50600 		lbu	a0,0(a3)
+ 202 003a 13353500 		sltiu	a0,a0,3
+ 203 003e 3305A040 		neg	a0,a0
+ 204 0042 4205     		slli	a0,a0,16
+ 205 0044 4181     		srli	a0,a0,16
+ 206 0046 8280     		ret
+ 207              	.L33:
+ 208 0048 1387F7FF 		addi	a4,a5,-1
+ 209 004c 33071703 		mul	a4,a4,a7
+ 210 0050 4297     		add	a4,a6,a4
+ 211 0052 034E3700 		lbu	t3,3(a4)
+ 212 0056 6318AE00 		bne	t3,a0,.L31
+ 213 005a 03470700 		lbu	a4,0(a4)
+ 214 005e 6374E300 		bleu	a4,t1,.L31
+ 215 0062 3E85     		mv	a0,a5
+ 216 0064 8280     		ret
+ 217              	.L31:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 5
+
+
+ 218 0066 8507     		addi	a5,a5,1
+ 219 0068 93F7F70F 		andi	a5,a5,0xff
+ 220 006c C9B7     		j	.L30
+ 221              	.L34:
+ 222 006e 4165     		li	a0,65536
+ 223 0070 7D15     		addi	a0,a0,-1
+ 224 0072 8280     		ret
+ 226              		.section	.text.SETorOFFNumLock,"ax",@progbits
+ 227              		.align	1
+ 228              		.globl	SETorOFFNumLock
+ 230              	SETorOFFNumLock:
+ 231 0000 B7170002 		li	a5,33558528
+ 232 0004 0111     		addi	sp,sp,-32
+ 233 0006 93871792 		addi	a5,a5,-1759
+ 234 000a 06CE     		sw	ra,28(sp)
+ 235 000c 3EC4     		sw	a5,8(sp)
+ 236 000e C167     		li	a5,65536
+ 237 0010 03471500 		lbu	a4,1(a0)
+ 238 0014 3EC6     		sw	a5,12(sp)
+ 239 0016 83470500 		lbu	a5,0(a0)
+ 240 001a D98F     		or	a5,a5,a4
+ 241 001c 03473500 		lbu	a4,3(a0)
+ 242 0020 D98F     		or	a5,a5,a4
+ 243 0022 03474500 		lbu	a4,4(a0)
+ 244 0026 D98F     		or	a5,a5,a4
+ 245 0028 03475500 		lbu	a4,5(a0)
+ 246 002c D98F     		or	a5,a5,a4
+ 247 002e 03476500 		lbu	a4,6(a0)
+ 248 0032 D98F     		or	a5,a5,a4
+ 249 0034 03477500 		lbu	a4,7(a0)
+ 250 0038 D98F     		or	a5,a5,a4
+ 251 003a B9E3     		bne	a5,zero,.L38
+ 252 003c 83472500 		lbu	a5,2(a0)
+ 253 0040 9387D7FA 		addi	a5,a5,-83
+ 254 0044 95EF     		bne	a5,zero,.L38
+ 255 0046 97050000 		lla	a1,pHOST_TX_RAM_Addr
+ 255      93850500 
+ 256 004e A146     		li	a3,8
+ 257              	.L37:
+ 258 0050 3000     		addi	a2,sp,8
+ 259 0052 9841     		lw	a4,0(a1)
+ 260 0054 3E96     		add	a2,a2,a5
+ 261 0056 03460600 		lbu	a2,0(a2)
+ 262 005a 3E97     		add	a4,a4,a5
+ 263 005c 8507     		addi	a5,a5,1
+ 264 005e 2300C700 		sb	a2,0(a4)
+ 265 0062 E397D7FE 		bne	a5,a3,.L37
+ 266 0066 93057100 		addi	a1,sp,7
+ 267 006a 17050000 		lla	a0,Com_Buffer
+ 267      13050500 
+ 268 0072 97000000 		call	HostCtrlTransfer
+ 268      E7800000 
+ 269              	.L36:
+ 270 007a F240     		lw	ra,28(sp)
+ 271 007c 0561     		addi	sp,sp,32
+ 272 007e 8280     		jr	ra
+ 273              	.L38:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 6
+
+
+ 274 0080 0145     		li	a0,0
+ 275 0082 E5BF     		j	.L36
+ 277              		.section	.text.CtrlGetHIDDeviceReport,"ax",@progbits
+ 278              		.align	1
+ 279              		.globl	CtrlGetHIDDeviceReport
+ 281              	CtrlGetHIDDeviceReport:
+ 282 0000 0111     		addi	sp,sp,-32
+ 283 0002 22CC     		sw	s0,24(sp)
+ 284 0004 2A84     		mv	s0,a0
+ 285 0006 17050000 		lla	a0,SetupSetHIDIdle
+ 285      13050500 
+ 286 000e 26CA     		sw	s1,20(sp)
+ 287 0010 4AC8     		sw	s2,16(sp)
+ 288 0012 06CE     		sw	ra,28(sp)
+ 289 0014 17090000 		lla	s2,pHOST_TX_RAM_Addr
+ 289      13090900 
+ 290 001c 97000000 		call	CopySetupReqPkg
+ 290      E7800000 
+ 291 0024 83270900 		lw	a5,0(s2)
+ 292 0028 1374F40F 		andi	s0,s0,255
+ 293 002c 8144     		li	s1,0
+ 294 002e 23828700 		sb	s0,4(a5)
+ 295 0032 A3829700 		sb	s1,5(a5)
+ 296 0036 9305F100 		addi	a1,sp,15
+ 297 003a 17050000 		lla	a0,Com_Buffer
+ 297      13050500 
+ 298 0042 97000000 		call	HostCtrlTransfer
+ 298      E7800000 
+ 299 004a 0DE9     		bne	a0,zero,.L48
+ 300 004c 17050000 		lla	a0,SetupGetHIDDevReport
+ 300      13050500 
+ 301 0054 97000000 		call	CopySetupReqPkg
+ 301      E7800000 
+ 302 005c 83270900 		lw	a5,0(s2)
+ 303 0060 9305F100 		addi	a1,sp,15
+ 304 0064 17050000 		lla	a0,Com_Buffer
+ 304      13050500 
+ 305 006c 23828700 		sb	s0,4(a5)
+ 306 0070 A3829700 		sb	s1,5(a5)
+ 307 0074 97000000 		call	HostCtrlTransfer
+ 307      E7800000 
+ 308              	.L48:
+ 309 007c F240     		lw	ra,28(sp)
+ 310 007e 6244     		lw	s0,24(sp)
+ 311 0080 D244     		lw	s1,20(sp)
+ 312 0082 4249     		lw	s2,16(sp)
+ 313 0084 0561     		addi	sp,sp,32
+ 314 0086 8280     		jr	ra
+ 316              		.section	.text.CtrlGetHubDescr,"ax",@progbits
+ 317              		.align	1
+ 318              		.globl	CtrlGetHubDescr
+ 320              	CtrlGetHubDescr:
+ 321 0000 0111     		addi	sp,sp,-32
+ 322 0002 17050000 		lla	a0,SetupGetHubDescr
+ 322      13050500 
+ 323 000a 06CE     		sw	ra,28(sp)
+ 324 000c 97000000 		call	CopySetupReqPkg
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 7
+
+
+ 324      E7800000 
+ 325 0014 9305F100 		addi	a1,sp,15
+ 326 0018 17050000 		lla	a0,Com_Buffer
+ 326      13050500 
+ 327 0020 97000000 		call	HostCtrlTransfer
+ 327      E7800000 
+ 328 0028 19E5     		bne	a0,zero,.L51
+ 329 002a 0347F100 		lbu	a4,15(sp)
+ 330 002e A147     		li	a5,8
+ 331 0030 63E3E700 		bgtu	a4,a5,.L51
+ 332 0034 5D45     		li	a0,23
+ 333              	.L51:
+ 334 0036 F240     		lw	ra,28(sp)
+ 335 0038 0561     		addi	sp,sp,32
+ 336 003a 8280     		jr	ra
+ 338              		.section	.text.HubGetPortStatus,"ax",@progbits
+ 339              		.align	1
+ 340              		.globl	HubGetPortStatus
+ 342              	HubGetPortStatus:
+ 343 0000 0111     		addi	sp,sp,-32
+ 344 0002 06CE     		sw	ra,28(sp)
+ 345 0004 97070000 		lw	a5,pHOST_TX_RAM_Addr
+ 345      83A70700 
+ 346 000c 130730FA 		li	a4,-93
+ 347 0010 2380E700 		sb	a4,0(a5)
+ 348 0014 1147     		li	a4,4
+ 349 0016 2382A700 		sb	a0,4(a5)
+ 350 001a A3800700 		sb	zero,1(a5)
+ 351 001e 23810700 		sb	zero,2(a5)
+ 352 0022 A3810700 		sb	zero,3(a5)
+ 353 0026 A3820700 		sb	zero,5(a5)
+ 354 002a 2383E700 		sb	a4,6(a5)
+ 355 002e A3830700 		sb	zero,7(a5)
+ 356 0032 9305F100 		addi	a1,sp,15
+ 357 0036 17050000 		lla	a0,Com_Buffer
+ 357      13050500 
+ 358 003e 97000000 		call	HostCtrlTransfer
+ 358      E7800000 
+ 359 0046 19E5     		bne	a0,zero,.L55
+ 360 0048 0347F100 		lbu	a4,15(sp)
+ 361 004c 8D47     		li	a5,3
+ 362 004e 63E3E700 		bgtu	a4,a5,.L55
+ 363 0052 5D45     		li	a0,23
+ 364              	.L55:
+ 365 0054 F240     		lw	ra,28(sp)
+ 366 0056 0561     		addi	sp,sp,32
+ 367 0058 8280     		jr	ra
+ 369              		.section	.text.HubSetPortFeature,"ax",@progbits
+ 370              		.align	1
+ 371              		.globl	HubSetPortFeature
+ 373              	HubSetPortFeature:
+ 374 0000 97070000 		lw	a5,pHOST_TX_RAM_Addr
+ 374      83A70700 
+ 375 0008 13073002 		li	a4,35
+ 376 000c 2380E700 		sb	a4,0(a5)
+ 377 0010 0D47     		li	a4,3
+ 378 0012 2381B700 		sb	a1,2(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 8
+
+
+ 379 0016 2382A700 		sb	a0,4(a5)
+ 380 001a A380E700 		sb	a4,1(a5)
+ 381 001e A3810700 		sb	zero,3(a5)
+ 382 0022 A3820700 		sb	zero,5(a5)
+ 383 0026 23830700 		sb	zero,6(a5)
+ 384 002a A3830700 		sb	zero,7(a5)
+ 385 002e 8145     		li	a1,0
+ 386 0030 0145     		li	a0,0
+ 387 0032 17030000 		tail	HostCtrlTransfer
+ 387      67000300 
+ 389              		.section	.rodata.InitRootDevice.str1.4,"aMS",@progbits,1
+ 390              		.align	2
+ 391              	.LC1:
+ 392 0000 52657365 		.string	"Reset host port"
+ 392      7420686F 
+ 392      73742070 
+ 392      6F727400 
+ 393              		.align	2
+ 394              	.LC2:
+ 395 0010 78253032 		.string	"x%02X "
+ 395      582000
+ 396 0017 00       		.align	2
+ 397              	.LC3:
+ 398 0018 47657443 		.string	"GetCfgDescr: "
+ 398      66674465 
+ 398      7363723A 
+ 398      2000
+ 399 0026 0000     		.align	2
+ 400              	.LC4:
+ 401 0028 5553422D 		.string	"USB-Disk Ready"
+ 401      4469736B 
+ 401      20526561 
+ 401      647900
+ 402 0037 00       		.align	2
+ 403              	.LC5:
+ 404 0038 5553422D 		.string	"USB-Print Ready"
+ 404      5072696E 
+ 404      74205265 
+ 404      61647900 
+ 405              		.align	2
+ 406              	.LC6:
+ 407 0048 416E616C 		.string	"AnalyzeHidIntEndp %02x\n"
+ 407      797A6548 
+ 407      6964496E 
+ 407      74456E64 
+ 407      70202530 
+ 408              		.align	2
+ 409              	.LC7:
+ 410 0060 5553422D 		.string	"USB-Keyboard Ready"
+ 410      4B657962 
+ 410      6F617264 
+ 410      20526561 
+ 410      647900
+ 411 0073 00       		.align	2
+ 412              	.LC8:
+ 413 0074 5553422D 		.string	"USB-Mouse Ready"
+ 413      4D6F7573 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 9
+
+
+ 413      65205265 
+ 413      61647900 
+ 414              		.align	2
+ 415              	.LC9:
+ 416 0084 4D617820 		.string	"Max Port:%02X "
+ 416      506F7274 
+ 416      3A253032 
+ 416      582000
+ 417 0093 00       		.align	2
+ 418              	.LC10:
+ 419 0094 4578742D 		.string	"Ext-HUB Port_%1d# power on error\n"
+ 419      48554220 
+ 419      506F7274 
+ 419      5F253164 
+ 419      2320706F 
+ 420 00b6 0000     		.align	2
+ 421              	.LC11:
+ 422 00b8 5553422D 		.string	"USB-HUB Ready"
+ 422      48554220 
+ 422      52656164 
+ 422      7900
+ 423 00c6 0000     		.align	2
+ 424              	.LC12:
+ 425 00c8 496E6974 		.string	"InitRootDev Err = %02X\n"
+ 425      526F6F74 
+ 425      44657620 
+ 425      45727220 
+ 425      3D202530 
+ 426              		.align	2
+ 427              	.LC13:
+ 428 00e0 44697361 		.string	"Disable host port because of disconnect"
+ 428      626C6520 
+ 428      686F7374 
+ 428      20706F72 
+ 428      74206265 
+ 429              		.align	2
+ 430              	.LC14:
+ 431 0108 47657444 		.string	"GetDevDescr: "
+ 431      65764465 
+ 431      7363723A 
+ 431      2000
+ 432              		.section	.text.InitRootDevice,"ax",@progbits
+ 433              		.align	1
+ 434              		.globl	InitRootDevice
+ 436              	InitRootDevice:
+ 437 0000 0111     		addi	sp,sp,-32
+ 438 0002 17050000 		lla	a0,.LC1
+ 438      13050500 
+ 439 000a 06CE     		sw	ra,28(sp)
+ 440 000c 22CC     		sw	s0,24(sp)
+ 441 000e 26CA     		sw	s1,20(sp)
+ 442 0010 4AC8     		sw	s2,16(sp)
+ 443 0012 4EC6     		sw	s3,12(sp)
+ 444 0014 52C4     		sw	s4,8(sp)
+ 445 0016 56C2     		sw	s5,4(sp)
+ 446 0018 97000000 		call	puts
+ 446      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 10
+
+
+ 447 0020 97000000 		call	ResetRootHubPort
+ 447      E7800000 
+ 448 0028 8144     		li	s1,0
+ 449 002a 0144     		li	s0,0
+ 450 002c 13094006 		li	s2,100
+ 451              	.L64:
+ 452 0030 0545     		li	a0,1
+ 453 0032 97000000 		call	mDelaymS
+ 453      E7800000 
+ 454 003a 97000000 		call	EnableRootHubPort
+ 454      E7800000 
+ 455 0042 01E9     		bne	a0,zero,.L60
+ 456 0044 8504     		addi	s1,s1,1
+ 457 0046 93F4F40F 		andi	s1,s1,0xff
+ 458 004a 63669930 		bgtu	s1,s2,.L61
+ 459 004e 0544     		li	s0,1
+ 460 0050 C5B7     		j	.L64
+ 461              	.L60:
+ 462 0052 0504     		addi	s0,s0,1
+ 463 0054 1374F40F 		andi	s0,s0,0xff
+ 464 0058 E31C24FD 		bne	s0,s2,.L64
+ 465 005c 97000000 		call	DisableRootHubPort
+ 465      E7800000 
+ 466 0064 17050000 		lla	a0,.LC13
+ 466      13050500 
+ 467 006c 97000000 		call	puts
+ 467      E7800000 
+ 468 0074 5944     		li	s0,22
+ 469 0076 DDA8     		j	.L91
+ 470              	.L65:
+ 471 0078 B3078900 		add	a5,s2,s0
+ 472 007c 83C50700 		lbu	a1,0(a5)
+ 473 0080 5285     		mv	a0,s4
+ 474 0082 97000000 		call	printf
+ 474      E7800000 
+ 475 008a 13051400 		addi	a0,s0,1
+ 476 008e 1374F50F 		andi	s0,a0,0xff
+ 477              	.L82:
+ 478 0092 E36334FF 		bltu	s0,s3,.L65
+ 479 0096 2945     		li	a0,10
+ 480 0098 97000000 		call	putchar
+ 480      E7800000 
+ 481 00a0 83578900 		lhu	a5,8(s2)
+ 482 00a4 97090000 		lbu	s3,SetupSetUsbAddr+2
+ 482      83C90900 
+ 483 00ac 4E85     		mv	a0,s3
+ 484 00ae 2392F400 		sh	a5,4(s1)
+ 485 00b2 8357A900 		lhu	a5,10(s2)
+ 486 00b6 834A4900 		lbu	s5,4(s2)
+ 487 00ba 2393F400 		sh	a5,6(s1)
+ 488 00be 97000000 		call	CtrlSetUsbAddress
+ 488      E7800000 
+ 489 00c6 2A84     		mv	s0,a0
+ 490 00c8 63150526 		bne	a0,zero,.L66
+ 491 00cc 17050000 		lla	a0,.LC3
+ 491      13050500 
+ 492 00d4 A3803401 		sb	s3,1(s1)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 11
+
+
+ 493 00d8 97000000 		call	printf
+ 493      E7800000 
+ 494 00e0 97000000 		call	CtrlGetConfigDescr
+ 494      E7800000 
+ 495 00e8 2A84     		mv	s0,a0
+ 496 00ea 63140524 		bne	a0,zero,.L66
+ 497 00ee 0144     		li	s0,0
+ 498 00f0 97090000 		lla	s3,.LC2
+ 498      93890900 
+ 499 00f8 29A8     		j	.L67
+ 500              	.L68:
+ 501 00fa B3078900 		add	a5,s2,s0
+ 502 00fe 83C50700 		lbu	a1,0(a5)
+ 503 0102 4E85     		mv	a0,s3
+ 504 0104 0504     		addi	s0,s0,1
+ 505 0106 97000000 		call	printf
+ 505      E7800000 
+ 506 010e 1374F40F 		andi	s0,s0,0xff
+ 507              	.L67:
+ 508 0112 83572900 		lhu	a5,2(s2)
+ 509 0116 E362F4FE 		bgtu	a5,s0,.L68
+ 510 011a 2945     		li	a0,10
+ 511 011c 97000000 		call	putchar
+ 511      E7800000 
+ 512 0124 83495900 		lbu	s3,5(s2)
+ 513 0128 034AE900 		lbu	s4,14(s2)
+ 514 012c 63910A14 		bne	s5,zero,.L69
+ 515 0130 A147     		li	a5,8
+ 516 0132 6317FA04 		bne	s4,a5,.L70
+ 517 0136 4E85     		mv	a0,s3
+ 518 0138 97000000 		call	CtrlSetUsbConfig
+ 518      E7800000 
+ 519 0140 2A84     		mv	s0,a0
+ 520 0142 6318051E 		bne	a0,zero,.L66
+ 521 0146 8D47     		li	a5,3
+ 522 0148 2380F400 		sb	a5,0(s1)
+ 523 014c A3814401 		sb	s4,3(s1)
+ 524 0150 17050000 		lla	a0,.LC4
+ 524      13050500 
+ 525              	.L93:
+ 526 0158 97000000 		call	puts
+ 526      E7800000 
+ 527              	.L94:
+ 528 0160 0545     		li	a0,1
+ 529 0162 97000000 		call	SetUsbSpeed
+ 529      E7800000 
+ 530 016a 0144     		li	s0,0
+ 531              	.L91:
+ 532 016c F240     		lw	ra,28(sp)
+ 533 016e 2285     		mv	a0,s0
+ 534 0170 6244     		lw	s0,24(sp)
+ 535 0172 D244     		lw	s1,20(sp)
+ 536 0174 4249     		lw	s2,16(sp)
+ 537 0176 B249     		lw	s3,12(sp)
+ 538 0178 224A     		lw	s4,8(sp)
+ 539 017a 924A     		lw	s5,4(sp)
+ 540 017c 0561     		addi	sp,sp,32
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 12
+
+
+ 541 017e 8280     		jr	ra
+ 542              	.L70:
+ 543 0180 9D47     		li	a5,7
+ 544 0182 6319FA02 		bne	s4,a5,.L72
+ 545 0186 0347F900 		lbu	a4,15(s2)
+ 546 018a 8547     		li	a5,1
+ 547 018c 6315F718 		bne	a4,a5,.L73
+ 548 0190 4E85     		mv	a0,s3
+ 549 0192 97000000 		call	CtrlSetUsbConfig
+ 549      E7800000 
+ 550 019a 2A84     		mv	s0,a0
+ 551 019c 631B0518 		bne	a0,zero,.L66
+ 552 01a0 8D47     		li	a5,3
+ 553 01a2 2380F400 		sb	a5,0(s1)
+ 554 01a6 A3814401 		sb	s4,3(s1)
+ 555 01aa 17050000 		lla	a0,.LC5
+ 555      13050500 
+ 556 01b2 5DB7     		j	.L93
+ 557              	.L72:
+ 558 01b4 8D47     		li	a5,3
+ 559 01b6 6310FA16 		bne	s4,a5,.L73
+ 560 01ba 0347F900 		lbu	a4,15(s2)
+ 561 01be 8547     		li	a5,1
+ 562 01c0 63EBE714 		bgtu	a4,a5,.L73
+ 563 01c4 8145     		li	a1,0
+ 564 01c6 17050000 		lla	a0,Com_Buffer
+ 564      13050500 
+ 565 01ce 97000000 		call	AnalyzeHidIntEndp
+ 565      E7800000 
+ 566 01d6 AA85     		mv	a1,a0
+ 567 01d8 17050000 		lla	a0,.LC6
+ 567      13050500 
+ 568 01e0 97000000 		call	printf
+ 568      E7800000 
+ 569 01e8 4E85     		mv	a0,s3
+ 570 01ea 034A0901 		lbu	s4,16(s2)
+ 571 01ee 97000000 		call	CtrlSetUsbConfig
+ 571      E7800000 
+ 572 01f6 2A84     		mv	s0,a0
+ 573 01f8 631D0512 		bne	a0,zero,.L66
+ 574 01fc 97000000 		call	CtrlGetHIDDeviceReport
+ 574      E7800000 
+ 575 0204 05E9     		bne	a0,zero,.L75
+ 576 0206 970A0000 		lla	s5,.LC2
+ 576      938A0A00 
+ 577 020e 93090004 		li	s3,64
+ 578              	.L76:
+ 579 0212 B3078900 		add	a5,s2,s0
+ 580 0216 83C50700 		lbu	a1,0(a5)
+ 581 021a 5685     		mv	a0,s5
+ 582 021c 0504     		addi	s0,s0,1
+ 583 021e 97000000 		call	printf
+ 583      E7800000 
+ 584 0226 E31634FF 		bne	s0,s3,.L76
+ 585 022a 2945     		li	a0,10
+ 586 022c 97000000 		call	putchar
+ 586      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 13
+
+
+ 587              	.L75:
+ 588 0234 8D47     		li	a5,3
+ 589 0236 2380F400 		sb	a5,0(s1)
+ 590 023a 8547     		li	a5,1
+ 591 023c 631BFA00 		bne	s4,a5,.L77
+ 592 0240 93073002 		li	a5,35
+ 593 0244 A381F400 		sb	a5,3(s1)
+ 594 0248 17050000 		lla	a0,.LC7
+ 594      13050500 
+ 595 0250 21B7     		j	.L93
+ 596              	.L77:
+ 597 0252 8947     		li	a5,2
+ 598 0254 1304B00F 		li	s0,251
+ 599 0258 631DFA0C 		bne	s4,a5,.L66
+ 600 025c 93073003 		li	a5,51
+ 601 0260 A381F400 		sb	a5,3(s1)
+ 602 0264 17050000 		lla	a0,.LC8
+ 602      13050500 
+ 603 026c F5B5     		j	.L93
+ 604              	.L69:
+ 605 026e A547     		li	a5,9
+ 606 0270 6393FA0A 		bne	s5,a5,.L73
+ 607 0274 97000000 		call	CtrlGetHubDescr
+ 607      E7800000 
+ 608 027c 2A84     		mv	s0,a0
+ 609 027e 55E9     		bne	a0,zero,.L66
+ 610 0280 83452900 		lbu	a1,2(s2)
+ 611 0284 17050000 		lla	a0,.LC9
+ 611      13050500 
+ 612 028c 97000000 		call	printf
+ 612      E7800000 
+ 613 0294 03472900 		lbu	a4,2(s2)
+ 614 0298 9146     		li	a3,4
+ 615 029a BA87     		mv	a5,a4
+ 616 029c 63F3E600 		bleu	a4,a3,.L78
+ 617 02a0 9147     		li	a5,4
+ 618              	.L78:
+ 619 02a2 4E85     		mv	a0,s3
+ 620 02a4 2386F400 		sb	a5,12(s1)
+ 621 02a8 97000000 		call	CtrlSetUsbConfig
+ 621      E7800000 
+ 622 02b0 2A84     		mv	s0,a0
+ 623 02b2 41E1     		bne	a0,zero,.L66
+ 624 02b4 8D47     		li	a5,3
+ 625 02b6 2380F400 		sb	a5,0(s1)
+ 626 02ba A547     		li	a5,9
+ 627 02bc A381F400 		sb	a5,3(s1)
+ 628 02c0 0544     		li	s0,1
+ 629 02c2 17090000 		lla	s2,DevOnHubPort
+ 629      13090900 
+ 630 02ca B149     		li	s3,12
+ 631 02cc 170A0000 		lla	s4,.LC10
+ 631      130A0A00 
+ 632              	.L79:
+ 633 02d4 83C7C400 		lbu	a5,12(s1)
+ 634 02d8 63F78700 		bgeu	a5,s0,.L81
+ 635 02dc 17050000 		lla	a0,.LC11
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 14
+
+
+ 635      13050500 
+ 636 02e4 95BD     		j	.L93
+ 637              	.L81:
+ 638 02e6 9307F4FF 		addi	a5,s0,-1
+ 639 02ea B3873703 		mul	a5,a5,s3
+ 640 02ee A145     		li	a1,8
+ 641 02f0 2285     		mv	a0,s0
+ 642 02f2 CA97     		add	a5,s2,a5
+ 643 02f4 23800700 		sb	zero,0(a5)
+ 644 02f8 97000000 		call	HubSetPortFeature
+ 644      E7800000 
+ 645 0300 19C5     		beq	a0,zero,.L80
+ 646 0302 A285     		mv	a1,s0
+ 647 0304 5285     		mv	a0,s4
+ 648 0306 97000000 		call	printf
+ 648      E7800000 
+ 649              	.L80:
+ 650 030e 0504     		addi	s0,s0,1
+ 651 0310 1374F40F 		andi	s0,s0,0xff
+ 652 0314 C1B7     		j	.L79
+ 653              	.L73:
+ 654 0316 4E85     		mv	a0,s3
+ 655 0318 97000000 		call	CtrlSetUsbConfig
+ 655      E7800000 
+ 656 0320 2A84     		mv	s0,a0
+ 657 0322 01E9     		bne	a0,zero,.L66
+ 658 0324 8D47     		li	a5,3
+ 659 0326 2380F400 		sb	a5,0(s1)
+ 660 032a FD57     		li	a5,-1
+ 661 032c A381F400 		sb	a5,3(s1)
+ 662 0330 05BD     		j	.L94
+ 663              	.L66:
+ 664 0332 A285     		mv	a1,s0
+ 665 0334 17050000 		lla	a0,.LC12
+ 665      13050500 
+ 666 033c 97000000 		call	printf
+ 666      E7800000 
+ 667 0344 8947     		li	a5,2
+ 668 0346 0545     		li	a0,1
+ 669 0348 2380F400 		sb	a5,0(s1)
+ 670 034c 97000000 		call	SetUsbSpeed
+ 670      E7800000 
+ 671 0354 21BD     		j	.L91
+ 672              	.L61:
+ 673 0356 97040000 		lla	s1,ThisUsbDev
+ 673      93840400 
+ 674 035e 03C52400 		lbu	a0,2(s1)
+ 675 0362 97000000 		call	SetUsbSpeed
+ 675      E7800000 
+ 676 036a 17050000 		lla	a0,.LC14
+ 676      13050500 
+ 677 0372 97000000 		call	printf
+ 677      E7800000 
+ 678 037a 97000000 		call	CtrlGetDeviceDescr
+ 678      E7800000 
+ 679 0382 2A84     		mv	s0,a0
+ 680 0384 5DF5     		bne	a0,zero,.L66
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 15
+
+
+ 681 0386 97070000 		lla	a5,SetupGetDevDescr
+ 681      93870700 
+ 682 038e 83C97700 		lbu	s3,7(a5)
+ 683 0392 03C76700 		lbu	a4,6(a5)
+ 684 0396 17090000 		lla	s2,Com_Buffer
+ 684      13090900 
+ 685 039e A209     		slli	s3,s3,8
+ 686 03a0 B3E9E900 		or	s3,s3,a4
+ 687 03a4 170A0000 		lla	s4,.LC2
+ 687      130A0A00 
+ 688 03ac DDB1     		j	.L82
+ 690              		.section	.text.HubClearPortFeature,"ax",@progbits
+ 691              		.align	1
+ 692              		.globl	HubClearPortFeature
+ 694              	HubClearPortFeature:
+ 695 0000 97070000 		lw	a5,pHOST_TX_RAM_Addr
+ 695      83A70700 
+ 696 0008 13073002 		li	a4,35
+ 697 000c 2380E700 		sb	a4,0(a5)
+ 698 0010 0547     		li	a4,1
+ 699 0012 2381B700 		sb	a1,2(a5)
+ 700 0016 2382A700 		sb	a0,4(a5)
+ 701 001a A380E700 		sb	a4,1(a5)
+ 702 001e A3810700 		sb	zero,3(a5)
+ 703 0022 A3820700 		sb	zero,5(a5)
+ 704 0026 23830700 		sb	zero,6(a5)
+ 705 002a A3830700 		sb	zero,7(a5)
+ 706 002e 8145     		li	a1,0
+ 707 0030 0145     		li	a0,0
+ 708 0032 17030000 		tail	HostCtrlTransfer
+ 708      67000300 
+ 710              		.section	.rodata.InitDevOnHub.str1.4,"aMS",@progbits,1
+ 711              		.align	2
+ 712              	.LC15:
+ 713 0000 496E6974 		.string	"Init dev @ExtHub-port_%1d "
+ 713      20646576 
+ 713      20404578 
+ 713      74487562 
+ 713      2D706F72 
+ 714 001b 00       		.align	2
+ 715              	.LC16:
+ 716 001c 5553425F 		.string	"USB_DEV_CLASS_HID Ready"
+ 716      4445565F 
+ 716      434C4153 
+ 716      535F4849 
+ 716      44205265 
+ 717              		.align	2
+ 718              	.LC17:
+ 719 0034 54686973 		.string	"This program don't support Level 2 HUB"
+ 719      2070726F 
+ 719      6772616D 
+ 719      20646F6E 
+ 719      27742073 
+ 720 005b 00       		.align	2
+ 721              	.LC18:
+ 722 005c 496E6974 		.string	"InitDevOnHub Err = %02X\n"
+ 722      4465764F 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 16
+
+
+ 722      6E487562 
+ 722      20457272 
+ 722      203D2025 
+ 723              		.section	.text.InitDevOnHub,"ax",@progbits
+ 724              		.align	1
+ 725              		.globl	InitDevOnHub
+ 727              	InitDevOnHub:
+ 728 0000 7971     		addi	sp,sp,-48
+ 729 0002 22D4     		sw	s0,40(sp)
+ 730 0004 AA85     		mv	a1,a0
+ 731 0006 2A84     		mv	s0,a0
+ 732 0008 17050000 		lla	a0,.LC15
+ 732      13050500 
+ 733 0010 26D2     		sw	s1,36(sp)
+ 734 0012 06D6     		sw	ra,44(sp)
+ 735 0014 4AD0     		sw	s2,32(sp)
+ 736 0016 4ECE     		sw	s3,28(sp)
+ 737 0018 52CC     		sw	s4,24(sp)
+ 738 001a 56CA     		sw	s5,20(sp)
+ 739 001c 5AC8     		sw	s6,16(sp)
+ 740 001e 5EC6     		sw	s7,12(sp)
+ 741 0020 62C4     		sw	s8,8(sp)
+ 742 0022 66C2     		sw	s9,4(sp)
+ 743 0024 9304E00F 		li	s1,254
+ 744 0028 97000000 		call	printf
+ 744      E7800000 
+ 745 0030 63030414 		beq	s0,zero,.L97
+ 746 0034 2285     		mv	a0,s0
+ 747 0036 97000000 		call	SelectHubPort
+ 747      E7800000 
+ 748 003e 17050000 		lla	a0,.LC14
+ 748      13050500 
+ 749 0046 97000000 		call	printf
+ 749      E7800000 
+ 750 004e 97000000 		call	CtrlGetDeviceDescr
+ 750      E7800000 
+ 751 0056 AA84     		mv	s1,a0
+ 752 0058 631F0510 		bne	a0,zero,.L97
+ 753 005c 9309F4FF 		addi	s3,s0,-1
+ 754 0060 B14A     		li	s5,12
+ 755 0062 B38A5903 		mul	s5,s3,s5
+ 756 0066 170A0000 		lla	s4,Com_Buffer
+ 756      130A0A00 
+ 757 006e 83578A00 		lhu	a5,8(s4)
+ 758 0072 17090000 		lla	s2,DevOnHubPort
+ 758      13090900 
+ 759 007a 930B0401 		addi	s7,s0,16
+ 760 007e 93FBFB0F 		andi	s7,s7,0xff
+ 761 0082 5E85     		mv	a0,s7
+ 762 0084 034B4A00 		lbu	s6,4(s4)
+ 763 0088 CA9A     		add	s5,s2,s5
+ 764 008a 2392FA00 		sh	a5,4(s5)
+ 765 008e 8357AA00 		lhu	a5,10(s4)
+ 766 0092 2393FA00 		sh	a5,6(s5)
+ 767 0096 97000000 		call	CtrlSetUsbAddress
+ 767      E7800000 
+ 768 009e AA84     		mv	s1,a0
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 17
+
+
+ 769 00a0 79E9     		bne	a0,zero,.L97
+ 770 00a2 17050000 		lla	a0,.LC3
+ 770      13050500 
+ 771 00aa A3807A01 		sb	s7,1(s5)
+ 772 00ae 97000000 		call	printf
+ 772      E7800000 
+ 773 00b6 97000000 		call	CtrlGetConfigDescr
+ 773      E7800000 
+ 774 00be AA84     		mv	s1,a0
+ 775 00c0 5DE9     		bne	a0,zero,.L97
+ 776 00c2 834A5A00 		lbu	s5,5(s4)
+ 777 00c6 014C     		li	s8,0
+ 778 00c8 970B0000 		lla	s7,.LC2
+ 778      938B0B00 
+ 779              	.L98:
+ 780 00d0 83572A00 		lhu	a5,2(s4)
+ 781 00d4 636FFC0A 		bgtu	a5,s8,.L99
+ 782 00d8 2945     		li	a0,10
+ 783 00da 97000000 		call	putchar
+ 783      E7800000 
+ 784 00e2 834BEA00 		lbu	s7,14(s4)
+ 785 00e6 631C0B1E 		bne	s6,zero,.L100
+ 786 00ea A147     		li	a5,8
+ 787 00ec 6390FB0C 		bne	s7,a5,.L101
+ 788 00f0 A285     		mv	a1,s0
+ 789 00f2 3144     		li	s0,12
+ 790 00f4 33848902 		mul	s0,s3,s0
+ 791 00f8 17050000 		lla	a0,Com_Buffer
+ 791      13050500 
+ 792 0100 97000000 		call	AnalyzeBulkEndp
+ 792      E7800000 
+ 793 0108 114A     		li	s4,4
+ 794 010a 170B0000 		lla	s6,.LC0
+ 794      130B0B00 
+ 795 0112 4A94     		add	s0,s2,s0
+ 796              	.L102:
+ 797 0114 83458400 		lbu	a1,8(s0)
+ 798 0118 7D1A     		addi	s4,s4,-1
+ 799 011a 5A85     		mv	a0,s6
+ 800 011c 137AFA0F 		andi	s4,s4,0xff
+ 801 0120 97000000 		call	printf
+ 801      E7800000 
+ 802 0128 0504     		addi	s0,s0,1
+ 803 012a E3150AFE 		bne	s4,zero,.L102
+ 804 012e 2945     		li	a0,10
+ 805 0130 97000000 		call	putchar
+ 805      E7800000 
+ 806 0138 5685     		mv	a0,s5
+ 807 013a 97000000 		call	CtrlSetUsbConfig
+ 807      E7800000 
+ 808 0142 2A84     		mv	s0,a0
+ 809 0144 63110514 		bne	a0,zero,.L103
+ 810 0148 B147     		li	a5,12
+ 811 014a B387F902 		mul	a5,s3,a5
+ 812 014e 0D47     		li	a4,3
+ 813 0150 17050000 		lla	a0,.LC4
+ 813      13050500 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 18
+
+
+ 814 0158 CA97     		add	a5,s2,a5
+ 815 015a 2380E700 		sb	a4,0(a5)
+ 816 015e 2147     		li	a4,8
+ 817 0160 A381E700 		sb	a4,3(a5)
+ 818              	.L123:
+ 819 0164 97000000 		call	puts
+ 819      E7800000 
+ 820              	.L124:
+ 821 016c 0545     		li	a0,1
+ 822 016e 97000000 		call	SetUsbSpeed
+ 822      E7800000 
+ 823              	.L97:
+ 824 0176 B250     		lw	ra,44(sp)
+ 825 0178 2254     		lw	s0,40(sp)
+ 826 017a 0259     		lw	s2,32(sp)
+ 827 017c F249     		lw	s3,28(sp)
+ 828 017e 624A     		lw	s4,24(sp)
+ 829 0180 D24A     		lw	s5,20(sp)
+ 830 0182 424B     		lw	s6,16(sp)
+ 831 0184 B24B     		lw	s7,12(sp)
+ 832 0186 224C     		lw	s8,8(sp)
+ 833 0188 924C     		lw	s9,4(sp)
+ 834 018a 2685     		mv	a0,s1
+ 835 018c 9254     		lw	s1,36(sp)
+ 836 018e 4561     		addi	sp,sp,48
+ 837 0190 8280     		jr	ra
+ 838              	.L99:
+ 839 0192 B3078A01 		add	a5,s4,s8
+ 840 0196 83C50700 		lbu	a1,0(a5)
+ 841 019a 5E85     		mv	a0,s7
+ 842 019c 050C     		addi	s8,s8,1
+ 843 019e 97000000 		call	printf
+ 843      E7800000 
+ 844 01a6 137CFC0F 		andi	s8,s8,0xff
+ 845 01aa 1DB7     		j	.L98
+ 846              	.L101:
+ 847 01ac 8D47     		li	a5,3
+ 848 01ae 6392FB16 		bne	s7,a5,.L105
+ 849 01b2 0347FA00 		lbu	a4,15(s4)
+ 850 01b6 8547     		li	a5,1
+ 851 01b8 63EDE714 		bgtu	a4,a5,.L105
+ 852 01bc A285     		mv	a1,s0
+ 853 01be 17050000 		lla	a0,Com_Buffer
+ 853      13050500 
+ 854 01c6 834B4A00 		lbu	s7,4(s4)
+ 855 01ca 97000000 		call	AnalyzeHidIntEndp
+ 855      E7800000 
+ 856 01d2 AA85     		mv	a1,a0
+ 857 01d4 17050000 		lla	a0,.LC6
+ 857      13050500 
+ 858 01dc 97000000 		call	printf
+ 858      E7800000 
+ 859 01e4 5685     		mv	a0,s5
+ 860 01e6 034B0A01 		lbu	s6,16(s4)
+ 861 01ea 97000000 		call	CtrlSetUsbConfig
+ 861      E7800000 
+ 862 01f2 2A84     		mv	s0,a0
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 19
+
+
+ 863 01f4 49E9     		bne	a0,zero,.L103
+ 864 01f6 170C0000 		lla	s8,.LC2
+ 864      130C0C00 
+ 865 01fe 930C0004 		li	s9,64
+ 866              	.L106:
+ 867 0202 63117405 		bne	s0,s7,.L109
+ 868 0206 314A     		li	s4,12
+ 869 0208 338A4903 		mul	s4,s3,s4
+ 870 020c 8D4A     		li	s5,3
+ 871 020e 8547     		li	a5,1
+ 872 0210 4A9A     		add	s4,s2,s4
+ 873 0212 23005A01 		sb	s5,0(s4)
+ 874 0216 6313FB06 		bne	s6,a5,.L110
+ 875 021a 93073002 		li	a5,35
+ 876 021e A301FA00 		sb	a5,3(s4)
+ 877 0222 637C8B00 		bleu	s0,s6,.L111
+ 878 0226 17050000 		lla	a0,.LC16
+ 878      13050500 
+ 879 022e 97000000 		call	puts
+ 879      E7800000 
+ 880 0236 A3015A01 		sb	s5,3(s4)
+ 881              	.L111:
+ 882 023a 17050000 		lla	a0,.LC7
+ 882      13050500 
+ 883 0242 0DB7     		j	.L123
+ 884              	.L109:
+ 885 0244 2285     		mv	a0,s0
+ 886 0246 97000000 		call	CtrlGetHIDDeviceReport
+ 886      E7800000 
+ 887 024e 1DE1     		bne	a0,zero,.L107
+ 888 0250 814A     		li	s5,0
+ 889              	.L108:
+ 890 0252 B3075A01 		add	a5,s4,s5
+ 891 0256 83C50700 		lbu	a1,0(a5)
+ 892 025a 6285     		mv	a0,s8
+ 893 025c 850A     		addi	s5,s5,1
+ 894 025e 97000000 		call	printf
+ 894      E7800000 
+ 895 0266 E3969AFF 		bne	s5,s9,.L108
+ 896 026a 2945     		li	a0,10
+ 897 026c 97000000 		call	putchar
+ 897      E7800000 
+ 898              	.L107:
+ 899 0274 0504     		addi	s0,s0,1
+ 900 0276 1374F40F 		andi	s0,s0,0xff
+ 901 027a 61B7     		j	.L106
+ 902              	.L110:
+ 903 027c 0947     		li	a4,2
+ 904 027e 630BEB02 		beq	s6,a4,.L112
+ 905              	.L114:
+ 906 0282 1304B00F 		li	s0,251
+ 907              	.L103:
+ 908 0286 A285     		mv	a1,s0
+ 909 0288 17050000 		lla	a0,.LC18
+ 909      13050500 
+ 910 0290 97000000 		call	printf
+ 910      E7800000 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 20
+
+
+ 911 0298 B147     		li	a5,12
+ 912 029a B389F902 		mul	s3,s3,a5
+ 913 029e 0545     		li	a0,1
+ 914 02a0 8947     		li	a5,2
+ 915 02a2 A284     		mv	s1,s0
+ 916 02a4 4E99     		add	s2,s2,s3
+ 917 02a6 2300F900 		sb	a5,0(s2)
+ 918 02aa 97000000 		call	SetUsbSpeed
+ 918      E7800000 
+ 919 02b2 D1B5     		j	.L97
+ 920              	.L112:
+ 921 02b4 13073003 		li	a4,51
+ 922 02b8 A301EA00 		sb	a4,3(s4)
+ 923 02bc 63FC8700 		bleu	s0,a5,.L113
+ 924 02c0 17050000 		lla	a0,.LC16
+ 924      13050500 
+ 925 02c8 97000000 		call	puts
+ 925      E7800000 
+ 926 02d0 A3015A01 		sb	s5,3(s4)
+ 927              	.L113:
+ 928 02d4 17050000 		lla	a0,.LC8
+ 928      13050500 
+ 929 02dc 61B5     		j	.L123
+ 930              	.L100:
+ 931 02de A547     		li	a5,9
+ 932 02e0 6319FB02 		bne	s6,a5,.L105
+ 933 02e4 B147     		li	a5,12
+ 934 02e6 B387F902 		mul	a5,s3,a5
+ 935 02ea 17050000 		lla	a0,.LC17
+ 935      13050500 
+ 936 02f2 CA97     		add	a5,s2,a5
+ 937 02f4 A3816701 		sb	s6,3(a5)
+ 938 02f8 97000000 		call	puts
+ 938      E7800000 
+ 939 0300 8545     		li	a1,1
+ 940 0302 6285     		mv	a0,s8
+ 941 0304 97000000 		call	HubClearPortFeature
+ 941      E7800000 
+ 942 030c AA84     		mv	s1,a0
+ 943 030e 35D9     		beq	a0,zero,.L114
+ 944 0310 9DB5     		j	.L97
+ 945              	.L105:
+ 946 0312 A285     		mv	a1,s0
+ 947 0314 3144     		li	s0,12
+ 948 0316 33848902 		mul	s0,s3,s0
+ 949 031a 17050000 		lla	a0,Com_Buffer
+ 949      13050500 
+ 950 0322 97000000 		call	AnalyzeBulkEndp
+ 950      E7800000 
+ 951 032a 114A     		li	s4,4
+ 952 032c 170C0000 		lla	s8,.LC0
+ 952      130C0C00 
+ 953 0334 4A94     		add	s0,s2,s0
+ 954              	.L115:
+ 955 0336 83458400 		lbu	a1,8(s0)
+ 956 033a 7D1A     		addi	s4,s4,-1
+ 957 033c 6285     		mv	a0,s8
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 21
+
+
+ 958 033e 137AFA0F 		andi	s4,s4,0xff
+ 959 0342 97000000 		call	printf
+ 959      E7800000 
+ 960 034a 0504     		addi	s0,s0,1
+ 961 034c E3150AFE 		bne	s4,zero,.L115
+ 962 0350 2945     		li	a0,10
+ 963 0352 97000000 		call	putchar
+ 963      E7800000 
+ 964 035a 5685     		mv	a0,s5
+ 965 035c 97000000 		call	CtrlSetUsbConfig
+ 965      E7800000 
+ 966 0364 2A84     		mv	s0,a0
+ 967 0366 05F1     		bne	a0,zero,.L103
+ 968 0368 B147     		li	a5,12
+ 969 036a B387F902 		mul	a5,s3,a5
+ 970 036e 0D47     		li	a4,3
+ 971 0370 CA97     		add	a5,s2,a5
+ 972 0372 2380E700 		sb	a4,0(a5)
+ 973 0376 63130B00 		bne	s6,zero,.L116
+ 974 037a 5E8B     		mv	s6,s7
+ 975              	.L116:
+ 976 037c B147     		li	a5,12
+ 977 037e B387F902 		mul	a5,s3,a5
+ 978 0382 CA97     		add	a5,s2,a5
+ 979 0384 A3816701 		sb	s6,3(a5)
+ 980 0388 D5B3     		j	.L124
+ 982              		.section	.rodata.EnumHubPort.str1.4,"aMS",@progbits,1
+ 983              		.align	2
+ 984              	.LC19:
+ 985 0000 466F756E 		.string	"Found full speed device on port %1d\n"
+ 985      64206675 
+ 985      6C6C2073 
+ 985      70656564 
+ 985      20646576 
+ 986 0025 000000   		.align	2
+ 987              	.LC20:
+ 988 0028 466F756E 		.string	"Found low speed device on port %1d\n"
+ 988      64206C6F 
+ 988      77207370 
+ 988      65656420 
+ 988      64657669 
+ 989              		.align	2
+ 990              	.LC21:
+ 991 004c 52657365 		.string	"Reset port and then wait in"
+ 991      7420706F 
+ 991      72742061 
+ 991      6E642074 
+ 991      68656E20 
+ 992              		.align	2
+ 993              	.LC22:
+ 994 0068 44657669 		.string	"Device on port error"
+ 994      6365206F 
+ 994      6E20706F 
+ 994      72742065 
+ 994      72726F72 
+ 995 007d 000000   		.align	2
+ 996              	.LC23:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 22
+
+
+ 997 0080 44657669 		.string	"Device on port %1d removed\n"
+ 997      6365206F 
+ 997      6E20706F 
+ 997      72742025 
+ 997      31642072 
+ 998              		.section	.text.EnumHubPort,"ax",@progbits
+ 999              		.align	1
+ 1000              		.globl	EnumHubPort
+ 1002              	EnumHubPort:
+ 1003 0000 7971     		addi	sp,sp,-48
+ 1004 0002 22D4     		sw	s0,40(sp)
+ 1005 0004 26D2     		sw	s1,36(sp)
+ 1006 0006 4AD0     		sw	s2,32(sp)
+ 1007 0008 4ECE     		sw	s3,28(sp)
+ 1008 000a 52CC     		sw	s4,24(sp)
+ 1009 000c 56CA     		sw	s5,20(sp)
+ 1010 000e 5AC8     		sw	s6,16(sp)
+ 1011 0010 06D6     		sw	ra,44(sp)
+ 1012 0012 5EC6     		sw	s7,12(sp)
+ 1013 0014 62C4     		sw	s8,8(sp)
+ 1014 0016 0544     		li	s0,1
+ 1015 0018 970A0000 		lla	s5,ThisUsbDev
+ 1015      938A0A00 
+ 1016 0020 97040000 		lla	s1,Com_Buffer
+ 1016      93840400 
+ 1017 0028 B149     		li	s3,12
+ 1018 002a 17090000 		lla	s2,DevOnHubPort
+ 1018      13090900 
+ 1019 0032 170B0000 		lla	s6,.LC21
+ 1019      130B0B00 
+ 1020 003a 414A     		li	s4,16
+ 1021              	.L126:
+ 1022 003c 83C7CA00 		lbu	a5,12(s5)
+ 1023 0040 0145     		li	a0,0
+ 1024 0042 63FE8700 		bgeu	a5,s0,.L140
+ 1025              	.L127:
+ 1026 0046 B250     		lw	ra,44(sp)
+ 1027 0048 2254     		lw	s0,40(sp)
+ 1028 004a 9254     		lw	s1,36(sp)
+ 1029 004c 0259     		lw	s2,32(sp)
+ 1030 004e F249     		lw	s3,28(sp)
+ 1031 0050 624A     		lw	s4,24(sp)
+ 1032 0052 D24A     		lw	s5,20(sp)
+ 1033 0054 424B     		lw	s6,16(sp)
+ 1034 0056 B24B     		lw	s7,12(sp)
+ 1035 0058 224C     		lw	s8,8(sp)
+ 1036 005a 4561     		addi	sp,sp,48
+ 1037 005c 8280     		jr	ra
+ 1038              	.L140:
+ 1039 005e 97000000 		call	SelectHubPort
+ 1039      E7800000 
+ 1040 0066 2285     		mv	a0,s0
+ 1041 0068 97000000 		call	HubGetPortStatus
+ 1041      E7800000 
+ 1042 0070 79F9     		bne	a0,zero,.L127
+ 1043 0072 03C70400 		lbu	a4,0(s1)
+ 1044 0076 83C72400 		lbu	a5,2(s1)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 23
+
+
+ 1045 007a 058B     		andi	a4,a4,1
+ 1046 007c 39EB     		bne	a4,zero,.L128
+ 1047 007e 63854707 		beq	a5,s4,.L129
+ 1048 0082 898B     		andi	a5,a5,2
+ 1049 0084 63890714 		beq	a5,zero,.L149
+ 1050              	.L130:
+ 1051 0088 C545     		li	a1,17
+ 1052 008a 2285     		mv	a0,s0
+ 1053 008c 97000000 		call	HubClearPortFeature
+ 1053      E7800000 
+ 1054 0094 17050000 		lla	a0,.LC22
+ 1054      13050500 
+ 1055 009c 97000000 		call	puts
+ 1055      E7800000 
+ 1056 00a4 9145     		li	a1,4
+ 1057 00a6 2285     		mv	a0,s0
+ 1058 00a8 97000000 		call	HubSetPortFeature
+ 1058      E7800000 
+ 1059 00b0 59F9     		bne	a0,zero,.L127
+ 1060              	.L137:
+ 1061 00b2 0545     		li	a0,1
+ 1062 00b4 97000000 		call	mDelaymS
+ 1062      E7800000 
+ 1063 00bc 2285     		mv	a0,s0
+ 1064 00be 97000000 		call	HubGetPortStatus
+ 1064      E7800000 
+ 1065 00c6 41F1     		bne	a0,zero,.L127
+ 1066 00c8 83C70400 		lbu	a5,0(s1)
+ 1067 00cc C18B     		andi	a5,a5,16
+ 1068 00ce F5F3     		bne	a5,zero,.L137
+ 1069 00d0 01A8     		j	.L132
+ 1070              	.L128:
+ 1071 00d2 13F71700 		andi	a4,a5,1
+ 1072 00d6 09EB     		bne	a4,zero,.L129
+ 1073 00d8 63884701 		beq	a5,s4,.L129
+ 1074 00dc 898B     		andi	a5,a5,2
+ 1075 00de CDF7     		bne	a5,zero,.L130
+ 1076              	.L132:
+ 1077 00e0 0504     		addi	s0,s0,1
+ 1078 00e2 1374F40F 		andi	s0,s0,0xff
+ 1079 00e6 99BF     		j	.L126
+ 1080              	.L129:
+ 1081 00e8 930BF4FF 		addi	s7,s0,-1
+ 1082 00ec 338C3B03 		mul	s8,s7,s3
+ 1083 00f0 8547     		li	a5,1
+ 1084 00f2 2285     		mv	a0,s0
+ 1085 00f4 4A9C     		add	s8,s8,s2
+ 1086 00f6 2310FC00 		sh	a5,0(s8)
+ 1087 00fa 97000000 		call	HubGetPortStatus
+ 1087      E7800000 
+ 1088 0102 31F1     		bne	a0,zero,.L127
+ 1089 0104 83C71400 		lbu	a5,1(s1)
+ 1090 0108 A285     		mv	a1,s0
+ 1091 010a 17050000 		lla	a0,.LC19
+ 1091      13050500 
+ 1092 0112 898B     		andi	a5,a5,2
+ 1093 0114 13B71700 		seqz	a4,a5
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 24
+
+
+ 1094 0118 2301EC00 		sb	a4,2(s8)
+ 1095 011c 89C7     		beq	a5,zero,.L151
+ 1096 011e 17050000 		lla	a0,.LC20
+ 1096      13050500 
+ 1097              	.L151:
+ 1098 0126 97000000 		call	printf
+ 1098      E7800000 
+ 1099 012e 1305800C 		li	a0,200
+ 1100 0132 97000000 		call	mDelaymS
+ 1100      E7800000 
+ 1101 013a 9145     		li	a1,4
+ 1102 013c 2285     		mv	a0,s0
+ 1103 013e 97000000 		call	HubSetPortFeature
+ 1103      E7800000 
+ 1104 0146 01F1     		bne	a0,zero,.L127
+ 1105 0148 5A85     		mv	a0,s6
+ 1106 014a 97000000 		call	puts
+ 1106      E7800000 
+ 1107              	.L135:
+ 1108 0152 0545     		li	a0,1
+ 1109 0154 97000000 		call	mDelaymS
+ 1109      E7800000 
+ 1110 015c 2285     		mv	a0,s0
+ 1111 015e 97000000 		call	HubGetPortStatus
+ 1111      E7800000 
+ 1112 0166 E31005EE 		bne	a0,zero,.L127
+ 1113 016a 83C70400 		lbu	a5,0(s1)
+ 1114 016e C18B     		andi	a5,a5,16
+ 1115 0170 EDF3     		bne	a5,zero,.L135
+ 1116 0172 13054006 		li	a0,100
+ 1117 0176 97000000 		call	mDelaymS
+ 1117      E7800000 
+ 1118 017e D145     		li	a1,20
+ 1119 0180 2285     		mv	a0,s0
+ 1120 0182 97000000 		call	HubClearPortFeature
+ 1120      E7800000 
+ 1121 018a C145     		li	a1,16
+ 1122 018c 2285     		mv	a0,s0
+ 1123 018e 97000000 		call	HubClearPortFeature
+ 1123      E7800000 
+ 1124 0196 E31805EA 		bne	a0,zero,.L127
+ 1125 019a 2285     		mv	a0,s0
+ 1126 019c 97000000 		call	HubGetPortStatus
+ 1126      E7800000 
+ 1127 01a4 E31105EA 		bne	a0,zero,.L127
+ 1128 01a8 83C70400 		lbu	a5,0(s1)
+ 1129 01ac 858B     		andi	a5,a5,1
+ 1130 01ae 99E7     		bne	a5,zero,.L136
+ 1131 01b0 B147     		li	a5,12
+ 1132 01b2 B38BFB02 		mul	s7,s7,a5
+ 1133 01b6 CA9B     		add	s7,s2,s7
+ 1134 01b8 23800B00 		sb	zero,0(s7)
+ 1135              	.L136:
+ 1136 01bc 2285     		mv	a0,s0
+ 1137 01be 97000000 		call	InitDevOnHub
+ 1137      E7800000 
+ 1138 01c6 E31005E8 		bne	a0,zero,.L127
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 25
+
+
+ 1139 01ca 0545     		li	a0,1
+ 1140 01cc 97000000 		call	SetUsbSpeed
+ 1140      E7800000 
+ 1141 01d4 31B7     		j	.L132
+ 1142              	.L149:
+ 1143 01d6 930BF4FF 		addi	s7,s0,-1
+ 1144 01da B3873B03 		mul	a5,s7,s3
+ 1145 01de CA97     		add	a5,s2,a5
+ 1146 01e0 83C70700 		lbu	a5,0(a5)
+ 1147 01e4 91CB     		beq	a5,zero,.L139
+ 1148 01e6 A285     		mv	a1,s0
+ 1149 01e8 17050000 		lla	a0,.LC23
+ 1149      13050500 
+ 1150 01f0 97000000 		call	printf
+ 1150      E7800000 
+ 1151              	.L139:
+ 1152 01f8 B38B3B03 		mul	s7,s7,s3
+ 1153 01fc 83C72400 		lbu	a5,2(s1)
+ 1154 0200 858B     		andi	a5,a5,1
+ 1155 0202 CA9B     		add	s7,s2,s7
+ 1156 0204 23800B00 		sb	zero,0(s7)
+ 1157 0208 E38C07EC 		beq	a5,zero,.L132
+ 1158 020c C145     		li	a1,16
+ 1159 020e 2285     		mv	a0,s0
+ 1160 0210 97000000 		call	HubClearPortFeature
+ 1160      E7800000 
+ 1161 0218 E1B5     		j	.L132
+ 1163              		.section	.rodata.EnumAllHubPort.str1.4,"aMS",@progbits,1
+ 1164              		.align	2
+ 1165              	.LC24:
+ 1166 0000 456E756D 		.string	"EnumAllHubPort err = %02X\n"
+ 1166      416C6C48 
+ 1166      7562506F 
+ 1166      72742065 
+ 1166      7272203D 
+ 1167              		.section	.text.EnumAllHubPort,"ax",@progbits
+ 1168              		.align	1
+ 1169              		.globl	EnumAllHubPort
+ 1171              	EnumAllHubPort:
+ 1172 0000 97070000 		lla	a5,ThisUsbDev
+ 1172      93870700 
+ 1173 0008 83C60700 		lbu	a3,0(a5)
+ 1174 000c 0947     		li	a4,2
+ 1175 000e 6375D704 		bleu	a3,a4,.L159
+ 1176 0012 03C73700 		lbu	a4,3(a5)
+ 1177 0016 A547     		li	a5,9
+ 1178 0018 6310F704 		bne	a4,a5,.L159
+ 1179 001c 4111     		addi	sp,sp,-16
+ 1180 001e 0145     		li	a0,0
+ 1181 0020 06C6     		sw	ra,12(sp)
+ 1182 0022 97000000 		call	SelectHubPort
+ 1182      E7800000 
+ 1183 002a 97000000 		call	EnumHubPort
+ 1183      E7800000 
+ 1184 0032 AA85     		mv	a1,a0
+ 1185 0034 09C9     		beq	a0,zero,.L154
+ 1186 0036 17050000 		lla	a0,.LC24
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 26
+
+
+ 1186      13050500 
+ 1187 003e 97000000 		call	printf
+ 1187      E7800000 
+ 1188              	.L154:
+ 1189 0046 0545     		li	a0,1
+ 1190 0048 97000000 		call	SetUsbSpeed
+ 1190      E7800000 
+ 1191 0050 B240     		lw	ra,12(sp)
+ 1192 0052 0145     		li	a0,0
+ 1193 0054 4101     		addi	sp,sp,16
+ 1194 0056 8280     		jr	ra
+ 1195              	.L159:
+ 1196 0058 0145     		li	a0,0
+ 1197 005a 8280     		ret
+ 1199              		.globl	Com_Buffer
+ 1200              		.section	.bss.Com_Buffer,"aw",@nobits
+ 1201              		.align	2
+ 1204              	Com_Buffer:
+ 1205 0000 00000000 		.zero	128
+ 1205      00000000 
+ 1205      00000000 
+ 1205      00000000 
+ 1205      00000000 
+ 1206              		.globl	SetupGetHubDescr
+ 1207              		.section	.srodata.SetupGetHubDescr,"a"
+ 1208              		.align	2
+ 1211              	SetupGetHubDescr:
+ 1212 0000 A00600   		.string	"\240\006"
+ 1213 0003 2900     		.string	")"
+ 1214 0005 00       		.string	""
+ 1215 0006 0900     		.string	"\t"
+ 1216              		.globl	SetupGetHIDDevReport
+ 1217              		.section	.srodata.SetupGetHIDDevReport,"a"
+ 1218              		.align	2
+ 1221              	SetupGetHIDDevReport:
+ 1222 0000 810600   		.string	"\201\006"
+ 1223 0003 2200     		.string	"\""
+ 1224 0005 00       		.string	""
+ 1225 0006 4100     		.string	"A"
+ 1226              		.globl	SetupSetHIDIdle
+ 1227              		.section	.srodata.SetupSetHIDIdle,"a"
+ 1228              		.align	2
+ 1231              	SetupSetHIDIdle:
+ 1232 0000 210A00   		.string	"!\n"
+ 1233 0003 00       		.string	""
+ 1234 0004 00       		.string	""
+ 1235 0005 00       		.string	""
+ 1236 0006 00       		.string	""
+ 1237 0007 00       		.string	""
+ 1238              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 27
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_usbhostClass.c
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:15     .text.AnalyzeHidIntEndp:0000000000000000 AnalyzeHidIntEndp
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:16     .text.AnalyzeHidIntEndp:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:109    .text.AnalyzeBulkEndp:0000000000000000 AnalyzeBulkEndp
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:110    .text.AnalyzeBulkEndp:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:184    .text.SearchTypeDevice:0000000000000000 SearchTypeDevice
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:185    .text.SearchTypeDevice:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:230    .text.SETorOFFNumLock:0000000000000000 SETorOFFNumLock
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:231    .text.SETorOFFNumLock:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1204   .bss.Com_Buffer:0000000000000000 Com_Buffer
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:281    .text.CtrlGetHIDDeviceReport:0000000000000000 CtrlGetHIDDeviceReport
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:282    .text.CtrlGetHIDDeviceReport:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1231   .srodata.SetupSetHIDIdle:0000000000000000 SetupSetHIDIdle
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1221   .srodata.SetupGetHIDDevReport:0000000000000000 SetupGetHIDDevReport
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:320    .text.CtrlGetHubDescr:0000000000000000 CtrlGetHubDescr
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:321    .text.CtrlGetHubDescr:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1211   .srodata.SetupGetHubDescr:0000000000000000 SetupGetHubDescr
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:342    .text.HubGetPortStatus:0000000000000000 HubGetPortStatus
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:343    .text.HubGetPortStatus:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:373    .text.HubSetPortFeature:0000000000000000 HubSetPortFeature
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:374    .text.HubSetPortFeature:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:436    .text.InitRootDevice:0000000000000000 InitRootDevice
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:437    .text.InitRootDevice:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:694    .text.HubClearPortFeature:0000000000000000 HubClearPortFeature
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:695    .text.HubClearPortFeature:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:727    .text.InitDevOnHub:0000000000000000 InitDevOnHub
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:728    .text.InitDevOnHub:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1002   .text.EnumHubPort:0000000000000000 EnumHubPort
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1003   .text.EnumHubPort:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1171   .text.EnumAllHubPort:0000000000000000 EnumAllHubPort
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1172   .text.EnumAllHubPort:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:32     .text.AnalyzeHidIntEndp:0000000000000024 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:64     .text.AnalyzeHidIntEndp:0000000000000072 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:65     .text.AnalyzeHidIntEndp:000000000000007a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:78     .text.AnalyzeHidIntEndp:00000000000000a8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:85     .text.AnalyzeHidIntEndp:00000000000000c2 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:9      .rodata.AnalyzeHidIntEndp.str1.4:0000000000000000 .LC0
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:92     .text.AnalyzeHidIntEndp:00000000000000d8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:63     .text.AnalyzeHidIntEndp:0000000000000072 .L2
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:67     .text.AnalyzeHidIntEndp:0000000000000084 .L9
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:36     .text.AnalyzeHidIntEndp:0000000000000036 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:98     .text.AnalyzeHidIntEndp:00000000000000f4 .L5
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:88     .text.AnalyzeHidIntEndp:00000000000000ce .L11
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:48     .text.AnalyzeHidIntEndp:0000000000000050 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:42     .text.AnalyzeHidIntEndp:0000000000000040 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:114    .text.AnalyzeBulkEndp:000000000000000c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:135    .text.AnalyzeBulkEndp:0000000000000040 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:136    .text.AnalyzeBulkEndp:0000000000000048 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:151    .text.AnalyzeBulkEndp:000000000000007c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:176    .text.AnalyzeBulkEndp:00000000000000ba .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:134    .text.AnalyzeBulkEndp:0000000000000040 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:138    .text.AnalyzeBulkEndp:0000000000000052 .L24
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:118    .text.AnalyzeBulkEndp:000000000000001e .L15
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:160    .text.AnalyzeBulkEndp:0000000000000098 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:175    .text.AnalyzeBulkEndp:00000000000000ba .L17
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:166    .text.AnalyzeBulkEndp:00000000000000a8 .L18
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 28
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:131    .text.AnalyzeBulkEndp:000000000000003c .L26
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:129    .text.AnalyzeBulkEndp:0000000000000038 .L14
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:170    .text.AnalyzeBulkEndp:00000000000000b0 .L22
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:156    .text.AnalyzeBulkEndp:0000000000000090 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:185    .text.SearchTypeDevice:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:194    .text.SearchTypeDevice:0000000000000022 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:199    .text.SearchTypeDevice:0000000000000032 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:207    .text.SearchTypeDevice:0000000000000048 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:221    .text.SearchTypeDevice:000000000000006e .L34
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:217    .text.SearchTypeDevice:0000000000000066 .L31
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:197    .text.SearchTypeDevice:000000000000002e .L30
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:255    .text.SETorOFFNumLock:0000000000000046 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:267    .text.SETorOFFNumLock:000000000000006a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:273    .text.SETorOFFNumLock:0000000000000080 .L38
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:257    .text.SETorOFFNumLock:0000000000000050 .L37
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:269    .text.SETorOFFNumLock:000000000000007a .L36
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:285    .text.CtrlGetHIDDeviceReport:0000000000000006 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:289    .text.CtrlGetHIDDeviceReport:0000000000000014 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:297    .text.CtrlGetHIDDeviceReport:000000000000003a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:300    .text.CtrlGetHIDDeviceReport:000000000000004c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:304    .text.CtrlGetHIDDeviceReport:0000000000000064 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:308    .text.CtrlGetHIDDeviceReport:000000000000007c .L48
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:322    .text.CtrlGetHubDescr:0000000000000002 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:326    .text.CtrlGetHubDescr:0000000000000018 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:333    .text.CtrlGetHubDescr:0000000000000036 .L51
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:345    .text.HubGetPortStatus:0000000000000004 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:357    .text.HubGetPortStatus:0000000000000036 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:364    .text.HubGetPortStatus:0000000000000054 .L55
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:374    .text.HubSetPortFeature:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:391    .rodata.InitRootDevice.str1.4:0000000000000000 .LC1
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:438    .text.InitRootDevice:0000000000000002 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:427    .rodata.InitRootDevice.str1.4:00000000000000e0 .LC13
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:466    .text.InitRootDevice:0000000000000064 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:482    .text.InitRootDevice:00000000000000a4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:397    .rodata.InitRootDevice.str1.4:0000000000000018 .LC3
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:491    .text.InitRootDevice:00000000000000cc .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:394    .rodata.InitRootDevice.str1.4:0000000000000010 .LC2
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:498    .text.InitRootDevice:00000000000000f0 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:400    .rodata.InitRootDevice.str1.4:0000000000000028 .LC4
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:524    .text.InitRootDevice:0000000000000150 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:403    .rodata.InitRootDevice.str1.4:0000000000000038 .LC5
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:555    .text.InitRootDevice:00000000000001aa .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:564    .text.InitRootDevice:00000000000001c6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:406    .rodata.InitRootDevice.str1.4:0000000000000048 .LC6
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:567    .text.InitRootDevice:00000000000001d8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:576    .text.InitRootDevice:0000000000000206 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:409    .rodata.InitRootDevice.str1.4:0000000000000060 .LC7
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:594    .text.InitRootDevice:0000000000000248 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:412    .rodata.InitRootDevice.str1.4:0000000000000074 .LC8
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:602    .text.InitRootDevice:0000000000000264 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:415    .rodata.InitRootDevice.str1.4:0000000000000084 .LC9
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:611    .text.InitRootDevice:0000000000000284 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:629    .text.InitRootDevice:00000000000002c2 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:418    .rodata.InitRootDevice.str1.4:0000000000000094 .LC10
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:631    .text.InitRootDevice:00000000000002cc .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:421    .rodata.InitRootDevice.str1.4:00000000000000b8 .LC11
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:635    .text.InitRootDevice:00000000000002dc .L0 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 29
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:424    .rodata.InitRootDevice.str1.4:00000000000000c8 .LC12
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:665    .text.InitRootDevice:0000000000000334 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:673    .text.InitRootDevice:0000000000000356 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:430    .rodata.InitRootDevice.str1.4:0000000000000108 .LC14
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:676    .text.InitRootDevice:000000000000036a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:681    .text.InitRootDevice:0000000000000386 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:684    .text.InitRootDevice:0000000000000396 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:687    .text.InitRootDevice:00000000000003a4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:461    .text.InitRootDevice:0000000000000052 .L60
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:672    .text.InitRootDevice:0000000000000356 .L61
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:451    .text.InitRootDevice:0000000000000030 .L64
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:531    .text.InitRootDevice:000000000000016c .L91
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:470    .text.InitRootDevice:0000000000000078 .L65
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:663    .text.InitRootDevice:0000000000000332 .L66
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:507    .text.InitRootDevice:0000000000000112 .L67
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:500    .text.InitRootDevice:00000000000000fa .L68
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:604    .text.InitRootDevice:000000000000026e .L69
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:542    .text.InitRootDevice:0000000000000180 .L70
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:557    .text.InitRootDevice:00000000000001b4 .L72
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:653    .text.InitRootDevice:0000000000000316 .L73
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:525    .text.InitRootDevice:0000000000000158 .L93
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:587    .text.InitRootDevice:0000000000000234 .L75
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:578    .text.InitRootDevice:0000000000000212 .L76
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:596    .text.InitRootDevice:0000000000000252 .L77
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:618    .text.InitRootDevice:00000000000002a2 .L78
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:637    .text.InitRootDevice:00000000000002e6 .L81
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:649    .text.InitRootDevice:000000000000030e .L80
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:632    .text.InitRootDevice:00000000000002d4 .L79
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:527    .text.InitRootDevice:0000000000000160 .L94
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:477    .text.InitRootDevice:0000000000000092 .L82
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:695    .text.HubClearPortFeature:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:712    .rodata.InitDevOnHub.str1.4:0000000000000000 .LC15
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:732    .text.InitDevOnHub:0000000000000008 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:748    .text.InitDevOnHub:000000000000003e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:756    .text.InitDevOnHub:0000000000000066 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:758    .text.InitDevOnHub:0000000000000072 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:770    .text.InitDevOnHub:00000000000000a2 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:778    .text.InitDevOnHub:00000000000000c8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:791    .text.InitDevOnHub:00000000000000f8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:794    .text.InitDevOnHub:000000000000010a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:813    .text.InitDevOnHub:0000000000000150 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:853    .text.InitDevOnHub:00000000000001be .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:857    .text.InitDevOnHub:00000000000001d4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:864    .text.InitDevOnHub:00000000000001f6 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:715    .rodata.InitDevOnHub.str1.4:000000000000001c .LC16
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:878    .text.InitDevOnHub:0000000000000226 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:882    .text.InitDevOnHub:000000000000023a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:721    .rodata.InitDevOnHub.str1.4:000000000000005c .LC18
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:909    .text.InitDevOnHub:0000000000000288 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:924    .text.InitDevOnHub:00000000000002c0 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:928    .text.InitDevOnHub:00000000000002d4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:718    .rodata.InitDevOnHub.str1.4:0000000000000034 .LC17
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:935    .text.InitDevOnHub:00000000000002ea .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:949    .text.InitDevOnHub:000000000000031a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:952    .text.InitDevOnHub:000000000000032c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:823    .text.InitDevOnHub:0000000000000176 .L97
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:838    .text.InitDevOnHub:0000000000000192 .L99
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 30
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:930    .text.InitDevOnHub:00000000000002de .L100
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:846    .text.InitDevOnHub:00000000000001ac .L101
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:796    .text.InitDevOnHub:0000000000000114 .L102
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:907    .text.InitDevOnHub:0000000000000286 .L103
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:779    .text.InitDevOnHub:00000000000000d0 .L98
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:945    .text.InitDevOnHub:0000000000000312 .L105
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:884    .text.InitDevOnHub:0000000000000244 .L109
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:902    .text.InitDevOnHub:000000000000027c .L110
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:881    .text.InitDevOnHub:000000000000023a .L111
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:818    .text.InitDevOnHub:0000000000000164 .L123
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:898    .text.InitDevOnHub:0000000000000274 .L107
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:889    .text.InitDevOnHub:0000000000000252 .L108
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:866    .text.InitDevOnHub:0000000000000202 .L106
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:920    .text.InitDevOnHub:00000000000002b4 .L112
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:927    .text.InitDevOnHub:00000000000002d4 .L113
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:905    .text.InitDevOnHub:0000000000000282 .L114
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:954    .text.InitDevOnHub:0000000000000336 .L115
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:975    .text.InitDevOnHub:000000000000037c .L116
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:820    .text.InitDevOnHub:000000000000016c .L124
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1015   .text.EnumHubPort:0000000000000018 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1016   .text.EnumHubPort:0000000000000020 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1018   .text.EnumHubPort:000000000000002a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:990    .rodata.EnumHubPort.str1.4:000000000000004c .LC21
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1019   .text.EnumHubPort:0000000000000032 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:993    .rodata.EnumHubPort.str1.4:0000000000000068 .LC22
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1054   .text.EnumHubPort:0000000000000094 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:984    .rodata.EnumHubPort.str1.4:0000000000000000 .LC19
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1091   .text.EnumHubPort:000000000000010a .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:987    .rodata.EnumHubPort.str1.4:0000000000000028 .LC20
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1096   .text.EnumHubPort:000000000000011e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:996    .rodata.EnumHubPort.str1.4:0000000000000080 .LC23
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1149   .text.EnumHubPort:00000000000001e8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1038   .text.EnumHubPort:000000000000005e .L140
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1025   .text.EnumHubPort:0000000000000046 .L127
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1070   .text.EnumHubPort:00000000000000d2 .L128
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1080   .text.EnumHubPort:00000000000000e8 .L129
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1142   .text.EnumHubPort:00000000000001d6 .L149
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1060   .text.EnumHubPort:00000000000000b2 .L137
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1076   .text.EnumHubPort:00000000000000e0 .L132
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1050   .text.EnumHubPort:0000000000000088 .L130
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1021   .text.EnumHubPort:000000000000003c .L126
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1097   .text.EnumHubPort:0000000000000126 .L151
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1107   .text.EnumHubPort:0000000000000152 .L135
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1135   .text.EnumHubPort:00000000000001bc .L136
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1151   .text.EnumHubPort:00000000000001f8 .L139
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1172   .text.EnumAllHubPort:0000000000000000 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1165   .rodata.EnumAllHubPort.str1.4:0000000000000000 .LC24
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1186   .text.EnumAllHubPort:0000000000000036 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1195   .text.EnumAllHubPort:0000000000000058 .L159
+C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s:1188   .text.EnumAllHubPort:0000000000000046 .L154
+
+UNDEFINED SYMBOLS
+DevOnHubPort
+putchar
+ThisUsbDev
+printf
+pHOST_TX_RAM_Addr
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccsf0Z1n.s 			page 31
+
+
+HostCtrlTransfer
+CopySetupReqPkg
+puts
+ResetRootHubPort
+mDelaymS
+EnableRootHubPort
+DisableRootHubPort
+SetupSetUsbAddr
+CtrlSetUsbAddress
+CtrlGetConfigDescr
+CtrlSetUsbConfig
+SetUsbSpeed
+CtrlGetDeviceDescr
+SetupGetDevDescr
+SelectHubPort

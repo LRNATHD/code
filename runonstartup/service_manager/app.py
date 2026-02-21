@@ -290,7 +290,9 @@ def api_mp3_sync_auth():
         
         return jsonify({'success': True, 'message': 'Auth headers saved'})
     except Exception as e:
-        return jsonify({'success': False, 'message': str(e)}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'message': f"Auth error: {str(e)}"}), 500
 
 
 

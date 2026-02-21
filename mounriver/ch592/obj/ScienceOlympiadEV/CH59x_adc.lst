@@ -1,0 +1,305 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s 			page 1
+
+
+   1              		.file	"CH59x_adc.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.ADC_DataCalib_Rough,"ax",@progbits
+   8              		.align	1
+   9              		.globl	ADC_DataCalib_Rough
+  11              	ADC_DataCalib_Rough:
+  12 0000 B7170040 		li	a5,1073745920
+  13 0004 83C58705 		lbu	a1,88(a5)
+  14 0008 03C89705 		lbu	a6,89(a5)
+  15 000c 03C79705 		lbu	a4,89(a5)
+  16 0010 93F5F50F 		andi	a1,a1,0xff
+  17 0014 1378F80F 		andi	a6,a6,0xff
+  18 0018 13678700 		ori	a4,a4,8
+  19 001c A38CE704 		sb	a4,89(a5)
+  20 0020 03C79705 		lbu	a4,89(a5)
+  21 0024 1377B70F 		andi	a4,a4,251
+  22 0028 A38CE704 		sb	a4,89(a5)
+  23 002c 03C7A705 		lbu	a4,90(a5)
+  24 0030 13671700 		ori	a4,a4,1
+  25 0034 238DE704 		sb	a4,90(a5)
+  26 0038 37170040 		li	a4,1073745920
+  27              	.L2:
+  28 003c 8347A705 		lbu	a5,90(a4)
+  29 0040 858B     		andi	a5,a5,1
+  30 0042 EDFF     		bne	a5,zero,.L2
+  31 0044 0565     		li	a0,4096
+  32 0046 C146     		li	a3,16
+  33 0048 37170040 		li	a4,1073745920
+  34 004c 9308F5FF 		addi	a7,a0,-1
+  35              	.L4:
+  36 0050 0346A705 		lbu	a2,90(a4)
+  37 0054 13661600 		ori	a2,a2,1
+  38 0058 230DC704 		sb	a2,90(a4)
+  39              	.L3:
+  40 005c 0346A705 		lbu	a2,90(a4)
+  41 0060 058A     		andi	a2,a2,1
+  42 0062 6DFE     		bne	a2,zero,.L3
+  43 0064 0356C705 		lhu	a2,92(a4)
+  44 0068 FD16     		addi	a3,a3,-1
+  45 006a C206     		slli	a3,a3,16
+  46 006c 1346F6FF 		not	a2,a2
+  47 0070 33761601 		and	a2,a2,a7
+  48 0074 C182     		srli	a3,a3,16
+  49 0076 B297     		add	a5,a5,a2
+  50 0078 E1FE     		bne	a3,zero,.L4
+  51 007a A107     		addi	a5,a5,8
+  52 007c 9183     		srli	a5,a5,4
+  53 007e 13050580 		addi	a0,a0,-2048
+  54 0082 1D8D     		sub	a0,a0,a5
+  55 0084 A30C0705 		sb	a6,89(a4)
+  56 0088 4205     		slli	a0,a0,16
+  57 008a 230CB704 		sb	a1,88(a4)
+  58 008e 4185     		srai	a0,a0,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s 			page 2
+
+
+  59 0090 8280     		ret
+  61              		.section	.text.ADC_ExtSingleChSampInit,"ax",@progbits
+  62              		.align	1
+  63              		.globl	ADC_ExtSingleChSampInit
+  65              	ADC_ExtSingleChSampInit:
+  66 0000 B7170040 		li	a5,1073745920
+  67 0004 03C77705 		lbu	a4,87(a5)
+  68 0008 1A05     		slli	a0,a0,6
+  69 000a 1377E70F 		andi	a4,a4,254
+  70 000e A38BE704 		sb	a4,87(a5)
+  71 0012 13974500 		slli	a4,a1,4
+  72 0016 598D     		or	a0,a0,a4
+  73 0018 13653500 		ori	a0,a0,3
+  74 001c 1375F50F 		andi	a0,a0,0xff
+  75 0020 A38CA704 		sb	a0,89(a5)
+  76 0024 03C7A705 		lbu	a4,90(a5)
+  77 0028 C189     		andi	a1,a1,16
+  78 002a 91C5     		beq	a1,zero,.L9
+  79 002c 13672700 		ori	a4,a4,2
+  80              	.L11:
+  81 0030 238DE704 		sb	a4,90(a5)
+  82 0034 8280     		ret
+  83              	.L9:
+  84 0036 1377D70F 		andi	a4,a4,253
+  85 003a DDBF     		j	.L11
+  87              		.section	.text.ADC_ExtDiffChSampInit,"ax",@progbits
+  88              		.align	1
+  89              		.globl	ADC_ExtDiffChSampInit
+  91              	ADC_ExtDiffChSampInit:
+  92 0000 B7170040 		li	a5,1073745920
+  93 0004 03C77705 		lbu	a4,87(a5)
+  94 0008 1A05     		slli	a0,a0,6
+  95 000a 1377E70F 		andi	a4,a4,254
+  96 000e A38BE704 		sb	a4,87(a5)
+  97 0012 13974500 		slli	a4,a1,4
+  98 0016 598D     		or	a0,a0,a4
+  99 0018 13655500 		ori	a0,a0,5
+ 100 001c 1375F50F 		andi	a0,a0,0xff
+ 101 0020 A38CA704 		sb	a0,89(a5)
+ 102 0024 03C7A705 		lbu	a4,90(a5)
+ 103 0028 C189     		andi	a1,a1,16
+ 104 002a 91C5     		beq	a1,zero,.L13
+ 105 002c 13672700 		ori	a4,a4,2
+ 106              	.L15:
+ 107 0030 238DE704 		sb	a4,90(a5)
+ 108 0034 8280     		ret
+ 109              	.L13:
+ 110 0036 1377D70F 		andi	a4,a4,253
+ 111 003a DDBF     		j	.L15
+ 113              		.section	.text.ADC_InterTSSampInit,"ax",@progbits
+ 114              		.align	1
+ 115              		.globl	ADC_InterTSSampInit
+ 117              	ADC_InterTSSampInit:
+ 118 0000 B7170040 		li	a5,1073745920
+ 119 0004 03C77705 		lbu	a4,87(a5)
+ 120 0008 1377E70F 		andi	a4,a4,254
+ 121 000c A38BE704 		sb	a4,87(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s 			page 3
+
+
+ 122 0010 130700F8 		li	a4,-128
+ 123 0014 A38DE704 		sb	a4,91(a5)
+ 124 0018 3D47     		li	a4,15
+ 125 001a 238CE704 		sb	a4,88(a5)
+ 126 001e 13075003 		li	a4,53
+ 127 0022 A38CE704 		sb	a4,89(a5)
+ 128 0026 03C7A705 		lbu	a4,90(a5)
+ 129 002a 1377D70F 		andi	a4,a4,253
+ 130 002e 238DE704 		sb	a4,90(a5)
+ 131 0032 8280     		ret
+ 133              		.section	.text.ADC_InterBATSampInit,"ax",@progbits
+ 134              		.align	1
+ 135              		.globl	ADC_InterBATSampInit
+ 137              	ADC_InterBATSampInit:
+ 138 0000 B7170040 		li	a5,1073745920
+ 139 0004 03C77705 		lbu	a4,87(a5)
+ 140 0008 1377E70F 		andi	a4,a4,254
+ 141 000c A38BE704 		sb	a4,87(a5)
+ 142 0010 3947     		li	a4,14
+ 143 0012 238CE704 		sb	a4,88(a5)
+ 144 0016 0D47     		li	a4,3
+ 145 0018 A38CE704 		sb	a4,89(a5)
+ 146 001c 03C7A705 		lbu	a4,90(a5)
+ 147 0020 1377D70F 		andi	a4,a4,253
+ 148 0024 238DE704 		sb	a4,90(a5)
+ 149 0028 8280     		ret
+ 151              		.section	.text.TouchKey_ChSampInit,"ax",@progbits
+ 152              		.align	1
+ 153              		.globl	TouchKey_ChSampInit
+ 155              	TouchKey_ChSampInit:
+ 156 0000 B7170040 		li	a5,1073745920
+ 157 0004 13073006 		li	a4,99
+ 158 0008 A38CE704 		sb	a4,89(a5)
+ 159 000c 03C7A705 		lbu	a4,90(a5)
+ 160 0010 1377D70F 		andi	a4,a4,253
+ 161 0014 238DE704 		sb	a4,90(a5)
+ 162 0018 03C77705 		lbu	a4,87(a5)
+ 163 001c 13671700 		ori	a4,a4,1
+ 164 0020 A38BE704 		sb	a4,87(a5)
+ 165 0024 8280     		ret
+ 167              		.section	.text.ADC_ExcutSingleConver,"ax",@progbits
+ 168              		.align	1
+ 169              		.globl	ADC_ExcutSingleConver
+ 171              	ADC_ExcutSingleConver:
+ 172 0000 37170040 		li	a4,1073745920
+ 173 0004 8347A705 		lbu	a5,90(a4)
+ 174 0008 93E71700 		ori	a5,a5,1
+ 175 000c 230DF704 		sb	a5,90(a4)
+ 176              	.L20:
+ 177 0010 8347A705 		lbu	a5,90(a4)
+ 178 0014 858B     		andi	a5,a5,1
+ 179 0016 EDFF     		bne	a5,zero,.L20
+ 180 0018 0355C705 		lhu	a0,92(a4)
+ 181 001c 5205     		slli	a0,a0,20
+ 182 001e 5181     		srli	a0,a0,20
+ 183 0020 8280     		ret
+ 185              		.section	.text.TouchKey_ExcutSingleConver,"ax",@progbits
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s 			page 4
+
+
+ 186              		.align	1
+ 187              		.globl	TouchKey_ExcutSingleConver
+ 189              	TouchKey_ExcutSingleConver:
+ 190 0000 7D89     		andi	a0,a0,31
+ 191 0002 9605     		slli	a1,a1,5
+ 192 0004 4D8D     		or	a0,a0,a1
+ 193 0006 B7170040 		li	a5,1073745920
+ 194 000a 1375F50F 		andi	a0,a0,0xff
+ 195 000e 0547     		li	a4,1
+ 196 0010 238AA704 		sb	a0,84(a5)
+ 197 0014 238BE704 		sb	a4,86(a5)
+ 198 0018 37170040 		li	a4,1073745920
+ 199              	.L23:
+ 200 001c 83476705 		lbu	a5,86(a4)
+ 201 0020 858B     		andi	a5,a5,1
+ 202 0022 EDFF     		bne	a5,zero,.L23
+ 203 0024 0355C705 		lhu	a0,92(a4)
+ 204 0028 5205     		slli	a0,a0,20
+ 205 002a 5181     		srli	a0,a0,20
+ 206 002c 8280     		ret
+ 208              		.section	.text.ADC_AutoConverCycle,"ax",@progbits
+ 209              		.align	1
+ 210              		.globl	ADC_AutoConverCycle
+ 212              	ADC_AutoConverCycle:
+ 213 0000 B7170040 		li	a5,1073745920
+ 214 0004 A381A706 		sb	a0,99(a5)
+ 215 0008 8280     		ret
+ 217              		.section	.text.ADC_DMACfg,"ax",@progbits
+ 218              		.align	1
+ 219              		.globl	ADC_DMACfg
+ 221              	ADC_DMACfg:
+ 222 0000 11E9     		bne	a0,zero,.L27
+ 223 0002 37170040 		li	a4,1073745920
+ 224 0006 83471706 		lbu	a5,97(a4)
+ 225 000a 93F7670F 		andi	a5,a5,246
+ 226 000e A300F706 		sb	a5,97(a4)
+ 227 0012 8280     		ret
+ 228              	.L27:
+ 229 0014 C205     		slli	a1,a1,16
+ 230 0016 B7170040 		li	a5,1073745920
+ 231 001a C181     		srli	a1,a1,16
+ 232 001c 4206     		slli	a2,a2,16
+ 233 001e 2394B706 		sh	a1,104(a5)
+ 234 0022 4182     		srli	a2,a2,16
+ 235 0024 2396C706 		sh	a2,108(a5)
+ 236 0028 03C71706 		lbu	a4,97(a5)
+ 237 002c 91C6     		beq	a3,zero,.L29
+ 238 002e 1367D700 		ori	a4,a4,13
+ 239              	.L30:
+ 240 0032 A380E706 		sb	a4,97(a5)
+ 241 0036 8280     		ret
+ 242              	.L29:
+ 243 0038 1377B70F 		andi	a4,a4,251
+ 244 003c A380E706 		sb	a4,97(a5)
+ 245 0040 03C71706 		lbu	a4,97(a5)
+ 246 0044 13679700 		ori	a4,a4,9
+ 247 0048 EDB7     		j	.L30
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s 			page 5
+
+
+ 249              		.section	.text.adc_to_temperature_celsius,"ax",@progbits
+ 250              		.align	1
+ 251              		.globl	adc_to_temperature_celsius
+ 253              	adc_to_temperature_celsius:
+ 254 0000 B7F70700 		li	a5,520192
+ 255 0004 DC4B     		lw	a5,20(a5)
+ 256 0006 13D70701 		srli	a4,a5,16
+ 257 000a 11E3     		bne	a4,zero,.L32
+ 258 000c 6547     		li	a4,25
+ 259              	.L32:
+ 260 000e C207     		slli	a5,a5,16
+ 261 0010 C183     		srli	a5,a5,16
+ 262 0012 1D8D     		sub	a0,a0,a5
+ 263 0014 93074006 		li	a5,100
+ 264 0018 3305F502 		mul	a0,a0,a5
+ 265 001c 9307B011 		li	a5,283
+ 266 0020 3345F502 		div	a0,a0,a5
+ 267 0024 3A95     		add	a0,a0,a4
+ 268 0026 8280     		ret
+ 270              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_adc.c
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:11     .text.ADC_DataCalib_Rough:0000000000000000 ADC_DataCalib_Rough
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:12     .text.ADC_DataCalib_Rough:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:65     .text.ADC_ExtSingleChSampInit:0000000000000000 ADC_ExtSingleChSampInit
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:66     .text.ADC_ExtSingleChSampInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:91     .text.ADC_ExtDiffChSampInit:0000000000000000 ADC_ExtDiffChSampInit
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:92     .text.ADC_ExtDiffChSampInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:117    .text.ADC_InterTSSampInit:0000000000000000 ADC_InterTSSampInit
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:118    .text.ADC_InterTSSampInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:137    .text.ADC_InterBATSampInit:0000000000000000 ADC_InterBATSampInit
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:138    .text.ADC_InterBATSampInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:155    .text.TouchKey_ChSampInit:0000000000000000 TouchKey_ChSampInit
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:156    .text.TouchKey_ChSampInit:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:171    .text.ADC_ExcutSingleConver:0000000000000000 ADC_ExcutSingleConver
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:172    .text.ADC_ExcutSingleConver:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:189    .text.TouchKey_ExcutSingleConver:0000000000000000 TouchKey_ExcutSingleConver
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:190    .text.TouchKey_ExcutSingleConver:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:212    .text.ADC_AutoConverCycle:0000000000000000 ADC_AutoConverCycle
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:213    .text.ADC_AutoConverCycle:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:221    .text.ADC_DMACfg:0000000000000000 ADC_DMACfg
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:222    .text.ADC_DMACfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:253    .text.adc_to_temperature_celsius:0000000000000000 adc_to_temperature_celsius
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:254    .text.adc_to_temperature_celsius:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:27     .text.ADC_DataCalib_Rough:000000000000003c .L2
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:39     .text.ADC_DataCalib_Rough:000000000000005c .L3
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:35     .text.ADC_DataCalib_Rough:0000000000000050 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:83     .text.ADC_ExtSingleChSampInit:0000000000000036 .L9
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:80     .text.ADC_ExtSingleChSampInit:0000000000000030 .L11
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:109    .text.ADC_ExtDiffChSampInit:0000000000000036 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:106    .text.ADC_ExtDiffChSampInit:0000000000000030 .L15
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:176    .text.ADC_ExcutSingleConver:0000000000000010 .L20
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:199    .text.TouchKey_ExcutSingleConver:000000000000001c .L23
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:228    .text.ADC_DMACfg:0000000000000014 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:242    .text.ADC_DMACfg:0000000000000038 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:239    .text.ADC_DMACfg:0000000000000032 .L30
+C:\Users\LRNA\AppData\Local\Temp\ccYYAeNb.s:259    .text.adc_to_temperature_celsius:000000000000000e .L32
+
+NO UNDEFINED SYMBOLS

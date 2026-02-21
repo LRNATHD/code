@@ -1,0 +1,381 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 1
+
+
+   1              		.file	"CH59x_gpio.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.text.GPIOA_ModeCfg,"ax",@progbits
+   8              		.align	1
+   9              		.globl	GPIOA_ModeCfg
+  11              	GPIOA_ModeCfg:
+  12 0000 9147     		li	a5,4
+  13 0002 63EAB708 		bgtu	a1,a5,.L1
+  14 0006 97070000 		lla	a5,.L4
+  14      93870700 
+  15 000e 8A05     		slli	a1,a1,2
+  16 0010 BE95     		add	a1,a1,a5
+  17 0012 9841     		lw	a4,0(a1)
+  18 0014 3E97     		add	a4,a4,a5
+  19 0016 B7170040 		li	a5,1073745920
+  20 001a 9387470B 		addi	a5,a5,180
+  21 001e 0287     		jr	a4
+  22              		.section	.rodata.GPIOA_ModeCfg,"a",@progbits
+  23              		.align	2
+  24              		.align	2
+  25              	.L4:
+  26 0000 00000000 		.word	.L8-.L4
+  27 0004 00000000 		.word	.L7-.L4
+  28 0008 00000000 		.word	.L6-.L4
+  29 000c 00000000 		.word	.L5-.L4
+  30 0010 00000000 		.word	.L3-.L4
+  31              		.section	.text.GPIOA_ModeCfg
+  32              	.L8:
+  33 0020 9443     		lw	a3,0(a5)
+  34 0022 1345F5FF 		not	a0,a0
+  35 0026 37170040 		li	a4,1073745920
+  36 002a E98E     		and	a3,a3,a0
+  37 002c 94C3     		sw	a3,0(a5)
+  38 002e 9306070B 		addi	a3,a4,176
+  39 0032 9C42     		lw	a5,0(a3)
+  40              	.L9:
+  41 0034 E98F     		and	a5,a5,a0
+  42 0036 9CC2     		sw	a5,0(a3)
+  43 0038 9307070A 		addi	a5,a4,160
+  44 003c 9843     		lw	a4,0(a5)
+  45 003e 798D     		and	a0,a0,a4
+  46 0040 88C3     		sw	a0,0(a5)
+  47 0042 8280     		ret
+  48              	.L7:
+  49 0044 9043     		lw	a2,0(a5)
+  50 0046 9346F5FF 		not	a3,a0
+  51 004a 37170040 		li	a4,1073745920
+  52 004e 758E     		and	a2,a2,a3
+  53 0050 90C3     		sw	a2,0(a5)
+  54 0052 1306070B 		addi	a2,a4,176
+  55 0056 1C42     		lw	a5,0(a2)
+  56 0058 C98F     		or	a5,a5,a0
+  57 005a 1CC2     		sw	a5,0(a2)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 2
+
+
+  58 005c 9307070A 		addi	a5,a4,160
+  59 0060 9843     		lw	a4,0(a5)
+  60 0062 F98E     		and	a3,a3,a4
+  61 0064 94C3     		sw	a3,0(a5)
+  62 0066 8280     		ret
+  63              	.L6:
+  64 0068 9443     		lw	a3,0(a5)
+  65 006a 37170040 		li	a4,1073745920
+  66 006e C98E     		or	a3,a3,a0
+  67 0070 94C3     		sw	a3,0(a5)
+  68 0072 9306070B 		addi	a3,a4,176
+  69 0076 9C42     		lw	a5,0(a3)
+  70 0078 1345F5FF 		not	a0,a0
+  71 007c 65BF     		j	.L9
+  72              	.L5:
+  73 007e 9443     		lw	a3,0(a5)
+  74 0080 1347F5FF 		not	a4,a0
+  75 0084 758F     		and	a4,a4,a3
+  76              	.L10:
+  77 0086 98C3     		sw	a4,0(a5)
+  78 0088 B7170040 		li	a5,1073745920
+  79 008c 9387070A 		addi	a5,a5,160
+  80 0090 9843     		lw	a4,0(a5)
+  81 0092 498F     		or	a4,a4,a0
+  82 0094 98C3     		sw	a4,0(a5)
+  83              	.L1:
+  84 0096 8280     		ret
+  85              	.L3:
+  86 0098 9843     		lw	a4,0(a5)
+  87 009a 498F     		or	a4,a4,a0
+  88 009c EDB7     		j	.L10
+  90              		.section	.text.GPIOB_ModeCfg,"ax",@progbits
+  91              		.align	1
+  92              		.globl	GPIOB_ModeCfg
+  94              	GPIOB_ModeCfg:
+  95 0000 9147     		li	a5,4
+  96 0002 63EAB708 		bgtu	a1,a5,.L11
+  97 0006 97070000 		lla	a5,.L14
+  97      93870700 
+  98 000e 8A05     		slli	a1,a1,2
+  99 0010 BE95     		add	a1,a1,a5
+ 100 0012 9841     		lw	a4,0(a1)
+ 101 0014 3E97     		add	a4,a4,a5
+ 102 0016 B7170040 		li	a5,1073745920
+ 103 001a 9387470D 		addi	a5,a5,212
+ 104 001e 0287     		jr	a4
+ 105              		.section	.rodata.GPIOB_ModeCfg,"a",@progbits
+ 106              		.align	2
+ 107              		.align	2
+ 108              	.L14:
+ 109 0000 00000000 		.word	.L18-.L14
+ 110 0004 00000000 		.word	.L17-.L14
+ 111 0008 00000000 		.word	.L16-.L14
+ 112 000c 00000000 		.word	.L15-.L14
+ 113 0010 00000000 		.word	.L13-.L14
+ 114              		.section	.text.GPIOB_ModeCfg
+ 115              	.L18:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 3
+
+
+ 116 0020 9443     		lw	a3,0(a5)
+ 117 0022 1345F5FF 		not	a0,a0
+ 118 0026 37170040 		li	a4,1073745920
+ 119 002a E98E     		and	a3,a3,a0
+ 120 002c 94C3     		sw	a3,0(a5)
+ 121 002e 9306070D 		addi	a3,a4,208
+ 122 0032 9C42     		lw	a5,0(a3)
+ 123              	.L19:
+ 124 0034 E98F     		and	a5,a5,a0
+ 125 0036 9CC2     		sw	a5,0(a3)
+ 126 0038 9307070C 		addi	a5,a4,192
+ 127 003c 9843     		lw	a4,0(a5)
+ 128 003e 798D     		and	a0,a0,a4
+ 129 0040 88C3     		sw	a0,0(a5)
+ 130 0042 8280     		ret
+ 131              	.L17:
+ 132 0044 9043     		lw	a2,0(a5)
+ 133 0046 9346F5FF 		not	a3,a0
+ 134 004a 37170040 		li	a4,1073745920
+ 135 004e 758E     		and	a2,a2,a3
+ 136 0050 90C3     		sw	a2,0(a5)
+ 137 0052 1306070D 		addi	a2,a4,208
+ 138 0056 1C42     		lw	a5,0(a2)
+ 139 0058 C98F     		or	a5,a5,a0
+ 140 005a 1CC2     		sw	a5,0(a2)
+ 141 005c 9307070C 		addi	a5,a4,192
+ 142 0060 9843     		lw	a4,0(a5)
+ 143 0062 F98E     		and	a3,a3,a4
+ 144 0064 94C3     		sw	a3,0(a5)
+ 145 0066 8280     		ret
+ 146              	.L16:
+ 147 0068 9443     		lw	a3,0(a5)
+ 148 006a 37170040 		li	a4,1073745920
+ 149 006e C98E     		or	a3,a3,a0
+ 150 0070 94C3     		sw	a3,0(a5)
+ 151 0072 9306070D 		addi	a3,a4,208
+ 152 0076 9C42     		lw	a5,0(a3)
+ 153 0078 1345F5FF 		not	a0,a0
+ 154 007c 65BF     		j	.L19
+ 155              	.L15:
+ 156 007e 9443     		lw	a3,0(a5)
+ 157 0080 1347F5FF 		not	a4,a0
+ 158 0084 758F     		and	a4,a4,a3
+ 159              	.L20:
+ 160 0086 98C3     		sw	a4,0(a5)
+ 161 0088 B7170040 		li	a5,1073745920
+ 162 008c 9387070C 		addi	a5,a5,192
+ 163 0090 9843     		lw	a4,0(a5)
+ 164 0092 498F     		or	a4,a4,a0
+ 165 0094 98C3     		sw	a4,0(a5)
+ 166              	.L11:
+ 167 0096 8280     		ret
+ 168              	.L13:
+ 169 0098 9843     		lw	a4,0(a5)
+ 170 009a 498F     		or	a4,a4,a0
+ 171 009c EDB7     		j	.L20
+ 173              		.section	.text.GPIOA_ITModeCfg,"ax",@progbits
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 4
+
+
+ 174              		.align	1
+ 175              		.globl	GPIOA_ITModeCfg
+ 177              	GPIOA_ITModeCfg:
+ 178 0000 13170501 		slli	a4,a0,16
+ 179 0004 8947     		li	a5,2
+ 180 0006 4183     		srli	a4,a4,16
+ 181 0008 638BF504 		beq	a1,a5,.L22
+ 182 000c 63E2B702 		bgtu	a1,a5,.L23
+ 183 0010 1346F7FF 		not	a2,a4
+ 184 0014 9DE9     		bne	a1,zero,.L28
+ 185 0016 B7170040 		li	a5,1073745920
+ 186 001a 83D64709 		lhu	a3,148(a5)
+ 187 001e F18E     		and	a3,a3,a2
+ 188              	.L31:
+ 189 0020 239AD708 		sh	a3,148(a5)
+ 190 0024 9387C70A 		addi	a5,a5,172
+ 191              	.L29:
+ 192 0028 9443     		lw	a3,0(a5)
+ 193 002a C98E     		or	a3,a3,a0
+ 194 002c 94C3     		sw	a3,0(a5)
+ 195 002e 21A0     		j	.L27
+ 196              	.L23:
+ 197 0030 8D47     		li	a5,3
+ 198 0032 638CF502 		beq	a1,a5,.L26
+ 199              	.L27:
+ 200 0036 B7170040 		li	a5,1073745920
+ 201 003a 239EE708 		sh	a4,156(a5)
+ 202 003e 83D60709 		lhu	a3,144(a5)
+ 203 0042 558F     		or	a4,a3,a4
+ 204 0044 2398E708 		sh	a4,144(a5)
+ 205 0048 8280     		ret
+ 206              	.L28:
+ 207 004a B7170040 		li	a5,1073745920
+ 208 004e 83D64709 		lhu	a3,148(a5)
+ 209 0052 F18E     		and	a3,a3,a2
+ 210              	.L30:
+ 211 0054 239AD708 		sh	a3,148(a5)
+ 212 0058 9387870A 		addi	a5,a5,168
+ 213 005c F1B7     		j	.L29
+ 214              	.L22:
+ 215 005e B7170040 		li	a5,1073745920
+ 216 0062 83D64709 		lhu	a3,148(a5)
+ 217 0066 D98E     		or	a3,a3,a4
+ 218 0068 65BF     		j	.L31
+ 219              	.L26:
+ 220 006a B7170040 		li	a5,1073745920
+ 221 006e 83D64709 		lhu	a3,148(a5)
+ 222 0072 D98E     		or	a3,a3,a4
+ 223 0074 C5B7     		j	.L30
+ 225              		.section	.text.GPIOB_ITModeCfg,"ax",@progbits
+ 226              		.align	1
+ 227              		.globl	GPIOB_ITModeCfg
+ 229              	GPIOB_ITModeCfg:
+ 230 0000 9357E500 		srli	a5,a0,14
+ 231 0004 93F70730 		andi	a5,a5,768
+ 232 0008 C98F     		or	a5,a5,a0
+ 233 000a C207     		slli	a5,a5,16
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 5
+
+
+ 234 000c 0947     		li	a4,2
+ 235 000e C183     		srli	a5,a5,16
+ 236 0010 638BE504 		beq	a1,a4,.L33
+ 237 0014 6362B702 		bgtu	a1,a4,.L34
+ 238 0018 13C6F7FF 		not	a2,a5
+ 239 001c 9DE9     		bne	a1,zero,.L39
+ 240 001e 37170040 		li	a4,1073745920
+ 241 0022 83566709 		lhu	a3,150(a4)
+ 242 0026 F18E     		and	a3,a3,a2
+ 243              	.L42:
+ 244 0028 231BD708 		sh	a3,150(a4)
+ 245 002c 1307C70C 		addi	a4,a4,204
+ 246              	.L40:
+ 247 0030 1443     		lw	a3,0(a4)
+ 248 0032 C98E     		or	a3,a3,a0
+ 249 0034 14C3     		sw	a3,0(a4)
+ 250 0036 21A0     		j	.L38
+ 251              	.L34:
+ 252 0038 0D47     		li	a4,3
+ 253 003a 638CE502 		beq	a1,a4,.L37
+ 254              	.L38:
+ 255 003e 37170040 		li	a4,1073745920
+ 256 0042 231FF708 		sh	a5,158(a4)
+ 257 0046 83562709 		lhu	a3,146(a4)
+ 258 004a D58F     		or	a5,a3,a5
+ 259 004c 2319F708 		sh	a5,146(a4)
+ 260 0050 8280     		ret
+ 261              	.L39:
+ 262 0052 37170040 		li	a4,1073745920
+ 263 0056 83566709 		lhu	a3,150(a4)
+ 264 005a F18E     		and	a3,a3,a2
+ 265              	.L41:
+ 266 005c 231BD708 		sh	a3,150(a4)
+ 267 0060 1307870C 		addi	a4,a4,200
+ 268 0064 F1B7     		j	.L40
+ 269              	.L33:
+ 270 0066 37170040 		li	a4,1073745920
+ 271 006a 83566709 		lhu	a3,150(a4)
+ 272 006e DD8E     		or	a3,a3,a5
+ 273 0070 65BF     		j	.L42
+ 274              	.L37:
+ 275 0072 37170040 		li	a4,1073745920
+ 276 0076 83566709 		lhu	a3,150(a4)
+ 277 007a DD8E     		or	a3,a3,a5
+ 278 007c C5B7     		j	.L41
+ 280              		.section	.text.GPIOPinRemap,"ax",@progbits
+ 281              		.align	1
+ 282              		.globl	GPIOPinRemap
+ 284              	GPIOPinRemap:
+ 285 0000 37170040 		li	a4,1073745920
+ 286 0004 83578701 		lhu	a5,24(a4)
+ 287 0008 09C5     		beq	a0,zero,.L44
+ 288 000a CD8F     		or	a5,a5,a1
+ 289              	.L46:
+ 290 000c 231CF700 		sh	a5,24(a4)
+ 291 0010 8280     		ret
+ 292              	.L44:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 6
+
+
+ 293 0012 93C5F5FF 		not	a1,a1
+ 294 0016 ED8F     		and	a5,a5,a1
+ 295 0018 D5BF     		j	.L46
+ 297              		.section	.text.GPIOAGPPCfg,"ax",@progbits
+ 298              		.align	1
+ 299              		.globl	GPIOAGPPCfg
+ 301              	GPIOAGPPCfg:
+ 302 0000 37170040 		li	a4,1073745920
+ 303 0004 8357A701 		lhu	a5,26(a4)
+ 304 0008 09C5     		beq	a0,zero,.L48
+ 305 000a CD8F     		or	a5,a5,a1
+ 306              	.L50:
+ 307 000c 231DF700 		sh	a5,26(a4)
+ 308 0010 8280     		ret
+ 309              	.L48:
+ 310 0012 93C5F5FF 		not	a1,a1
+ 311 0016 ED8F     		and	a5,a5,a1
+ 312 0018 D5BF     		j	.L50
+ 314              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 CH59x_gpio.c
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:11     .text.GPIOA_ModeCfg:0000000000000000 GPIOA_ModeCfg
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:12     .text.GPIOA_ModeCfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:94     .text.GPIOB_ModeCfg:0000000000000000 GPIOB_ModeCfg
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:95     .text.GPIOB_ModeCfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:177    .text.GPIOA_ITModeCfg:0000000000000000 GPIOA_ITModeCfg
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:178    .text.GPIOA_ITModeCfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:229    .text.GPIOB_ITModeCfg:0000000000000000 GPIOB_ITModeCfg
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:230    .text.GPIOB_ITModeCfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:284    .text.GPIOPinRemap:0000000000000000 GPIOPinRemap
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:285    .text.GPIOPinRemap:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:301    .text.GPIOAGPPCfg:0000000000000000 GPIOAGPPCfg
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:302    .text.GPIOAGPPCfg:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:25     .rodata.GPIOA_ModeCfg:0000000000000000 .L4
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:14     .text.GPIOA_ModeCfg:0000000000000006 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:83     .text.GPIOA_ModeCfg:0000000000000096 .L1
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:40     .text.GPIOA_ModeCfg:0000000000000034 .L9
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:76     .text.GPIOA_ModeCfg:0000000000000086 .L10
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:32     .text.GPIOA_ModeCfg:0000000000000020 .L8
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:48     .text.GPIOA_ModeCfg:0000000000000044 .L7
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:63     .text.GPIOA_ModeCfg:0000000000000068 .L6
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:72     .text.GPIOA_ModeCfg:000000000000007e .L5
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:85     .text.GPIOA_ModeCfg:0000000000000098 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:108    .rodata.GPIOB_ModeCfg:0000000000000000 .L14
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:97     .text.GPIOB_ModeCfg:0000000000000006 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:166    .text.GPIOB_ModeCfg:0000000000000096 .L11
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:123    .text.GPIOB_ModeCfg:0000000000000034 .L19
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:159    .text.GPIOB_ModeCfg:0000000000000086 .L20
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:115    .text.GPIOB_ModeCfg:0000000000000020 .L18
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:131    .text.GPIOB_ModeCfg:0000000000000044 .L17
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:146    .text.GPIOB_ModeCfg:0000000000000068 .L16
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:155    .text.GPIOB_ModeCfg:000000000000007e .L15
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:168    .text.GPIOB_ModeCfg:0000000000000098 .L13
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:214    .text.GPIOA_ITModeCfg:000000000000005e .L22
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:196    .text.GPIOA_ITModeCfg:0000000000000030 .L23
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:206    .text.GPIOA_ITModeCfg:000000000000004a .L28
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:199    .text.GPIOA_ITModeCfg:0000000000000036 .L27
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:219    .text.GPIOA_ITModeCfg:000000000000006a .L26
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:191    .text.GPIOA_ITModeCfg:0000000000000028 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:188    .text.GPIOA_ITModeCfg:0000000000000020 .L31
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:210    .text.GPIOA_ITModeCfg:0000000000000054 .L30
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:269    .text.GPIOB_ITModeCfg:0000000000000066 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:251    .text.GPIOB_ITModeCfg:0000000000000038 .L34
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:261    .text.GPIOB_ITModeCfg:0000000000000052 .L39
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:254    .text.GPIOB_ITModeCfg:000000000000003e .L38
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:274    .text.GPIOB_ITModeCfg:0000000000000072 .L37
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:246    .text.GPIOB_ITModeCfg:0000000000000030 .L40
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:243    .text.GPIOB_ITModeCfg:0000000000000028 .L42
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:265    .text.GPIOB_ITModeCfg:000000000000005c .L41
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:292    .text.GPIOPinRemap:0000000000000012 .L44
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:289    .text.GPIOPinRemap:000000000000000c .L46
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:309    .text.GPIOAGPPCfg:0000000000000012 .L48
+C:\Users\LRNA\AppData\Local\Temp\ccXk6UJC.s:306    .text.GPIOAGPPCfg:000000000000000c .L50
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Converter Test</title>
+    <script src="lib/converter.js"></script>
+    <script src="easyeda_c2040.js"></script>
+</head>
+
+<body>
+    <h1>Converter Test</h1>
+    <textarea id="output" style="width: 100%; height: 500px;"></textarea>
+    <script>
+        try {
+            const result = Converter.convert(TEST_JSON);
+            document.getElementById("output").value =
+                "SYMBOL:\n" + result.symbol +
+                "\n\nFOOTPRINT:\n" + result.footprint;
+        } catch (e) {
+            document.getElementById("output").value = "Error: " + e.toString();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,887 @@
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 1
+
+
+   1              		.file	"Sandbox.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              		.section	.highcode,"ax",@progbits
+   8              		.align	1
+   9              		.globl	GPIOB_IRQHandler
+  11              	GPIOB_IRQHandler:
+  12 0000 B7170040 		li	a5,1073745920
+  13 0004 03D7E709 		lhu	a4,158(a5)
+  14 0008 13770704 		andi	a4,a4,64
+  15 000c 31C3     		beq	a4,zero,.L1
+  16 000e 9387470C 		addi	a5,a5,196
+  17 0012 9843     		lw	a4,0(a5)
+  18 0014 9443     		lw	a3,0(a5)
+  19 0016 97070000 		lla	a5,count_left
+  19      93870700 
+  20 001e 13770704 		andi	a4,a4,64
+  21 0022 3336E000 		snez	a2,a4
+  22 0026 858A     		andi	a3,a3,1
+  23 0028 6316D602 		bne	a2,a3,.L3
+  24 002c 9443     		lw	a3,0(a5)
+  25 002e 8506     		addi	a3,a3,1
+  26              	.L10:
+  27 0030 94C3     		sw	a3,0(a5)
+  28 0032 8945     		li	a1,2
+  29 0034 11E3     		bne	a4,zero,.L11
+  30 0036 8D45     		li	a1,3
+  31              	.L11:
+  32 0038 13050004 		li	a0,64
+  33 003c 97000000 		call	GPIOB_ITModeCfg
+  33      E7800000 
+  34 0044 B7170040 		li	a5,1073745920
+  35 0048 13070004 		li	a4,64
+  36 004c 239FE708 		sh	a4,158(a5)
+  37              	.L1:
+  38 0050 73002030 		mret
+  39              	.L3:
+  40 0054 9443     		lw	a3,0(a5)
+  41 0056 FD16     		addi	a3,a3,-1
+  42 0058 E1BF     		j	.L10
+  44              		.align	1
+  45              		.globl	GPIOA_IRQHandler
+  47              	GPIOA_IRQHandler:
+  48 005a B7170040 		li	a5,1073745920
+  49 005e 03D7C709 		lhu	a4,156(a5)
+  50 0062 418B     		andi	a4,a4,16
+  51 0064 21C3     		beq	a4,zero,.L12
+  52 0066 9387470A 		addi	a5,a5,164
+  53 006a 9843     		lw	a4,0(a5)
+  54 006c 9C43     		lw	a5,0(a5)
+  55 006e 97060000 		lla	a3,count_right
+  55      93860600 
+  56 0076 418B     		andi	a4,a4,16
+  57 0078 9583     		srli	a5,a5,5
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 2
+
+
+  58 007a 3336E000 		snez	a2,a4
+  59 007e 858B     		andi	a5,a5,1
+  60 0080 6314F602 		bne	a2,a5,.L14
+  61 0084 9C42     		lw	a5,0(a3)
+  62 0086 8507     		addi	a5,a5,1
+  63              	.L21:
+  64 0088 9CC2     		sw	a5,0(a3)
+  65 008a 8945     		li	a1,2
+  66 008c 11E3     		bne	a4,zero,.L22
+  67 008e 8D45     		li	a1,3
+  68              	.L22:
+  69 0090 4145     		li	a0,16
+  70 0092 97000000 		call	GPIOA_ITModeCfg
+  70      E7800000 
+  71 009a B7170040 		li	a5,1073745920
+  72 009e 4147     		li	a4,16
+  73 00a0 239EE708 		sh	a4,156(a5)
+  74              	.L12:
+  75 00a4 73002030 		mret
+  76              	.L14:
+  77 00a8 9C42     		lw	a5,0(a3)
+  78 00aa FD17     		addi	a5,a5,-1
+  79 00ac F1BF     		j	.L21
+  81              		.section	.text.Motor_Init,"ax",@progbits
+  82              		.align	1
+  83              		.globl	Motor_Init
+  85              	Motor_Init:
+  86 0000 4111     		addi	sp,sp,-16
+  87 0002 8D45     		li	a1,3
+  88 0004 3D65     		li	a0,61440
+  89 0006 06C6     		sw	ra,12(sp)
+  90 0008 22C4     		sw	s0,8(sp)
+  91 000a 97000000 		call	GPIOA_ModeCfg
+  91      E7800000 
+  92 0012 37140040 		li	s0,1073745920
+  93 0016 1307C40A 		addi	a4,s0,172
+  94 001a 1C43     		lw	a5,0(a4)
+  95 001c 8D66     		li	a3,12288
+  96 001e 8545     		li	a1,1
+  97 0020 D58F     		or	a5,a5,a3
+  98 0022 1CC3     		sw	a5,0(a4)
+  99 0024 13051004 		li	a0,65
+ 100 0028 97000000 		call	GPIOB_ModeCfg
+ 100      E7800000 
+ 101 0030 8545     		li	a1,1
+ 102 0032 13050003 		li	a0,48
+ 103 0036 97000000 		call	GPIOA_ModeCfg
+ 103      E7800000 
+ 104 003e 8945     		li	a1,2
+ 105 0040 13050004 		li	a0,64
+ 106 0044 97000000 		call	GPIOB_ITModeCfg
+ 106      E7800000 
+ 107 004c 8945     		li	a1,2
+ 108 004e 4145     		li	a0,16
+ 109 0050 97000000 		call	GPIOA_ITModeCfg
+ 109      E7800000 
+ 110 0058 B7E700E0 		li	a5,-536813568
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 3
+
+
+ 111 005c 37070400 		li	a4,262144
+ 112 0060 23A0E710 		sw	a4,256(a5)
+ 113 0064 37070200 		li	a4,131072
+ 114 0068 23A0E710 		sw	a4,256(a5)
+ 115 006c 3D65     		li	a0,61440
+ 116 006e B7570040 		li	a5,1073762304
+ 117 0072 1147     		li	a4,4
+ 118 0074 A381E700 		sb	a4,3(a5)
+ 119 0078 130505A6 		addi	a0,a0,-1440
+ 120 007c 97000000 		call	PWMX_16bit_CycleCfg
+ 120      E7800000 
+ 121 0084 8146     		li	a3,0
+ 122 0086 0146     		li	a2,0
+ 123 0088 8145     		li	a1,0
+ 124 008a 0545     		li	a0,1
+ 125 008c 97000000 		call	PWMX_16bit_ACTOUT
+ 125      E7800000 
+ 126 0094 8146     		li	a3,0
+ 127 0096 0146     		li	a2,0
+ 128 0098 8145     		li	a1,0
+ 129 009a 0945     		li	a0,2
+ 130 009c 97000000 		call	PWMX_16bit_ACTOUT
+ 130      E7800000 
+ 131 00a4 9307840A 		addi	a5,s0,168
+ 132 00a8 9843     		lw	a4,0(a5)
+ 133 00aa 9166     		li	a3,16384
+ 134 00ac B240     		lw	ra,12(sp)
+ 135 00ae 558F     		or	a4,a4,a3
+ 136 00b0 98C3     		sw	a4,0(a5)
+ 137 00b2 9843     		lw	a4,0(a5)
+ 138 00b4 2244     		lw	s0,8(sp)
+ 139 00b6 A166     		li	a3,32768
+ 140 00b8 558F     		or	a4,a4,a3
+ 141 00ba 98C3     		sw	a4,0(a5)
+ 142 00bc 4101     		addi	sp,sp,16
+ 143 00be 8280     		jr	ra
+ 145              		.globl	__gtsf2
+ 146              		.globl	__ltsf2
+ 147              		.globl	__mulsf3
+ 148              		.globl	__divsf3
+ 149              		.globl	__fixunssfsi
+ 150              		.section	.text.SetLeftMotor,"ax",@progbits
+ 151              		.align	1
+ 152              		.globl	SetLeftMotor
+ 154              	SetLeftMotor:
+ 155 0000 4111     		addi	sp,sp,-16
+ 156 0002 26C2     		sw	s1,4(sp)
+ 157 0004 97040000 		lw	s1,.LC1
+ 157      83A40400 
+ 158 000c A685     		mv	a1,s1
+ 159 000e 22C4     		sw	s0,8(sp)
+ 160 0010 06C6     		sw	ra,12(sp)
+ 161 0012 2A84     		mv	s0,a0
+ 162 0014 97000000 		call	__gtsf2
+ 162      E7800000 
+ 163 001c 6340A00A 		bgt	a0,zero,.L32
+ 164 0020 97040000 		lw	s1,.LC0
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 4
+
+
+ 164      83A40400 
+ 165 0028 A685     		mv	a1,s1
+ 166 002a 2285     		mv	a0,s0
+ 167 002c 97000000 		call	__ltsf2
+ 167      E7800000 
+ 168 0034 63420508 		blt	a0,zero,.L33
+ 169 0038 93050000 		mv	a1,zero
+ 170 003c 2285     		mv	a0,s0
+ 171 003e 97000000 		call	__ltsf2
+ 171      E7800000 
+ 172 0046 635C0506 		bge	a0,zero,.L26
+ 173              	.L27:
+ 174 004a B7170040 		li	a5,1073745920
+ 175 004e 9387C70A 		addi	a5,a5,172
+ 176 0052 9843     		lw	a4,0(a5)
+ 177 0054 9166     		li	a3,16384
+ 178 0056 558F     		or	a4,a4,a3
+ 179 0058 98C3     		sw	a4,0(a5)
+ 180 005a B7070080 		li	a5,-2147483648
+ 181 005e 3D8C     		xor	s0,a5,s0
+ 182              	.L29:
+ 183 0060 93050000 		mv	a1,zero
+ 184 0064 2285     		mv	a0,s0
+ 185 0066 97000000 		call	__gtsf2
+ 185      E7800000 
+ 186 006e 6351A006 		ble	a0,zero,.L35
+ 187 0072 97050000 		lw	a1,.LC2
+ 187      83A50500 
+ 188 007a 2285     		mv	a0,s0
+ 189 007c 97000000 		call	__mulsf3
+ 189      E7800000 
+ 190 0084 97050000 		lw	a1,.LC1
+ 190      83A50500 
+ 191 008c 97000000 		call	__divsf3
+ 191      E7800000 
+ 192 0094 97000000 		call	__fixunssfsi
+ 192      E7800000 
+ 193 009c 2244     		lw	s0,8(sp)
+ 194 009e B240     		lw	ra,12(sp)
+ 195 00a0 9244     		lw	s1,4(sp)
+ 196 00a2 93150501 		slli	a1,a0,16
+ 197 00a6 8546     		li	a3,1
+ 198 00a8 0146     		li	a2,0
+ 199 00aa C181     		srli	a1,a1,16
+ 200 00ac 0545     		li	a0,1
+ 201 00ae 4101     		addi	sp,sp,16
+ 202 00b0 17030000 		tail	PWMX_16bit_ACTOUT
+ 202      67000300 
+ 203              	.L33:
+ 204 00b8 2684     		mv	s0,s1
+ 205 00ba 41BF     		j	.L27
+ 206              	.L32:
+ 207 00bc 2684     		mv	s0,s1
+ 208              	.L26:
+ 209 00be B7170040 		li	a5,1073745920
+ 210 00c2 9387870A 		addi	a5,a5,168
+ 211 00c6 9843     		lw	a4,0(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 5
+
+
+ 212 00c8 9166     		li	a3,16384
+ 213 00ca 558F     		or	a4,a4,a3
+ 214 00cc 98C3     		sw	a4,0(a5)
+ 215 00ce 49BF     		j	.L29
+ 216              	.L35:
+ 217 00d0 8146     		li	a3,0
+ 218 00d2 0146     		li	a2,0
+ 219 00d4 8145     		li	a1,0
+ 220 00d6 0545     		li	a0,1
+ 221 00d8 97000000 		call	PWMX_16bit_ACTOUT
+ 221      E7800000 
+ 222 00e0 B7170040 		li	a5,1073745920
+ 223 00e4 9387C70A 		addi	a5,a5,172
+ 224 00e8 9843     		lw	a4,0(a5)
+ 225 00ea B240     		lw	ra,12(sp)
+ 226 00ec 2244     		lw	s0,8(sp)
+ 227 00ee 8566     		li	a3,4096
+ 228 00f0 558F     		or	a4,a4,a3
+ 229 00f2 98C3     		sw	a4,0(a5)
+ 230 00f4 9244     		lw	s1,4(sp)
+ 231 00f6 4101     		addi	sp,sp,16
+ 232 00f8 8280     		jr	ra
+ 234              		.section	.text.SetRightMotor,"ax",@progbits
+ 235              		.align	1
+ 236              		.globl	SetRightMotor
+ 238              	SetRightMotor:
+ 239 0000 4111     		addi	sp,sp,-16
+ 240 0002 26C2     		sw	s1,4(sp)
+ 241 0004 97040000 		lw	s1,.LC1
+ 241      83A40400 
+ 242 000c A685     		mv	a1,s1
+ 243 000e 22C4     		sw	s0,8(sp)
+ 244 0010 06C6     		sw	ra,12(sp)
+ 245 0012 2A84     		mv	s0,a0
+ 246 0014 97000000 		call	__gtsf2
+ 246      E7800000 
+ 247 001c 6340A00A 		bgt	a0,zero,.L44
+ 248 0020 97040000 		lw	s1,.LC0
+ 248      83A40400 
+ 249 0028 A685     		mv	a1,s1
+ 250 002a 2285     		mv	a0,s0
+ 251 002c 97000000 		call	__ltsf2
+ 251      E7800000 
+ 252 0034 63420508 		blt	a0,zero,.L45
+ 253 0038 93050000 		mv	a1,zero
+ 254 003c 2285     		mv	a0,s0
+ 255 003e 97000000 		call	__ltsf2
+ 255      E7800000 
+ 256 0046 635C0506 		bge	a0,zero,.L38
+ 257              	.L39:
+ 258 004a B7170040 		li	a5,1073745920
+ 259 004e 9387C70A 		addi	a5,a5,172
+ 260 0052 9843     		lw	a4,0(a5)
+ 261 0054 A166     		li	a3,32768
+ 262 0056 558F     		or	a4,a4,a3
+ 263 0058 98C3     		sw	a4,0(a5)
+ 264 005a B7070080 		li	a5,-2147483648
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 6
+
+
+ 265 005e 3D8C     		xor	s0,a5,s0
+ 266              	.L41:
+ 267 0060 93050000 		mv	a1,zero
+ 268 0064 2285     		mv	a0,s0
+ 269 0066 97000000 		call	__gtsf2
+ 269      E7800000 
+ 270 006e 6351A006 		ble	a0,zero,.L47
+ 271 0072 97050000 		lw	a1,.LC2
+ 271      83A50500 
+ 272 007a 2285     		mv	a0,s0
+ 273 007c 97000000 		call	__mulsf3
+ 273      E7800000 
+ 274 0084 97050000 		lw	a1,.LC1
+ 274      83A50500 
+ 275 008c 97000000 		call	__divsf3
+ 275      E7800000 
+ 276 0094 97000000 		call	__fixunssfsi
+ 276      E7800000 
+ 277 009c 2244     		lw	s0,8(sp)
+ 278 009e B240     		lw	ra,12(sp)
+ 279 00a0 9244     		lw	s1,4(sp)
+ 280 00a2 93150501 		slli	a1,a0,16
+ 281 00a6 8546     		li	a3,1
+ 282 00a8 0146     		li	a2,0
+ 283 00aa C181     		srli	a1,a1,16
+ 284 00ac 0945     		li	a0,2
+ 285 00ae 4101     		addi	sp,sp,16
+ 286 00b0 17030000 		tail	PWMX_16bit_ACTOUT
+ 286      67000300 
+ 287              	.L45:
+ 288 00b8 2684     		mv	s0,s1
+ 289 00ba 41BF     		j	.L39
+ 290              	.L44:
+ 291 00bc 2684     		mv	s0,s1
+ 292              	.L38:
+ 293 00be B7170040 		li	a5,1073745920
+ 294 00c2 9387870A 		addi	a5,a5,168
+ 295 00c6 9843     		lw	a4,0(a5)
+ 296 00c8 A166     		li	a3,32768
+ 297 00ca 558F     		or	a4,a4,a3
+ 298 00cc 98C3     		sw	a4,0(a5)
+ 299 00ce 49BF     		j	.L41
+ 300              	.L47:
+ 301 00d0 8146     		li	a3,0
+ 302 00d2 0146     		li	a2,0
+ 303 00d4 8145     		li	a1,0
+ 304 00d6 0945     		li	a0,2
+ 305 00d8 97000000 		call	PWMX_16bit_ACTOUT
+ 305      E7800000 
+ 306 00e0 B7170040 		li	a5,1073745920
+ 307 00e4 9387C70A 		addi	a5,a5,172
+ 308 00e8 9843     		lw	a4,0(a5)
+ 309 00ea B240     		lw	ra,12(sp)
+ 310 00ec 2244     		lw	s0,8(sp)
+ 311 00ee 8966     		li	a3,8192
+ 312 00f0 558F     		or	a4,a4,a3
+ 313 00f2 98C3     		sw	a4,0(a5)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 7
+
+
+ 314 00f4 9244     		lw	s1,4(sp)
+ 315 00f6 4101     		addi	sp,sp,16
+ 316 00f8 8280     		jr	ra
+ 318              		.globl	__floatsisf
+ 319              		.globl	__addsf3
+ 320              		.section	.text.CalculateSpeedProfile,"ax",@progbits
+ 321              		.align	1
+ 322              		.globl	CalculateSpeedProfile
+ 324              	CalculateSpeedProfile:
+ 325 0000 4111     		addi	sp,sp,-16
+ 326 0002 22C4     		sw	s0,8(sp)
+ 327 0004 06C6     		sw	ra,12(sp)
+ 328 0006 26C2     		sw	s1,4(sp)
+ 329 0008 898D     		sub	a1,a1,a0
+ 330 000a 13040000 		mv	s0,zero
+ 331 000e 635FB004 		ble	a1,zero,.L49
+ 332 0012 13075009 		li	a4,149
+ 333 0016 6341B706 		bgt	a1,a4,.L51
+ 334 001a 2E85     		mv	a0,a1
+ 335 001c 97000000 		call	__floatsisf
+ 335      E7800000 
+ 336 0024 97050000 		lw	a1,.LC5
+ 336      83A50500 
+ 337              	.L57:
+ 338 002c 97000000 		call	__divsf3
+ 338      E7800000 
+ 339 0034 97050000 		lw	a1,.LC6
+ 339      83A50500 
+ 340 003c 97000000 		call	__mulsf3
+ 340      E7800000 
+ 341 0044 97050000 		lw	a1,.LC3
+ 341      83A50500 
+ 342 004c 97000000 		call	__addsf3
+ 342      E7800000 
+ 343 0054 97040000 		lw	s1,.LC3
+ 343      83A40400 
+ 344 005c A685     		mv	a1,s1
+ 345 005e 2A84     		mv	s0,a0
+ 346 0060 97000000 		call	__ltsf2
+ 346      E7800000 
+ 347 0068 634A0502 		blt	a0,zero,.L55
+ 348              	.L49:
+ 349 006c B240     		lw	ra,12(sp)
+ 350 006e 2285     		mv	a0,s0
+ 351 0070 2244     		lw	s0,8(sp)
+ 352 0072 9244     		lw	s1,4(sp)
+ 353 0074 4101     		addi	sp,sp,16
+ 354 0076 8280     		jr	ra
+ 355              	.L51:
+ 356 0078 13073006 		li	a4,99
+ 357 007c 634BA700 		bgt	a0,a4,.L54
+ 358 0080 97000000 		call	__floatsisf
+ 358      E7800000 
+ 359 0088 97050000 		lw	a1,.LC1
+ 359      83A50500 
+ 360 0090 71BF     		j	.L57
+ 361              	.L54:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 8
+
+
+ 362 0092 17040000 		lw	s0,.LC4
+ 362      03240400 
+ 363 009a C9BF     		j	.L49
+ 364              	.L55:
+ 365 009c 2684     		mv	s0,s1
+ 366 009e F9B7     		j	.L49
+ 368              		.section	.rodata.main.str1.4,"aMS",@progbits,1
+ 369              		.align	2
+ 370              	.LC8:
+ 371 0000 52656164 		.string	"Ready!"
+ 371      792100
+ 372 0007 00       		.align	2
+ 373              	.LC9:
+ 374 0008 54617267 		.string	"Target: %dmm"
+ 374      65743A20 
+ 374      25646D6D 
+ 374      00
+ 375 0015 000000   		.align	2
+ 376              	.LC10:
+ 377 0018 50726573 		.string	"Press BOOT btn"
+ 377      7320424F 
+ 377      4F542062 
+ 377      746E00
+ 378 0027 00       		.align	2
+ 379              	.LC11:
+ 380 0028 44726976 		.string	"Driving ~100mm"
+ 380      696E6720 
+ 380      7E313030 
+ 380      6D6D00
+ 381              		.globl	__eqsf2
+ 382 0037 00       		.align	2
+ 383              	.LC12:
+ 384 0038 46696E69 		.string	"Finished!"
+ 384      73686564 
+ 384      2100
+ 385 0042 0000     		.align	2
+ 386              	.LC13:
+ 387 0044 4C3A2025 		.string	"L: %d"
+ 387      6400
+ 388 004a 0000     		.align	2
+ 389              	.LC14:
+ 390 004c 523A2025 		.string	"R: %d"
+ 390      6400
+ 391 0052 0000     		.align	2
+ 392              	.LC15:
+ 393 0054 54617267 		.string	"Target: %d"
+ 393      65743A20 
+ 393      256400
+ 394              		.section	.text.startup.main,"ax",@progbits
+ 395              		.align	1
+ 396              		.globl	main
+ 398              	main:
+ 399 0000 5971     		addi	sp,sp,-112
+ 400 0002 13058004 		li	a0,72
+ 401 0006 86D6     		sw	ra,108(sp)
+ 402 0008 D2CC     		sw	s4,88(sp)
+ 403 000a DEC6     		sw	s7,76(sp)
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 9
+
+
+ 404 000c A2D4     		sw	s0,104(sp)
+ 405 000e A6D2     		sw	s1,100(sp)
+ 406 0010 CAD0     		sw	s2,96(sp)
+ 407 0012 CECE     		sw	s3,92(sp)
+ 408 0014 D6CA     		sw	s5,84(sp)
+ 409 0016 DAC8     		sw	s6,80(sp)
+ 410 0018 E2C4     		sw	s8,72(sp)
+ 411 001a E6C2     		sw	s9,68(sp)
+ 412 001c 97000000 		call	SetSysClock
+ 412      E7800000 
+ 413 0024 97000000 		call	OLED_Init
+ 413      E7800000 
+ 414 002c 97000000 		call	Motor_Init
+ 414      E7800000 
+ 415 0034 8545     		li	a1,1
+ 416 0036 37054000 		li	a0,4194304
+ 417 003a 97000000 		call	GPIOB_ModeCfg
+ 417      E7800000 
+ 418 0042 B71B0040 		li	s7,1073745920
+ 419 0046 170A0000 		lw	s4,.LC7
+ 419      032A0A00 
+ 420              	.L72:
+ 421 004e 97000000 		call	OLED_Clear
+ 421      E7800000 
+ 422 0056 17060000 		lla	a2,.LC8
+ 422      13060600 
+ 423 005e 8145     		li	a1,0
+ 424 0060 0145     		li	a0,0
+ 425 0062 97000000 		call	OLED_ShowString
+ 425      E7800000 
+ 426 006a 13064006 		li	a2,100
+ 427 006e 97050000 		lla	a1,.LC9
+ 427      93850500 
+ 428 0076 0A85     		mv	a0,sp
+ 429 0078 97000000 		call	sprintf
+ 429      E7800000 
+ 430 0080 0A86     		mv	a2,sp
+ 431 0082 8545     		li	a1,1
+ 432 0084 0145     		li	a0,0
+ 433 0086 97000000 		call	OLED_ShowString
+ 433      E7800000 
+ 434 008e 17060000 		lla	a2,.LC10
+ 434      13060600 
+ 435 0096 8D45     		li	a1,3
+ 436 0098 0145     		li	a0,0
+ 437 009a 97000000 		call	OLED_ShowString
+ 437      E7800000 
+ 438 00a2 37044000 		li	s0,4194304
+ 439              	.L59:
+ 440 00a6 93874B0C 		addi	a5,s7,196
+ 441 00aa 9C43     		lw	a5,0(a5)
+ 442 00ac E18F     		and	a5,a5,s0
+ 443 00ae B5EB     		bne	a5,zero,.L60
+ 444 00b0 97070000 		sw	zero,count_left,a5
+ 444      23A00700 
+ 445 00b8 97070000 		sw	zero,count_right,a5
+ 445      23A00700 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 10
+
+
+ 446 00c0 97000000 		call	OLED_Clear
+ 446      E7800000 
+ 447 00c8 17060000 		lla	a2,.LC11
+ 447      13060600 
+ 448 00d0 8145     		li	a1,0
+ 449 00d2 0145     		li	a0,0
+ 450 00d4 97000000 		call	OLED_ShowString
+ 450      E7800000 
+ 451 00dc 014B     		li	s6,0
+ 452 00de 8147     		li	a5,0
+ 453 00e0 814A     		li	s5,0
+ 454 00e2 8149     		li	s3,0
+ 455 00e4 970C0000 		lla	s9,count_left
+ 455      938C0C00 
+ 456 00ec 170C0000 		lla	s8,count_right
+ 456      130C0C00 
+ 457              	.L69:
+ 458 00f4 83A40C00 		lw	s1,0(s9)
+ 459 00f8 03290C00 		lw	s2,0(s8)
+ 460 00fc 13D7F441 		srai	a4,s1,31
+ 461 0100 B98C     		xor	s1,a4,s1
+ 462 0102 998C     		sub	s1,s1,a4
+ 463 0104 1357F941 		srai	a4,s2,31
+ 464 0108 33492701 		xor	s2,a4,s2
+ 465 010c 3309E940 		sub	s2,s2,a4
+ 466 0110 638F0900 		beq	s3,zero,.L61
+ 467 0114 5284     		mv	s0,s4
+ 468 0116 63CB9702 		blt	a5,s1,.L62
+ 469 011a 13040000 		mv	s0,zero
+ 470 011e 8949     		li	s3,2
+ 471 0120 35A0     		j	.L62
+ 472              	.L60:
+ 473 0122 2945     		li	a0,10
+ 474 0124 97000000 		call	mDelaymS
+ 474      E7800000 
+ 475 012c ADBF     		j	.L59
+ 476              	.L61:
+ 477 012e 93058016 		li	a1,360
+ 478 0132 2685     		mv	a0,s1
+ 479 0134 97000000 		call	CalculateSpeedProfile
+ 479      E7800000 
+ 480 013c 93050000 		mv	a1,zero
+ 481 0140 2A84     		mv	s0,a0
+ 482 0142 97000000 		call	__eqsf2
+ 482      E7800000 
+ 483 014a 05CD     		beq	a0,zero,.L74
+ 484              	.L62:
+ 485 014c 638E0A02 		beq	s5,zero,.L63
+ 486 0150 2285     		mv	a0,s0
+ 487 0152 63412B09 		blt	s6,s2,.L64
+ 488 0156 97000000 		call	SetLeftMotor
+ 488      E7800000 
+ 489 015e 13050000 		mv	a0,zero
+ 490 0162 97000000 		call	SetRightMotor
+ 490      E7800000 
+ 491 016a 8947     		li	a5,2
+ 492 016c 6382F908 		beq	s3,a5,.L65
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 11
+
+
+ 493 0170 894A     		li	s5,2
+ 494              	.L66:
+ 495 0172 2945     		li	a0,10
+ 496 0174 97000000 		call	mDelaymS
+ 496      E7800000 
+ 497 017c 4A8B     		mv	s6,s2
+ 498 017e A687     		mv	a5,s1
+ 499 0180 95BF     		j	.L69
+ 500              	.L74:
+ 501 0182 5284     		mv	s0,s4
+ 502 0184 8549     		li	s3,1
+ 503 0186 D9B7     		j	.L62
+ 504              	.L63:
+ 505 0188 93058016 		li	a1,360
+ 506 018c 4A85     		mv	a0,s2
+ 507 018e 97000000 		call	CalculateSpeedProfile
+ 507      E7800000 
+ 508 0196 93050000 		mv	a1,zero
+ 509 019a 2A8B     		mv	s6,a0
+ 510 019c 97000000 		call	__eqsf2
+ 510      E7800000 
+ 511 01a4 09ED     		bne	a0,zero,.L76
+ 512 01a6 2285     		mv	a0,s0
+ 513 01a8 97000000 		call	SetLeftMotor
+ 513      E7800000 
+ 514 01b0 5285     		mv	a0,s4
+ 515 01b2 97000000 		call	SetRightMotor
+ 515      E7800000 
+ 516 01ba 854A     		li	s5,1
+ 517 01bc 5DBF     		j	.L66
+ 518              	.L76:
+ 519 01be 2285     		mv	a0,s0
+ 520 01c0 97000000 		call	SetLeftMotor
+ 520      E7800000 
+ 521 01c8 5A85     		mv	a0,s6
+ 522 01ca 97000000 		call	SetRightMotor
+ 522      E7800000 
+ 523 01d2 45B7     		j	.L66
+ 524              	.L64:
+ 525 01d4 97000000 		call	SetLeftMotor
+ 525      E7800000 
+ 526 01dc 5285     		mv	a0,s4
+ 527 01de 97000000 		call	SetRightMotor
+ 527      E7800000 
+ 528 01e6 8947     		li	a5,2
+ 529 01e8 E395F9F8 		bne	s3,a5,.L66
+ 530 01ec E3933AF9 		bne	s5,s3,.L66
+ 531              	.L65:
+ 532 01f0 13050000 		mv	a0,zero
+ 533 01f4 97000000 		call	SetLeftMotor
+ 533      E7800000 
+ 534 01fc 13050000 		mv	a0,zero
+ 535 0200 97000000 		call	SetRightMotor
+ 535      E7800000 
+ 536 0208 97000000 		call	OLED_Clear
+ 536      E7800000 
+ 537 0210 17060000 		lla	a2,.LC12
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 12
+
+
+ 537      13060600 
+ 538 0218 8145     		li	a1,0
+ 539 021a 0145     		li	a0,0
+ 540 021c 97000000 		call	OLED_ShowString
+ 540      E7800000 
+ 541 0224 03A60C00 		lw	a2,0(s9)
+ 542 0228 97050000 		lla	a1,.LC13
+ 542      93850500 
+ 543 0230 0810     		addi	a0,sp,32
+ 544 0232 97000000 		call	sprintf
+ 544      E7800000 
+ 545 023a 1010     		addi	a2,sp,32
+ 546 023c 8545     		li	a1,1
+ 547 023e 0145     		li	a0,0
+ 548 0240 97000000 		call	OLED_ShowString
+ 548      E7800000 
+ 549 0248 03260C00 		lw	a2,0(s8)
+ 550 024c 97050000 		lla	a1,.LC14
+ 550      93850500 
+ 551 0254 0810     		addi	a0,sp,32
+ 552 0256 97000000 		call	sprintf
+ 552      E7800000 
+ 553 025e 1010     		addi	a2,sp,32
+ 554 0260 8945     		li	a1,2
+ 555 0262 0145     		li	a0,0
+ 556 0264 97000000 		call	OLED_ShowString
+ 556      E7800000 
+ 557 026c 13068016 		li	a2,360
+ 558 0270 97050000 		lla	a1,.LC15
+ 558      93850500 
+ 559 0278 0810     		addi	a0,sp,32
+ 560 027a 97000000 		call	sprintf
+ 560      E7800000 
+ 561 0282 1010     		addi	a2,sp,32
+ 562 0284 8D45     		li	a1,3
+ 563 0286 0145     		li	a0,0
+ 564 0288 97000000 		call	OLED_ShowString
+ 564      E7800000 
+ 565 0290 37044000 		li	s0,4194304
+ 566              	.L70:
+ 567 0294 93874B0C 		addi	a5,s7,196
+ 568 0298 9C43     		lw	a5,0(a5)
+ 569 029a E18F     		and	a5,a5,s0
+ 570 029c 81CB     		beq	a5,zero,.L71
+ 571 029e 1305803E 		li	a0,1000
+ 572 02a2 97000000 		call	mDelaymS
+ 572      E7800000 
+ 573 02aa 55B3     		j	.L72
+ 574              	.L71:
+ 575 02ac 2945     		li	a0,10
+ 576 02ae 97000000 		call	mDelaymS
+ 576      E7800000 
+ 577 02b6 F9BF     		j	.L70
+ 579              		.globl	count_right
+ 580              		.section	.sbss.count_right,"aw",@nobits
+ 581              		.align	2
+ 584              	count_right:
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 13
+
+
+ 585 0000 00000000 		.zero	4
+ 586              		.globl	count_left
+ 587              		.section	.sbss.count_left,"aw",@nobits
+ 588              		.align	2
+ 591              	count_left:
+ 592 0000 00000000 		.zero	4
+ 593              		.section	.srodata.cst4,"aM",@progbits,4
+ 594              		.align	2
+ 595              	.LC0:
+ 596 0000 0000C8C2 		.word	-1027080192
+ 597              		.align	2
+ 598              	.LC1:
+ 599 0004 0000C842 		.word	1120403456
+ 600              		.align	2
+ 601              	.LC2:
+ 602 0008 00606A47 		.word	1198153728
+ 603              		.align	2
+ 604              	.LC3:
+ 605 000c 00002041 		.word	1092616192
+ 606              		.align	2
+ 607              	.LC4:
+ 608 0010 0000C841 		.word	1103626240
+ 609              		.align	2
+ 610              	.LC5:
+ 611 0014 00001643 		.word	1125515264
+ 612              		.align	2
+ 613              	.LC6:
+ 614 0018 00007041 		.word	1097859072
+ 615              		.align	2
+ 616              	.LC7:
+ 617 001c 000070C1 		.word	-1049624576
+ 618              		.ident	"GCC: (xPack GNU RISC-V Embedded GCC i386) 12.2.0"
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Sandbox.c
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:11     .highcode:0000000000000000 GPIOB_IRQHandler
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:12     .highcode:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:591    .sbss.count_left:0000000000000000 count_left
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:47     .highcode:000000000000005a GPIOA_IRQHandler
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:584    .sbss.count_right:0000000000000000 count_right
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:85     .text.Motor_Init:0000000000000000 Motor_Init
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:86     .text.Motor_Init:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:154    .text.SetLeftMotor:0000000000000000 SetLeftMotor
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:155    .text.SetLeftMotor:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:238    .text.SetRightMotor:0000000000000000 SetRightMotor
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:239    .text.SetRightMotor:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:324    .text.CalculateSpeedProfile:0000000000000000 CalculateSpeedProfile
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:325    .text.CalculateSpeedProfile:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:398    .text.startup.main:0000000000000000 main
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:399    .text.startup.main:0000000000000000 $x
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:19     .highcode:0000000000000016 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:55     .highcode:000000000000006e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:37     .highcode:0000000000000050 .L1
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:39     .highcode:0000000000000054 .L3
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:31     .highcode:0000000000000038 .L11
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:26     .highcode:0000000000000030 .L10
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:74     .highcode:00000000000000a4 .L12
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:76     .highcode:00000000000000a8 .L14
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:68     .highcode:0000000000000090 .L22
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:63     .highcode:0000000000000088 .L21
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:598    .srodata.cst4:0000000000000004 .LC1
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:157    .text.SetLeftMotor:0000000000000004 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:595    .srodata.cst4:0000000000000000 .LC0
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:164    .text.SetLeftMotor:0000000000000020 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:601    .srodata.cst4:0000000000000008 .LC2
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:187    .text.SetLeftMotor:0000000000000072 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:190    .text.SetLeftMotor:0000000000000084 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:206    .text.SetLeftMotor:00000000000000bc .L32
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:203    .text.SetLeftMotor:00000000000000b8 .L33
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:208    .text.SetLeftMotor:00000000000000be .L26
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:216    .text.SetLeftMotor:00000000000000d0 .L35
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:173    .text.SetLeftMotor:000000000000004a .L27
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:182    .text.SetLeftMotor:0000000000000060 .L29
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:241    .text.SetRightMotor:0000000000000004 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:248    .text.SetRightMotor:0000000000000020 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:271    .text.SetRightMotor:0000000000000072 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:274    .text.SetRightMotor:0000000000000084 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:290    .text.SetRightMotor:00000000000000bc .L44
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:287    .text.SetRightMotor:00000000000000b8 .L45
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:292    .text.SetRightMotor:00000000000000be .L38
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:300    .text.SetRightMotor:00000000000000d0 .L47
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:257    .text.SetRightMotor:000000000000004a .L39
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:266    .text.SetRightMotor:0000000000000060 .L41
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:610    .srodata.cst4:0000000000000014 .LC5
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:336    .text.CalculateSpeedProfile:0000000000000024 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:613    .srodata.cst4:0000000000000018 .LC6
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:339    .text.CalculateSpeedProfile:0000000000000034 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:604    .srodata.cst4:000000000000000c .LC3
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:341    .text.CalculateSpeedProfile:0000000000000044 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:343    .text.CalculateSpeedProfile:0000000000000054 .L0 
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 15
+
+
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:359    .text.CalculateSpeedProfile:0000000000000088 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:607    .srodata.cst4:0000000000000010 .LC4
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:362    .text.CalculateSpeedProfile:0000000000000092 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:348    .text.CalculateSpeedProfile:000000000000006c .L49
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:355    .text.CalculateSpeedProfile:0000000000000078 .L51
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:364    .text.CalculateSpeedProfile:000000000000009c .L55
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:361    .text.CalculateSpeedProfile:0000000000000092 .L54
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:337    .text.CalculateSpeedProfile:000000000000002c .L57
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:616    .srodata.cst4:000000000000001c .LC7
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:419    .text.startup.main:0000000000000046 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:370    .rodata.main.str1.4:0000000000000000 .LC8
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:422    .text.startup.main:0000000000000056 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:373    .rodata.main.str1.4:0000000000000008 .LC9
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:427    .text.startup.main:000000000000006e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:376    .rodata.main.str1.4:0000000000000018 .LC10
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:434    .text.startup.main:000000000000008e .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:444    .text.startup.main:00000000000000b0 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:445    .text.startup.main:00000000000000b8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:379    .rodata.main.str1.4:0000000000000028 .LC11
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:447    .text.startup.main:00000000000000c8 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:455    .text.startup.main:00000000000000e4 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:456    .text.startup.main:00000000000000ec .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:383    .rodata.main.str1.4:0000000000000038 .LC12
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:537    .text.startup.main:0000000000000210 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:386    .rodata.main.str1.4:0000000000000044 .LC13
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:542    .text.startup.main:0000000000000228 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:389    .rodata.main.str1.4:000000000000004c .LC14
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:550    .text.startup.main:000000000000024c .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:392    .rodata.main.str1.4:0000000000000054 .LC15
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:558    .text.startup.main:0000000000000270 .L0 
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:472    .text.startup.main:0000000000000122 .L60
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:476    .text.startup.main:000000000000012e .L61
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:484    .text.startup.main:000000000000014c .L62
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:439    .text.startup.main:00000000000000a6 .L59
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:500    .text.startup.main:0000000000000182 .L74
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:504    .text.startup.main:0000000000000188 .L63
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:524    .text.startup.main:00000000000001d4 .L64
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:531    .text.startup.main:00000000000001f0 .L65
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:457    .text.startup.main:00000000000000f4 .L69
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:518    .text.startup.main:00000000000001be .L76
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:494    .text.startup.main:0000000000000172 .L66
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:574    .text.startup.main:00000000000002ac .L71
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:420    .text.startup.main:000000000000004e .L72
+C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s:566    .text.startup.main:0000000000000294 .L70
+
+UNDEFINED SYMBOLS
+GPIOB_ITModeCfg
+GPIOA_ITModeCfg
+GPIOA_ModeCfg
+GPIOB_ModeCfg
+PWMX_16bit_CycleCfg
+PWMX_16bit_ACTOUT
+__gtsf2
+__ltsf2
+__mulsf3
+__divsf3
+__fixunssfsi
+GAS LISTING C:\Users\LRNA\AppData\Local\Temp\ccoxDxEA.s 			page 16
+
+
+__floatsisf
+__addsf3
+__eqsf2
+SetSysClock
+OLED_Init
+OLED_Clear
+OLED_ShowString
+sprintf
+mDelaymS

@@ -14,7 +14,8 @@
  ../SRC/StdPeriphDriver/inc/CH59x_spi.h \
  ../SRC/StdPeriphDriver/inc/CH59x_usbdev.h \
  ../SRC/StdPeriphDriver/inc/CH59x_usbhost.h \
- ../SRC/StdPeriphDriver/inc/ISP592.h
+ ../SRC/StdPeriphDriver/inc/ISP592.h \
+ ../SRC/StdPeriphDriver/inc/CH59x_timer.h src/oled_driver.h
 ../SRC/StdPeriphDriver/inc/CH59x_common.h:
 ../SRC/StdPeriphDriver/inc/CH592SFR.h:
 ../SRC/RVMSIS/core_riscv.h:
@@ -32,3 +33,5 @@
 ../SRC/StdPeriphDriver/inc/CH59x_usbdev.h:
 ../SRC/StdPeriphDriver/inc/CH59x_usbhost.h:
 ../SRC/StdPeriphDriver/inc/ISP592.h:
+../SRC/StdPeriphDriver/inc/CH59x_timer.h:
+src/oled_driver.h:

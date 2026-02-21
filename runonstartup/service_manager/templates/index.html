@@ -811,6 +811,57 @@
         .save-msg.error {
             color: #f87171;
         }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid #333;
+            padding: 24px;
+            width: 500px;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .modal h3 {
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .modal textarea {
+            width: 100%;
+            height: 200px;
+            background: #222;
+            border: 1px solid #444;
+            color: #ccc;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        .modal .btn-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
     </style>
 </head>
 
@@ -851,21 +902,7 @@
         </div>
     </div>
 
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="confirm-overlay">
-        <div class="confirm-box" style="width: 400px; text-align: left;">
-            <p style="text-align: center; margin-bottom: 8px; color: #fff;">MP3 Sync Authentication</p>
-            <p style="font-size: 11px; color: #888; margin-bottom: 12px;">
-                Paste the HTTP headers from your browser (Network tab) when playing a song on music.youtube.com.
-            </p>
-            <textarea id="auth-headers"
-                style="width: 100%; height: 150px; background: #111; border: 1px solid #333; color: #aaa; font-family: monospace; font-size: 10px; padding: 8px; resize: none; outline: none; margin-bottom: 12px;"></textarea>
-            <div class="btn-row">
-                <button class="yes" onclick="saveAuth()">Save Credentials</button>
-                <button onclick="closeAuthModal()">Close</button>
-            </div>
-        </div>
-    </div>
+
 
     <script>
         let services = [], tasks = [];
@@ -1073,8 +1110,9 @@
                 };
             });
 
-            // Save CUSTOM CARDS (which are otherwise lost on wipe)
-            const currentCustomCards = getCustomCardData();
+            // PRESERVE CUSTOM CARDS: Detach them from DOM instead of serializing
+            const customCardsElements = Array.from(canvas.querySelectorAll('.custom-card'));
+            customCardsElements.forEach(el => el.remove());
 
             canvas.innerHTML = '';
 
@@ -1125,6 +1163,24 @@
                 } else {
                     const sc = item.healthy ? 'healthy' : (item.running ? 'running' : 'stopped');
                     const statusText = item.healthy ? 'HEALTHY' : (item.running ? 'RUNNING' : 'STOPPED');
+
+                    let actionsHTML = `
+                        <button class="btn btn-start" onclick="doAction('${item.id}', 'start', false)" ${item.running ? 'disabled' : ''}>Start</button>
+                        <button class="btn btn-stop" onclick="doAction('${item.id}', 'stop', false)" ${!item.running ? 'disabled' : ''}>Stop</button>
+                        <button class="btn btn-restart" onclick="doAction('${item.id}', 'restart', false)">Restart</button>
+                    `;
+
+                    // Special handling for MP3 Sync: Hide standard controls, show Enable/Connect if stopped
+                    // Also show Auth button (user requested)
+                    if (item.id === 'mp3_sync') {
+                        actionsHTML = `<button class="btn" style="border-color:#aaa; color:#aaa" onclick="showAuthModal('${item.id}')">Auth</button>`;
+                        // If stopped, the inline config won't load, so we need a way to start it.
+                        if (!item.running) {
+                            // We'll inject a "Connect" button into the custom area via renderInlineConfig fallback or here?
+                            // Since renderInlineConfig fails if stopped, we handle it here.
+                        }
+                    }
+
                     card.innerHTML = `
                         <div class="card-header">
                             <div class="status-dot ${sc}"></div>
@@ -1134,11 +1190,16 @@
                         ${item.description ? `<div class="card-desc">${item.description}</div>` : ''}
                         <div class="card-body">
                             <div class="card-status">${statusText} · :${item.port}</div>
-                            <div class="card-custom" data-svc="${item.id}"></div>
+                            <div class="card-custom" data-svc="${item.id}">
+                                ${item.id === 'mp3_sync' && !item.running ?
+                            `<div style="padding:10px 0; text-align:center">
+                                        <p style="font-size:11px; color:#666; margin-bottom:8px">Service stopped.</p>
+                                        <button class="btn btn-start" onclick="doAction('${item.id}', 'start', false)">Enable Sync Service</button>
+                                     </div>`
+                            : ''}
+                            </div>
                             <div class="card-actions">
-                                <button class="btn btn-start" onclick="doAction('${item.id}', 'start', false)" ${item.running ? 'disabled' : ''}>Start</button>
-                                <button class="btn btn-stop" onclick="doAction('${item.id}', 'stop', false)" ${!item.running ? 'disabled' : ''}>Stop</button>
-                                <button class="btn btn-restart" onclick="doAction('${item.id}', 'restart', false)">Restart</button>
+                                ${actionsHTML}
                             </div>
                         </div>
                     `;
@@ -1148,8 +1209,8 @@
                 initDrag(card);
             });
 
-            // Restore custom cards
-            loadCustomCards(currentCustomCards);
+            // Restore custom cards (re-attach preserved elements)
+            customCardsElements.forEach(el => canvas.appendChild(el));
 
             // Load inline config for services that have it
             loadInlineConfigs();
@@ -1264,6 +1325,8 @@
             html += `<div class="sync-row" id="sync-row-${svcId}">
                 <button onclick="triggerSync('${svcId}')" id="sync-btn-${svcId}">Sync Now</button>
                 <button class="stop-btn" onclick="stopSync('${svcId}')" id="sync-stop-${svcId}" disabled>Stop</button>
+                ${svcId === 'mp3_sync' ? `<button onclick="pauseSync('${svcId}')" id="pause-btn-${svcId}" disabled>Pause</button>` : ''}
+                ${svcId === 'mp3_sync' ? `<button onclick="uploadSync('${svcId}')" id="upload-btn-${svcId}">Upload</button>` : ''}
             </div>`;
             html += `<div class="sync-progress" id="sync-prog-${svcId}"><div class="fill" id="sync-fill-${svcId}"></div></div>`;
             html += `<div class="sync-info" id="sync-info-${svcId}"></div>`;
@@ -1323,6 +1386,32 @@
             } catch (e) { }
         }
 
+        async function pauseSync(svcId) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+            try {
+                const resp = await fetch(`/api/service/${svcId}/proxy/api/sync/pause`, {
+                    method: 'POST',
+                    headers: { 'X-Password': pw }
+                });
+                const data = await resp.json();
+                flashMsg(data.message, !data.success);
+            } catch (e) { flashMsg('Network Error', true); }
+        }
+
+        async function uploadSync(svcId) {
+            const pw = getPassword();
+            if (!pw) { showPasswordBar(); return; }
+            try {
+                const resp = await fetch(`/api/service/${svcId}/proxy/api/sync/upload`, {
+                    method: 'POST',
+                    headers: { 'X-Password': pw }
+                });
+                const data = await resp.json();
+                flashMsg(data.message, !data.success);
+            } catch (e) { flashMsg('Network Error', true); }
+        }
+
         async function pollSyncStatus(svcId) {
             const update = async () => {
                 try {
@@ -1332,6 +1421,8 @@
 
                     const btn = document.getElementById(`sync-btn-${svcId}`);
                     const stop = document.getElementById(`sync-stop-${svcId}`);
+                    const pause = document.getElementById(`pause-btn-${svcId}`);
+                    const upload = document.getElementById(`upload-btn-${svcId}`);
                     const fill = document.getElementById(`sync-fill-${svcId}`);
                     const info = document.getElementById(`sync-info-${svcId}`);
                     if (!btn) return;
@@ -1339,12 +1430,23 @@
                     btn.disabled = s.running;
                     stop.disabled = !s.running;
 
+                    if (pause) {
+                        pause.disabled = !s.running;
+                        pause.textContent = s.paused ? "Resume" : "Pause";
+                        if (s.paused) pause.style.borderColor = '#facc15';
+                        else pause.style.borderColor = '';
+                    }
+                    if (upload) {
+                        upload.disabled = s.running;
+                    }
+
                     const pct = s.tracks_total > 0 ? (s.tracks_done / s.tracks_total * 100) : 0;
                     fill.style.width = pct + '%';
 
                     if (s.running) {
                         info.className = 'sync-info active';
-                        info.textContent = `${s.current_playlist} · ${s.current_track} · ${s.tracks_done}/${s.tracks_total}`;
+                        const prefix = s.paused ? '[PAUSED] ' : '';
+                        info.textContent = `${prefix}${s.current_playlist} · ${s.current_track} · ${s.tracks_done}/${s.tracks_total}`;
                     } else if (s.last_sync) {
                         info.className = 'sync-info';
                         info.textContent = `last: ${s.last_sync}`;
@@ -1585,6 +1687,76 @@
             setInterval(pollConsoleLogs, 2000); // Poll logs every 2s
         })();
         setInterval(fetchStatus, 15000);
+
+    </script>
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <h3>Update Auth Headers</h3>
+            <p style="font-size:12px; color:#888; margin-bottom:12px">
+                Paste the full HTTP headers (e.g. from Firefox Network tab, "Copy Request Headers") for <span
+                    id="auth-svc-name"></span>.
+            </p>
+            <textarea id="auth-input" placeholder="Accept: text/html..."></textarea>
+            <div class="btn-row">
+                <button class="btn" onclick="closeAuthModal()">Cancel</button>
+                <button class="btn btn-run" onclick="saveAuth()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentAuthSvc = '';
+
+        function showAuthModal(svcId) {
+            currentAuthSvc = svcId;
+            document.getElementById('auth-svc-name').textContent = svcId;
+            document.getElementById('auth-input').value = '';
+            document.getElementById('auth-modal').classList.add('show');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.remove('show');
+        }
+
+        async function saveAuth() {
+            // DEBUG
+            console.log('saveAuth clicked');
+            const val = document.getElementById('auth-input').value;
+            if (!val) {
+                alert('Input is empty?');
+                return;
+            }
+
+            const pw = getPassword();
+            // DEBUG
+            if (!pw) {
+                alert('No password found, showing bar');
+                showPasswordBar();
+                return;
+            }
+            alert('Sending request to ' + currentAuthSvc);
+
+            try {
+                // Currently only MP3 Sync uses this standard auth flow in app.py
+                // If other services need it, we might need a dynamic endpoint
+                const endpoint = currentAuthSvc === 'mp3_sync' ? '/api/mp3_sync/auth' : `/api/service/${currentAuthSvc}/auth`;
+
+                const resp = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Password': pw },
+                    body: JSON.stringify({ headers: val })
+                });
+                const res = await resp.json();
+                if (res.success) {
+                    alert('Auth saved!');
+                    closeAuthModal();
+                } else {
+                    alert('Error: ' + res.message);
+                }
+            } catch (e) {
+                alert('Network error');
+            }
+        }
     </script>
 </body>
 

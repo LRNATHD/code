@@ -20,7 +20,7 @@ timeout /t 2 /nobreak >nul
 start "" "C:\Users\LRNA\Desktop\code\runonstartup\fbreader_web\start_silent.vbs"
 
 :: Start FBReader UWP App (Minimized) - Essential for cloud sync
-start /min shell:AppsFolder\FBReader_n0j83cvmz1mee!App
+start /min shell:AppsFolder\FBReader_n0j83cvmz1mee!FBREADER
 
 :: Small delay
 timeout /t 2 /nobreak >nul

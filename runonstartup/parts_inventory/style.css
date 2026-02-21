@@ -22,6 +22,7 @@
     --digikey-color: #ef4444;
 }
 
+/* --- Layout & Reset --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -29,200 +30,225 @@
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--bg-dark);
-    color: var(--text-main);
-    min-height: 100vh;
-    overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-}
-
-/* Hide Branding */
-header {
-    display: none;
-}
-
-.background-glob {
-    display: none;
-    /* Removed for OLED black */
+    color: var(--text-primary);
+    overflow: hidden;
+    /* App handles scroll */
+    height: 100vh;
 }
 
 .app-container {
-    width: 100%;
-    /* Max width removed to allow full filling when zoomed out */
-    max-width: none;
-    padding: 20px 40px;
     display: flex;
-    flex-direction: column;
-    gap: 32px;
+    height: 100vh;
+    width: 100vw;
 }
 
-/* OLED Panel Styles - High Contrast */
-.glass-panel {
-    background: #000000;
-    border: 1px solid #ffffff;
-    border-radius: 0;
-    /* Sharper corners for high tech feel */
-    box-shadow: none;
-    padding: 24px;
-}
-
-/* Search Area */
-.search-container {
+/* --- Sidebar (Old Sorting System) --- */
+.sidebar {
+    width: 380px;
+    height: 100%;
+    background: rgba(18, 18, 20, 0.95);
+    border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    /* User requested "WEB PAGE" sticky not "VIEW" sticky, implying it scrolls with page */
-    position: relative;
     z-index: 10;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.input-group {
+.controls {
+    padding: 20px;
+    background: transparent;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.search-bar {
     position: relative;
-    display: flex;
-    align-items: center;
+    /* margin-bottom: 12px; */
 }
 
-#searchInput {
+.search-bar input {
     width: 100%;
-    background: #000000;
-    border: 1px solid #ffffff;
-    padding: 16px 20px;
-    border-radius: 0;
-    color: #ffffff;
-    font-size: 1.2rem;
+    padding: 12px 12px 12px 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
     font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.search-bar input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-primary);
     outline: none;
+    box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.15);
 }
 
-#searchInput:focus {
-    border-color: var(--accent-secondary);
-    box-shadow: 0 0 0 1px var(--accent-secondary);
-}
-
-#searchInput::placeholder {
-    color: #666;
-}
-
-#clearSearch {
+.search-icon {
     position: absolute;
-    right: 16px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: none;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
 }
 
-#searchInput:not(:placeholder-shown)+#clearSearch {
-    display: block;
-}
-
-/* Toolbar Config */
-.toolbar-row {
+.stats-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 12px;
-    gap: 16px;
 }
 
-.toolbar-controls {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+/* Results List (Sidebar) */
+.results-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
 }
 
-.upload-link {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    text-align: right;
-    cursor: pointer;
-    text-decoration: underline;
+/* Scrollbar */
+.results-list::-webkit-scrollbar {
+    width: 6px;
 }
 
-.upload-link:hover {
-    color: #fff;
+.results-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
 }
 
-/* Stats Bar */
-.stats-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-    font-size: 0.9rem;
-    padding: 0 10px;
-    font-family: monospace;
-    /* Tech feel */
-}
-
-.text-btn {
-    background: none;
-    border: none;
-    color: #fff;
-    text-decoration: underline;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.9rem;
-}
-
-.text-btn:hover {
-    color: var(--accent-secondary);
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* Results Grid */
-.results-grid {
-    display: grid;
-    /* Reverted to 300px as per user request */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    align-items: stretch;
-    /* Ensure cards in a row are same height */
-}
-
-.result-card {
-    background: #000000;
-    border: 1px solid #333;
-    border-radius: 0;
-    padding: 16px 20px;
-    transition: all 0.1s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+/* --- Main Viewport (Zoomable Box) --- */
+.main-viewport {
+    flex: 1;
     position: relative;
     overflow: hidden;
-    height: 100%;
-    /* Force full height */
+    /* Hide overflow for zoom */
+    background: radial-gradient(circle at center, #1a1a1e 0%, #0d0d0f 100%);
+    cursor: grab;
 }
 
-.result-card:hover {
-    border-color: #fff;
-    transform: translateY(-2px);
+.main-viewport:active {
+    cursor: grabbing;
 }
 
-.card-header {
+.viewport-hud {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Zoom Container */
+.zoom-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0 0;
+    /* JS will handle transform */
+    /* Start centered */
+    transform: translate(-50%, -50%) scale(1);
+    will-change: transform;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-panel-content {
+    /* No longer a modal/panel. It's the content itself */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Prevents stretching, centers segments */
+    gap: 20px;
+    padding: 40px;
+    background: transparent;
+}
+
+/* Remove old Main Container styles */
+/* .main-container { max-width: 1200px; ... } */
+
+/* --- Card Styles (Sidebar) --- */
+.result-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.result-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+}
+
+.part-number {
+    font-weight: 600;
+    color: var(--accent-secondary);
+    font-size: 1rem;
+}
+
+.quantity-badge {
+    background: rgba(100, 108, 255, 0.2);
+    color: var(--accent-primary);
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.result-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.result-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
 }
 
-/* Source Badges */
-.source-badge {
-    font-size: 0.7rem;
-    font-weight: 700;
+.brand-tag {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 2px 6px;
     border: 1px solid #333;
-    background: #000;
     color: #fff;
 }
 
@@ -497,4 +523,285 @@ header {
         font-size: 1rem;
         padding: 12px 16px;
     }
+}
+
+/* Box Organizer Panel */
+.box-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    border-left: 1px solid var(--border-color);
+    z-index: 100;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    transition: none;
+}
+
+/* Simplified for reliability */
+.box-panel.hidden {
+    display: none !important;
+}
+
+.box-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.box-segment-label {
+    font-size: 0.8rem;
+    color: var(--accent-secondary);
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.box-grid {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+}
+
+/* Top Segment: 6 rows, 12 cols */
+.box-grid-top {
+    grid-template-columns: repeat(12, 1fr);
+    /* Aspect ratio mainly handled by content/padding */
+}
+
+.box-grid-top .box-cell {
+    aspect-ratio: 1 / 1.2;
+    /* Slightly taller */
+}
+
+/* --- Box Segments --- */
+.box-segment {
+    display: grid;
+    gap: 8px;
+    background: #000;
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid #333;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#boxTopSegment {
+    /* 12 Columns */
+    grid-template-columns: repeat(12, 140px);
+    grid-template-rows: repeat(6, 120px);
+}
+
+#boxBottomSegment {
+    /* 6 Columns */
+    grid-template-columns: repeat(6, 140px);
+    grid-template-rows: repeat(4, 120px);
+}
+
+.mid-spacer {
+    height: 80px;
+    /* Visual separation */
+}
+
+/* --- Box Cells (Mini Cards) --- */
+.box-cell {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.1s;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.box-cell:hover {
+    border-color: #666;
+    background: #252528;
+    z-index: 10;
+    /* Pop slightly above */
+}
+
+.box-cell.has-item {
+    background: #1e1e24;
+    /* Slightly blue-ish dark */
+    border-color: #444;
+}
+
+.box-cell.has-item:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.3);
+}
+
+.box-cell.drag-over {
+    border: 2px dashed var(--accent-primary);
+    background: rgba(100, 108, 255, 0.1);
+}
+
+/* Cell Content Layout */
+.cell-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 4px;
+}
+
+.cell-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cell-part {
+    font-weight: 700;
+    color: var(--accent-secondary);
+    font-size: 0.9rem;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+.cell-qty {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-primary);
+    font-size: 0.7rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.cell-desc {
+    font-size: 0.75rem;
+    color: #aaa;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+    /* Fill space */
+}
+
+.cell-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.cell-size {
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: #666;
+    background: #000;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+.cell-loc-label {
+    font-size: 0.65rem;
+    color: #444;
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    pointer-events: none;
+}
+
+/* --- Mini Card (Inside Box Cell) --- */
+.mini-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 2px;
+}
+
+.mini-card .part-number {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mini-card .quantity-badge {
+    font-size: 0.6rem;
+    padding: 1px 4px;
+}
+
+.mini-card .result-desc {
+    font-size: 0.7rem;
+    -webkit-line-clamp: 3;
+    margin-bottom: 0;
+    line-height: 1.1;
+    color: #aaa;
+}
+
+.mini-card .brand-tag {
+    font-size: 0.6rem;
+    padding: 0 3px;
+    margin-top: auto;
+    /* Push to bottom */
+    align-self: flex-start;
+}
+
+/* For empty cells */
+/* --- 3D Elements --- */
+.box-cell-3d {
+    pointer-events: auto;
+    /* Critical for CSS3DObject interaction */
+    transition: background 0.1s, border-color 0.1s;
+    cursor: pointer;
+}
+
+.box-cell-3d.has-item:hover {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 10px rgba(100, 108, 255, 0.3);
+}
+
+/* Bottom Segment: 4 rows, 6 cols */
+.box-grid-bottom {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* Bottom segment rows have specific heights defined by grid-template-rows? 
+   Or just make the cells in those rows taller? 
+   Grid template rows is better.
+*/
+.box-grid-bottom {
+    /* 4 rows. Top 2 are "way taller". */
+    grid-template-rows: 2fr 2fr 1fr 1fr;
+    /* Fixed height container to allow fr units to work well */
+}
+
+.box-instructions {
+    margin-top: auto;
+    padding-top: 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Utility: Global Hidden State */
+.hidden,
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+
+
+/* Draggable Source Styling */
+.result-card[draggable="true"] {
+    cursor: grab;
+}
+
+.result-card[draggable="true"]:active {
+    cursor: grabbing;
 }

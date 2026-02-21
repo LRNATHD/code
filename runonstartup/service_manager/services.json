@@ -59,23 +59,27 @@
                 "JSON storage"
             ],
             "github": "https://github.com/yourusername/parts-inventory"
-        }
-    ],
-    "tasks": [
+        },
         {
-            "id": "mp3_sync_task",
+            "id": "mp3_sync",
             "name": "MP3 Sync",
-            "cmd": "python c:\\Users\\LRNA\\Desktop\\code\\runonstartup\\mp3_sync\\run_sync.py",
-            "type": "task",
-            "trigger": "manual",
-            "description": "Syncs YouTube Music playlists and liked songs to local folder.",
+            "internal_port": 9874,
+            "path": "/sync",
+            "domain": "sync.noahsmith.dev",
+            "dir": "../mp3_sync",
+            "start_cmd": "py server.py",
+            "health_url": "/api/status",
+            "type": "flask",
+            "description": "Syncs YouTube Music to local storage and uploads to MP3 player.",
+            "has_config": true,
             "tech": [
                 "Python",
                 "ytmusicapi",
                 "yt-dlp"
-            ],
-            "has_auth": true
-        },
+            ]
+        }
+    ],
+    "tasks": [
         {
             "id": "portfolio_sync",
             "name": "Portfolio Sync",

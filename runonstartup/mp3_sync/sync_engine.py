@@ -37,11 +37,15 @@ def load_sync_config():
     if not os.path.exists(CONFIG_FILE):
         return {
             "download_folder": os.path.join(os.path.expanduser("~"), "Music", "YTMusic"),
+            "device_path": "",
             "sync_liked_music": True,
             "sync_all_playlists": True,
         }
     with open(CONFIG_FILE, 'r') as f:
-        return json.load(f)
+        config = json.load(f)
+        # Ensure new keys exist in old configs
+        if "device_path" not in config: config["device_path"] = ""
+        return config
 
 
 def save_sync_config(data):
@@ -153,15 +157,18 @@ def _download_track(track, folder_path, video_id, cached_tracks):
         return 'failed'
 
 
+
 def log_to_manager(msg):
     """Send log to Service Manager console."""
+    print(f"[MP3Sync] {msg}") # Fallback to stdout
     try:
         url = "http://localhost:9870/api/log"
         password = os.environ.get("STARTUP_APPS_PASSWORD", "")
         import requests
-        requests.post(url, json={"source": "mp3_sync", "message": msg}, headers={"X-Password": password}, timeout=1)
-    except:
-        pass
+        resp = requests.post(url, json={"source": "mp3_sync", "message": msg}, headers={"X-Password": password}, timeout=2)
+        # if not resp.ok: print(f"Log failed: {resp.status_code} {resp.text}")
+    except Exception as e:
+        print(f"Log error: {e}")
 
 
 def _sync_worker():
@@ -267,6 +274,13 @@ def _sync_worker():
 
         track_success_count = 0
         for track in task['tracks']:
+            # PAUSE LOGIC
+            while _sync_state.get("paused", False):
+                if not _sync_state["running"]: return
+                _update_state(current_playlist="[PAUSED] " + task['name'])
+                time.sleep(1)
+            _update_state(current_playlist=task['name']) # Restore name after pause
+
             if not _sync_state["running"]: return
             
             vid = track.get('videoId')
@@ -274,9 +288,6 @@ def _sync_worker():
             
             # Fast skip: if in cache and file exists
             if vid in cached_tracks:
-                # We trust cache mostly, but verify filename if possible?
-                # Actually, simply checking if vid is in cache is often enough if we trust our cache.
-                # But let's check file existence in _download_track logic.
                 pass
 
             status = _download_track(track, folder_path, vid, cached_tracks)
@@ -332,6 +343,7 @@ def start_sync():
 
     _update_state(
         running=True,
+        paused=False,
         current_track="",
         current_playlist="Starting...",
         tracks_done=0,
@@ -350,6 +362,104 @@ def stop_sync():
     """Signal the sync to stop."""
     if not _sync_state["running"]:
         return False, "No sync running"
-    _update_state(running=False)
+    _update_state(running=False, paused=False)
     log_to_manager("Stopping sync...")
     return True, "Sync stopping..."
+
+
+def pause_sync():
+    """Toggle pause state."""
+    if not _sync_state["running"]:
+        return False, "No sync running"
+    
+    current = _sync_state.get("paused", False)
+    _update_state(paused=not current)
+    state = "Resumed" if current else "Paused"
+    log_to_manager(f"Sync {state}")
+    return True, f"Sync {state}"
+
+
+def _upload_worker(device_path):
+    log_to_manager("Upload started")
+    config = load_sync_config()
+    source_folder = config.get("download_folder", "")
+    
+    if not os.path.exists(source_folder):
+        log_to_manager("Source folder not found")
+        _update_state(running=False, paused=False)
+        return
+
+    if not os.path.exists(device_path):
+        log_to_manager("Device folder not found")
+        _update_state(running=False, paused=False)
+        return
+
+    import shutil
+
+    total_files = 0
+    copied_files = 0
+    
+    # Count files
+    for root, dirs, files in os.walk(source_folder):
+        total_files += len(files)
+
+    _update_state(tracks_total=total_files, tracks_done=0, current_playlist="Uploading...")
+
+    for root, dirs, files in os.walk(source_folder):
+        if not _sync_state["running"]: break
+        
+        # Determine relative path to maintain structure
+        rel_path = os.path.relpath(root, source_folder)
+        dest_dir = os.path.join(device_path, rel_path)
+        
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir, exist_ok=True)
+
+        for file in files:
+            # PAUSE CHECK
+            while _sync_state.get("paused", False):
+                if not _sync_state["running"]: return
+                _update_state(current_playlist="[PAUSED] Uploading...")
+                time.sleep(1)
+            _update_state(current_playlist="Uploading...")
+
+            if not _sync_state["running"]: break
+            
+            src_file = os.path.join(root, file)
+            dest_file = os.path.join(dest_dir, file)
+            
+            # Simple check: if dest doesn't exist or size is different
+            if not os.path.exists(dest_file) or os.path.getsize(src_file) != os.path.getsize(dest_file):
+                try:
+                    _update_state(current_track=f"Copying {file}...")
+                    shutil.copy2(src_file, dest_file)
+                    log_to_manager(f"Copied: {file}")
+                except Exception as e:
+                    log_to_manager(f"Failed to copy {file}: {e}")
+            
+            copied_files += 1
+            _update_state(tracks_done=copied_files)
+
+    log_to_manager("Upload completed")
+    _update_state(running=False, paused=False, current_playlist="Idle")
+
+
+def start_upload(device_path):
+    """Start upload in background thread."""
+    if _sync_state["running"]:
+        return False, "Sync/Upload already running"
+        
+    _update_state(
+        running=True,
+        paused=False,
+        current_track="",
+        current_playlist="Starting Upload...",
+        tracks_done=0,
+        tracks_total=0,
+        errors=[],
+    )
+
+    t = threading.Thread(target=_upload_worker, args=(device_path,), daemon=True)
+    t.start()
+    return True, "Upload started"
+

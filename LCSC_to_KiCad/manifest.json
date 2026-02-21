@@ -1,0 +1,46 @@
+{
+    "manifest_version": 2,
+    "name": "LCSC to KiCad Downloader",
+    "version": "1.0",
+    "description": "Download LCSC parts as KiCad symbols and footprints directly from the product page.",
+    "icons": {
+        "48": "icons/icon-48.png"
+    },
+    "permissions": [
+        "activeTab",
+        "downloads",
+        "storage",
+        "https://lcsc.com/*",
+        "https://easyeda.com/*",
+        "https://*.lcsc.com/*",
+        "contextMenus"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://lcsc.com/product-detail/*",
+                "*://www.lcsc.com/product-detail/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": [
+            "lib/easyeda_api.js",
+            "lib/converter.js",
+            "background.js"
+        ]
+    },
+    "options_ui": {
+        "page": "options.html",
+        "browser_style": true
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "lcsc2kicad@custom.extension",
+            "strict_min_version": "42.0"
+        }
+    }
+}
